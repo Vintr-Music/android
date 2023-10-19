@@ -47,7 +47,7 @@ fun AppTextField(
     val localFocusManager = LocalFocusManager.current
     val interactionSource = remember { MutableInteractionSource() }
 
-    Column {
+    Column(modifier = modifier) {
         Text(
             modifier = Modifier.padding(start = 8.dp),
             text = label,
@@ -57,7 +57,7 @@ fun AppTextField(
         Spacer(modifier = Modifier.height(14.dp))
         BasicTextField(
             value = value,
-            modifier = modifier
+            modifier = Modifier
                 .fillMaxWidth()
                 .background(
                     LocalVintrColors.current.textFieldBackground,
@@ -89,7 +89,7 @@ fun AppTextField(
             visualTransformation = visualTransformation,
             decorationBox = @Composable { innerTextField ->
                 Row(
-                    modifier = modifier.padding(horizontal = 12.dp),
+                    modifier = Modifier.padding(horizontal = 12.dp),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Box(
