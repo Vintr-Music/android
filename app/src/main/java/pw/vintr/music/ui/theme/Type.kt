@@ -26,6 +26,9 @@ val RubikRegular = BaseRubikStyle.copy(fontWeight = FontWeight.Normal)
 val RubikMedium = BaseRubikStyle.copy(fontWeight = FontWeight.Medium)
 val RubikBold = BaseRubikStyle.copy(fontWeight = FontWeight.Bold)
 
+val RubikRegular16 = RubikRegular.copy(fontSize = 16.sp)
 val RubikMedium16 = RubikMedium.copy(fontSize = 16.sp)
 
 val BaseGilroyStyle = TextStyle(fontFamily = Gilroy)
+
+val Gilroy11 = BaseGilroyStyle.copy(fontSize = 11.sp)

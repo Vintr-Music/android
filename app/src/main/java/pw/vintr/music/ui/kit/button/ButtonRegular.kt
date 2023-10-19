@@ -32,9 +32,9 @@ fun ButtonRegular(
         onClick = onClick,
         modifier = modifier
             .fillMaxWidth()
-            .height(44.dp)
-            .defaultMinSize(minHeight = 44.dp),
-        shape = RoundedCornerShape(6.dp),
+            .height(40.dp)
+            .defaultMinSize(minHeight = 40.dp),
+        shape = RoundedCornerShape(10.dp),
         enabled = enabled && !isLoading,
         colors = ButtonDefaults.buttonColors(
             containerColor = color,
