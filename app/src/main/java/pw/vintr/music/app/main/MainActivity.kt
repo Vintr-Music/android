@@ -1,4 +1,4 @@
-package pw.vintr.music
+package pw.vintr.music.app.main
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity

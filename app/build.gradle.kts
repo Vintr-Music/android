@@ -53,7 +53,11 @@ android {
 dependencies {
     val navigationVersion = "2.7.4"
     val accompanistVersion = "0.32.0"
+    val ktorVersion = "2.3.5"
+    val kotlinxSerializationVersion = "1.6.0"
+    val koinVersion = "3.5.0"
 
+    // Common Android
     implementation("androidx.core:core-ktx:1.12.0")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.6.2")
     implementation("androidx.activity:activity-compose:1.8.0")
@@ -71,6 +75,17 @@ dependencies {
     debugImplementation("androidx.compose.ui:ui-tooling")
     debugImplementation("androidx.compose.ui:ui-test-manifest")
 
+    // Navigation | Accompanist
     implementation("androidx.navigation:navigation-compose:$navigationVersion")
     implementation("com.google.accompanist:accompanist-navigation-material:$accompanistVersion")
+
+    // Ktor | HTTP
+    implementation("io.ktor:ktor-client-android:$ktorVersion")
+    implementation("io.ktor:ktor-client-logging-jvm:$ktorVersion")
+    implementation("io.ktor:ktor-client-content-negotiation:$ktorVersion")
+    implementation("io.ktor:ktor-serialization-gson:$ktorVersion")
+
+    // Koin
+    implementation("io.insert-koin:koin-android:$koinVersion")
+    implementation("io.insert-koin:koin-androidx-compose:$koinVersion")
 }
