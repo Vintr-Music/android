@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -27,10 +28,13 @@ import androidx.compose.ui.graphics.PathEffect
 import androidx.compose.ui.graphics.drawOutline
 import androidx.compose.ui.graphics.drawscope.drawIntoCanvas
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import pw.vintr.music.R
 import pw.vintr.music.tools.composable.StatusBarEffect
 import pw.vintr.music.ui.kit.button.ButtonRegular
+import pw.vintr.music.ui.kit.button.ButtonText
 import pw.vintr.music.ui.kit.input.AppTextField
 import pw.vintr.music.ui.theme.Gray5
 
@@ -48,22 +52,37 @@ fun LoginScreen() {
             modifier = Modifier
                 .height(300.dp)
         )
+        Spacer(modifier = Modifier.weight(1f))
         AppTextField(
             modifier = Modifier.padding(horizontal = 20.dp),
             label = "Email",
-            hint = "Email"
+            hint = "Email",
+            keyboardOptions = KeyboardOptions(
+                keyboardType = KeyboardType.Email,
+                imeAction = ImeAction.Next,
+            )
         )
         Spacer(modifier = Modifier.height(20.dp))
         AppTextField(
             modifier = Modifier.padding(horizontal = 20.dp),
             label = "Пароль",
-            hint = "Пароль"
+            hint = "Пароль",
+            keyboardOptions = KeyboardOptions(
+                keyboardType = KeyboardType.Password,
+                imeAction = ImeAction.Done,
+            )
         )
         Spacer(modifier = Modifier.height(20.dp))
         Spacer(modifier = Modifier.weight(1f))
         ButtonRegular(
             modifier = Modifier.padding(horizontal = 20.dp),
             text = "Войти",
+            onClick = { },
+        )
+        Spacer(modifier = Modifier.height(20.dp))
+        ButtonText(
+            modifier = Modifier.padding(horizontal = 20.dp),
+            text = "Регистрация",
             onClick = { },
         )
         Spacer(modifier = Modifier.weight(1f))
@@ -94,11 +113,26 @@ private fun LogoBar(modifier: Modifier) {
                         x = rect.bottomCenter.x + (rect.bottomCenter.x / 2),
                         y = rect.bottomCenter.y
                     )
-                    moveTo(rect.topLeft.x, rect.topLeft.y)
-                    lineTo(rect.bottomLeft.x, rect.bottomLeft.y - 80.dp.toPx())
-                    lineTo(xDisplacedCenter.x - 20, xDisplacedCenter.y - 20.dp.toPx())
-                    lineTo(rect.bottomRight.x, rect.bottomRight.y - 100.dp.toPx())
-                    lineTo(rect.topRight.x, rect.topRight.y)
+                    moveTo(
+                        x = rect.topLeft.x,
+                        y = rect.topLeft.y
+                    )
+                    lineTo(
+                        x = rect.bottomLeft.x,
+                        y = rect.bottomLeft.y - 80.dp.toPx()
+                    )
+                    lineTo(
+                        x = xDisplacedCenter.x,
+                        y = xDisplacedCenter.y
+                    )
+                    lineTo(
+                        x = rect.bottomRight.x,
+                        y = rect.bottomRight.y - 100.dp.toPx()
+                    )
+                    lineTo(
+                        x = rect.topRight.x,
+                        y = rect.topRight.y
+                    )
                 }
 
                 drawIntoCanvas { canvas ->
@@ -134,7 +168,6 @@ private fun LogoBar(modifier: Modifier) {
                     contentDescription = null,
                 )
             }
-
         }
     }
 }

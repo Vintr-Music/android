@@ -21,8 +21,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.platform.LocalFocusManager
-import androidx.compose.ui.text.input.ImeAction
-import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import pw.vintr.music.tools.extension.Empty
@@ -37,7 +35,7 @@ fun AppTextField(
     onValueChange: (String) -> Unit = {},
     hint: String = String.Empty,
     label: String = String.Empty,
-    inputType: KeyboardType = KeyboardType.Text,
+    keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
     singleLine: Boolean = true,
     enabled: Boolean = true,
     readOnly: Boolean = false,
@@ -74,10 +72,7 @@ fun AppTextField(
                 color = LocalVintrColors.current.textButtonContent,
             ),
             cursorBrush = SolidColor(LocalVintrColors.current.textButtonContent),
-            keyboardOptions = KeyboardOptions(
-                imeAction = ImeAction.Done,
-                keyboardType = inputType
-            ),
+            keyboardOptions = keyboardOptions,
             keyboardActions = KeyboardActions(
                 onDone = {
                     localFocusManager.clearFocus()

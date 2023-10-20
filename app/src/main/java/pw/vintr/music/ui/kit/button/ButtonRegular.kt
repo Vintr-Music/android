@@ -18,7 +18,6 @@ import pw.vintr.music.ui.theme.VintrMusicExtendedTheme
 
 @Composable
 fun ButtonRegular(
-    onClick: () -> Unit,
     modifier: Modifier = Modifier,
     text: String,
     enabled: Boolean = true,
@@ -27,6 +26,7 @@ fun ButtonRegular(
     contentColor: Color = VintrMusicExtendedTheme.colors.regularButtonContent,
     disabledColor: Color = VintrMusicExtendedTheme.colors.regularButtonDisabledBackground,
     disabledContentColor: Color = VintrMusicExtendedTheme.colors.regularButtonDisabledContent,
+    onClick: () -> Unit,
 ) {
     Button(
         onClick = onClick,

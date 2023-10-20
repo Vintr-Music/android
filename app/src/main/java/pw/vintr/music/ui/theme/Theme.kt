@@ -24,6 +24,7 @@ data class VintrMusicColors(
     val regularButtonDisabledContent: Color = Color.Unspecified,
     // Text button
     val textButtonContent: Color = Color.Unspecified,
+    val textButtonDisabledContent: Color = Color.Unspecified,
     // Text Field
     val textFieldBackground: Color = Color.Unspecified,
     val textFieldContent: Color = Color.Unspecified,
@@ -41,6 +42,7 @@ val darkVintrColors = VintrMusicColors(
     regularButtonDisabledContent = Gray3,
     // Text button
     textButtonContent = White0,
+    textButtonDisabledContent = Gray3,
     // Text Field
     textFieldBackground = Gray1,
     textFieldContent = White0,
@@ -56,6 +58,7 @@ val lightVintrColors = VintrMusicColors(
     regularButtonDisabledContent = Gray3,
     // Text button
     textButtonContent = White0,
+    textButtonDisabledContent = Gray3,
     // Text Field
     textFieldBackground = Gray45,
     textFieldContent = White0,
