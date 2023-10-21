@@ -18,7 +18,7 @@ import pw.vintr.music.ui.kit.toolbar.ToolbarRegular
 fun RegisterScreen(
     viewModel: RegisterViewModel = getViewModel()
 ) {
-    StatusBarEffect(useDarkIcons = false)
+    StatusBarEffect()
 
     Scaffold(
         modifier = Modifier

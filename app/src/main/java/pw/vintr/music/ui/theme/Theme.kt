@@ -60,7 +60,7 @@ val lightVintrColors = VintrMusicColors(
     regularButtonDisabledBackground = Gray5,
     regularButtonDisabledContent = Gray3,
     // Text button
-    textButtonContent = White0,
+    textButtonContent = Black0,
     textButtonDisabledContent = Gray3,
     // Text Field
     textFieldBackground = Gray45,
