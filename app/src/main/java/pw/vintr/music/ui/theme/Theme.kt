@@ -29,7 +29,9 @@ data class VintrMusicColors(
     val textFieldBackground: Color = Color.Unspecified,
     val textFieldContent: Color = Color.Unspecified,
     val textFieldHint: Color = Color.Unspecified,
-    val textFieldLabel: Color = Color.Unspecified
+    val textFieldLabel: Color = Color.Unspecified,
+    // Text
+    val regularText: Color = Color.Unspecified,
 )
 
 val LocalVintrColors = staticCompositionLocalOf { VintrMusicColors() }
@@ -48,6 +50,7 @@ val darkVintrColors = VintrMusicColors(
     textFieldContent = White0,
     textFieldHint = Gray3,
     textFieldLabel = Bee1,
+    regularText = White0,
 )
 
 val lightVintrColors = VintrMusicColors(
@@ -64,13 +67,14 @@ val lightVintrColors = VintrMusicColors(
     textFieldContent = White0,
     textFieldHint = Gray3,
     textFieldLabel = Bee1,
+    regularText = Black0,
 )
 
 private val darkColorScheme = darkColorScheme(
     primary = Black0,
     secondary = Bee0,
     tertiary = Gray1,
-    background = Black0
+    background = Black0,
 )
 
 private val lightColorScheme = lightColorScheme(

@@ -2,6 +2,7 @@ package pw.vintr.music.ui.feature.login
 
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -16,6 +17,7 @@ import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
@@ -52,6 +54,7 @@ fun LoginScreen(
 
     Column(
         modifier = Modifier
+            .background(MaterialTheme.colorScheme.background)
             .fillMaxSize()
             .verticalScroll(rememberScrollState())
             .imePadding()
@@ -98,7 +101,7 @@ fun LoginScreen(
         ButtonText(
             modifier = Modifier.padding(horizontal = 20.dp),
             text = stringResource(id = R.string.register),
-            onClick = { },
+            onClick = { viewModel.openRegister() },
         )
         Spacer(modifier = Modifier.weight(1f))
         Spacer(modifier = Modifier.height(16.dp))

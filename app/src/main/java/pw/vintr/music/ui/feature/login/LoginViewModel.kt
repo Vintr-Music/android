@@ -7,6 +7,7 @@ import kotlinx.coroutines.launch
 import pw.vintr.music.domain.user.useCase.AuthorizeUseCase
 import pw.vintr.music.tools.extension.Empty
 import pw.vintr.music.ui.base.BaseViewModel
+import pw.vintr.music.ui.navigation.Screen
 
 class LoginViewModel(
     private val authorizeUseCase: AuthorizeUseCase
@@ -37,6 +38,10 @@ class LoginViewModel(
 
             _screenState.update { it.copy(isAuthorizing = false) }
         }
+    }
+
+    fun openRegister() {
+        navigator.forward(Screen.Register)
     }
 }
 

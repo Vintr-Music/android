@@ -32,3 +32,4 @@ val RubikMedium16 = RubikMedium.copy(fontSize = 16.sp)
 val BaseGilroyStyle = TextStyle(fontFamily = Gilroy)
 
 val Gilroy11 = BaseGilroyStyle.copy(fontSize = 11.sp)
+val Gilroy18 = BaseGilroyStyle.copy(fontSize = 18.sp)

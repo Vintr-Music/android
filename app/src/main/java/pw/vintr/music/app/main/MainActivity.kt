@@ -22,13 +22,23 @@ import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.ModalBottomSheetValue
 import androidx.compose.material.SwipeableDefaults
 import androidx.compose.material.rememberModalBottomSheetState
+import androidx.compose.runtime.LaunchedEffect
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import pw.vintr.music.ui.routing.Screen
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
+import org.koin.compose.rememberKoinInject
+import pw.vintr.music.tools.extension.popUpToTop
+import pw.vintr.music.ui.feature.register.RegisterScreen
+import pw.vintr.music.ui.navigation.Navigator
+import pw.vintr.music.ui.navigation.NavigatorAction
+import pw.vintr.music.ui.navigation.Screen
 
 private const val TRANSITION_DURATION = 300
+
+private const val NAVIGATION_EFFECT_KEY = "navigation"
 
 class MainActivity : ComponentActivity() {
 
@@ -57,7 +67,29 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun Navigation(navController: NavHostController, rootScreen: Screen) {
+fun Navigation(
+    navigator: Navigator = rememberKoinInject(),
+    navController: NavHostController,
+    rootScreen: Screen
+) {
+    LaunchedEffect(NAVIGATION_EFFECT_KEY) {
+        navigator.actionFlow.onEach { action ->
+            when (action) {
+                is NavigatorAction.Back -> {
+                    navController.navigateUp()
+                }
+                is NavigatorAction.Forward -> {
+                    navController.navigate(action.screen.route)
+                }
+                is NavigatorAction.ReplaceAll -> {
+                    navController.navigate(
+                        action.screen.route
+                    ) { popUpToTop(navController) }
+                }
+            }
+        }.launchIn(scope = this)
+    }
+
     NavHost(
         navController = navController,
         startDestination = rootScreen.route,
@@ -65,6 +97,7 @@ fun Navigation(navController: NavHostController, rootScreen: Screen) {
         exitTransition = { fadeOut(animationSpec = tween(TRANSITION_DURATION)) }
     ) {
         composable(Screen.Login.route) { LoginScreen() }
+        composable(Screen.Register.route) { RegisterScreen() }
     }
 }
 
