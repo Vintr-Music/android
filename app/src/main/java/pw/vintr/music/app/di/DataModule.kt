@@ -14,10 +14,13 @@ import io.ktor.http.ContentType
 import io.ktor.http.HttpHeaders
 import io.ktor.serialization.gson.gson
 import org.koin.dsl.module
+import pw.vintr.music.data.user.repository.UserRepository
+import pw.vintr.music.data.user.source.UserRemoteDataSource
 
 private const val BASE_URL = "http://188.225.9.157:4001/"
 
-val networkModule = module {
+val dataModule = module {
+    // Network
     val httpClient = HttpClient(Android) {
         // Serialization
         install(ContentNegotiation) { gson() }
@@ -43,4 +46,8 @@ val networkModule = module {
     }
 
     single { httpClient }
+
+    // User
+    single { UserRemoteDataSource(get()) }
+    single { UserRepository(get()) }
 }

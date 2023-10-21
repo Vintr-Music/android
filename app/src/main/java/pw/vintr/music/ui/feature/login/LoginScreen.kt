@@ -17,6 +17,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
@@ -28,9 +29,12 @@ import androidx.compose.ui.graphics.PathEffect
 import androidx.compose.ui.graphics.drawOutline
 import androidx.compose.ui.graphics.drawscope.drawIntoCanvas
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
+import org.koin.androidx.compose.getViewModel
 import pw.vintr.music.R
 import pw.vintr.music.tools.composable.StatusBarEffect
 import pw.vintr.music.ui.kit.button.ButtonRegular
@@ -39,8 +43,12 @@ import pw.vintr.music.ui.kit.input.AppTextField
 import pw.vintr.music.ui.theme.Gray5
 
 @Composable
-fun LoginScreen() {
+fun LoginScreen(
+    viewModel: LoginViewModel = getViewModel()
+) {
     StatusBarEffect(useDarkIcons = true)
+
+    val screenState = viewModel.screenState.collectAsState()
 
     Column(
         modifier = Modifier
@@ -55,8 +63,10 @@ fun LoginScreen() {
         Spacer(modifier = Modifier.weight(1f))
         AppTextField(
             modifier = Modifier.padding(horizontal = 20.dp),
-            label = "Email",
-            hint = "Email",
+            label = stringResource(id = R.string.email),
+            hint = stringResource(id = R.string.email),
+            value = screenState.value.email,
+            onValueChange = { viewModel.changeEmail(it) },
             keyboardOptions = KeyboardOptions(
                 keyboardType = KeyboardType.Email,
                 imeAction = ImeAction.Next,
@@ -65,8 +75,11 @@ fun LoginScreen() {
         Spacer(modifier = Modifier.height(20.dp))
         AppTextField(
             modifier = Modifier.padding(horizontal = 20.dp),
-            label = "Пароль",
-            hint = "Пароль",
+            label = stringResource(id = R.string.password),
+            hint = stringResource(id = R.string.password),
+            value = screenState.value.password,
+            visualTransformation = PasswordVisualTransformation(),
+            onValueChange = { viewModel.changePassword(it) },
             keyboardOptions = KeyboardOptions(
                 keyboardType = KeyboardType.Password,
                 imeAction = ImeAction.Done,
@@ -76,13 +89,15 @@ fun LoginScreen() {
         Spacer(modifier = Modifier.weight(1f))
         ButtonRegular(
             modifier = Modifier.padding(horizontal = 20.dp),
-            text = "Войти",
-            onClick = { },
+            text = stringResource(id = R.string.login),
+            enabled = screenState.value.formIsValid,
+            isLoading = screenState.value.isAuthorizing,
+            onClick = { viewModel.authorize() },
         )
         Spacer(modifier = Modifier.height(20.dp))
         ButtonText(
             modifier = Modifier.padding(horizontal = 20.dp),
-            text = "Регистрация",
+            text = stringResource(id = R.string.register),
             onClick = { },
         )
         Spacer(modifier = Modifier.weight(1f))
@@ -159,7 +174,9 @@ private fun LogoBar(modifier: Modifier) {
         ) {
             Spacer(modifier = Modifier.statusBarsPadding())
             Box(
-                modifier = Modifier.padding(bottom = 60.dp).size(150.dp)
+                modifier = Modifier
+                    .padding(bottom = 60.dp)
+                    .size(150.dp)
             ) {
                 Image(
                     modifier = Modifier

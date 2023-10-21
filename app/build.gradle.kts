@@ -54,7 +54,6 @@ dependencies {
     val navigationVersion = "2.7.4"
     val accompanistVersion = "0.32.0"
     val ktorVersion = "2.3.5"
-    val kotlinxSerializationVersion = "1.6.0"
     val koinVersion = "3.5.0"
 
     // Common Android
@@ -84,6 +83,7 @@ dependencies {
     implementation("io.ktor:ktor-client-logging-jvm:$ktorVersion")
     implementation("io.ktor:ktor-client-content-negotiation:$ktorVersion")
     implementation("io.ktor:ktor-serialization-gson:$ktorVersion")
+    implementation("io.ktor:ktor-client-resources:$ktorVersion")
 
     // Koin
     implementation("io.insert-koin:koin-android:$koinVersion")

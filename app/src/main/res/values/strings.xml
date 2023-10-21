@@ -1,3 +1,9 @@
 <resources>
-    <string name="app_name">Vintr Music</string>
+    <string name="app_name" translatable="false">Vintr Music</string>
+
+    <!--Login Screen-->
+    <string name="email" translatable="false">Email</string>
+    <string name="password">Password</string>
+    <string name="login">Login</string>
+    <string name="register">Register</string>
 </resources>
