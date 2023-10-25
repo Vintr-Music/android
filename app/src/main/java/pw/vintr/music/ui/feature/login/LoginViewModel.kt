@@ -37,11 +37,16 @@ class LoginViewModel(
             )
 
             _screenState.update { it.copy(isAuthorizing = false) }
+            openSelectServer()
         }
     }
 
     fun openRegister() {
         navigator.forward(Screen.Register)
+    }
+
+    private fun openSelectServer() {
+        navigator.replaceAll(Screen.SelectServer)
     }
 }
 

@@ -17,7 +17,7 @@ class Navigator {
         _actionFlow.tryEmit(NavigatorAction.Forward(screen))
     }
 
-    fun replaceCurrent(screen: Screen) {
+    fun replaceAll(screen: Screen) {
         _actionFlow.tryEmit(NavigatorAction.ReplaceAll(screen))
     }
 }

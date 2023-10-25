@@ -40,8 +40,13 @@ val dataModule = module {
         }
 
         install(DefaultRequest) {
-            header(HttpHeaders.ContentType, ContentType.Application.Json)
+            // Base configuration
             url(BASE_URL)
+            header(HttpHeaders.ContentType, ContentType.Application.Json)
+
+            // Auth configuration
+
+            // Media configuration
         }
     }
 

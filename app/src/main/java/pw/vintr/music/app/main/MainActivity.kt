@@ -32,6 +32,7 @@ import kotlinx.coroutines.flow.onEach
 import org.koin.compose.rememberKoinInject
 import pw.vintr.music.tools.extension.popUpToTop
 import pw.vintr.music.ui.feature.register.RegisterScreen
+import pw.vintr.music.ui.feature.serverSelection.ServerSelectionScreen
 import pw.vintr.music.ui.navigation.Navigator
 import pw.vintr.music.ui.navigation.NavigatorAction
 import pw.vintr.music.ui.navigation.Screen
@@ -98,6 +99,7 @@ fun Navigation(
     ) {
         composable(Screen.Login.route) { LoginScreen() }
         composable(Screen.Register.route) { RegisterScreen() }
+        composable(Screen.SelectServer.route) { ServerSelectionScreen() }
     }
 }
 

@@ -27,7 +27,7 @@ fun ToolbarRegular(
     title: String,
     showBackButton: Boolean = true,
     onBackPressed: () -> Unit,
-    paddingValues: PaddingValues = PaddingValues(horizontal = 24.dp),
+    paddingValues: PaddingValues = PaddingValues(horizontal = 16.dp),
     trailing: @Composable BoxScope.() -> Unit = { },
 ) {
     Row(
@@ -40,8 +40,7 @@ fun ToolbarRegular(
     ) {
         if (showBackButton) {
             Box(
-                Modifier
-                    .padding(horizontal = 16.dp),
+                modifier = Modifier.size(24.dp),
                 contentAlignment = Alignment.Center,
             ) {
                 SimpleIconButton(
@@ -51,7 +50,7 @@ fun ToolbarRegular(
                 )
             }
         } else {
-            Box(Modifier.size(24.dp))
+            Box(modifier = Modifier.size(24.dp))
         }
         Text(
             modifier = Modifier.weight(1f),
@@ -61,11 +60,7 @@ fun ToolbarRegular(
             style = Gilroy18,
             color = VintrMusicExtendedTheme.colors.regularText,
         )
-        Box(
-            modifier = Modifier
-                .padding(horizontal = 16.dp)
-                .size(24.dp)
-        ) {
+        Box(modifier = Modifier.size(24.dp)) {
             trailing()
         }
     }

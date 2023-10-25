@@ -1,9 +1,16 @@
 <resources>
     <string name="app_name" translatable="false">Vintr Music</string>
 
+    <!--Common-->
+    <string name="common_confirm">Confirm</string>
+
     <!--Login Screen-->
     <string name="email" translatable="false">Email</string>
     <string name="password">Password</string>
     <string name="login">Login</string>
     <string name="register">Register</string>
+
+    <!--Select Server Screen-->
+    <string name="select_server">Select server</string>
+    <string name="add_new_server">Add new</string>
 </resources>
