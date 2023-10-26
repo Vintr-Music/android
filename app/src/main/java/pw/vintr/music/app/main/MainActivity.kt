@@ -22,12 +22,16 @@ import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.ModalBottomSheetValue
 import androidx.compose.material.SwipeableDefaults
 import androidx.compose.material.rememberModalBottomSheetState
+import androidx.compose.runtime.collectAsState
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.compose.KoinContext
 import org.koin.compose.rememberKoinInject
 import pw.vintr.music.ui.feature.register.RegisterScreen
+import pw.vintr.music.ui.feature.root.RootScreen
 import pw.vintr.music.ui.feature.serverSelection.ServerSelectionScreen
 import pw.vintr.music.ui.navigation.Navigator
 import pw.vintr.music.ui.navigation.NavigatorEffect
@@ -38,24 +42,33 @@ private const val TRANSITION_DURATION = 300
 
 class MainActivity : ComponentActivity() {
 
+    private val viewModel: MainViewModel by viewModel()
+
     @OptIn(ExperimentalMaterialNavigationApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         WindowCompat.setDecorFitsSystemWindows(window, false)
 
         setContent {
+            val initialState = viewModel.initialState.collectAsState()
             val bottomSheetNavigator = rememberBottomSheetNavigator(skipHalfExpanded = true)
             val navController = rememberNavController(bottomSheetNavigator)
 
-            VintrMusicTheme {
-                Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colorScheme.background
-                ) {
-                    Navigation(
-                        navController = navController,
-                        rootScreen = Screen.Login
-                    )
+            KoinContext {
+                VintrMusicTheme {
+                    Surface(
+                        modifier = Modifier.fillMaxSize(),
+                        color = MaterialTheme.colorScheme.background
+                    ) {
+                        Navigation(
+                            navController = navController,
+                            rootScreen = when (initialState.value) {
+                                AppInitialState.Authorized -> Screen.Root
+                                AppInitialState.Login -> Screen.Login
+                                AppInitialState.ServerSelection -> Screen.SelectServer
+                            }
+                        )
+                    }
                 }
             }
         }
@@ -83,6 +96,7 @@ fun Navigation(
         composable(Screen.Login.route) { LoginScreen() }
         composable(Screen.Register.route) { RegisterScreen() }
         composable(Screen.SelectServer.route) { ServerSelectionScreen() }
+        composable(Screen.Root.route) { RootScreen() }
     }
 }
 

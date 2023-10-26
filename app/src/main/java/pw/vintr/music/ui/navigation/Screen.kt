@@ -11,4 +11,6 @@ sealed class Screen(val route: String) : Parcelable {
     object Register : Screen(route = "register")
 
     object SelectServer : Screen(route = "select-server")
+
+    object Root : Screen(route = "root")
 }

@@ -12,4 +12,6 @@ class UserRepository(
     suspend fun authorize(request: AuthorizeRequestDto) = remoteDataSource.authorize(request)
 
     fun setAccessToken(token: String) = preferencesDataSource.setAccessToken(token)
+
+    fun getAccessToken() = preferencesDataSource.getAccessToken()
 }

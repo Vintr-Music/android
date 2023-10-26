@@ -9,6 +9,7 @@ import pw.vintr.music.domain.server.useCase.SelectServerUseCase
 import pw.vintr.music.tools.extension.updateTyped
 import pw.vintr.music.tools.extension.withTyped
 import pw.vintr.music.ui.base.BaseViewModel
+import pw.vintr.music.ui.navigation.Screen
 
 class ServerSelectionViewModel(
     private val getServerListUseCase: GetServerListUseCase,
@@ -43,7 +44,7 @@ class ServerSelectionViewModel(
         _screenState.withTyped<ServerSelectionState.Loaded> { state ->
             state.selection?.let { server ->
                 selectServerUseCase.invoke(server)
-                // TODO: navigate to main
+                navigator.replaceAll(Screen.Root)
             }
         }
     }
