@@ -2,6 +2,9 @@ package pw.vintr.music.ui.theme
 
 import android.app.Activity
 import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.material.ripple.LocalRippleTheme
+import androidx.compose.material.ripple.RippleAlpha
+import androidx.compose.material.ripple.RippleTheme
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.lightColorScheme
@@ -39,6 +42,8 @@ data class VintrMusicColors(
     val radioUnselected: Color = Color.Unspecified,
     val radioSelected: Color = Color.Unspecified,
     val radioDisabled: Color = Color.Unspecified,
+    // Ripple
+    val ripple: Color = Color.Unspecified,
 )
 
 val LocalVintrColors = staticCompositionLocalOf { VintrMusicColors() }
@@ -64,6 +69,8 @@ val darkVintrColors = VintrMusicColors(
     radioBackground = Gray1,
     radioStroke = Gray3,
     radioSelected = Gray5,
+    // Ripple
+    ripple = Gray5
 )
 
 val lightVintrColors = VintrMusicColors(
@@ -87,6 +94,8 @@ val lightVintrColors = VintrMusicColors(
     radioBackground = Gray6,
     radioStroke = Gray4,
     radioSelected = Gray2,
+    // Ripple
+    ripple = Gray2
 )
 
 private val darkColorScheme = darkColorScheme(
@@ -102,6 +111,18 @@ private val lightColorScheme = lightColorScheme(
     tertiary = Gray6,
     background = White0,
 )
+
+object VintrMusicRippleTheme : RippleTheme {
+
+    @Composable
+    override fun defaultColor(): Color = LocalVintrColors.current.ripple
+
+    @Composable
+    override fun rippleAlpha(): RippleAlpha = RippleTheme.defaultRippleAlpha(
+        LocalVintrColors.current.ripple,
+        lightTheme = false,
+    )
+}
 
 @Composable
 fun VintrMusicTheme(
@@ -137,8 +158,12 @@ fun VintrMusicTheme(
         MaterialTheme(
             colorScheme = colorScheme,
             typography = Typography,
-            content = content
-        )
+        ) {
+            CompositionLocalProvider(
+                LocalRippleTheme provides VintrMusicRippleTheme,
+                content = content
+            )
+        }
     }
 }
 
