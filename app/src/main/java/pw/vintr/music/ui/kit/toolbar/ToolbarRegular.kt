@@ -58,7 +58,7 @@ fun ToolbarRegular(
             textAlign = TextAlign.Center,
             maxLines = 1,
             style = Gilroy18,
-            color = VintrMusicExtendedTheme.colors.regularText,
+            color = VintrMusicExtendedTheme.colors.textRegular,
         )
         Box(modifier = Modifier.size(24.dp)) {
             trailing()

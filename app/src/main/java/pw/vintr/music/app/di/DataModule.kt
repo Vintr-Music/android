@@ -1,6 +1,7 @@
 package pw.vintr.music.app.di
 
 import android.util.Log
+import androidx.preference.PreferenceManager
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.android.Android
 import io.ktor.client.plugins.DefaultRequest
@@ -14,45 +15,74 @@ import io.ktor.http.ContentType
 import io.ktor.http.HttpHeaders
 import io.ktor.serialization.gson.gson
 import org.koin.dsl.module
+import pw.vintr.music.data.server.repository.ServerRepository
+import pw.vintr.music.data.server.source.ServerPreferencesDataSource
+import pw.vintr.music.data.server.source.ServerRemoteDataSource
 import pw.vintr.music.data.user.repository.UserRepository
+import pw.vintr.music.data.user.source.UserPreferencesDataSource
 import pw.vintr.music.data.user.source.UserRemoteDataSource
 
 private const val BASE_URL = "http://188.225.9.157:4001/"
 
+private const val BEARER_PREFIX = "Bearer "
+
+private const val HEADER_MEDIA_SERVER_ID = "x-media-server-id"
+
 val dataModule = module {
+    // Preferences
+    single { PreferenceManager.getDefaultSharedPreferences(get()) }
+
+    single { UserPreferencesDataSource(get()) }
+    single { ServerPreferencesDataSource(get()) }
+
     // Network
-    val httpClient = HttpClient(Android) {
-        // Serialization
-        install(ContentNegotiation) { gson() }
+    single {
+        val userPreferencesDataSource: UserPreferencesDataSource = get()
+        val serverPreferencesDataSource: ServerPreferencesDataSource = get()
 
-        // Logging
-        install(Logging) {
-            logger = object : Logger {
-                override fun log(message: String) { Log.v("Logger Ktor =>", message) }
-            }
-            level = LogLevel.ALL
+        val httpLogger = object : Logger {
+            override fun log(message: String) { Log.v("Logger Ktor =>", message) }
         }
 
-        install(ResponseObserver) {
-            onResponse { response ->
-                Log.d("HTTP status:", "${response.status.value}")
+        HttpClient(Android) {
+            // Serialization
+            install(ContentNegotiation) { gson() }
+
+            // Logging
+            install(Logging) {
+                logger = httpLogger
+                level = LogLevel.ALL
             }
-        }
 
-        install(DefaultRequest) {
-            // Base configuration
-            url(BASE_URL)
-            header(HttpHeaders.ContentType, ContentType.Application.Json)
+            install(ResponseObserver) {
+                onResponse { response ->
+                    Log.d("HTTP status:", "${response.status.value}")
+                }
+            }
 
-            // Auth configuration
+            install(DefaultRequest) {
+                // Base configuration
+                url(BASE_URL)
+                header(HttpHeaders.ContentType, ContentType.Application.Json)
 
-            // Media configuration
+                // Auth configuration
+                userPreferencesDataSource.getAccessToken()?.let { accessToken ->
+                    header(HttpHeaders.Authorization, BEARER_PREFIX + accessToken)
+                }
+
+                // Media configuration
+                serverPreferencesDataSource.getSelectedServerId()?.let { serverId ->
+                    header(HEADER_MEDIA_SERVER_ID, serverId)
+                }
+            }
         }
     }
 
-    single { httpClient }
-
     // User
     single { UserRemoteDataSource(get()) }
-    single { UserRepository(get()) }
+    single { UserRepository(get(), get()) }
+
+    // Server
+    single { ServerRemoteDataSource(get()) }
+    single { ServerRepository(get(), get()) }
 }

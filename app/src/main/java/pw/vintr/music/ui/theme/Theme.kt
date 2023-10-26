@@ -31,7 +31,14 @@ data class VintrMusicColors(
     val textFieldHint: Color = Color.Unspecified,
     val textFieldLabel: Color = Color.Unspecified,
     // Text
-    val regularText: Color = Color.Unspecified,
+    val textRegular: Color = Color.Unspecified,
+    val textSecondary: Color = Color.Unspecified,
+    // Radio button
+    val radioBackground: Color = Color.Unspecified,
+    val radioStroke: Color = Color.Unspecified,
+    val radioUnselected: Color = Color.Unspecified,
+    val radioSelected: Color = Color.Unspecified,
+    val radioDisabled: Color = Color.Unspecified,
 )
 
 val LocalVintrColors = staticCompositionLocalOf { VintrMusicColors() }
@@ -50,7 +57,13 @@ val darkVintrColors = VintrMusicColors(
     textFieldContent = White0,
     textFieldHint = Gray3,
     textFieldLabel = Bee1,
-    regularText = White0,
+    // Text
+    textRegular = White0,
+    textSecondary = Gray4,
+    // Radio button
+    radioBackground = Gray1,
+    radioStroke = Gray3,
+    radioSelected = Gray5,
 )
 
 val lightVintrColors = VintrMusicColors(
@@ -63,11 +76,17 @@ val lightVintrColors = VintrMusicColors(
     textButtonContent = Black0,
     textButtonDisabledContent = Gray3,
     // Text Field
-    textFieldBackground = Gray45,
+    textFieldBackground = Gray6,
     textFieldContent = White0,
     textFieldHint = Gray3,
     textFieldLabel = Bee1,
-    regularText = Black0,
+    // Text
+    textRegular = Black0,
+    textSecondary = Gray3,
+    // Radio button
+    radioBackground = Gray6,
+    radioStroke = Gray4,
+    radioSelected = Gray2,
 )
 
 private val darkColorScheme = darkColorScheme(
@@ -80,7 +99,7 @@ private val darkColorScheme = darkColorScheme(
 private val lightColorScheme = lightColorScheme(
     primary = White0,
     secondary = Bee0,
-    tertiary = Gray45,
+    tertiary = Gray6,
     background = White0,
 )
 

@@ -10,9 +10,11 @@ class AuthorizeUseCase(
 ) {
 
     suspend operator fun invoke(email: String, password: String): UserModel {
-        return userRepository
+        val authResponse = userRepository
             .authorize(AuthorizeRequestDto(email, password))
-            .user
-            .toModel()
+
+        userRepository.setAccessToken(authResponse.token)
+
+        return authResponse.user.toModel()
     }
 }
