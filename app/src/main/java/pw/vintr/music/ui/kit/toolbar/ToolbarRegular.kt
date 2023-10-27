@@ -17,7 +17,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import pw.vintr.music.R
 import pw.vintr.music.ui.kit.button.SimpleIconButton
-import pw.vintr.music.ui.theme.Bee0
+import pw.vintr.music.ui.theme.Bee1
 import pw.vintr.music.ui.theme.Gilroy18
 import pw.vintr.music.ui.theme.VintrMusicExtendedTheme
 
@@ -46,7 +46,7 @@ fun ToolbarRegular(
                 SimpleIconButton(
                     iconRes = R.drawable.ic_back,
                     onClick = onBackPressed,
-                    tint = Bee0,
+                    tint = Bee1,
                 )
             }
         } else {

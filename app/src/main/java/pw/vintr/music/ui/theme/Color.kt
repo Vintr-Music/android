@@ -5,8 +5,9 @@ import androidx.compose.ui.graphics.Color
 val Black0 = Color(0xFF000000)
 val White0 = Color(0xFFFFFFFF)
 
-val Bee0 = Color(0xFFE88224)
-val Bee1 = Color(0xFFFF9800)
+val Bee0 = Color(0xFFDE6B00)
+val Bee1 = Color(0xFFE88224)
+val Bee2 = Color(0xFFFF9800)
 
 val Gray1 = Color(0xFF2C2C31)
 val Gray2 = Color(0xFF4A4A54)

@@ -44,13 +44,16 @@ data class VintrMusicColors(
     val radioDisabled: Color = Color.Unspecified,
     // Ripple
     val ripple: Color = Color.Unspecified,
+    // Nav bar
+    val navBarSelected: Color = Color.Unspecified,
+    val navBarUnselected: Color = Color.Unspecified,
 )
 
 val LocalVintrColors = staticCompositionLocalOf { VintrMusicColors() }
 
 val darkVintrColors = VintrMusicColors(
     // Regular button
-    regularButtonBackground = Bee0,
+    regularButtonBackground = Bee1,
     regularButtonContent = White0,
     regularButtonDisabledBackground = Gray1,
     regularButtonDisabledContent = Gray3,
@@ -61,7 +64,7 @@ val darkVintrColors = VintrMusicColors(
     textFieldBackground = Gray1,
     textFieldContent = White0,
     textFieldHint = Gray3,
-    textFieldLabel = Bee1,
+    textFieldLabel = Bee2,
     // Text
     textRegular = White0,
     textSecondary = Gray4,
@@ -70,12 +73,15 @@ val darkVintrColors = VintrMusicColors(
     radioStroke = Gray3,
     radioSelected = Gray5,
     // Ripple
-    ripple = Gray5
+    ripple = Gray5,
+    // Nav bar
+    navBarSelected = Bee1,
+    navBarUnselected = White0,
 )
 
 val lightVintrColors = VintrMusicColors(
     // Regular button
-    regularButtonBackground = Bee0,
+    regularButtonBackground = Bee1,
     regularButtonContent = White0,
     regularButtonDisabledBackground = Gray5,
     regularButtonDisabledContent = Gray3,
@@ -86,7 +92,7 @@ val lightVintrColors = VintrMusicColors(
     textFieldBackground = Gray6,
     textFieldContent = White0,
     textFieldHint = Gray3,
-    textFieldLabel = Bee1,
+    textFieldLabel = Bee2,
     // Text
     textRegular = Black0,
     textSecondary = Gray3,
@@ -95,19 +101,22 @@ val lightVintrColors = VintrMusicColors(
     radioStroke = Gray4,
     radioSelected = Gray2,
     // Ripple
-    ripple = Gray2
+    ripple = Gray2,
+    // Nav bar
+    navBarSelected = Bee0,
+    navBarUnselected = Black0,
 )
 
 private val darkColorScheme = darkColorScheme(
     primary = Black0,
-    secondary = Bee0,
+    secondary = Bee1,
     tertiary = Gray1,
     background = Black0,
 )
 
 private val lightColorScheme = lightColorScheme(
     primary = White0,
-    secondary = Bee0,
+    secondary = Bee1,
     tertiary = Gray6,
     background = White0,
 )

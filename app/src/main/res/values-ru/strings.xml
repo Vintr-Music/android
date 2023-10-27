@@ -11,4 +11,6 @@
     <!--Select Server Screen-->
     <string name="select_server">Выбрать сервер</string>
     <string name="add_new_server">Добавить новый</string>
+
+    <string name="settings">Настройки</string>
 </resources>

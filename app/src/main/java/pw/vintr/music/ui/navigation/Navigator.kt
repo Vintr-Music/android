@@ -19,6 +19,10 @@ class Navigator {
 
     val actionFlow = _actionFlow.asSharedFlow()
 
+    fun switchNavigatorType(type: NavigatorType) {
+        currentNavigatorType = type
+    }
+
     fun back() {
         _actionFlow.tryEmit(
             NavigatorAction.Back(

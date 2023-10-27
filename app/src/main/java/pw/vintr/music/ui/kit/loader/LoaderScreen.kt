@@ -8,7 +8,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import pw.vintr.music.ui.theme.Bee0
+import pw.vintr.music.ui.theme.Bee1
 
 @Composable
 fun LoaderScreen(modifier: Modifier = Modifier) {
@@ -18,7 +18,7 @@ fun LoaderScreen(modifier: Modifier = Modifier) {
     ) {
         CircularProgressIndicator(
             modifier = Modifier.size(36.dp),
-            color = Bee0,
+            color = Bee1,
         )
     }
 }
