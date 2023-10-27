@@ -14,7 +14,10 @@ import io.ktor.client.request.header
 import io.ktor.http.ContentType
 import io.ktor.http.HttpHeaders
 import io.ktor.serialization.gson.gson
+import okhttp3.OkHttpClient
 import org.koin.dsl.module
+import pw.vintr.music.data.mainPage.repository.MainPageRepository
+import pw.vintr.music.data.mainPage.source.MainPageRemoteDataSource
 import pw.vintr.music.data.server.repository.ServerRepository
 import pw.vintr.music.data.server.source.ServerPreferencesDataSource
 import pw.vintr.music.data.server.source.ServerRemoteDataSource
@@ -78,6 +81,25 @@ val dataModule = module {
         }
     }
 
+    single {
+        val userPreferencesDataSource: UserPreferencesDataSource = get()
+
+        OkHttpClient.Builder()
+            .addInterceptor { chain ->
+                val builder = chain.request().newBuilder()
+
+                userPreferencesDataSource.getAccessToken()?.let { accessToken ->
+                    builder.addHeader(
+                        HttpHeaders.Authorization,
+                        BEARER_PREFIX + accessToken
+                    )
+                }
+
+                chain.proceed(builder.build())
+            }
+            .build()
+    }
+
     // User
     single { UserRemoteDataSource(get()) }
     single { UserRepository(get(), get()) }
@@ -85,4 +107,8 @@ val dataModule = module {
     // Server
     single { ServerRemoteDataSource(get()) }
     single { ServerRepository(get(), get()) }
+
+    // Main Page
+    single { MainPageRemoteDataSource(get()) }
+    single { MainPageRepository(get()) }
 }

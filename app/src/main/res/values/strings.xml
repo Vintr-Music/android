@@ -16,4 +16,8 @@
 
     <string name="settings">Settings</string>
     <string name="settings_description">Customization and integrations</string>
+
+    <string name="welcome_title_morning">Good morning</string>
+    <string name="welcome_title_day">Good afternoon</string>
+    <string name="welcome_title_evening">Good evening</string>
 </resources>

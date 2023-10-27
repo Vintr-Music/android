@@ -19,6 +19,8 @@ android {
         vectorDrawables {
             useSupportLibrary = true
         }
+
+        buildConfigField("String", "BASE_URL", "\"http://188.225.9.157:4001/\"")
     }
 
     buildTypes {
@@ -39,6 +41,7 @@ android {
     }
     buildFeatures {
         compose = true
+        buildConfig = true
     }
     composeOptions {
         kotlinCompilerExtensionVersion = "1.4.3"
@@ -56,6 +59,7 @@ dependencies {
     val ktorVersion = "2.3.5"
     val koinVersion = "3.5.0"
     val preferenceVersion = "1.2.1"
+    val coilVersion = "2.4.0"
 
     // Common Android
     implementation("androidx.core:core-ktx:1.12.0")
@@ -92,4 +96,7 @@ dependencies {
     // Koin
     implementation("io.insert-koin:koin-android:$koinVersion")
     implementation("io.insert-koin:koin-androidx-compose:$koinVersion")
+
+    // Coil
+    implementation("io.coil-kt:coil-compose:$coilVersion")
 }

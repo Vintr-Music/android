@@ -34,5 +34,7 @@ val BaseGilroyStyle = TextStyle(fontFamily = Gilroy)
 
 val Gilroy11 = BaseGilroyStyle.copy(fontSize = 11.sp)
 val Gilroy14 = BaseGilroyStyle.copy(fontSize = 14.sp)
+val Gilroy16 = BaseGilroyStyle.copy(fontSize = 16.sp)
 val Gilroy18 = BaseGilroyStyle.copy(fontSize = 18.sp)
+val Gilroy24 = BaseGilroyStyle.copy(fontSize = 24.sp)
 val Gilroy32 = BaseGilroyStyle.copy(fontSize = 32.sp)

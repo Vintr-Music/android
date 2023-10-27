@@ -14,4 +14,8 @@
 
     <string name="settings">Настройки</string>
     <string name="settings_description">Кастомизация и интеграции</string>
+
+    <string name="welcome_title_morning">Доброе утро</string>
+    <string name="welcome_title_day">Добрый день</string>
+    <string name="welcome_title_evening">Добрый вечер</string>
 </resources>
