@@ -6,10 +6,12 @@ import pw.vintr.music.domain.server.useCase.GetServerListUseCase
 import pw.vintr.music.domain.server.useCase.SelectServerUseCase
 import pw.vintr.music.domain.user.useCase.AuthorizeUseCase
 import pw.vintr.music.domain.user.useCase.GetAuthorizeStateUseCase
+import pw.vintr.music.domain.user.useCase.GetProfileUseCase
 
 val domainModule = module {
     single { AuthorizeUseCase(get()) }
     single { GetAuthorizeStateUseCase(get()) }
+    single { GetProfileUseCase(get()) }
 
     single { GetServerListUseCase(get()) }
     single { SelectServerUseCase(get()) }

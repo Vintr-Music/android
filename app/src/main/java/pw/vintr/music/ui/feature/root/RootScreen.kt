@@ -4,7 +4,6 @@ import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
@@ -22,7 +21,9 @@ import org.koin.androidx.compose.getViewModel
 import org.koin.compose.rememberKoinInject
 import pw.vintr.music.tools.composable.StatusBarEffect
 import pw.vintr.music.ui.feature.home.HomeScreen
+import pw.vintr.music.ui.feature.library.LibraryScreen
 import pw.vintr.music.ui.feature.menu.MenuScreen
+import pw.vintr.music.ui.feature.search.SearchScreen
 import pw.vintr.music.ui.feature.settings.SettingsScreen
 import pw.vintr.music.ui.kit.navbar.AppNavBarItem
 import pw.vintr.music.ui.kit.navbar.AppNavigationBar
@@ -54,19 +55,13 @@ fun RootScreen(
             enterTransition = { fadeIn(animationSpec = tween(TRANSITION_DURATION)) },
             exitTransition = { fadeOut(animationSpec = tween(TRANSITION_DURATION)) }
         ) {
-            composable(Tab.Home.route) {
-                TabNavigation(
-                    rootScreen = Screen.Home,
-                    navigatorType = TabNavigator.Home
-                )
-            }
-            composable(Tab.Search.route) { Box { } }
-            composable(Tab.Library.route) { Box { } }
-            composable(Tab.Menu.route) {
-                TabNavigation(
-                    rootScreen = Screen.Menu,
-                    navigatorType = TabNavigator.Menu
-                )
+            tabs.value.forEach { tab ->
+                composable(tab.route) {
+                    TabNavigation(
+                        rootScreen = tab.rootScreen,
+                        navigatorType = tab.navigatorType
+                    )
+                }
             }
         }
         AppNavigationBar {
@@ -115,6 +110,8 @@ fun TabNavigation(
         exitTransition = { fadeOut(animationSpec = tween(TRANSITION_DURATION)) }
     ) {
         composable(Screen.Home.route) { HomeScreen() }
+        composable(Screen.Search.route) { SearchScreen() }
+        composable(Screen.Library.route) { LibraryScreen() }
         composable(Screen.Menu.route) { MenuScreen() }
         composable(Screen.Settings.route) { SettingsScreen() }
     }

@@ -6,6 +6,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import pw.vintr.music.R
 import pw.vintr.music.ui.base.BaseViewModel
 import pw.vintr.music.ui.navigation.NavigatorType
+import pw.vintr.music.ui.navigation.Screen
 
 sealed interface TabNavigator : NavigatorType {
     object Home : TabNavigator
@@ -19,26 +20,31 @@ sealed class Tab(
     @DrawableRes
     val iconRes: Int,
     val navigatorType: NavigatorType,
+    val rootScreen: Screen,
 ) {
     object Home : Tab(
         route = "home",
         iconRes = R.drawable.ic_home,
         navigatorType = TabNavigator.Home,
+        rootScreen = Screen.Home
     )
     object Search : Tab(
         route = "search",
         iconRes = R.drawable.ic_search,
         navigatorType = TabNavigator.Search,
+        rootScreen = Screen.Search
     )
     object Library : Tab(
         route = "library",
         iconRes = R.drawable.ic_library,
         navigatorType = TabNavigator.Library,
+        rootScreen = Screen.Library
     )
     object Menu : Tab(
         route = "menu",
         iconRes = R.drawable.ic_profile,
         navigatorType = TabNavigator.Menu,
+        rootScreen = Screen.Menu
     )
 }
 

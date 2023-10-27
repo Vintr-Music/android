@@ -7,6 +7,8 @@ data class UserModel(
     val email: String,
     val firstName: String,
     val lastName: String,
-)
+) {
+    val fullName = "$firstName $lastName"
+}
 
 fun UserDto.toModel() = UserModel(id, email, firstName, lastName)

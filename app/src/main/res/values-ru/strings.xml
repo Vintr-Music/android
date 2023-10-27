@@ -13,4 +13,5 @@
     <string name="add_new_server">Добавить новый</string>
 
     <string name="settings">Настройки</string>
+    <string name="settings_description">Кастомизация и интеграции</string>
 </resources>

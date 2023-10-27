@@ -20,6 +20,6 @@ val uiModule = module {
     viewModel { ServerSelectionViewModel(get(), get()) }
 
     viewModel { RootViewModel() }
-    viewModel { MenuViewModel() }
+    viewModel { MenuViewModel(get()) }
     viewModel { SettingsViewModel() }
 }

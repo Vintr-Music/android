@@ -16,6 +16,10 @@ sealed class Screen(val route: String) : Parcelable {
 
     object Home : Screen(route = "home")
 
+    object Search : Screen(route = "search")
+
+    object Library : Screen(route = "library")
+
     object Menu : Screen(route = "menu")
 
     object Settings : Screen(route = "settings")

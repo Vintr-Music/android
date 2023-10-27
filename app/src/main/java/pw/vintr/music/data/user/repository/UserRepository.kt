@@ -14,4 +14,6 @@ class UserRepository(
     fun setAccessToken(token: String) = preferencesDataSource.setAccessToken(token)
 
     fun getAccessToken() = preferencesDataSource.getAccessToken()
+
+    suspend fun getProfile() = remoteDataSource.getProfile()
 }
