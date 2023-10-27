@@ -23,10 +23,10 @@ class Navigator {
         currentNavigatorType = type
     }
 
-    fun back() {
+    fun back(type: NavigatorType? = null) {
         _actionFlow.tryEmit(
             NavigatorAction.Back(
-                navigatorType = currentNavigatorType
+                navigatorType = type ?: currentNavigatorType
             )
         )
     }

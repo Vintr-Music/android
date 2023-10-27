@@ -1,5 +1,7 @@
 package pw.vintr.music.ui.feature.root
 
+import android.app.Activity
+import androidx.activity.compose.BackHandler
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
@@ -11,6 +13,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.NavHost
@@ -96,12 +99,18 @@ fun TabNavigation(
     navigator: Navigator = rememberKoinInject(),
 ) {
     val navController = rememberNavController()
+    val navBackStackEntry by navController.currentBackStackEntryAsState()
+    val activity = (LocalContext.current as? Activity)
 
     NavigatorEffect(
         type = navigatorType,
         navigator = navigator,
         controller = navController
     )
+
+    BackHandler(enabled = navBackStackEntry?.destination?.route == rootScreen.route) {
+        activity?.finish()
+    }
 
     NavHost(
         navController = navController,
