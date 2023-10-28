@@ -4,6 +4,7 @@ import android.app.Application
 import coil.ImageLoader
 import coil.ImageLoaderFactory
 import coil.request.CachePolicy
+import coil.util.DebugLogger
 import okhttp3.OkHttpClient
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
@@ -30,6 +31,7 @@ class App : Application(), ImageLoaderFactory, KoinComponent {
         val okHttpClient: OkHttpClient = get()
 
         return ImageLoader.Builder(applicationContext)
+            .logger(DebugLogger())
             .okHttpClient(okHttpClient)
             .crossfade(enable = true)
             .networkObserverEnabled(enable = true)

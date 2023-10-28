@@ -83,6 +83,7 @@ val dataModule = module {
 
     single {
         val userPreferencesDataSource: UserPreferencesDataSource = get()
+        val serverPreferencesDataSource: ServerPreferencesDataSource = get()
 
         OkHttpClient.Builder()
             .addInterceptor { chain ->
@@ -93,6 +94,9 @@ val dataModule = module {
                         HttpHeaders.Authorization,
                         BEARER_PREFIX + accessToken
                     )
+                }
+                serverPreferencesDataSource.getSelectedServerId()?.let { serverId ->
+                    builder.addHeader(HEADER_MEDIA_SERVER_ID, serverId)
                 }
 
                 chain.proceed(builder.build())
