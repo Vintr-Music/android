@@ -6,13 +6,16 @@ import kotlinx.coroutines.launch
 import pw.vintr.music.domain.mainPage.model.MainPageItemModel
 import pw.vintr.music.domain.mainPage.model.MainPageWelcomeModel
 import pw.vintr.music.domain.mainPage.useCase.GetMainPageContentUseCase
+import pw.vintr.music.ui.base.BaseScreenState
 import pw.vintr.music.ui.base.BaseViewModel
 
 class HomeViewModel(
     private val getMainPageContentUseCase: GetMainPageContentUseCase
 ) : BaseViewModel() {
 
-    private val _screenState = MutableStateFlow<HomeState>(HomeState.Loading)
+    private val _screenState = MutableStateFlow<BaseScreenState<HomeScreenData>>(
+        value = BaseScreenState.Loading()
+    )
 
     val screenState = _screenState.asStateFlow()
 
@@ -22,24 +25,20 @@ class HomeViewModel(
 
     private fun loadData() {
         launch(createExceptionHandler {
-            _screenState.value = HomeState.Error
+            _screenState.value = BaseScreenState.Error()
         }) {
-            _screenState.value = HomeState.Loading
-            _screenState.value = HomeState.Loaded(
-                welcome = MainPageWelcomeModel.getByNowTime(),
-                items = getMainPageContentUseCase.invoke(),
+            _screenState.value = BaseScreenState.Loading()
+            _screenState.value = BaseScreenState.Loaded(
+                HomeScreenData(
+                    welcome = MainPageWelcomeModel.getByNowTime(),
+                    items = getMainPageContentUseCase.invoke(),
+                )
             )
         }
     }
 }
 
-sealed interface HomeState {
-    object Loading : HomeState
-
-    object Error : HomeState
-
-    data class Loaded(
-        val welcome: MainPageWelcomeModel,
-        val items: List<MainPageItemModel>,
-    ) : HomeState
-}
+data class HomeScreenData(
+    val welcome: MainPageWelcomeModel,
+    val items: List<MainPageItemModel>,
+)

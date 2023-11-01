@@ -1,6 +1,7 @@
 package pw.vintr.music.domain.library.model.track
 
 import pw.vintr.music.data.library.dto.track.TrackFormatDto
+import pw.vintr.music.tools.format.DurationFormat
 
 data class TrackFormatModel(
     val bitrate: Int,
@@ -13,7 +14,9 @@ data class TrackFormatModel(
     val sampleRate: Int,
     val tagTypes: List<String>,
     val tool: String
-)
+) {
+    val durationFormat = DurationFormat.formatSeconds(duration.toLong())
+}
 
 fun TrackFormatDto.toModel() = TrackFormatModel(
     bitrate,

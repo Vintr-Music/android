@@ -6,6 +6,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import pw.vintr.music.domain.user.model.UserModel
 import pw.vintr.music.domain.user.useCase.GetProfileUseCase
+import pw.vintr.music.ui.base.BaseScreenState
 import pw.vintr.music.ui.base.BaseViewModel
 import pw.vintr.music.ui.navigation.Screen
 
@@ -13,7 +14,9 @@ class MenuViewModel(
     private val getProfileUseCase: GetProfileUseCase,
 ) : BaseViewModel() {
 
-    private val _screenState = MutableStateFlow<MenuState>(MenuState.Loading)
+    private val _screenState = MutableStateFlow<BaseScreenState<MenuScreenData>>(
+        value = BaseScreenState.Loading()
+    )
 
     val screenState = _screenState.asStateFlow()
 
@@ -23,15 +26,17 @@ class MenuViewModel(
 
     private fun loadData() {
         launch(createExceptionHandler {
-            _screenState.value = MenuState.Error
+            _screenState.value = BaseScreenState.Error()
         }) {
-            _screenState.value = MenuState.Loading
+            _screenState.value = BaseScreenState.Loading()
 
             val user = async { getProfileUseCase.invoke() }
             // TODO: load other data
 
-            _screenState.value = MenuState.Loaded(
-                user = user.await(),
+            _screenState.value = BaseScreenState.Loaded(
+                MenuScreenData(
+                    user = user.await()
+                ),
             )
         }
     }
@@ -41,12 +46,6 @@ class MenuViewModel(
     }
 }
 
-sealed interface MenuState {
-    object Loading : MenuState
-
-    object Error : MenuState
-
-    data class Loaded(
-        val user: UserModel
-    ) : MenuState
-}
+data class MenuScreenData(
+    val user: UserModel
+)

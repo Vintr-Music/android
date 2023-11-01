@@ -6,8 +6,9 @@ import kotlinx.coroutines.launch
 import pw.vintr.music.domain.server.model.ServerModel
 import pw.vintr.music.domain.server.useCase.GetServerListUseCase
 import pw.vintr.music.domain.server.useCase.SelectServerUseCase
-import pw.vintr.music.tools.extension.updateTyped
-import pw.vintr.music.tools.extension.withTyped
+import pw.vintr.music.tools.extension.updateLoaded
+import pw.vintr.music.tools.extension.withLoaded
+import pw.vintr.music.ui.base.BaseScreenState
 import pw.vintr.music.ui.base.BaseViewModel
 import pw.vintr.music.ui.navigation.Screen
 
@@ -16,7 +17,9 @@ class ServerSelectionViewModel(
     private val selectServerUseCase: SelectServerUseCase,
 ) : BaseViewModel() {
 
-    private val _screenState = MutableStateFlow<ServerSelectionState>(ServerSelectionState.Loading)
+    private val _screenState = MutableStateFlow<BaseScreenState<ServerSelectionScreenData>>(
+        value = BaseScreenState.Loading()
+    )
 
     val screenState = _screenState.asStateFlow()
 
@@ -26,22 +29,23 @@ class ServerSelectionViewModel(
 
     private fun loadServers() {
         launch(createExceptionHandler {
-            _screenState.value = ServerSelectionState.Error
+            _screenState.value = BaseScreenState.Error()
         }) {
-            _screenState.value = ServerSelectionState.Loaded(
-                servers = getServerListUseCase.invoke(),
+            _screenState.value = BaseScreenState.Loading()
+            _screenState.value = BaseScreenState.Loaded(
+                ServerSelectionScreenData(
+                    servers = getServerListUseCase.invoke(),
+                )
             )
         }
     }
 
     fun selectServer(server: ServerModel) {
-        _screenState.updateTyped<ServerSelectionState, ServerSelectionState.Loaded> {
-            it.copy(selection = server)
-        }
+        _screenState.updateLoaded { it.copy(selection = server) }
     }
 
     fun confirmSelection() {
-        _screenState.withTyped<ServerSelectionState.Loaded> { state ->
+        _screenState.withLoaded { state ->
             state.selection?.let { server ->
                 selectServerUseCase.invoke(server)
                 navigator.replaceAll(Screen.Root)
@@ -54,16 +58,9 @@ class ServerSelectionViewModel(
     }
 }
 
-sealed interface ServerSelectionState {
-
-    object Loading : ServerSelectionState
-
-    object Error : ServerSelectionState
-
-    data class Loaded(
-        val servers: List<ServerModel>,
-        val selection: ServerModel? = null,
-    ) : ServerSelectionState {
-        val formIsValid = selection != null
-    }
+data class ServerSelectionScreenData(
+    val servers: List<ServerModel>,
+    val selection: ServerModel? = null,
+) {
+    val formIsValid = selection != null
 }

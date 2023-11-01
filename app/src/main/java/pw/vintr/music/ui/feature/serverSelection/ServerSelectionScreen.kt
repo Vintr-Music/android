@@ -29,8 +29,8 @@ import pw.vintr.music.R
 import pw.vintr.music.tools.composable.StatusBarEffect
 import pw.vintr.music.ui.kit.button.ButtonRegular
 import pw.vintr.music.ui.kit.button.ButtonText
-import pw.vintr.music.ui.kit.loader.LoaderScreen
 import pw.vintr.music.ui.kit.server.ServerSelectableItem
+import pw.vintr.music.ui.kit.state.ScreenStateHolder
 import pw.vintr.music.ui.kit.toolbar.ToolbarPrimaryMount
 import pw.vintr.music.ui.theme.Gilroy32
 
@@ -50,49 +50,41 @@ fun ServerSelectionScreen(
     ) {
         SelectServerBar(modifier = Modifier.height(barHeight))
 
-        when (val state = screenState.value) {
-            is ServerSelectionState.Loading -> {
-                LoaderScreen()
-            }
-            is ServerSelectionState.Error -> {
-                // TODO: error state
-            }
-            is ServerSelectionState.Loaded -> {
-                Column(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .navigationBarsPadding()
+        ScreenStateHolder(state = screenState.value) { state ->
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .navigationBarsPadding()
+            ) {
+                LazyColumn(
+                    modifier = Modifier.weight(1f),
+                    contentPadding = PaddingValues(
+                        top = barHeight + 24.dp,
+                        bottom = 24.dp
+                    ),
+                    verticalArrangement = Arrangement.spacedBy(28.dp),
                 ) {
-                    LazyColumn(
-                        modifier = Modifier.weight(1f),
-                        contentPadding = PaddingValues(
-                            top = barHeight + 24.dp,
-                            bottom = 24.dp
-                        ),
-                        verticalArrangement = Arrangement.spacedBy(28.dp),
-                    ) {
-                        items(state.servers) { server ->
-                            ServerSelectableItem(
-                                server = server,
-                                selected = state.selection == server,
-                                onClick = { viewModel.selectServer(server) },
-                            )
-                        }
+                    items(state.servers) { server ->
+                        ServerSelectableItem(
+                            server = server,
+                            selected = state.selection == server,
+                            onClick = { viewModel.selectServer(server) },
+                        )
                     }
-                    ButtonRegular(
-                        modifier = Modifier.padding(horizontal = 20.dp),
-                        text = stringResource(id = R.string.common_confirm),
-                        enabled = state.formIsValid,
-                        onClick = { viewModel.confirmSelection() },
-                    )
-                    Spacer(modifier = Modifier.height(20.dp))
-                    ButtonText(
-                        modifier = Modifier.padding(horizontal = 20.dp),
-                        text = stringResource(id = R.string.add_new_server),
-                        onClick = { viewModel.openAddNewServer() },
-                    )
-                    Spacer(modifier = Modifier.height(32.dp))
                 }
+                ButtonRegular(
+                    modifier = Modifier.padding(horizontal = 20.dp),
+                    text = stringResource(id = R.string.common_confirm),
+                    enabled = state.formIsValid,
+                    onClick = { viewModel.confirmSelection() },
+                )
+                Spacer(modifier = Modifier.height(20.dp))
+                ButtonText(
+                    modifier = Modifier.padding(horizontal = 20.dp),
+                    text = stringResource(id = R.string.add_new_server),
+                    onClick = { viewModel.openAddNewServer() },
+                )
+                Spacer(modifier = Modifier.height(32.dp))
             }
         }
     }

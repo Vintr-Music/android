@@ -20,8 +20,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import org.koin.androidx.compose.getViewModel
 import pw.vintr.music.R
-import pw.vintr.music.ui.kit.loader.LoaderScreen
 import pw.vintr.music.ui.kit.menu.MenuItemIconified
+import pw.vintr.music.ui.kit.state.ScreenStateHolder
 import pw.vintr.music.ui.theme.Gilroy32
 import pw.vintr.music.ui.theme.VintrMusicExtendedTheme
 
@@ -37,36 +37,30 @@ fun MenuScreen(
             .statusBarsPadding()
             .fillMaxSize()
     ) {
-        when (val state = screenState.value) {
-            is MenuState.Loading -> {
-                LoaderScreen()
-            }
-            is MenuState.Error -> {
-                // TODO: error state
-            }
-            is MenuState.Loaded -> {
-                Column(
+        ScreenStateHolder(
+            state = screenState.value
+        ) { state ->
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .verticalScroll(rememberScrollState())
+            ) {
+                Spacer(modifier = Modifier.height(40.dp))
+                Text(
+                    modifier = Modifier.padding(horizontal = 20.dp),
+                    text = state.user.fullName,
+                    style = Gilroy32,
+                    color = VintrMusicExtendedTheme.colors.textRegular,
+                )
+                Spacer(modifier = Modifier.height(40.dp))
+                MenuItemIconified(
                     modifier = Modifier
-                        .fillMaxSize()
-                        .verticalScroll(rememberScrollState())
-                ) {
-                    Spacer(modifier = Modifier.height(40.dp))
-                    Text(
-                        modifier = Modifier.padding(horizontal = 20.dp),
-                        text = state.user.fullName,
-                        style = Gilroy32,
-                        color = VintrMusicExtendedTheme.colors.textRegular,
-                    )
-                    Spacer(modifier = Modifier.height(40.dp))
-                    MenuItemIconified(
-                        modifier = Modifier
-                            .clickable { viewModel.openSettings() }
-                            .padding(horizontal = 28.dp, vertical = 8.dp),
-                        title = stringResource(id = R.string.settings),
-                        subtitle = stringResource(id = R.string.settings_description),
-                        iconRes = R.drawable.ic_settings,
-                    )
-                }
+                        .clickable { viewModel.openSettings() }
+                        .padding(horizontal = 28.dp, vertical = 8.dp),
+                    title = stringResource(id = R.string.settings),
+                    subtitle = stringResource(id = R.string.settings_description),
+                    iconRes = R.drawable.ic_settings,
+                )
             }
         }
     }

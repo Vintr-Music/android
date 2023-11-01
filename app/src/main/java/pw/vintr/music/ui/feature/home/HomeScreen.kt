@@ -20,7 +20,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import org.koin.androidx.compose.getViewModel
 import pw.vintr.music.ui.kit.library.AlbumView
-import pw.vintr.music.ui.kit.loader.LoaderScreen
+import pw.vintr.music.ui.kit.state.ScreenStateHolder
 import pw.vintr.music.ui.theme.Gilroy18
 import pw.vintr.music.ui.theme.Gilroy24
 import pw.vintr.music.ui.theme.VintrMusicExtendedTheme
@@ -39,48 +39,42 @@ fun HomeScreen(
             .statusBarsPadding()
             .fillMaxSize()
     ) {
-        when (val state = screenState.value) {
-            is HomeState.Loading -> {
-                LoaderScreen()
-            }
-            is HomeState.Error -> {
-                // TODO: error state
-            }
-            is HomeState.Loaded -> {
-                LazyVerticalGrid(
-                    modifier = Modifier
-                        .fillMaxSize(),
-                    columns = GridCells.Fixed(2),
-                    verticalArrangement = Arrangement.spacedBy(20.dp),
-                    horizontalArrangement = Arrangement.spacedBy(20.dp),
-                    contentPadding = PaddingValues(20.dp)
+        ScreenStateHolder(
+            state = screenState.value,
+        ) { state ->
+            LazyVerticalGrid(
+                modifier = Modifier
+                    .fillMaxSize(),
+                columns = GridCells.Fixed(2),
+                verticalArrangement = Arrangement.spacedBy(20.dp),
+                horizontalArrangement = Arrangement.spacedBy(20.dp),
+                contentPadding = PaddingValues(20.dp)
+            ) {
+                item(
+                    key = KEY_WELCOME_TEXT,
+                    span = { GridItemSpan(currentLineSpan = 2) },
                 ) {
+                    Text(
+                        modifier = Modifier.padding(bottom = 20.dp),
+                        text = stringResource(id = state.welcome.textRes),
+                        style = Gilroy24,
+                        color = VintrMusicExtendedTheme.colors.textRegular,
+                    )
+                }
+
+                state.items.forEach { item ->
                     item(
-                        key = KEY_WELCOME_TEXT,
+                        key = item.artist,
                         span = { GridItemSpan(currentLineSpan = 2) },
                     ) {
                         Text(
-                            modifier = Modifier.padding(bottom = 20.dp),
-                            text = stringResource(id = state.welcome.textRes),
-                            style = Gilroy24,
+                            text = item.artist,
+                            style = Gilroy18,
                             color = VintrMusicExtendedTheme.colors.textRegular,
                         )
                     }
-
-                    state.items.forEach { item ->
-                        item(
-                            key = item.artist,
-                            span = { GridItemSpan(currentLineSpan = 2) },
-                        ) {
-                            Text(
-                                text = item.artist,
-                                style = Gilroy18,
-                                color = VintrMusicExtendedTheme.colors.textRegular,
-                            )
-                        }
-                        items(item.albums) { album ->
-                            AlbumView(album = album)
-                        }
+                    items(item.albums) { album ->
+                        AlbumView(album = album)
                     }
                 }
             }
