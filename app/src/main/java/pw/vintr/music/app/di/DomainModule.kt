@@ -1,6 +1,7 @@
 package pw.vintr.music.app.di
 
 import org.koin.dsl.module
+import pw.vintr.music.domain.library.useCase.GetAlbumTracksUseCase
 import pw.vintr.music.domain.mainPage.useCase.GetMainPageContentUseCase
 import pw.vintr.music.domain.server.useCase.GetSelectedServerIdUseCase
 import pw.vintr.music.domain.server.useCase.GetServerListUseCase
@@ -19,4 +20,5 @@ val domainModule = module {
     single { GetSelectedServerIdUseCase(get()) }
 
     single { GetMainPageContentUseCase(get()) }
+    single { GetAlbumTracksUseCase(get()) }
 }

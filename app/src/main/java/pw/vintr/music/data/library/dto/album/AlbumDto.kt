@@ -6,7 +6,7 @@ data class AlbumDto(
     @SerializedName("artist")
     val artist: String,
     @SerializedName("name")
-    val name: String,
+    val name: String?,
     @SerializedName("year")
     val year: Int?
 )

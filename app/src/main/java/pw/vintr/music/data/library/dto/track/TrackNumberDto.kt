@@ -4,7 +4,7 @@ import com.google.gson.annotations.SerializedName
 
 data class TrackNumberDto(
     @SerializedName("no")
-    val no: Int,
+    val no: Int?,
     @SerializedName("of")
-    val of: Int
+    val of: Int?
 )

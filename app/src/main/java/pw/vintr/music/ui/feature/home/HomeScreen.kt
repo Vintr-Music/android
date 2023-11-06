@@ -74,7 +74,10 @@ fun HomeScreen(
                         )
                     }
                     items(item.albums) { album ->
-                        AlbumView(album = album)
+                        AlbumView(
+                            album = album,
+                            onClick = { viewModel.onAlbumClick(album) }
+                        )
                     }
                 }
             }

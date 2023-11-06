@@ -52,7 +52,7 @@ class CollapsingToolbarState(
         internal set(value) {
             minHeightState = value
 
-            if(height < value) {
+            if (height < value) {
                 height = value
             }
         }
@@ -78,23 +78,23 @@ class CollapsingToolbarState(
     val progress: Float
         @FloatRange(from = 0.0, to = 1.0)
         get() =
-            if(minHeight == maxHeight) {
+            if (minHeight == maxHeight) {
                 0f
-            }else{
+            } else {
                 ((height - minHeight).toFloat() / (maxHeight - minHeight)).coerceIn(0f, 1f)
             }
 
     private val scrollableState = ScrollableState { value ->
-        val consume = if(value < 0) {
+        val consume = if (value < 0) {
             max(minHeight.toFloat() - height, value)
-        }else{
+        } else {
             min(maxHeight.toFloat() - height, value)
         }
 
         val current = consume + deferredConsumption
         val currentInt = current.toInt()
 
-        if(current.absoluteValue > 0) {
+        if (current.absoluteValue > 0) {
             height += currentInt
             deferredConsumption = current - currentInt
         }
@@ -227,7 +227,7 @@ private class CollapsingToolbarMeasurePolicy(
 
             placeableList.forEachIndexed { i, placeable ->
                 val strategy = placeStrategy[i]
-                if(strategy is CollapsingToolbarData) {
+                if (strategy is CollapsingToolbarData) {
                     strategy.progressListener?.onProgressUpdate(progress)
                 }
 
@@ -252,12 +252,11 @@ private class CollapsingToolbarMeasurePolicy(
 
                         placeable.place(offset.x, offset.y)
                     }
-                    is CollapsingToolbarParallaxData ->
-                        placeable.placeRelative(
-                            x = 0,
-                            y = -((maxHeight - minHeight) * (1 - progress) * strategy.ratio)
-                                .roundToInt()
-                        )
+                    is CollapsingToolbarParallaxData -> placeable.placeRelative(
+                        x = 0,
+                        y = -((maxHeight - minHeight) * (1 - progress) * strategy.ratio)
+                            .roundToInt()
+                    )
                     else -> placeable.placeRelative(0, 0)
                 }
             }

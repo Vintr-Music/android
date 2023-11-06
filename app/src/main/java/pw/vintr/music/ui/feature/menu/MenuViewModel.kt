@@ -3,7 +3,6 @@ package pw.vintr.music.ui.feature.menu
 import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.launch
 import pw.vintr.music.domain.user.model.UserModel
 import pw.vintr.music.domain.user.useCase.GetProfileUseCase
 import pw.vintr.music.ui.base.BaseScreenState
@@ -25,19 +24,11 @@ class MenuViewModel(
     }
 
     private fun loadData() {
-        launch(createExceptionHandler {
-            _screenState.value = BaseScreenState.Error()
-        }) {
-            _screenState.value = BaseScreenState.Loading()
-
+        _screenState.loadWithStateHandling {
             val user = async { getProfileUseCase.invoke() }
             // TODO: load other data
 
-            _screenState.value = BaseScreenState.Loaded(
-                MenuScreenData(
-                    user = user.await()
-                ),
-            )
+            MenuScreenData(user = user.await())
         }
     }
 

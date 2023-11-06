@@ -4,17 +4,17 @@ import com.google.gson.annotations.SerializedName
 
 data class TrackMetadataDto(
     @SerializedName("album")
-    val album: String,
+    val album: String?,
     @SerializedName("artist")
-    val artist: String,
+    val artist: String?,
     @SerializedName("artists")
-    val artists: List<String>,
+    val artists: List<String>?,
     @SerializedName("genre")
-    val genre: List<String>,
+    val genre: List<String>?,
     @SerializedName("title")
-    val title: String,
+    val title: String?,
     @SerializedName("track")
     val track: TrackNumberDto,
     @SerializedName("year")
-    val year: Int
+    val year: Int?
 )

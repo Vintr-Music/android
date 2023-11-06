@@ -10,16 +10,16 @@ data class TrackMetadataModel(
     val genre: List<String>,
     val title: String,
     val number: Int,
-    val year: Int
+    val year: Int?
 ) {
     val artist = artists.joinToString(separator = String.Comma + String.Space)
 }
 
 fun TrackMetadataDto.toModel() = TrackMetadataModel(
-    album = album,
-    artists = artists,
-    genre = genre,
-    title = title,
-    number = track.no,
+    album = album.orEmpty(),
+    artists = artists.orEmpty(),
+    genre = genre.orEmpty(),
+    title = title.orEmpty(),
+    number = track.no ?: 0,
     year = year,
 )

@@ -6,7 +6,9 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.cancel
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.isActive
+import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent
 import pw.vintr.music.ui.navigation.Navigator
 import org.koin.core.component.inject
@@ -26,6 +28,15 @@ abstract class BaseViewModel : ViewModel(), CoroutineScope, KoinComponent {
     ) = CoroutineExceptionHandler { _, throwable ->
         throwable.printStackTrace()
         onException.invoke(throwable)
+    }
+
+    protected fun <T> MutableStateFlow<BaseScreenState<T>>.loadWithStateHandling(
+        block: suspend () -> T
+    ) {
+        launch(createExceptionHandler { value = BaseScreenState.Error() }) {
+            value = BaseScreenState.Loading()
+            value = BaseScreenState.Loaded(block())
+        }
     }
 
     override fun onCleared() {

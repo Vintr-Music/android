@@ -4,7 +4,7 @@ import pw.vintr.music.data.library.dto.track.TrackFormatDto
 import pw.vintr.music.tools.format.DurationFormat
 
 data class TrackFormatModel(
-    val bitrate: Int,
+    val bitrate: Double,
     val codec: String,
     val codecProfile: String,
     val container: String,
@@ -20,13 +20,13 @@ data class TrackFormatModel(
 
 fun TrackFormatDto.toModel() = TrackFormatModel(
     bitrate,
-    codec,
-    codecProfile,
-    container,
+    codec.orEmpty(),
+    codecProfile.orEmpty(),
+    container.orEmpty(),
     duration,
     lossless,
     numberOfChannels,
     sampleRate,
-    tagTypes,
-    tool
+    tagTypes.orEmpty(),
+    tool.orEmpty(),
 )

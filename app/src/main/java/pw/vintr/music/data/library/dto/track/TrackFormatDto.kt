@@ -4,13 +4,13 @@ import com.google.gson.annotations.SerializedName
 
 data class TrackFormatDto(
     @SerializedName("bitrate")
-    val bitrate: Int,
+    val bitrate: Double,
     @SerializedName("codec")
-    val codec: String,
+    val codec: String?,
     @SerializedName("codecProfile")
-    val codecProfile: String,
+    val codecProfile: String?,
     @SerializedName("container")
-    val container: String,
+    val container: String?,
     @SerializedName("duration")
     val duration: Double,
     @SerializedName("lossless")
@@ -20,7 +20,7 @@ data class TrackFormatDto(
     @SerializedName("sampleRate")
     val sampleRate: Int,
     @SerializedName("tagTypes")
-    val tagTypes: List<String>,
+    val tagTypes: List<String>?,
     @SerializedName("tool")
-    val tool: String
+    val tool: String?
 )

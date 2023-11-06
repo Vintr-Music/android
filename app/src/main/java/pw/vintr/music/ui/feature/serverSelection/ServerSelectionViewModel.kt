@@ -2,7 +2,6 @@ package pw.vintr.music.ui.feature.serverSelection
 
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.launch
 import pw.vintr.music.domain.server.model.ServerModel
 import pw.vintr.music.domain.server.useCase.GetServerListUseCase
 import pw.vintr.music.domain.server.useCase.SelectServerUseCase
@@ -28,15 +27,8 @@ class ServerSelectionViewModel(
     }
 
     private fun loadServers() {
-        launch(createExceptionHandler {
-            _screenState.value = BaseScreenState.Error()
-        }) {
-            _screenState.value = BaseScreenState.Loading()
-            _screenState.value = BaseScreenState.Loaded(
-                ServerSelectionScreenData(
-                    servers = getServerListUseCase.invoke(),
-                )
-            )
+        _screenState.loadWithStateHandling {
+            ServerSelectionScreenData(servers = getServerListUseCase.invoke())
         }
     }
 

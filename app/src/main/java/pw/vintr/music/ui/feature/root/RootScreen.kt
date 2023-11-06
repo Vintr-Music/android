@@ -22,7 +22,10 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import org.koin.androidx.compose.getViewModel
 import org.koin.compose.rememberKoinInject
+import pw.vintr.music.domain.library.model.album.AlbumModel
 import pw.vintr.music.tools.composable.StatusBarEffect
+import pw.vintr.music.tools.extension.getRequiredArg
+import pw.vintr.music.ui.feature.albumDetails.AlbumDetailsScreen
 import pw.vintr.music.ui.feature.home.HomeScreen
 import pw.vintr.music.ui.feature.library.LibraryScreen
 import pw.vintr.music.ui.feature.menu.MenuScreen
@@ -123,5 +126,13 @@ fun TabNavigation(
         composable(Screen.Library.route) { LibraryScreen() }
         composable(Screen.Menu.route) { MenuScreen() }
         composable(Screen.Settings.route) { SettingsScreen() }
+        composable(Screen.AlbumDetails.route) {entry ->
+            val album = entry.arguments.getRequiredArg(
+                Screen.AlbumDetails.ARG_KEY_ALBUM,
+                AlbumModel::class.java
+            )
+
+            AlbumDetailsScreen(album = album)
+        }
     }
 }

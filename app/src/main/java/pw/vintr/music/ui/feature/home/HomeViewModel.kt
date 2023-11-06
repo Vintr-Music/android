@@ -2,12 +2,13 @@ package pw.vintr.music.ui.feature.home
 
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.launch
+import pw.vintr.music.domain.library.model.album.AlbumModel
 import pw.vintr.music.domain.mainPage.model.MainPageItemModel
 import pw.vintr.music.domain.mainPage.model.MainPageWelcomeModel
 import pw.vintr.music.domain.mainPage.useCase.GetMainPageContentUseCase
 import pw.vintr.music.ui.base.BaseScreenState
 import pw.vintr.music.ui.base.BaseViewModel
+import pw.vintr.music.ui.navigation.Screen
 
 class HomeViewModel(
     private val getMainPageContentUseCase: GetMainPageContentUseCase
@@ -24,17 +25,16 @@ class HomeViewModel(
     }
 
     private fun loadData() {
-        launch(createExceptionHandler {
-            _screenState.value = BaseScreenState.Error()
-        }) {
-            _screenState.value = BaseScreenState.Loading()
-            _screenState.value = BaseScreenState.Loaded(
-                HomeScreenData(
-                    welcome = MainPageWelcomeModel.getByNowTime(),
-                    items = getMainPageContentUseCase.invoke(),
-                )
+        _screenState.loadWithStateHandling {
+            HomeScreenData(
+                welcome = MainPageWelcomeModel.getByNowTime(),
+                items = getMainPageContentUseCase.invoke(),
             )
         }
+    }
+
+    fun onAlbumClick(album: AlbumModel) {
+        navigator.forward(Screen.AlbumDetails, Screen.AlbumDetails.arguments(album))
     }
 }
 

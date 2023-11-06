@@ -3,6 +3,7 @@ package pw.vintr.music.app.di
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 import pw.vintr.music.app.main.MainViewModel
+import pw.vintr.music.ui.feature.albumDetails.AlbumDetailsViewModel
 import pw.vintr.music.ui.feature.home.HomeViewModel
 import pw.vintr.music.ui.feature.login.LoginViewModel
 import pw.vintr.music.ui.feature.menu.MenuViewModel
@@ -24,4 +25,5 @@ val uiModule = module {
     viewModel { HomeViewModel(get()) }
     viewModel { MenuViewModel(get()) }
     viewModel { SettingsViewModel() }
+    viewModel { params -> AlbumDetailsViewModel(params.get(), get()) }
 }

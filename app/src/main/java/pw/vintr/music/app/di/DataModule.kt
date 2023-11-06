@@ -16,6 +16,8 @@ import io.ktor.http.HttpHeaders
 import io.ktor.serialization.gson.gson
 import okhttp3.OkHttpClient
 import org.koin.dsl.module
+import pw.vintr.music.data.library.repository.TrackRepository
+import pw.vintr.music.data.library.source.TrackRemoteDataSource
 import pw.vintr.music.data.mainPage.repository.MainPageRepository
 import pw.vintr.music.data.mainPage.source.MainPageRemoteDataSource
 import pw.vintr.music.data.server.repository.ServerRepository
@@ -115,4 +117,8 @@ val dataModule = module {
     // Main Page
     single { MainPageRemoteDataSource(get()) }
     single { MainPageRepository(get()) }
+
+    // Library
+    single { TrackRemoteDataSource(get()) }
+    single { TrackRepository(get()) }
 }

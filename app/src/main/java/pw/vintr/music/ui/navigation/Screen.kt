@@ -1,7 +1,10 @@
 package pw.vintr.music.ui.navigation
 
 import android.os.Parcelable
+import androidx.core.os.bundleOf
+import kotlinx.parcelize.IgnoredOnParcel
 import kotlinx.parcelize.Parcelize
+import pw.vintr.music.domain.library.model.album.AlbumModel
 
 @Parcelize
 sealed class Screen(val route: String) : Parcelable {
@@ -23,4 +26,12 @@ sealed class Screen(val route: String) : Parcelable {
     object Menu : Screen(route = "menu")
 
     object Settings : Screen(route = "settings")
+
+    object AlbumDetails : Screen(route = "album-details") {
+
+        @IgnoredOnParcel
+        const val ARG_KEY_ALBUM = "arg-key-album"
+
+        fun arguments(album: AlbumModel) = bundleOf(ARG_KEY_ALBUM to album)
+    }
 }

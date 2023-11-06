@@ -133,6 +133,7 @@ fun CollapsingLayout(
             toolbarPlaceable.width,
             bodyPlaceableList.maxOfOrNull { it.width } ?: 0
         ).coerceIn(constraints.minWidth, constraints.maxWidth)
+
         val height = max(
             toolbarHeight,
             bodyPlaceableList.maxOfOrNull { it.height } ?: 0
