@@ -13,10 +13,13 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import pw.vintr.music.R
+import pw.vintr.music.tools.extension.Empty
 import pw.vintr.music.ui.kit.button.SimpleIconButton
 import pw.vintr.music.ui.theme.Bee1
 import pw.vintr.music.ui.theme.Gilroy18
@@ -25,11 +28,13 @@ import pw.vintr.music.ui.theme.VintrMusicExtendedTheme
 @Composable
 fun ToolbarRegular(
     modifier: Modifier = Modifier,
-    title: String,
+    title: String = String.Empty,
+    titleOpacity: Float = 1f,
     showBackButton: Boolean = true,
     onBackPressed: () -> Unit,
     paddingValues: PaddingValues = PaddingValues(horizontal = 16.dp),
     backButtonColor: Color = Bee1,
+    center: @Composable (BoxScope.() -> Unit)? = null,
     trailing: @Composable BoxScope.() -> Unit = { },
 ) {
     Row(
@@ -54,14 +59,26 @@ fun ToolbarRegular(
         } else {
             Box(modifier = Modifier.size(24.dp))
         }
-        Text(
-            modifier = Modifier.weight(1f),
-            text = title,
-            textAlign = TextAlign.Center,
-            maxLines = 1,
-            style = Gilroy18,
-            color = VintrMusicExtendedTheme.colors.textRegular,
-        )
+        if (center != null) {
+            Box(
+                modifier = Modifier.weight(1f),
+                contentAlignment = Alignment.Center
+            ) {
+                center()
+            }
+        } else {
+            Text(
+                modifier = Modifier
+                    .weight(1f)
+                    .alpha(titleOpacity),
+                text = title,
+                textAlign = TextAlign.Center,
+                maxLines = 1,
+                style = Gilroy18,
+                color = VintrMusicExtendedTheme.colors.textRegular,
+                overflow = TextOverflow.Ellipsis,
+            )
+        }
         Box(modifier = Modifier.size(24.dp)) {
             trailing()
         }

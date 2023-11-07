@@ -1,6 +1,10 @@
 package pw.vintr.music.tools.format
 
+import java.text.DecimalFormat
+
 object DurationFormat {
+
+    private val secondsFormat = DecimalFormat("00")
 
     fun formatSeconds(seconds: Long) = format(millis = seconds * 1000)
 
@@ -17,16 +21,16 @@ object DurationFormat {
 
         return when {
             days > 0 -> {
-                "$days:$hours:$minutes:$seconds"
+                "$days:$hours:$minutes:${secondsFormat.format(seconds)}"
             }
             hours > 0 -> {
-                "$hours:$minutes:$seconds"
+                "$hours:$minutes:${secondsFormat.format(seconds)}"
             }
             minutes > 0 -> {
-                "$minutes:$seconds"
+                "$minutes:${secondsFormat.format(seconds)}"
             }
             else -> {
-                "0:$seconds"
+                "0:${secondsFormat.format(seconds)}"
             }
         }
     }

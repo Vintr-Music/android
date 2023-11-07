@@ -5,6 +5,8 @@ import kotlinx.coroutines.flow.asStateFlow
 import pw.vintr.music.domain.library.model.album.AlbumModel
 import pw.vintr.music.domain.library.model.track.TrackModel
 import pw.vintr.music.domain.library.useCase.GetAlbumTracksUseCase
+import pw.vintr.music.tools.extension.Comma
+import pw.vintr.music.tools.extension.Space
 import pw.vintr.music.ui.base.BaseScreenState
 import pw.vintr.music.ui.base.BaseViewModel
 
@@ -39,4 +41,10 @@ class AlbumDetailsViewModel(
 data class AlbumDetailsScreenData(
     val album: AlbumModel,
     val tracks: List<TrackModel>,
-)
+) {
+    val title = album.name
+
+    val subtitle = listOf(album.artist, album.year?.toString().orEmpty())
+        .filter { it.isNotEmpty() }
+        .joinToString(separator = String.Comma + String.Space)
+}
