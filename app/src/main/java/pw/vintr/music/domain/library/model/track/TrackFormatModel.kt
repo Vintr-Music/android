@@ -1,8 +1,12 @@
 package pw.vintr.music.domain.library.model.track
 
+import android.os.Parcelable
+import kotlinx.parcelize.IgnoredOnParcel
+import kotlinx.parcelize.Parcelize
 import pw.vintr.music.data.library.dto.track.TrackFormatDto
 import pw.vintr.music.tools.format.DurationFormat
 
+@Parcelize
 data class TrackFormatModel(
     val bitrate: Double,
     val codec: String,
@@ -14,7 +18,8 @@ data class TrackFormatModel(
     val sampleRate: Int,
     val tagTypes: List<String>,
     val tool: String
-) {
+) : Parcelable {
+    @IgnoredOnParcel
     val durationFormat = DurationFormat.formatSeconds(duration.toLong())
 }
 

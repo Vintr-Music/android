@@ -10,7 +10,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -44,6 +44,8 @@ fun AlbumDetailsScreen(
     viewModel: AlbumDetailsViewModel = getViewModel { parametersOf(album) }
 ) {
     val screenState = viewModel.screenState.collectAsState()
+    val albumPlayingState = viewModel.albumPlayingState.collectAsState()
+
     val collapsingLayoutState = rememberCollapsingLayoutState()
     val listState = rememberLazyListState()
 
@@ -115,6 +117,7 @@ fun AlbumDetailsScreen(
                                 .padding(top = 20.dp, bottom = 4.dp),
                         ) {
                             val horizontalBias = -collapsingLayoutState.toolbarState.progress
+                            val isPlaying = albumPlayingState.value is AlbumPlayingState.Playing
 
                             ButtonPlayerState(
                                 modifier = Modifier.align(
@@ -123,13 +126,17 @@ fun AlbumDetailsScreen(
                                         verticalBias = 0f
                                     )
                                 ),
+                                isPlaying = isPlaying,
                                 onClick = { viewModel.playAlbum() }
                             )
                         }
                     }
 
-                    items(screenData.tracks) {
-                        TrackView(trackModel = it)
+                    itemsIndexed(screenData.tracks) { index, track ->
+                        TrackView(
+                            trackModel = track,
+                            onClick = { viewModel.playAlbum(index) }
+                        )
                     }
                 }
             }

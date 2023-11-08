@@ -6,7 +6,10 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.cancel
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent
@@ -38,6 +41,12 @@ abstract class BaseViewModel : ViewModel(), CoroutineScope, KoinComponent {
             value = BaseScreenState.Loaded(block())
         }
     }
+
+    protected fun <T> Flow<T>.stateInThis(initialValue: T) = stateIn(
+        scope = this@BaseViewModel,
+        started = SharingStarted.Lazily,
+        initialValue = initialValue,
+    )
 
     override fun onCleared() {
         if (isActive) cancel()
