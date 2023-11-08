@@ -54,12 +54,13 @@ android {
 }
 
 dependencies {
-    val navigationVersion = "2.7.4"
+    val navigationVersion = "2.7.5"
     val accompanistVersion = "0.32.0"
     val ktorVersion = "2.3.5"
     val koinVersion = "3.5.0"
     val preferenceVersion = "1.2.1"
     val coilVersion = "2.4.0"
+    val media3Version = "1.1.1"
 
     // Common Android
     implementation("androidx.core:core-ktx:1.12.0")
@@ -99,4 +100,9 @@ dependencies {
 
     // Coil
     implementation("io.coil-kt:coil-compose:$coilVersion")
+
+    // Media 3
+    implementation("androidx.media3:media3-session:$media3Version")
+    implementation("androidx.media3:media3-exoplayer:$media3Version")
+    implementation("androidx.media3:media3-datasource-okhttp:$media3Version")
 }

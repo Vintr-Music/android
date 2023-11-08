@@ -5,14 +5,17 @@ import kotlinx.coroutines.flow.asStateFlow
 import pw.vintr.music.domain.library.model.album.AlbumModel
 import pw.vintr.music.domain.library.model.track.TrackModel
 import pw.vintr.music.domain.library.useCase.GetAlbumTracksUseCase
+import pw.vintr.music.domain.player.useCase.PlayerUseCase
 import pw.vintr.music.tools.extension.Comma
 import pw.vintr.music.tools.extension.Space
+import pw.vintr.music.tools.extension.withLoaded
 import pw.vintr.music.ui.base.BaseScreenState
 import pw.vintr.music.ui.base.BaseViewModel
 
 class AlbumDetailsViewModel(
-    val album: AlbumModel,
+    private val album: AlbumModel,
     private val getAlbumTracksUseCase: GetAlbumTracksUseCase,
+    private val playerUseCase: PlayerUseCase,
 ) : BaseViewModel() {
 
     private val _screenState = MutableStateFlow<BaseScreenState<AlbumDetailsScreenData>>(
@@ -35,6 +38,10 @@ class AlbumDetailsViewModel(
                 )
             )
         }
+    }
+
+    fun playAlbum() {
+        _screenState.withLoaded { playerUseCase.invokePlay(it.tracks) }
     }
 }
 

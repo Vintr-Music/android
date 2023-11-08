@@ -25,5 +25,5 @@ val uiModule = module {
     viewModel { HomeViewModel(get()) }
     viewModel { MenuViewModel(get()) }
     viewModel { SettingsViewModel() }
-    viewModel { params -> AlbumDetailsViewModel(params.get(), get()) }
+    viewModel { params -> AlbumDetailsViewModel(params.get(), get(), get()) }
 }

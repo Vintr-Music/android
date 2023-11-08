@@ -122,7 +122,8 @@ fun AlbumDetailsScreen(
                                         horizontalBias = horizontalBias,
                                         verticalBias = 0f
                                     )
-                                )
+                                ),
+                                onClick = { viewModel.playAlbum() }
                             )
                         }
                     }

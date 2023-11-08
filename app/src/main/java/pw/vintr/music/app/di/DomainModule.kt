@@ -1,8 +1,10 @@
 package pw.vintr.music.app.di
 
+import org.koin.android.ext.koin.androidContext
 import org.koin.dsl.module
 import pw.vintr.music.domain.library.useCase.GetAlbumTracksUseCase
 import pw.vintr.music.domain.mainPage.useCase.GetMainPageContentUseCase
+import pw.vintr.music.domain.player.useCase.PlayerUseCase
 import pw.vintr.music.domain.server.useCase.GetSelectedServerIdUseCase
 import pw.vintr.music.domain.server.useCase.GetServerListUseCase
 import pw.vintr.music.domain.server.useCase.SelectServerUseCase
@@ -21,4 +23,6 @@ val domainModule = module {
 
     single { GetMainPageContentUseCase(get()) }
     single { GetAlbumTracksUseCase(get()) }
+
+    single { PlayerUseCase(androidContext()) }
 }
