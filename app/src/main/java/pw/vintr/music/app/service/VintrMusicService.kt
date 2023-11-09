@@ -1,16 +1,27 @@
 package pw.vintr.music.app.service
 
+import android.app.PendingIntent
+import android.content.Intent
+import androidx.media3.common.AudioAttributes
+import androidx.media3.common.C
 import androidx.media3.common.util.UnstableApi
 import androidx.media3.datasource.okhttp.OkHttpDataSource
 import androidx.media3.exoplayer.ExoPlayer
 import androidx.media3.exoplayer.source.DefaultMediaSourceFactory
+import androidx.media3.session.DefaultMediaNotificationProvider
 import androidx.media3.session.MediaSession
 import androidx.media3.session.MediaSessionService
 import okhttp3.OkHttpClient
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
+import pw.vintr.music.R
+import pw.vintr.music.app.main.MainActivity
 
 class VintrMusicService : MediaSessionService(), KoinComponent {
+
+    companion object {
+        const val OPEN_APP_REQUEST_CODE = 10768
+    }
 
     private var mediaSession: MediaSession? = null
 
@@ -26,12 +37,38 @@ class VintrMusicService : MediaSessionService(), KoinComponent {
     override fun  onCreate() {
         super.onCreate()
 
+        // Notification init
+        val notificationProvider = DefaultMediaNotificationProvider
+            .Builder(applicationContext)
+            .build()
+
+        notificationProvider.setSmallIcon(R.drawable.ic_media_notification)
+        setMediaNotificationProvider(notificationProvider)
+
+        // Player init
         val dataSource = OkHttpDataSource.Factory(okHttpClient)
         val player = ExoPlayer.Builder(this)
             .setMediaSourceFactory(DefaultMediaSourceFactory(dataSource))
+            .setAudioAttributes(
+                AudioAttributes.Builder()
+                    .setUsage(C.USAGE_MEDIA)
+                    .setContentType(C.AUDIO_CONTENT_TYPE_MUSIC)
+                    .build(),
+                true,
+            )
             .build()
 
-        mediaSession = MediaSession.Builder(this, player).build()
+        // Media session init
+        mediaSession = MediaSession.Builder(this, player)
+            .setSessionActivity(
+                PendingIntent.getActivity(
+                    this,
+                    OPEN_APP_REQUEST_CODE,
+                    Intent(this, MainActivity::class.java),
+                    PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+                )
+            )
+            .build()
     }
 
     // Remember to release the player and media session in onDestroy
