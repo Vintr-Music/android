@@ -5,6 +5,8 @@ import org.koin.dsl.module
 import pw.vintr.music.app.main.MainViewModel
 import pw.vintr.music.ui.feature.albumDetails.AlbumDetailsViewModel
 import pw.vintr.music.ui.feature.home.HomeViewModel
+import pw.vintr.music.ui.feature.library.LibraryViewModel
+import pw.vintr.music.ui.feature.library.artistList.ArtistListViewModel
 import pw.vintr.music.ui.feature.login.LoginViewModel
 import pw.vintr.music.ui.feature.menu.MenuViewModel
 import pw.vintr.music.ui.feature.register.RegisterViewModel
@@ -23,6 +25,8 @@ val uiModule = module {
 
     viewModel { RootViewModel() }
     viewModel { HomeViewModel(get()) }
+    viewModel { LibraryViewModel() }
+    viewModel { ArtistListViewModel(get()) }
     viewModel { MenuViewModel(get()) }
     viewModel { SettingsViewModel() }
     viewModel { params -> AlbumDetailsViewModel(params.get(), get(), get()) }

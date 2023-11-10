@@ -18,4 +18,8 @@
     <string name="welcome_title_morning">Доброе утро</string>
     <string name="welcome_title_day">Добрый день</string>
     <string name="welcome_title_evening">Добрый вечер</string>
+
+    <string name="library">Медиатека</string>
+    <string name="library_artists">Исполнители</string>
+    <string name="library_albums">Альбомы</string>
 </resources>

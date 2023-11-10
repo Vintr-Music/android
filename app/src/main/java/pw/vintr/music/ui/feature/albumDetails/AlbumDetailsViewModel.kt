@@ -53,7 +53,7 @@ class AlbumDetailsViewModel(
             AlbumDetailsScreenData(
                 album = album,
                 tracks = getAlbumTracksUseCase.invoke(
-                    artist = album.artist,
+                    artist = album.artist.name,
                     album = album.name
                 )
             )
@@ -71,7 +71,7 @@ data class AlbumDetailsScreenData(
 ) {
     val title = album.name
 
-    val subtitle = listOf(album.artist, album.year?.toString().orEmpty())
+    val subtitle = listOf(album.artist.name, album.year?.toString().orEmpty())
         .filter { it.isNotEmpty() }
         .joinToString(separator = String.Comma + String.Space)
 }

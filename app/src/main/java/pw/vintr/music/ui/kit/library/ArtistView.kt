@@ -8,27 +8,26 @@ import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import coil.size.Size
-import pw.vintr.music.domain.library.model.album.AlbumModel
-import pw.vintr.music.tools.extension.Comma
-import pw.vintr.music.tools.extension.Space
-import pw.vintr.music.ui.theme.Gilroy14
+import pw.vintr.music.domain.library.model.artist.ArtistModel
 import pw.vintr.music.ui.theme.Gilroy16
 import pw.vintr.music.ui.theme.VintrMusicExtendedTheme
 
 @Composable
-fun AlbumView(
+fun ArtistView(
     modifier: Modifier = Modifier,
-    album: AlbumModel,
+    artist: ArtistModel,
     onClick: () -> Unit = {},
 ) {
     Column(
@@ -40,12 +39,12 @@ fun AlbumView(
             modifier = Modifier
                 .fillMaxWidth()
                 .aspectRatio(ratio = 1f)
-                .clip(RoundedCornerShape(4.dp)),
+                .clip(CircleShape),
         ) {
             AsyncImage(
                 modifier = Modifier.fillMaxSize(),
                 model = ImageRequest.Builder(LocalContext.current)
-                    .data(album.artworkUrl)
+                    .data(artist.artworkUrl)
                     .size(Size.ORIGINAL)
                     .crossfade(enable = true)
                     .build(),
@@ -54,22 +53,11 @@ fun AlbumView(
         }
         Spacer(modifier = Modifier.height(10.dp))
         Text(
-            text = album.name,
+            modifier = Modifier.fillMaxWidth(),
+            text = artist.name,
             style = Gilroy16,
-            color = VintrMusicExtendedTheme.colors.textRegular
-        )
-        Spacer(modifier = Modifier.height(4.dp))
-        Text(
-            text = buildString {
-                append(album.artist.name)
-
-                album.year?.let { year ->
-                    append(String.Comma + String.Space)
-                    append(year.toString())
-                }
-            },
-            style = Gilroy14,
-            color = VintrMusicExtendedTheme.colors.textSecondary
+            color = VintrMusicExtendedTheme.colors.textRegular,
+            textAlign = TextAlign.Center
         )
     }
 }

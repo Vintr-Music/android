@@ -20,4 +20,8 @@
     <string name="welcome_title_morning">Good morning</string>
     <string name="welcome_title_day">Good afternoon</string>
     <string name="welcome_title_evening">Good evening</string>
+
+    <string name="library">Library</string>
+    <string name="library_artists">Artists</string>
+    <string name="library_albums">Albums</string>
 </resources>
