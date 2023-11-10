@@ -1,5 +1,6 @@
 package pw.vintr.music.ui.kit.toolbar.collapsing
 
+import android.os.Bundle
 import androidx.compose.foundation.gestures.ScrollableDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
@@ -29,25 +30,31 @@ class CollapsingLayoutState(
     internal val offsetYState = mutableIntStateOf(initialOffsetY)
 }
 
-private class CollapsingToolbarScaffoldStateSaver: Saver<CollapsingLayoutState, List<Any>> {
-    override fun restore(value: List<Any>): CollapsingLayoutState =
+private class CollapsingToolbarLayoutStateSaver: Saver<CollapsingLayoutState, Bundle> {
+    override fun restore(value: Bundle): CollapsingLayoutState =
         CollapsingLayoutState(
-            CollapsingToolbarState(value[0] as Int),
-            value[1] as Int
+            CollapsingToolbarState(
+                initialHeight = value.getInt("height", Int.MAX_VALUE),
+                initialMaxHeight = value.getInt("maxHeight", Int.MAX_VALUE),
+                initialMinHeight = value.getInt("minHeight", 0)
+            ),
+            value.getInt("offsetY", 0)
         )
 
-    override fun SaverScope.save(value: CollapsingLayoutState): List<Any> =
-        listOf(
-            value.toolbarState.height,
-            value.offsetY
-        )
+    override fun SaverScope.save(value: CollapsingLayoutState): Bundle =
+        Bundle().apply {
+            putInt("height", value.toolbarState.height)
+            putInt("minHeight", value.toolbarState.minHeight)
+            putInt("maxHeight", value.toolbarState.maxHeight)
+            putInt("offsetY", value.offsetY)
+        }
 }
 
 @Composable
 fun rememberCollapsingLayoutState(
     toolbarState: CollapsingToolbarState = rememberCollapsingToolbarState()
 ): CollapsingLayoutState {
-    return rememberSaveable(toolbarState, saver = CollapsingToolbarScaffoldStateSaver()) {
+    return rememberSaveable(toolbarState, saver = CollapsingToolbarLayoutStateSaver()) {
         CollapsingLayoutState(toolbarState)
     }
 }

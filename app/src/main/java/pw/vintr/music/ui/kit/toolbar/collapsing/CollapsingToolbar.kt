@@ -34,12 +34,14 @@ import kotlin.math.roundToInt
 @Stable
 @Suppress("Unused")
 class CollapsingToolbarState(
-    initial: Int = Int.MAX_VALUE
+    initialHeight: Int = Int.MAX_VALUE,
+    initialMinHeight: Int = 0,
+    initialMaxHeight: Int = Int.MAX_VALUE,
 ): ScrollableState {
     /**
      * [height] indicates current height of the toolbar.
      */
-    var height: Int by mutableIntStateOf(initial)
+    var height: Int by mutableIntStateOf(initialHeight)
         private set
 
     /**
@@ -72,8 +74,8 @@ class CollapsingToolbarState(
             }
         }
 
-    private var maxHeightState by mutableIntStateOf(Int.MAX_VALUE)
-    private var minHeightState by mutableIntStateOf(0)
+    private var maxHeightState by mutableIntStateOf(initialMaxHeight)
+    private var minHeightState by mutableIntStateOf(initialMinHeight)
 
     val progress: Float
         @FloatRange(from = 0.0, to = 1.0)
@@ -155,11 +157,11 @@ class CollapsingToolbarState(
 
 @Composable
 fun rememberCollapsingToolbarState(
-    initial: Int = Int.MAX_VALUE
+    initialHeight: Int = Int.MAX_VALUE
 ): CollapsingToolbarState {
     return remember {
         CollapsingToolbarState(
-            initial = initial
+            initialHeight = initialHeight
         )
     }
 }
