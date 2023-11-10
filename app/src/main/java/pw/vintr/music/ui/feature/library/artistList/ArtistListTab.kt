@@ -32,7 +32,7 @@ fun ArtistListTab(
             items(artistList) { artist ->
                 ArtistView(
                     artist = artist,
-                    onClick = {  }
+                    onClick = { viewModel.onArtistClick(artist) }
                 )
             }
         }

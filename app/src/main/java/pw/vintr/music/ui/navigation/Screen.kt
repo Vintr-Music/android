@@ -5,6 +5,7 @@ import androidx.core.os.bundleOf
 import kotlinx.parcelize.IgnoredOnParcel
 import kotlinx.parcelize.Parcelize
 import pw.vintr.music.domain.library.model.album.AlbumModel
+import pw.vintr.music.domain.library.model.artist.ArtistModel
 
 @Parcelize
 sealed class Screen(val route: String) : Parcelable {
@@ -33,5 +34,13 @@ sealed class Screen(val route: String) : Parcelable {
         const val ARG_KEY_ALBUM = "arg-key-album"
 
         fun arguments(album: AlbumModel) = bundleOf(ARG_KEY_ALBUM to album)
+    }
+
+    object ArtistDetails : Screen(route = "artist-details") {
+
+        @IgnoredOnParcel
+        const val ARG_KEY_ARTIST = "arg-key-artist"
+
+        fun arguments(artist: ArtistModel) = bundleOf(ARG_KEY_ARTIST to artist)
     }
 }

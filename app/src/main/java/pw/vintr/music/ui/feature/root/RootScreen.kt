@@ -23,9 +23,11 @@ import androidx.navigation.compose.rememberNavController
 import org.koin.androidx.compose.getViewModel
 import org.koin.compose.rememberKoinInject
 import pw.vintr.music.domain.library.model.album.AlbumModel
+import pw.vintr.music.domain.library.model.artist.ArtistModel
 import pw.vintr.music.tools.composable.StatusBarEffect
 import pw.vintr.music.tools.extension.getRequiredArg
 import pw.vintr.music.ui.feature.albumDetails.AlbumDetailsScreen
+import pw.vintr.music.ui.feature.artistDetails.ArtistDetailsScreen
 import pw.vintr.music.ui.feature.home.HomeScreen
 import pw.vintr.music.ui.feature.library.LibraryScreen
 import pw.vintr.music.ui.feature.menu.MenuScreen
@@ -133,6 +135,14 @@ fun TabNavigation(
             )
 
             AlbumDetailsScreen(album = album)
+        }
+        composable(Screen.ArtistDetails.route) {entry ->
+            val artist = entry.arguments.getRequiredArg(
+                Screen.ArtistDetails.ARG_KEY_ARTIST,
+                ArtistModel::class.java
+            )
+
+            ArtistDetailsScreen(artist = artist)
         }
     }
 }

@@ -6,6 +6,7 @@ import pw.vintr.music.domain.library.model.artist.ArtistModel
 import pw.vintr.music.domain.library.useCase.GetArtistListUseCase
 import pw.vintr.music.ui.base.BaseScreenState
 import pw.vintr.music.ui.base.BaseViewModel
+import pw.vintr.music.ui.navigation.Screen
 
 class ArtistListViewModel(
     private val getArtistListUseCase: GetArtistListUseCase
@@ -23,5 +24,9 @@ class ArtistListViewModel(
 
     private fun loadData() {
         _screenState.loadWithStateHandling { getArtistListUseCase.invoke() }
+    }
+
+    fun onArtistClick(artist: ArtistModel) {
+        navigator.forward(Screen.ArtistDetails, Screen.ArtistDetails.arguments(artist))
     }
 }
