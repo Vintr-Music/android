@@ -1,7 +1,11 @@
 package pw.vintr.music.app.service
 
 import android.app.PendingIntent
+import android.content.BroadcastReceiver
+import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
+import android.media.AudioManager
 import androidx.media3.common.AudioAttributes
 import androidx.media3.common.C
 import androidx.media3.common.util.UnstableApi
@@ -26,6 +30,10 @@ class VintrMusicService : MediaSessionService(), KoinComponent {
     private var mediaSession: MediaSession? = null
 
     private val okHttpClient: OkHttpClient by inject()
+
+    private val noisyAudioStreamReceiver = BecomingNoisyReceiver()
+
+    private val noisyAudioIntentFilter = IntentFilter(AudioManager.ACTION_AUDIO_BECOMING_NOISY)
 
     // If desired, validate the controller before returning the media session
     override fun onGetSession(
@@ -69,6 +77,9 @@ class VintrMusicService : MediaSessionService(), KoinComponent {
                 )
             )
             .build()
+
+        // Noisy audio detection
+        registerReceiver(noisyAudioStreamReceiver, noisyAudioIntentFilter)
     }
 
     // Remember to release the player and media session in onDestroy
@@ -78,6 +89,16 @@ class VintrMusicService : MediaSessionService(), KoinComponent {
             release()
             mediaSession = null
         }
+        unregisterReceiver(noisyAudioStreamReceiver)
         super.onDestroy()
+    }
+
+    inner class BecomingNoisyReceiver : BroadcastReceiver() {
+
+        override fun onReceive(context: Context, intent: Intent) {
+            if (intent.action == AudioManager.ACTION_AUDIO_BECOMING_NOISY) {
+                mediaSession?.player?.pause()
+            }
+        }
     }
 }

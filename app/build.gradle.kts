@@ -61,6 +61,8 @@ dependencies {
     val preferenceVersion = "1.2.1"
     val coilVersion = "2.4.0"
     val media3Version = "1.1.1"
+    val realmVersion = "1.11.0"
+    val realmCoroutinesVersion = "1.7.3"
 
     // Common Android
     implementation("androidx.core:core-ktx:1.12.0")
@@ -105,4 +107,8 @@ dependencies {
     implementation("androidx.media3:media3-session:$media3Version")
     implementation("androidx.media3:media3-exoplayer:$media3Version")
     implementation("androidx.media3:media3-datasource-okhttp:$media3Version")
+
+    // Realm
+    implementation("io.realm.kotlin:library-base:$realmVersion")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$realmCoroutinesVersion")
 }

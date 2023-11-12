@@ -2,6 +2,8 @@ package pw.vintr.music.ui.feature.root
 
 import android.app.Activity
 import androidx.activity.compose.BackHandler
+import androidx.compose.animation.EnterTransition
+import androidx.compose.animation.ExitTransition
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
@@ -60,8 +62,8 @@ fun RootScreen(
             modifier = Modifier.weight(1f),
             navController = navController,
             startDestination = Tab.Home.route,
-            enterTransition = { fadeIn(animationSpec = tween(TRANSITION_DURATION)) },
-            exitTransition = { fadeOut(animationSpec = tween(TRANSITION_DURATION)) }
+            enterTransition = { EnterTransition.None },
+            exitTransition = { ExitTransition.None }
         ) {
             tabs.value.forEach { tab ->
                 composable(tab.route) {
