@@ -1,4 +1,4 @@
-package pw.vintr.music.data.player.dao
+package pw.vintr.music.data.player.cache
 
 import io.realm.kotlin.ext.realmListOf
 import io.realm.kotlin.types.RealmList

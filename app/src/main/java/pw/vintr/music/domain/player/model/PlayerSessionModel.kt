@@ -3,7 +3,7 @@ package pw.vintr.music.domain.player.model
 import io.realm.kotlin.ext.copyFromRealm
 import io.realm.kotlin.ext.realmListOf
 import io.realm.kotlin.ext.toRealmList
-import pw.vintr.music.data.player.dao.PlayerSessionCacheObject
+import pw.vintr.music.data.player.cache.PlayerSessionCacheObject
 import pw.vintr.music.domain.library.model.album.AlbumModel
 import pw.vintr.music.domain.library.model.album.toModel
 import pw.vintr.music.domain.library.model.artist.ArtistModel

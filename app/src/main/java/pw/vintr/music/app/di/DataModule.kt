@@ -29,7 +29,7 @@ import pw.vintr.music.data.library.source.ArtistRemoteDataSource
 import pw.vintr.music.data.library.source.TrackRemoteDataSource
 import pw.vintr.music.data.mainPage.repository.MainPageRepository
 import pw.vintr.music.data.mainPage.source.MainPageRemoteDataSource
-import pw.vintr.music.data.player.dao.PlayerSessionCacheObject
+import pw.vintr.music.data.player.cache.PlayerSessionCacheObject
 import pw.vintr.music.data.player.repository.PlayerSessionRepository
 import pw.vintr.music.data.player.source.PlayerSessionCacheDataStore
 import pw.vintr.music.data.server.repository.ServerRepository

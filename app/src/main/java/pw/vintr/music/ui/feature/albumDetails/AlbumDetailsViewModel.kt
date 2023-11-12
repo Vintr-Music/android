@@ -31,10 +31,13 @@ class AlbumDetailsViewModel(
 
         if (
             it.session is PlayerSessionModel.Album &&
-            it.session.album == album &&
-            isPlaying
+            it.session.album == album
         ) {
-            AlbumPlayingState.Playing(it.currentTrack)
+            if (isPlaying) {
+                AlbumPlayingState.Playing(it.currentTrack)
+            } else {
+                AlbumPlayingState.Paused(it.currentTrack)
+            }
         } else {
             AlbumPlayingState.Idle
         }
@@ -65,6 +68,14 @@ class AlbumDetailsViewModel(
             }
         }
     }
+
+    fun pauseAlbum() {
+        playerInteractor.pause()
+    }
+
+    fun resumeAlbum() {
+        playerInteractor.resume()
+    }
 }
 
 data class AlbumDetailsScreenData(
@@ -79,7 +90,15 @@ data class AlbumDetailsScreenData(
 }
 
 sealed interface AlbumPlayingState {
-    object Idle
 
-    data class Playing(val track: TrackModel?)
+    val playingTrack: TrackModel?
+
+    object Idle : AlbumPlayingState {
+
+        override val playingTrack: TrackModel? = null
+    }
+
+    data class Paused(override val playingTrack: TrackModel?) : AlbumPlayingState
+
+    data class Playing(override val playingTrack: TrackModel?) : AlbumPlayingState
 }

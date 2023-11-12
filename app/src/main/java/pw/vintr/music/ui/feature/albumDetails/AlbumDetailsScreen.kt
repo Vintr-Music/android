@@ -129,18 +129,27 @@ fun AlbumDetailsScreen(
                                     )
                                 ),
                                 isPlaying = isPlaying,
-                                onClick = { viewModel.playAlbum() }
+                                onClick = {
+                                    when (albumState) {
+                                        is AlbumPlayingState.Idle -> {
+                                            viewModel.playAlbum()
+                                        }
+                                        is AlbumPlayingState.Paused -> {
+                                            viewModel.resumeAlbum()
+                                        }
+                                        is AlbumPlayingState.Playing -> {
+                                            viewModel.pauseAlbum()
+                                        }
+                                    }
+                                }
                             )
                         }
                     }
 
                     itemsIndexed(screenData.tracks) { index, track ->
-                        val isPlaying = albumState is AlbumPlayingState.Playing &&
-                                albumState.track == track
-
                         TrackView(
                             trackModel = track,
-                            isPlaying = isPlaying,
+                            isPlaying = albumState.playingTrack == track,
                             onClick = { viewModel.playAlbum(index) }
                         )
                     }

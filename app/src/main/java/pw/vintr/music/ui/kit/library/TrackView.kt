@@ -17,7 +17,6 @@ import androidx.compose.ui.unit.dp
 import pw.vintr.music.R
 import pw.vintr.music.domain.library.model.track.TrackModel
 import pw.vintr.music.ui.kit.button.SimpleIconButton
-import pw.vintr.music.ui.theme.Gray3
 import pw.vintr.music.ui.theme.RubikMedium16
 import pw.vintr.music.ui.theme.RubikRegular14
 import pw.vintr.music.ui.theme.VintrMusicExtendedTheme
@@ -31,7 +30,11 @@ fun TrackView(
     onClick: () -> Unit = {},
 ) {
     val backgroundColor = animateColorAsState(
-        targetValue = if (isPlaying) Gray3.copy(alpha = 0.2f) else Color.Transparent,
+        targetValue = if (isPlaying) {
+            VintrMusicExtendedTheme.colors.trackHightlight
+        } else {
+            Color.Transparent
+        },
         label = "Track background color"
     )
 

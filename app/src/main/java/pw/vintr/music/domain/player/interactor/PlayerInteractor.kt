@@ -46,23 +46,21 @@ class PlayerInteractor(
 
     private var controller: MediaController? = null
 
-    private val _playerStatus = MutableStateFlow(PlayerStatusModel.IDLE)
+    private val playerSnapshotFlow = MutableStateFlow(PlayerSnapshot())
 
     val playerState = combine(
         playerSessionRepository.getPlayerSessionFlow(),
-        _playerStatus,
-    ) { sessionCache, playerStatus ->
+        playerSnapshotFlow,
+    ) { sessionCache, snapshot ->
         val session = sessionCache?.toModel() ?: PlayerSessionModel.Empty
-
-        val mediaId = controller?.currentMediaItem?.mediaId
-        val track = session.tracks.find { it.md5 == mediaId }
+        val track = session.tracks.find { it.md5 == snapshot.mediaId }
 
         PlayerStateHolderModel(
             session = session,
             currentTrack = track,
-            status = playerStatus,
+            status = snapshot.status,
         )
-    }.shareIn(scope = this, started = SharingStarted.Lazily)
+    }.shareIn(scope = this, started = SharingStarted.Lazily, replay = 1)
 
     init {
         controllerFuture.addListener({
@@ -70,29 +68,24 @@ class PlayerInteractor(
 
             controller?.addListener(object : Player.Listener {
                 override fun onEvents(player: Player, events: Player.Events) {
-                    if (
-                        events.contains(Player.EVENT_PLAYBACK_STATE_CHANGED) ||
-                        events.contains(Player.EVENT_PLAY_WHEN_READY_CHANGED)
-                    ) {
-                        onPlayerStateChanged(player)
-                    }
+                    onPlayerEvent(player)
                 }
             })
         }, MoreExecutors.directExecutor())
     }
 
-    private fun onPlayerStateChanged(player: Player) {
+    private fun onPlayerEvent(player: Player) {
         val mediaId = player.currentMediaItem?.mediaId
 
-        _playerStatus.value = when {
+        playerSnapshotFlow.value = when {
             mediaId != null && player.isPlaying -> {
-                PlayerStatusModel.PLAYING
+                PlayerSnapshot(mediaId, PlayerStatusModel.PLAYING)
             }
             mediaId != null -> {
-                PlayerStatusModel.PAUSED
+                PlayerSnapshot(mediaId, PlayerStatusModel.PAUSED)
             }
             else -> {
-                PlayerStatusModel.IDLE
+                PlayerSnapshot(status = PlayerStatusModel.IDLE)
             }
         }
     }
@@ -123,6 +116,10 @@ class PlayerInteractor(
         controller?.pause()
     }
 
+    fun resume() {
+        controller?.play()
+    }
+
     private fun TrackModel.toMediaItem() = MediaItem.Builder()
         .setUri(playerUrl)
         .setMediaId(md5)
@@ -132,4 +129,9 @@ class PlayerInteractor(
         if (isActive) cancel()
         MediaController.releaseFuture(controllerFuture)
     }
+
+    data class PlayerSnapshot(
+        val mediaId: String? = null,
+        val status: PlayerStatusModel = PlayerStatusModel.IDLE,
+    )
 }

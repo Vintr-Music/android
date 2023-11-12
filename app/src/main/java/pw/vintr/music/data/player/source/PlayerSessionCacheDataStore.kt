@@ -3,7 +3,7 @@ package pw.vintr.music.data.player.source
 import io.realm.kotlin.Realm
 import io.realm.kotlin.ext.query
 import kotlinx.coroutines.flow.map
-import pw.vintr.music.data.player.dao.PlayerSessionCacheObject
+import pw.vintr.music.data.player.cache.PlayerSessionCacheObject
 
 class PlayerSessionCacheDataStore(private val realm: Realm) {
 
