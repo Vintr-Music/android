@@ -7,15 +7,34 @@ import androidx.media3.common.Player
 import androidx.media3.session.MediaController
 import androidx.media3.session.SessionToken
 import com.google.common.util.concurrent.MoreExecutors
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asSharedFlow
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.shareIn
+import kotlinx.coroutines.isActive
 import pw.vintr.music.app.service.VintrMusicService
+import pw.vintr.music.data.player.repository.PlayerSessionRepository
+import pw.vintr.music.domain.library.model.album.AlbumModel
 import pw.vintr.music.domain.library.model.track.TrackModel
-import pw.vintr.music.domain.player.model.PlayerState
+import pw.vintr.music.domain.player.model.PlayerSessionModel
+import pw.vintr.music.domain.player.model.PlayerStateHolderModel
+import pw.vintr.music.domain.player.model.PlayerStatusModel
+import pw.vintr.music.domain.player.model.toModel
+import java.io.Closeable
 
 class PlayerInteractor(
-    applicationContext: Context
-) {
+    applicationContext: Context,
+    private val playerSessionRepository: PlayerSessionRepository,
+) : CoroutineScope, Closeable {
+
+    private val job = SupervisorJob()
+
+    override val coroutineContext = Dispatchers.Main + job
+
     private val sessionToken = SessionToken(
         applicationContext,
         ComponentName(applicationContext, VintrMusicService::class.java)
@@ -27,9 +46,23 @@ class PlayerInteractor(
 
     private var controller: MediaController? = null
 
-    private val _playerState = MutableStateFlow<PlayerState>(PlayerState.Idle)
+    private val _playerStatus = MutableStateFlow(PlayerStatusModel.IDLE)
 
-    val playerState = _playerState.asSharedFlow()
+    val playerState = combine(
+        playerSessionRepository.getPlayerSessionFlow(),
+        _playerStatus,
+    ) { sessionCache, playerStatus ->
+        val session = sessionCache?.toModel() ?: PlayerSessionModel.Empty
+
+        val mediaId = controller?.currentMediaItem?.mediaId
+        val track = session.tracks.find { it.md5 == mediaId }
+
+        PlayerStateHolderModel(
+            session = session,
+            currentTrack = track,
+            status = playerStatus,
+        )
+    }.shareIn(scope = this, started = SharingStarted.Lazily)
 
     init {
         controllerFuture.addListener({
@@ -41,27 +74,43 @@ class PlayerInteractor(
                         events.contains(Player.EVENT_PLAYBACK_STATE_CHANGED) ||
                         events.contains(Player.EVENT_PLAY_WHEN_READY_CHANGED)
                     ) {
-                        val mediaId = player.currentMediaItem?.mediaId
-
-                        _playerState.value = when {
-                            mediaId != null && player.isPlaying -> {
-                                PlayerState.Playing(trackId = mediaId)
-                            }
-                            mediaId != null -> {
-                                PlayerState.Paused(trackId = mediaId)
-                            }
-                            else -> {
-                                PlayerState.Idle
-                            }
-                        }
+                        onPlayerStateChanged(player)
                     }
                 }
             })
         }, MoreExecutors.directExecutor())
     }
 
-    fun invokePlay(tracks: List<TrackModel>, startIndex: Int = 0) {
+    private fun onPlayerStateChanged(player: Player) {
+        val mediaId = player.currentMediaItem?.mediaId
+
+        _playerStatus.value = when {
+            mediaId != null && player.isPlaying -> {
+                PlayerStatusModel.PLAYING
+            }
+            mediaId != null -> {
+                PlayerStatusModel.PAUSED
+            }
+            else -> {
+                PlayerStatusModel.IDLE
+            }
+        }
+    }
+
+    suspend fun playAlbum(
+        tracks: List<TrackModel>,
+        album: AlbumModel,
+        startIndex: Int = 0
+    ) {
         controller?.stop()
+
+        playerSessionRepository.savePlayerSession(
+            session = PlayerSessionModel.Album(
+                album = album,
+                tracks = tracks
+            ).toCacheObject()
+        )
+
         controller?.setMediaItems(
             tracks.map { it.toMediaItem() },
             startIndex,
@@ -70,7 +119,7 @@ class PlayerInteractor(
         controller?.play()
     }
 
-    fun invokePause() {
+    fun pause() {
         controller?.pause()
     }
 
@@ -78,4 +127,9 @@ class PlayerInteractor(
         .setUri(playerUrl)
         .setMediaId(md5)
         .build()
+
+    override fun close() {
+        if (isActive) cancel()
+        MediaController.releaseFuture(controllerFuture)
+    }
 }

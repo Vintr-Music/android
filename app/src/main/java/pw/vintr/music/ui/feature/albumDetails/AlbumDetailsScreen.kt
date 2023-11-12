@@ -102,6 +102,8 @@ fun AlbumDetailsScreen(
                     )
                 },
             ) {
+                val albumState = albumPlayingState.value
+
                 LazyColumn(
                     modifier = Modifier.fillMaxSize(),
                     contentPadding = PaddingValues(bottom = 28.dp),
@@ -117,7 +119,7 @@ fun AlbumDetailsScreen(
                                 .padding(top = 20.dp, bottom = 4.dp),
                         ) {
                             val horizontalBias = -collapsingLayoutState.toolbarState.progress
-                            val isPlaying = albumPlayingState.value is AlbumPlayingState.Playing
+                            val isPlaying = albumState is AlbumPlayingState.Playing
 
                             ButtonPlayerState(
                                 modifier = Modifier.align(
@@ -133,8 +135,12 @@ fun AlbumDetailsScreen(
                     }
 
                     itemsIndexed(screenData.tracks) { index, track ->
+                        val isPlaying = albumState is AlbumPlayingState.Playing &&
+                                albumState.track == track
+
                         TrackView(
                             trackModel = track,
+                            isPlaying = isPlaying,
                             onClick = { viewModel.playAlbum(index) }
                         )
                     }

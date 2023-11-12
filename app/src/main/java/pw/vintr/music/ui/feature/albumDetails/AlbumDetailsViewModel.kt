@@ -2,12 +2,14 @@ package pw.vintr.music.ui.feature.albumDetails
 
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.launch
 import pw.vintr.music.domain.library.model.album.AlbumModel
 import pw.vintr.music.domain.library.model.track.TrackModel
 import pw.vintr.music.domain.library.useCase.GetAlbumTracksUseCase
 import pw.vintr.music.domain.player.interactor.PlayerInteractor
-import pw.vintr.music.domain.player.model.PlayerState
+import pw.vintr.music.domain.player.model.PlayerSessionModel
+import pw.vintr.music.domain.player.model.PlayerStatusModel
 import pw.vintr.music.tools.extension.Comma
 import pw.vintr.music.tools.extension.Space
 import pw.vintr.music.tools.extension.withLoaded
@@ -24,19 +26,15 @@ class AlbumDetailsViewModel(
         value = BaseScreenState.Loading()
     )
 
-    val albumPlayingState = combine(
-        playerInteractor.playerState,
-        _screenState
-    ) { playerState, screenState ->
-        if (screenState is BaseScreenState.Loaded) {
-            val tracks = screenState.data.tracks
-            val track = tracks.find { playerState.trackId == it.md5 }
+    val albumPlayingState = playerInteractor.playerState.map {
+        val isPlaying = it.status == PlayerStatusModel.PLAYING
 
-            if (track != null && playerState is PlayerState.Playing) {
-                AlbumPlayingState.Playing(track)
-            } else {
-                AlbumPlayingState.Idle
-            }
+        if (
+            it.session is PlayerSessionModel.Album &&
+            it.session.album == album &&
+            isPlaying
+        ) {
+            AlbumPlayingState.Playing(it.currentTrack)
         } else {
             AlbumPlayingState.Idle
         }
@@ -61,7 +59,11 @@ class AlbumDetailsViewModel(
     }
 
     fun playAlbum(startIndex: Int = 0) {
-        _screenState.withLoaded { playerInteractor.invokePlay(it.tracks, startIndex) }
+        launch {
+            _screenState.withLoaded {
+                playerInteractor.playAlbum(it.tracks, album, startIndex)
+            }
+        }
     }
 }
 
@@ -79,5 +81,5 @@ data class AlbumDetailsScreenData(
 sealed interface AlbumPlayingState {
     object Idle
 
-    data class Playing(val track: TrackModel)
+    data class Playing(val track: TrackModel?)
 }

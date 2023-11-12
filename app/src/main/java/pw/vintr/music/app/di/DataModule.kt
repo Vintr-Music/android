@@ -14,8 +14,13 @@ import io.ktor.client.request.header
 import io.ktor.http.ContentType
 import io.ktor.http.HttpHeaders
 import io.ktor.serialization.gson.gson
+import io.realm.kotlin.Realm
+import io.realm.kotlin.RealmConfiguration
 import okhttp3.OkHttpClient
 import org.koin.dsl.module
+import org.koin.dsl.onClose
+import pw.vintr.music.data.library.cache.album.AlbumCacheObject
+import pw.vintr.music.data.library.cache.track.TrackCacheObject
 import pw.vintr.music.data.library.repository.AlbumRepository
 import pw.vintr.music.data.library.repository.ArtistRepository
 import pw.vintr.music.data.library.repository.TrackRepository
@@ -24,6 +29,9 @@ import pw.vintr.music.data.library.source.ArtistRemoteDataSource
 import pw.vintr.music.data.library.source.TrackRemoteDataSource
 import pw.vintr.music.data.mainPage.repository.MainPageRepository
 import pw.vintr.music.data.mainPage.source.MainPageRemoteDataSource
+import pw.vintr.music.data.player.dao.PlayerSessionCacheObject
+import pw.vintr.music.data.player.repository.PlayerSessionRepository
+import pw.vintr.music.data.player.source.PlayerSessionCacheDataStore
 import pw.vintr.music.data.server.repository.ServerRepository
 import pw.vintr.music.data.server.source.ServerPreferencesDataSource
 import pw.vintr.music.data.server.source.ServerRemoteDataSource
@@ -37,12 +45,31 @@ private const val BEARER_PREFIX = "Bearer "
 
 private const val HEADER_MEDIA_SERVER_ID = "x-media-server-id"
 
+private const val REALM_SCHEMA_VERSION = 1L
+
 val dataModule = module {
     // Preferences
     single { PreferenceManager.getDefaultSharedPreferences(get()) }
 
     single { UserPreferencesDataSource(get()) }
     single { ServerPreferencesDataSource(get()) }
+
+    single {
+        val config = RealmConfiguration.Builder(
+            schema = setOf(
+                AlbumCacheObject::class,
+                TrackCacheObject::class,
+                PlayerSessionCacheObject::class,
+            )
+        )
+            .schemaVersion(REALM_SCHEMA_VERSION)
+            .deleteRealmIfMigrationNeeded()
+            .build()
+
+        Realm.open(config)
+    } onClose { realm ->
+        realm?.close()
+    }
 
     // Network
     single {
@@ -129,4 +156,8 @@ val dataModule = module {
     single { ArtistRepository(get()) }
     single { AlbumRemoteDataSource(get()) }
     single { AlbumRepository(get()) }
+
+    // Player
+    single { PlayerSessionCacheDataStore(get()) }
+    single { PlayerSessionRepository(get()) }
 }

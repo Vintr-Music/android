@@ -1,5 +1,7 @@
 package pw.vintr.music.ui.kit.library
 
+import androidx.compose.animation.animateColorAsState
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -10,10 +12,12 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import pw.vintr.music.R
 import pw.vintr.music.domain.library.model.track.TrackModel
 import pw.vintr.music.ui.kit.button.SimpleIconButton
+import pw.vintr.music.ui.theme.Gray3
 import pw.vintr.music.ui.theme.RubikMedium16
 import pw.vintr.music.ui.theme.RubikRegular14
 import pw.vintr.music.ui.theme.VintrMusicExtendedTheme
@@ -22,12 +26,19 @@ import pw.vintr.music.ui.theme.VintrMusicExtendedTheme
 fun TrackView(
     modifier: Modifier = Modifier,
     trackModel: TrackModel,
+    isPlaying: Boolean = false,
     onMoreClick: () -> Unit = {},
     onClick: () -> Unit = {},
 ) {
+    val backgroundColor = animateColorAsState(
+        targetValue = if (isPlaying) Gray3.copy(alpha = 0.2f) else Color.Transparent,
+        label = "Track background color"
+    )
+
     Row(
         modifier = modifier
             .fillMaxWidth()
+            .background(backgroundColor.value)
             .clickable { onClick() }
             .padding(vertical = 4.dp, horizontal = 20.dp),
         horizontalArrangement = Arrangement.spacedBy(8.dp),
