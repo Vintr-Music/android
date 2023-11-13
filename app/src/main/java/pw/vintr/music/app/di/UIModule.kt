@@ -24,7 +24,7 @@ val uiModule = module {
     viewModel { RegisterViewModel() }
     viewModel { ServerSelectionViewModel(get(), get()) }
 
-    viewModel { RootViewModel() }
+    viewModel { RootViewModel(get()) }
     viewModel { HomeViewModel(get()) }
     viewModel { LibraryViewModel() }
     viewModel { ArtistListViewModel(get()) }

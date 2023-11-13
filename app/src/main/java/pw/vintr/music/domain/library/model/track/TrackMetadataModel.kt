@@ -17,6 +17,7 @@ data class TrackMetadataModel(
     val number: Int,
     val year: Int?
 ) : Parcelable {
+
     @IgnoredOnParcel
     val artist = artists.joinToString(separator = String.Comma + String.Space) { it.name }
 }

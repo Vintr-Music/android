@@ -2,6 +2,7 @@ package pw.vintr.music.ui.feature.root
 
 import android.app.Activity
 import androidx.activity.compose.BackHandler
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.EnterTransition
 import androidx.compose.animation.ExitTransition
 import androidx.compose.animation.core.tween
@@ -26,6 +27,7 @@ import org.koin.androidx.compose.getViewModel
 import org.koin.compose.rememberKoinInject
 import pw.vintr.music.domain.library.model.album.AlbumModel
 import pw.vintr.music.domain.library.model.artist.ArtistModel
+import pw.vintr.music.domain.player.model.PlayerStateHolderModel
 import pw.vintr.music.tools.composable.StatusBarEffect
 import pw.vintr.music.tools.extension.getRequiredArg
 import pw.vintr.music.ui.feature.albumDetails.AlbumDetailsScreen
@@ -37,6 +39,7 @@ import pw.vintr.music.ui.feature.search.SearchScreen
 import pw.vintr.music.ui.feature.settings.SettingsScreen
 import pw.vintr.music.ui.kit.navbar.AppNavBarItem
 import pw.vintr.music.ui.kit.navbar.AppNavigationBar
+import pw.vintr.music.ui.kit.player.BottomNowPlaying
 import pw.vintr.music.ui.navigation.Navigator
 import pw.vintr.music.ui.navigation.NavigatorEffect
 import pw.vintr.music.ui.navigation.NavigatorType
@@ -52,6 +55,7 @@ fun RootScreen(
 
     val navController = rememberNavController()
     val tabs = viewModel.bottomTabs.collectAsState()
+    val playerState = viewModel.playerStateFlow.collectAsState()
 
     Column(
         modifier = Modifier
@@ -74,6 +78,10 @@ fun RootScreen(
                 }
             }
         }
+        NowPlaying(
+            state = playerState.value,
+            onControlClick = { viewModel.onNowPlayingControlClick(playerState.value) },
+        )
         AppNavigationBar {
             val navBackStackEntry by navController.currentBackStackEntryAsState()
             val currentDestination = navBackStackEntry?.destination
@@ -146,5 +154,19 @@ fun TabNavigation(
 
             ArtistDetailsScreen(artist = artist)
         }
+    }
+}
+
+@Composable
+private fun NowPlaying(
+    state: PlayerStateHolderModel,
+    onControlClick: () -> Unit,
+) {
+    AnimatedVisibility(visible = state.currentTrack != null) {
+        BottomNowPlaying(
+            track = state.currentTrack,
+            playerStatus = state.status,
+            onControlClick = onControlClick
+        )
     }
 }

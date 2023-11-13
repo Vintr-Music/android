@@ -4,6 +4,9 @@ import androidx.annotation.DrawableRes
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import pw.vintr.music.R
+import pw.vintr.music.domain.player.interactor.PlayerInteractor
+import pw.vintr.music.domain.player.model.PlayerStateHolderModel
+import pw.vintr.music.domain.player.model.PlayerStatusModel
 import pw.vintr.music.ui.base.BaseViewModel
 import pw.vintr.music.ui.navigation.NavigatorType
 import pw.vintr.music.ui.navigation.Screen
@@ -55,7 +58,9 @@ val tabs = listOf(
     Tab.Menu
 )
 
-class RootViewModel : BaseViewModel() {
+class RootViewModel(
+    private val playerInteractor: PlayerInteractor,
+) : BaseViewModel() {
 
     init {
         setNavigatorType(TabNavigator.Home)
@@ -63,7 +68,22 @@ class RootViewModel : BaseViewModel() {
 
     val bottomTabs = MutableStateFlow(tabs).asStateFlow()
 
+    val playerStateFlow = playerInteractor.playerState
+        .stateInThis(PlayerStateHolderModel())
+
     fun setNavigatorType(navigatorType: NavigatorType) {
         navigator.switchNavigatorType(navigatorType)
+    }
+
+    fun onNowPlayingControlClick(state: PlayerStateHolderModel) {
+        when (state.status) {
+            PlayerStatusModel.IDLE,
+            PlayerStatusModel.PAUSED -> {
+                playerInteractor.resume()
+            }
+            PlayerStatusModel.PLAYING -> {
+                playerInteractor.pause()
+            }
+        }
     }
 }
