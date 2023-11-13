@@ -31,7 +31,7 @@ fun TrackView(
 ) {
     val backgroundColor = animateColorAsState(
         targetValue = if (isPlaying) {
-            VintrMusicExtendedTheme.colors.trackHightlight
+            VintrMusicExtendedTheme.colors.trackHighlight
         } else {
             Color.Transparent
         },

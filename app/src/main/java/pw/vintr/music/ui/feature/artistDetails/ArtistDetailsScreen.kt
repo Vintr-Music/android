@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material3.Text
@@ -21,6 +20,7 @@ import org.koin.core.parameter.parametersOf
 import pw.vintr.music.domain.library.model.artist.ArtistModel
 import pw.vintr.music.tools.extension.Empty
 import pw.vintr.music.ui.kit.library.AlbumView
+import pw.vintr.music.ui.kit.library.tools.rememberLibraryGridCells
 import pw.vintr.music.ui.kit.state.ScreenStateHolder
 import pw.vintr.music.ui.kit.toolbar.ToolbarArtwork
 import pw.vintr.music.ui.kit.toolbar.ToolbarRegular
@@ -84,7 +84,7 @@ fun ArtistDetailsScreen(
                 LazyVerticalGrid(
                     modifier = Modifier
                         .fillMaxSize(),
-                    columns = GridCells.Fixed(2),
+                    columns = rememberLibraryGridCells(),
                     verticalArrangement = Arrangement.spacedBy(20.dp),
                     horizontalArrangement = Arrangement.spacedBy(20.dp),
                     contentPadding = PaddingValues(20.dp)

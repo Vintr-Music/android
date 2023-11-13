@@ -4,9 +4,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Text
@@ -21,6 +19,7 @@ import coil.size.Size
 import pw.vintr.music.domain.library.model.album.AlbumModel
 import pw.vintr.music.tools.extension.Comma
 import pw.vintr.music.tools.extension.Space
+import pw.vintr.music.ui.kit.modifier.artworkContainer
 import pw.vintr.music.ui.theme.Gilroy14
 import pw.vintr.music.ui.theme.Gilroy16
 import pw.vintr.music.ui.theme.VintrMusicExtendedTheme
@@ -38,9 +37,7 @@ fun AlbumView(
     ) {
         BoxWithConstraints(
             modifier = Modifier
-                .fillMaxWidth()
-                .aspectRatio(ratio = 1f)
-                .clip(RoundedCornerShape(4.dp)),
+                .artworkContainer(RoundedCornerShape(4.dp)),
         ) {
             AsyncImage(
                 modifier = Modifier.fillMaxSize(),

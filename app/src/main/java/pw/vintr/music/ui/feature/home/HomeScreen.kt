@@ -20,6 +20,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import org.koin.androidx.compose.getViewModel
 import pw.vintr.music.ui.kit.library.AlbumView
+import pw.vintr.music.ui.kit.library.tools.rememberLibraryGridCellsCount
 import pw.vintr.music.ui.kit.state.ScreenStateHolder
 import pw.vintr.music.ui.theme.Gilroy18
 import pw.vintr.music.ui.theme.Gilroy24
@@ -32,6 +33,7 @@ fun HomeScreen(
     viewModel: HomeViewModel = getViewModel()
 ) {
     val screenState = viewModel.screenState.collectAsState()
+    val cellsCount = rememberLibraryGridCellsCount()
 
     Box(
         modifier = Modifier
@@ -45,7 +47,7 @@ fun HomeScreen(
             LazyVerticalGrid(
                 modifier = Modifier
                     .fillMaxSize(),
-                columns = GridCells.Fixed(2),
+                columns = GridCells.Fixed(cellsCount),
                 verticalArrangement = Arrangement.spacedBy(20.dp),
                 horizontalArrangement = Arrangement.spacedBy(20.dp),
                 contentPadding = PaddingValues(20.dp)
@@ -65,7 +67,7 @@ fun HomeScreen(
                 state.items.forEach { item ->
                     item(
                         key = item.artist,
-                        span = { GridItemSpan(currentLineSpan = 2) },
+                        span = { GridItemSpan(currentLineSpan = cellsCount) },
                     ) {
                         Text(
                             text = item.artist,

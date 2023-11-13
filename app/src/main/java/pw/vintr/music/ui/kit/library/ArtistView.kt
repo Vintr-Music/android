@@ -4,7 +4,6 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -21,6 +20,7 @@ import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import coil.size.Size
 import pw.vintr.music.domain.library.model.artist.ArtistModel
+import pw.vintr.music.ui.kit.modifier.artworkContainer
 import pw.vintr.music.ui.theme.Gilroy16
 import pw.vintr.music.ui.theme.VintrMusicExtendedTheme
 
@@ -37,9 +37,7 @@ fun ArtistView(
     ) {
         BoxWithConstraints(
             modifier = Modifier
-                .fillMaxWidth()
-                .aspectRatio(ratio = 1f)
-                .clip(CircleShape),
+                .artworkContainer(CircleShape),
         ) {
             AsyncImage(
                 modifier = Modifier.fillMaxSize(),

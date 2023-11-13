@@ -3,7 +3,6 @@ package pw.vintr.music.ui.feature.library.artistList
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.runtime.Composable
@@ -12,6 +11,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import org.koin.androidx.compose.getViewModel
 import pw.vintr.music.ui.kit.library.ArtistView
+import pw.vintr.music.ui.kit.library.tools.rememberLibraryGridCells
 import pw.vintr.music.ui.kit.state.ScreenStateHolder
 
 @Composable
@@ -24,7 +24,7 @@ fun ArtistListTab(
         LazyVerticalGrid(
             modifier = Modifier
                 .fillMaxSize(),
-            columns = GridCells.Fixed(2),
+            columns = rememberLibraryGridCells(),
             verticalArrangement = Arrangement.spacedBy(20.dp),
             horizontalArrangement = Arrangement.spacedBy(20.dp),
             contentPadding = PaddingValues(20.dp)
