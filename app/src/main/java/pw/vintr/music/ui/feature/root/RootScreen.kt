@@ -2,14 +2,12 @@ package pw.vintr.music.ui.feature.root
 
 import android.app.Activity
 import androidx.activity.compose.BackHandler
-import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.EnterTransition
 import androidx.compose.animation.ExitTransition
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
@@ -27,7 +25,6 @@ import org.koin.androidx.compose.getViewModel
 import org.koin.compose.rememberKoinInject
 import pw.vintr.music.domain.library.model.album.AlbumModel
 import pw.vintr.music.domain.library.model.artist.ArtistModel
-import pw.vintr.music.domain.player.model.PlayerStateHolderModel
 import pw.vintr.music.tools.composable.StatusBarEffect
 import pw.vintr.music.tools.extension.getRequiredArg
 import pw.vintr.music.ui.feature.albumDetails.AlbumDetailsScreen
@@ -37,9 +34,9 @@ import pw.vintr.music.ui.feature.library.LibraryScreen
 import pw.vintr.music.ui.feature.menu.MenuScreen
 import pw.vintr.music.ui.feature.search.SearchScreen
 import pw.vintr.music.ui.feature.settings.SettingsScreen
+import pw.vintr.music.ui.kit.layout.NowPlayingLayout
 import pw.vintr.music.ui.kit.navbar.AppNavBarItem
 import pw.vintr.music.ui.kit.navbar.AppNavigationBar
-import pw.vintr.music.ui.kit.player.BottomNowPlaying
 import pw.vintr.music.ui.navigation.Navigator
 import pw.vintr.music.ui.navigation.NavigatorEffect
 import pw.vintr.music.ui.navigation.NavigatorType
@@ -57,54 +54,55 @@ fun RootScreen(
     val tabs = viewModel.bottomTabs.collectAsState()
     val playerState = viewModel.playerStateFlow.collectAsState()
 
-    Column(
+    NowPlayingLayout(
         modifier = Modifier
             .background(MaterialTheme.colorScheme.background)
-            .fillMaxSize()
-    ) {
-        NavHost(
-            modifier = Modifier.weight(1f),
-            navController = navController,
-            startDestination = Tab.Home.route,
-            enterTransition = { EnterTransition.None },
-            exitTransition = { ExitTransition.None }
-        ) {
-            tabs.value.forEach { tab ->
-                composable(tab.route) {
-                    TabNavigation(
-                        rootScreen = tab.rootScreen,
-                        navigatorType = tab.navigatorType
+            .fillMaxSize(),
+        state = playerState.value,
+        onControlClick = { viewModel.onNowPlayingControlClick(playerState.value) },
+        content = { modifier ->
+            NavHost(
+                modifier = modifier.fillMaxSize(),
+                navController = navController,
+                startDestination = Tab.Home.route,
+                enterTransition = { EnterTransition.None },
+                exitTransition = { ExitTransition.None }
+            ) {
+                tabs.value.forEach { tab ->
+                    composable(tab.route) {
+                        TabNavigation(
+                            rootScreen = tab.rootScreen,
+                            navigatorType = tab.navigatorType
+                        )
+                    }
+                }
+            }
+        },
+        bottomNavigation = { modifier ->
+            AppNavigationBar(modifier = modifier) {
+                val navBackStackEntry by navController.currentBackStackEntryAsState()
+                val currentDestination = navBackStackEntry?.destination
+
+                tabs.value.forEach { tab ->
+                    AppNavBarItem(
+                        selected = currentDestination?.hierarchy
+                            ?.any { it.route == tab.route } == true,
+                        icon = tab.iconRes,
+                        onClick = {
+                            navController.navigate(tab.route) {
+                                popUpTo(navController.graph.findStartDestination().id) {
+                                    saveState = true
+                                }
+                                launchSingleTop = true
+                                restoreState = true
+                            }
+                            viewModel.setNavigatorType(tab.navigatorType)
+                        }
                     )
                 }
             }
         }
-        NowPlaying(
-            state = playerState.value,
-            onControlClick = { viewModel.onNowPlayingControlClick(playerState.value) },
-        )
-        AppNavigationBar {
-            val navBackStackEntry by navController.currentBackStackEntryAsState()
-            val currentDestination = navBackStackEntry?.destination
-
-            tabs.value.forEach { tab ->
-                AppNavBarItem(
-                    selected = currentDestination?.hierarchy
-                        ?.any { it.route == tab.route } == true,
-                    icon = tab.iconRes,
-                    onClick = {
-                        navController.navigate(tab.route) {
-                            popUpTo(navController.graph.findStartDestination().id) {
-                                saveState = true
-                            }
-                            launchSingleTop = true
-                            restoreState = true
-                        }
-                        viewModel.setNavigatorType(tab.navigatorType)
-                    }
-                )
-            }
-        }
-    }
+    )
 }
 
 @Composable
@@ -154,19 +152,5 @@ fun TabNavigation(
 
             ArtistDetailsScreen(artist = artist)
         }
-    }
-}
-
-@Composable
-private fun NowPlaying(
-    state: PlayerStateHolderModel,
-    onControlClick: () -> Unit,
-) {
-    AnimatedVisibility(visible = state.currentTrack != null) {
-        BottomNowPlaying(
-            track = state.currentTrack,
-            playerStatus = state.status,
-            onControlClick = onControlClick
-        )
     }
 }

@@ -28,7 +28,7 @@ import pw.vintr.music.ui.kit.toolbar.collapsing.CollapsingToolbarScope
 import pw.vintr.music.ui.theme.VintrMusicExtendedTheme
 
 @Composable
-fun CollapsingToolbarScope.ToolbarArtwork(
+fun CollapsingToolbarScope.ToolbarWithArtwork(
     state: CollapsingLayoutState,
     artworkUrl: String,
     mediaName: String,

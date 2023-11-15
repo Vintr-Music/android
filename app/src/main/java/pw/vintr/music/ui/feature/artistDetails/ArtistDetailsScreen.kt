@@ -22,7 +22,7 @@ import pw.vintr.music.tools.extension.Empty
 import pw.vintr.music.ui.kit.library.AlbumView
 import pw.vintr.music.ui.kit.library.tools.rememberLibraryGridCells
 import pw.vintr.music.ui.kit.state.ScreenStateHolder
-import pw.vintr.music.ui.kit.toolbar.ToolbarArtwork
+import pw.vintr.music.ui.kit.toolbar.ToolbarWithArtwork
 import pw.vintr.music.ui.kit.toolbar.ToolbarRegular
 import pw.vintr.music.ui.kit.toolbar.collapsing.CollapsingLayout
 import pw.vintr.music.ui.kit.toolbar.collapsing.ScrollStrategy
@@ -59,7 +59,7 @@ fun ArtistDetailsScreen(
                 state = collapsingLayoutState,
                 scrollStrategy = ScrollStrategy.ExitUntilCollapsed,
                 toolbar = {
-                    ToolbarArtwork(
+                    ToolbarWithArtwork(
                         state = collapsingLayoutState,
                         artworkUrl = screenData.artist.artworkUrl,
                         mediaName = screenData.title,

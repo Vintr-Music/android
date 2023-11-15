@@ -8,3 +8,6 @@ val String.Companion.Space: String
 
 val String.Companion.Comma: String
     get() = ","
+
+val String.Companion.Dash: String
+    get() = "–"

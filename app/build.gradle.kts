@@ -22,6 +22,7 @@ android {
         }
 
         buildConfigField("String", "BASE_URL", "\"http://188.225.9.157:4001/\"")
+        signingConfig = signingConfigs.getByName("debug")
     }
 
     buildTypes {
@@ -31,6 +32,7 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+            signingConfig = signingConfigs.getByName("debug")
         }
     }
     compileOptions {

@@ -10,6 +10,7 @@ import pw.vintr.music.ui.feature.library.LibraryViewModel
 import pw.vintr.music.ui.feature.library.artistList.ArtistListViewModel
 import pw.vintr.music.ui.feature.login.LoginViewModel
 import pw.vintr.music.ui.feature.menu.MenuViewModel
+import pw.vintr.music.ui.feature.nowPlaying.NowPlayingViewModel
 import pw.vintr.music.ui.feature.register.RegisterViewModel
 import pw.vintr.music.ui.feature.root.RootViewModel
 import pw.vintr.music.ui.feature.serverSelection.ServerSelectionViewModel
@@ -32,4 +33,5 @@ val uiModule = module {
     viewModel { SettingsViewModel() }
     viewModel { params -> AlbumDetailsViewModel(params.get(), get(), get()) }
     viewModel { params -> ArtistDetailsViewModel(params.get(), get()) }
+    viewModel { NowPlayingViewModel(get()) }
 }

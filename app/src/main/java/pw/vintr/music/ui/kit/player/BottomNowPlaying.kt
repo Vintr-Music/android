@@ -1,6 +1,7 @@
 package pw.vintr.music.ui.kit.player
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -8,7 +9,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.material.Text
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
@@ -29,16 +29,18 @@ fun BottomNowPlaying(
     modifier: Modifier = Modifier,
     track: TrackModel?,
     playerStatus: PlayerStatusModel,
+    onClick: () -> Unit = {},
     onControlClick: () -> Unit,
 ) {
     Column(
         modifier = modifier
             .fillMaxWidth()
-            .wrapContentHeight()
+            .height(60.dp)
+            .clickable { onClick() }
             .background(MaterialTheme.colorScheme.background)
     ) {
         LineSeparator()
-        Spacer(modifier = Modifier.height(8.dp))
+        Spacer(modifier = Modifier.weight(1f))
         Row(
             modifier = modifier
                 .fillMaxWidth()
@@ -52,13 +54,15 @@ fun BottomNowPlaying(
                 Text(
                     text = track?.metadata?.title.orEmpty(),
                     style = RubikMedium16,
-                    color = VintrMusicExtendedTheme.colors.textRegular
+                    color = VintrMusicExtendedTheme.colors.textRegular,
+                    maxLines = 1,
                 )
                 Spacer(modifier = Modifier.height(4.dp))
                 Text(
                     text = track?.metadata?.artist.orEmpty(),
                     style = RubikRegular14,
-                    color = VintrMusicExtendedTheme.colors.textSecondary
+                    color = VintrMusicExtendedTheme.colors.textSecondary,
+                    maxLines = 1,
                 )
             }
             Spacer(modifier = Modifier.width(8.dp))
@@ -72,7 +76,7 @@ fun BottomNowPlaying(
                 onClick = { onControlClick() }
             )
         }
-        Spacer(modifier = Modifier.height(8.dp))
+        Spacer(modifier = Modifier.weight(1f))
         LineSeparator()
     }
 }

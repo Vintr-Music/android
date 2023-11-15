@@ -20,6 +20,9 @@ data class TrackModel(
     @IgnoredOnParcel
     val playerUrl = BuildConfig.BASE_URL + "api/player/?key=$filePath"
 
+    @IgnoredOnParcel
+    val artworkUrl = BuildConfig.BASE_URL + "api/library/artworks/track?key=$filePath"
+
     fun toCacheObject() = TrackCacheObject(
         md5 = md5,
         filePath = filePath,
