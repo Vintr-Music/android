@@ -23,7 +23,7 @@ class MenuViewModel(
         loadData()
     }
 
-    private fun loadData() {
+    fun loadData() {
         _screenState.loadWithStateHandling {
             val user = async { getProfileUseCase.invoke() }
             // TODO: load other data

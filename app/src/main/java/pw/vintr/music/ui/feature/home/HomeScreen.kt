@@ -21,7 +21,7 @@ import androidx.compose.ui.unit.dp
 import org.koin.androidx.compose.getViewModel
 import pw.vintr.music.ui.kit.library.AlbumView
 import pw.vintr.music.ui.kit.library.tools.rememberLibraryGridCellsCount
-import pw.vintr.music.ui.kit.state.ScreenStateHolder
+import pw.vintr.music.ui.kit.layout.ScreenStateLayout
 import pw.vintr.music.ui.theme.Gilroy18
 import pw.vintr.music.ui.theme.Gilroy24
 import pw.vintr.music.ui.theme.VintrMusicExtendedTheme
@@ -41,8 +41,9 @@ fun HomeScreen(
             .statusBarsPadding()
             .fillMaxSize()
     ) {
-        ScreenStateHolder(
+        ScreenStateLayout(
             state = screenState.value,
+            errorRetryAction = { viewModel.loadData() },
         ) { state ->
             LazyVerticalGrid(
                 modifier = Modifier
@@ -54,7 +55,7 @@ fun HomeScreen(
             ) {
                 item(
                     key = KEY_WELCOME_TEXT,
-                    span = { GridItemSpan(currentLineSpan = 2) },
+                    span = { GridItemSpan(currentLineSpan = cellsCount) },
                 ) {
                     Text(
                         modifier = Modifier.padding(bottom = 20.dp),

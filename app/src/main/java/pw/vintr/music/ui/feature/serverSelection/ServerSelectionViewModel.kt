@@ -23,10 +23,10 @@ class ServerSelectionViewModel(
     val screenState = _screenState.asStateFlow()
 
     init {
-        loadServers()
+        loadData()
     }
 
-    private fun loadServers() {
+    fun loadData() {
         _screenState.loadWithStateHandling {
             ServerSelectionScreenData(servers = getServerListUseCase.invoke())
         }

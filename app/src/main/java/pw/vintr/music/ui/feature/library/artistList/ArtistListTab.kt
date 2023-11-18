@@ -12,7 +12,7 @@ import androidx.compose.ui.unit.dp
 import org.koin.androidx.compose.getViewModel
 import pw.vintr.music.ui.kit.library.ArtistView
 import pw.vintr.music.ui.kit.library.tools.rememberLibraryGridCells
-import pw.vintr.music.ui.kit.state.ScreenStateHolder
+import pw.vintr.music.ui.kit.layout.ScreenStateLayout
 
 @Composable
 fun ArtistListTab(
@@ -20,7 +20,7 @@ fun ArtistListTab(
 ) {
     val screenState = viewModel.screenState.collectAsState()
 
-    ScreenStateHolder(state = screenState.value) { artistList ->
+    ScreenStateLayout(state = screenState.value) { artistList ->
         LazyVerticalGrid(
             modifier = Modifier
                 .fillMaxSize(),

@@ -24,7 +24,7 @@ class HomeViewModel(
         loadData()
     }
 
-    private fun loadData() {
+    fun loadData() {
         _screenState.loadWithStateHandling {
             HomeScreenData(
                 welcome = MainPageWelcomeModel.getByNowTime(),

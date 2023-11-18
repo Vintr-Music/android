@@ -24,7 +24,7 @@ class ArtistDetailsViewModel(
         loadData()
     }
 
-    private fun loadData() {
+    fun loadData() {
         _screenState.loadWithStateHandling {
             ArtistDetailsScreenData(
                 artist = artist,

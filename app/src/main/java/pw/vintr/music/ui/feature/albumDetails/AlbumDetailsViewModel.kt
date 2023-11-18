@@ -49,7 +49,7 @@ class AlbumDetailsViewModel(
         loadData()
     }
 
-    private fun loadData() {
+    fun loadData() {
         _screenState.loadWithStateHandling {
             AlbumDetailsScreenData(
                 album = album,

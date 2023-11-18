@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -22,6 +23,7 @@ fun ButtonRegular(
     text: String,
     enabled: Boolean = true,
     isLoading: Boolean = false,
+    wrapContentWidth: Boolean = false,
     color: Color = VintrMusicExtendedTheme.colors.regularButtonBackground,
     contentColor: Color = VintrMusicExtendedTheme.colors.regularButtonContent,
     disabledColor: Color = VintrMusicExtendedTheme.colors.regularButtonDisabledBackground,
@@ -31,7 +33,13 @@ fun ButtonRegular(
     Button(
         onClick = onClick,
         modifier = modifier
-            .fillMaxWidth()
+            .let {
+                if (wrapContentWidth) {
+                    it.wrapContentWidth()
+                } else {
+                    it.fillMaxWidth()
+                }
+            }
             .height(40.dp)
             .defaultMinSize(minHeight = 40.dp),
         shape = RoundedCornerShape(10.dp),

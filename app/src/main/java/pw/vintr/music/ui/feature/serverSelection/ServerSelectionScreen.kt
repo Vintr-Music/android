@@ -30,7 +30,7 @@ import pw.vintr.music.tools.composable.StatusBarEffect
 import pw.vintr.music.ui.kit.button.ButtonRegular
 import pw.vintr.music.ui.kit.button.ButtonText
 import pw.vintr.music.ui.kit.server.ServerSelectableItem
-import pw.vintr.music.ui.kit.state.ScreenStateHolder
+import pw.vintr.music.ui.kit.layout.ScreenStateLayout
 import pw.vintr.music.ui.kit.toolbar.ToolbarPrimaryMount
 import pw.vintr.music.ui.theme.Gilroy32
 
@@ -50,7 +50,10 @@ fun ServerSelectionScreen(
     ) {
         SelectServerBar(modifier = Modifier.height(barHeight))
 
-        ScreenStateHolder(state = screenState.value) { state ->
+        ScreenStateLayout(
+            state = screenState.value,
+            errorRetryAction = { viewModel.loadData() },
+        ) { state ->
             Column(
                 modifier = Modifier
                     .fillMaxSize()

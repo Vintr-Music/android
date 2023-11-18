@@ -2,6 +2,8 @@
 <resources>
     <!--Common-->
     <string name="common_confirm">Подтвердить</string>
+    <string name="common_data_error">Ошибка загрузки данных</string>
+    <string name="common_retry">Повторить</string>
 
     <!--Login Screen-->
     <string name="password">Пароль</string>

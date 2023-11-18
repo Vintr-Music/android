@@ -21,7 +21,7 @@ import androidx.compose.ui.unit.dp
 import org.koin.androidx.compose.getViewModel
 import pw.vintr.music.R
 import pw.vintr.music.ui.kit.menu.MenuItemIconified
-import pw.vintr.music.ui.kit.state.ScreenStateHolder
+import pw.vintr.music.ui.kit.layout.ScreenStateLayout
 import pw.vintr.music.ui.theme.Gilroy32
 import pw.vintr.music.ui.theme.VintrMusicExtendedTheme
 
@@ -37,8 +37,9 @@ fun MenuScreen(
             .statusBarsPadding()
             .fillMaxSize()
     ) {
-        ScreenStateHolder(
-            state = screenState.value
+        ScreenStateLayout(
+            state = screenState.value,
+            errorRetryAction = { viewModel.loadData() },
         ) { state ->
             Column(
                 modifier = Modifier

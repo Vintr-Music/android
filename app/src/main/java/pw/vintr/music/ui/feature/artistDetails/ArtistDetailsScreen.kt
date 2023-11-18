@@ -21,7 +21,7 @@ import pw.vintr.music.domain.library.model.artist.ArtistModel
 import pw.vintr.music.tools.extension.Empty
 import pw.vintr.music.ui.kit.library.AlbumView
 import pw.vintr.music.ui.kit.library.tools.rememberLibraryGridCells
-import pw.vintr.music.ui.kit.state.ScreenStateHolder
+import pw.vintr.music.ui.kit.layout.ScreenStateLayout
 import pw.vintr.music.ui.kit.toolbar.ToolbarWithArtwork
 import pw.vintr.music.ui.kit.toolbar.ToolbarRegular
 import pw.vintr.music.ui.kit.toolbar.collapsing.CollapsingLayout
@@ -44,14 +44,15 @@ fun ArtistDetailsScreen(
         modifier = Modifier.fillMaxSize(),
         contentAlignment = Alignment.TopStart,
     ) {
-        ScreenStateHolder(
+        ScreenStateLayout(
             state = screenState.value,
             toolbar = {
                 ToolbarRegular(
                     title = String.Empty,
                     onBackPressed = { viewModel.navigateBack() },
                 )
-            }
+            },
+            errorRetryAction = { viewModel.loadData() },
         ) { screenData ->
             CollapsingLayout(
                 modifier = Modifier

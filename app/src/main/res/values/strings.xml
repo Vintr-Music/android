@@ -3,6 +3,8 @@
 
     <!--Common-->
     <string name="common_confirm">Confirm</string>
+    <string name="common_data_error">Error data loading</string>
+    <string name="common_retry">Retry</string>
 
     <!--Login Screen-->
     <string name="email" translatable="false">Email</string>
