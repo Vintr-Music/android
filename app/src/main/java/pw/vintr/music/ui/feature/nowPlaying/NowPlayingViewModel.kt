@@ -18,4 +18,12 @@ class NowPlayingViewModel(
     fun resume() {
         playerInteractor.resume()
     }
+
+    fun backward() {
+        playerInteractor.backward()
+    }
+
+    fun forward() {
+        playerInteractor.forward()
+    }
 }

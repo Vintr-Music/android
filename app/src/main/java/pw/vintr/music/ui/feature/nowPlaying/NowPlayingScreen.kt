@@ -11,13 +11,16 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Text
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
@@ -28,10 +31,12 @@ import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import coil.size.Size
 import org.koin.androidx.compose.getViewModel
+import pw.vintr.music.R
 import pw.vintr.music.domain.player.model.PlayerStatusModel
 import pw.vintr.music.tools.extension.Dash
 import pw.vintr.music.tools.extension.Space
 import pw.vintr.music.ui.kit.button.ButtonPlayerState
+import pw.vintr.music.ui.kit.button.SimpleIconButton
 import pw.vintr.music.ui.theme.Gilroy16
 import pw.vintr.music.ui.theme.Gilroy24
 import pw.vintr.music.ui.theme.VintrMusicExtendedTheme
@@ -114,7 +119,15 @@ fun NowPlayingScreen(viewModel: NowPlayingViewModel = getViewModel()) {
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.Center,
+                verticalAlignment = Alignment.CenterVertically,
             ) {
+                SimpleIconButton(
+                    iconRes = R.drawable.ic_skip_backward,
+                    size = 40.dp,
+                    iconModifier = Modifier.size(28.dp),
+                    onClick = { viewModel.backward() }
+                )
+                Spacer(modifier = Modifier.width(20.dp))
                 ButtonPlayerState(
                     isPlaying = playerState.value.status == PlayerStatusModel.PLAYING,
                     onClick = {
@@ -130,6 +143,13 @@ fun NowPlayingScreen(viewModel: NowPlayingViewModel = getViewModel()) {
                             }
                         }
                     }
+                )
+                Spacer(modifier = Modifier.width(20.dp))
+                SimpleIconButton(
+                    iconRes = R.drawable.ic_skip_forward,
+                    size = 40.dp,
+                    iconModifier = Modifier.size(28.dp),
+                    onClick = { viewModel.forward() }
                 )
             }
         }

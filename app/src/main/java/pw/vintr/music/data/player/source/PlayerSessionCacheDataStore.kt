@@ -9,13 +9,20 @@ class PlayerSessionCacheDataStore(private val realm: Realm) {
 
     suspend fun savePlayerSession(session: PlayerSessionCacheObject) {
         realm.write {
-            // Remove previous session
-            query<PlayerSessionCacheObject>()
+            // Find possibly existing session
+            val previousSession = query<PlayerSessionCacheObject>()
+                .first()
                 .find()
-                .let { delete(it) }
 
-            // Save current session
-            copyToRealm(session)
+            previousSession?.let {
+                // Update existing session
+                it.album = session.album
+                it.artist = session.artist
+                it.tracks = session.tracks
+            } ?: run {
+                // Save new session
+                copyToRealm(session)
+            }
         }
     }
 

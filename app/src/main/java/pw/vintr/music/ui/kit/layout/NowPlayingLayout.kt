@@ -120,6 +120,7 @@ fun NowPlayingLayout(
                 },
                 sheetBackgroundColor = MaterialTheme.colorScheme.background,
                 backgroundColor = Color.Transparent,
+                sheetElevation = 0.dp,
                 sheetPeekHeight = miniNowPlayingHeight.value,
                 content = {
                     content(Modifier.padding(bottom = miniNowPlayingHeight.value))

@@ -120,6 +120,14 @@ class PlayerInteractor(
         controller?.play()
     }
 
+    fun backward() {
+        controller?.seekToPrevious()
+    }
+
+    fun forward() {
+        controller?.seekToNextMediaItem()
+    }
+
     private fun TrackModel.toMediaItem() = MediaItem.Builder()
         .setUri(playerUrl)
         .setMediaId(md5)
