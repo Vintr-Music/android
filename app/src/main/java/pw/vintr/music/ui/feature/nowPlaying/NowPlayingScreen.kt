@@ -149,10 +149,10 @@ fun NowPlayingScreen(viewModel: NowPlayingViewModel = getViewModel()) {
                     isPlaying = playerState.value.status == PlayerStatusModel.PLAYING,
                     onClick = {
                         when (playerState.value.status) {
-                            PlayerStatusModel.IDLE,
-                            PlayerStatusModel.LOADING -> {
+                            PlayerStatusModel.IDLE -> {
                                 // TODO: action
                             }
+                            PlayerStatusModel.LOADING,
                             PlayerStatusModel.PAUSED -> {
                                 viewModel.resume()
                             }

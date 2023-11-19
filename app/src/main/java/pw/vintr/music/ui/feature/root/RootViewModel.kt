@@ -78,13 +78,13 @@ class RootViewModel(
     fun onNowPlayingControlClick(state: PlayerStateHolderModel) {
         when (state.status) {
             PlayerStatusModel.IDLE,
-            PlayerStatusModel.PAUSED -> {
+            PlayerStatusModel.PAUSED,
+            PlayerStatusModel.LOADING -> {
                 playerInteractor.resume()
             }
             PlayerStatusModel.PLAYING -> {
                 playerInteractor.pause()
             }
-            PlayerStatusModel.LOADING -> Unit
         }
     }
 }

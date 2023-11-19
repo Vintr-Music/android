@@ -88,7 +88,9 @@ private fun SliderTrack(sliderPositions: SliderPositions) {
         val sliderRight = Offset(size.width, center.y)
         val sliderStart = if (isRtl) sliderRight else sliderLeft
         val sliderEnd = if (isRtl) sliderLeft else sliderRight
+
         val trackStrokeWidth = 32.dp.toPx()
+        val markerWidth = 1.dp.toPx()
 
         drawLine(
             inactiveTrackColor,
@@ -96,20 +98,34 @@ private fun SliderTrack(sliderPositions: SliderPositions) {
             sliderEnd,
             trackStrokeWidth,
         )
-        val sliderValueEnd = Offset(
-            x = sliderStart.x + (sliderEnd.x - sliderStart.x) * sliderPositions.activeRange.endInclusive,
-            y = center.y
-        )
 
-        val sliderValueStart = Offset(
+        val activeSliderValueStart = Offset(
             x = sliderStart.x + (sliderEnd.x - sliderStart.x) * sliderPositions.activeRange.start,
             y = center.y
         )
 
+        val activeSliderValueEnd = Offset(
+            x = sliderStart.x + (sliderEnd.x - sliderStart.x) * sliderPositions.activeRange.endInclusive,
+            y = center.y
+        )
+
+        val markerValueStart = Offset(
+            x = activeSliderValueEnd.x - markerWidth,
+            y = center.y
+        )
+
+        // Active track
         drawLine(
             activeTrackColor,
-            sliderValueStart,
-            sliderValueEnd,
+            activeSliderValueStart,
+            activeSliderValueEnd,
+            trackStrokeWidth,
+        )
+        // Active marker
+        drawLine(
+            strokeColor,
+            markerValueStart,
+            activeSliderValueEnd,
             trackStrokeWidth,
         )
     }

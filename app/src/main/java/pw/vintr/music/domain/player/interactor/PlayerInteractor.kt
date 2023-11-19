@@ -77,7 +77,8 @@ class PlayerInteractor(
                         progress = position,
                         duration = duration,
                         mediaId = mediaId,
-                        isLoading = controller?.isLoading == true
+                        isLoading = controller?.isPlaying != true &&
+                                controller?.isLoading == true
                     )
                 )
             }
