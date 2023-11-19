@@ -1,5 +1,6 @@
 package pw.vintr.music.ui.feature.nowPlaying
 
+import android.graphics.Bitmap
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
@@ -21,13 +22,20 @@ import androidx.compose.material.Text
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import androidx.core.graphics.drawable.toBitmap
+import androidx.palette.graphics.Palette
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import coil.size.Size
@@ -49,15 +57,33 @@ fun NowPlayingScreen(viewModel: NowPlayingViewModel = getViewModel()) {
     val progressState = viewModel.playerProgressFlow.collectAsState()
 
     playerState.value.currentTrack?.let { track ->
+        var bitmap by remember { mutableStateOf<Bitmap?>(value = null) }
+        val accentColor = remember(bitmap) {
+            bitmap?.let { lockedBitmap ->
+                Palette
+                    .from(lockedBitmap)
+                    .generate()
+                    .mutedSwatch
+                    ?.let { Color(it.rgb) }
+            } ?: Color.Transparent
+        }
+
         AsyncImage(
             modifier = Modifier.fillMaxSize(),
             model = ImageRequest.Builder(LocalContext.current)
                 .data(track.artworkUrl)
                 .size(Size.ORIGINAL)
                 .crossfade(enable = true)
+                .allowHardware(enable = false)
                 .build(),
             contentScale = ContentScale.Crop,
+            onSuccess = { bitmap = it.result.drawable.toBitmap() },
             contentDescription = null
+        )
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(accentColor.copy(alpha = 0.5f)),
         )
     }
 

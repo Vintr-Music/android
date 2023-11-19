@@ -66,6 +66,7 @@ dependencies {
     val media3Version = "1.1.1"
     val realmVersion = "1.11.0"
     val realmCoroutinesVersion = "1.7.3"
+    val paletteVersion = "1.0.0"
 
     // Common Android
     implementation("androidx.core:core-ktx:1.12.0")
@@ -78,6 +79,7 @@ dependencies {
     implementation("androidx.compose.material3:material3")
     implementation("androidx.compose.material:material:1.5.4")
     implementation("androidx.preference:preference-ktx:$preferenceVersion")
+    implementation("androidx.palette:palette-ktx:$paletteVersion")
 
     // Tests
     testImplementation("junit:junit:4.13.2")
