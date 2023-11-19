@@ -30,6 +30,7 @@ import pw.vintr.music.ui.feature.nowPlaying.NowPlayingScreen
 import pw.vintr.music.ui.kit.dimen.DimensDp
 import pw.vintr.music.ui.kit.player.BottomNowPlaying
 import pw.vintr.music.ui.kit.sliding.BottomSheetScaffold
+import pw.vintr.music.ui.kit.sliding.BottomSheetScaffoldState
 import pw.vintr.music.ui.kit.sliding.rememberBottomSheetScaffoldState
 import kotlin.math.max
 
@@ -39,11 +40,11 @@ fun NowPlayingLayout(
     modifier: Modifier = Modifier,
     state: PlayerStateHolderModel,
     onControlClick: () -> Unit,
+    scaffoldState: BottomSheetScaffoldState = rememberBottomSheetScaffoldState(),
     bottomNavigation: @Composable (Modifier) -> Unit = {},
     content: @Composable (Modifier) -> Unit,
 ) {
     val coroutineScope = rememberCoroutineScope()
-    val scaffoldState = rememberBottomSheetScaffoldState()
     val bottomInset = rememberSystemNavigationBarHeight()
     val density = LocalDensity.current
 

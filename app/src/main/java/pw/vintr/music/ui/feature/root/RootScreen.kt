@@ -9,10 +9,12 @@ import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavDestination.Companion.hierarchy
@@ -21,6 +23,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import kotlinx.coroutines.launch
 import org.koin.androidx.compose.getViewModel
 import org.koin.compose.rememberKoinInject
 import pw.vintr.music.domain.library.model.album.AlbumModel
@@ -37,6 +40,8 @@ import pw.vintr.music.ui.feature.settings.SettingsScreen
 import pw.vintr.music.ui.kit.layout.NowPlayingLayout
 import pw.vintr.music.ui.kit.navbar.AppNavBarItem
 import pw.vintr.music.ui.kit.navbar.AppNavigationBar
+import pw.vintr.music.ui.kit.sliding.BottomSheetScaffoldState
+import pw.vintr.music.ui.kit.sliding.rememberBottomSheetScaffoldState
 import pw.vintr.music.ui.navigation.Navigator
 import pw.vintr.music.ui.navigation.NavigatorEffect
 import pw.vintr.music.ui.navigation.NavigatorType
@@ -45,6 +50,7 @@ import pw.vintr.music.ui.navigation.Screen
 private const val TRANSITION_DURATION = 300
 
 @Composable
+@OptIn(ExperimentalMaterialApi::class)
 fun RootScreen(
     viewModel: RootViewModel = getViewModel()
 ) {
@@ -53,12 +59,14 @@ fun RootScreen(
     val navController = rememberNavController()
     val tabs = viewModel.bottomTabs.collectAsState()
     val playerState = viewModel.playerStateFlow.collectAsState()
+    val scaffoldState = rememberBottomSheetScaffoldState()
 
     NowPlayingLayout(
         modifier = Modifier
             .background(MaterialTheme.colorScheme.background)
             .fillMaxSize(),
         state = playerState.value,
+        scaffoldState = scaffoldState,
         onControlClick = { viewModel.onNowPlayingControlClick(playerState.value) },
         content = { modifier ->
             NavHost(
@@ -72,7 +80,8 @@ fun RootScreen(
                     composable(tab.route) {
                         TabNavigation(
                             rootScreen = tab.rootScreen,
-                            navigatorType = tab.navigatorType
+                            navigatorType = tab.navigatorType,
+                            scaffoldState = scaffoldState,
                         )
                     }
                 }
@@ -105,15 +114,18 @@ fun RootScreen(
     )
 }
 
+@OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun TabNavigation(
     rootScreen: Screen,
     navigatorType: NavigatorType,
     navigator: Navigator = rememberKoinInject(),
+    scaffoldState: BottomSheetScaffoldState,
 ) {
     val navController = rememberNavController()
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val activity = (LocalContext.current as? Activity)
+    val coroutineScope = rememberCoroutineScope()
 
     NavigatorEffect(
         type = navigatorType,
@@ -121,6 +133,7 @@ fun TabNavigation(
         controller = navController
     )
 
+    // Root back handler
     BackHandler(enabled = navBackStackEntry?.destination?.route == rootScreen.route) {
         activity?.finish()
     }
@@ -152,5 +165,10 @@ fun TabNavigation(
 
             ArtistDetailsScreen(artist = artist)
         }
+    }
+
+    // Scaffold bottom sheet back handler
+    BackHandler(enabled = scaffoldState.bottomSheetState.isExpanded) {
+        coroutineScope.launch { scaffoldState.bottomSheetState.collapse() }
     }
 }
