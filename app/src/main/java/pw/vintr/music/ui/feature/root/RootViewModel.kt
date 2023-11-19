@@ -84,6 +84,7 @@ class RootViewModel(
             PlayerStatusModel.PLAYING -> {
                 playerInteractor.pause()
             }
+            PlayerStatusModel.LOADING -> Unit
         }
     }
 }

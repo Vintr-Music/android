@@ -69,6 +69,7 @@ fun BottomNowPlaying(
             SimpleIconButton(
                 iconRes = when (playerStatus) {
                     PlayerStatusModel.IDLE,
+                    PlayerStatusModel.LOADING,
                     PlayerStatusModel.PAUSED -> R.drawable.ic_play
                     PlayerStatusModel.PLAYING -> R.drawable.ic_pause
                 },

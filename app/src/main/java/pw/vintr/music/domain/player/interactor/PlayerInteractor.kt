@@ -11,15 +11,18 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.cancel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.shareIn
 import kotlinx.coroutines.isActive
 import pw.vintr.music.app.service.VintrMusicService
 import pw.vintr.music.data.player.repository.PlayerSessionRepository
 import pw.vintr.music.domain.library.model.album.AlbumModel
 import pw.vintr.music.domain.library.model.track.TrackModel
+import pw.vintr.music.domain.player.model.PlayerProgressModel
 import pw.vintr.music.domain.player.model.PlayerSessionModel
 import pw.vintr.music.domain.player.model.PlayerStateHolderModel
 import pw.vintr.music.domain.player.model.PlayerStatusModel
@@ -62,6 +65,26 @@ class PlayerInteractor(
         )
     }.shareIn(scope = this, started = SharingStarted.Lazily, replay = 1)
 
+    val playProgressState = flow {
+        while (isActive) {
+            val mediaId = controller?.currentMediaItem?.mediaId
+            val position = controller?.currentPosition?.toFloat() ?: 0f
+            val duration = controller?.duration?.toFloat() ?: 0f
+
+            if (position >= 0 && duration >= 0) {
+                emit(
+                    PlayerProgressModel(
+                        progress = position,
+                        duration = duration,
+                        mediaId = mediaId,
+                        isLoading = controller?.isLoading == true
+                    )
+                )
+            }
+            delay(timeMillis = 500)
+        }
+    }.shareIn(scope = this, started = SharingStarted.Lazily, replay = 1)
+
     init {
         controllerFuture.addListener({
             controller = controllerFuture.get()
@@ -81,8 +104,14 @@ class PlayerInteractor(
             mediaId != null && player.isPlaying -> {
                 PlayerSnapshot(mediaId, PlayerStatusModel.PLAYING)
             }
+            mediaId != null && player.isLoading -> {
+                PlayerSnapshot(mediaId, PlayerStatusModel.LOADING)
+            }
             mediaId != null -> {
                 PlayerSnapshot(mediaId, PlayerStatusModel.PAUSED)
+            }
+            player.isLoading -> {
+                PlayerSnapshot(status = PlayerStatusModel.LOADING)
             }
             else -> {
                 PlayerSnapshot(status = PlayerStatusModel.IDLE)
@@ -126,6 +155,10 @@ class PlayerInteractor(
 
     fun forward() {
         controller?.seekToNextMediaItem()
+    }
+
+    fun seekTo(position: Long) {
+        controller?.seekTo(position)
     }
 
     private fun TrackModel.toMediaItem() = MediaItem.Builder()

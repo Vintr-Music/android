@@ -52,6 +52,10 @@ data class VintrMusicColors(
     val coverBackground: Color = Color.Unspecified,
     // Common
     val lineSeparator: Color = Color.Unspecified,
+    // Player Slider
+    val playerSliderActiveBackground: Color = Color.Unspecified,
+    val playerSliderInactiveBackground: Color = Color.Unspecified,
+    val playerSliderStroke: Color = Color.Unspecified,
 )
 
 val LocalVintrColors = staticCompositionLocalOf { VintrMusicColors() }
@@ -87,6 +91,10 @@ val darkVintrColors = VintrMusicColors(
     coverBackground = Gray1,
     // Common
     lineSeparator = Gray1,
+    // Player Slider
+    playerSliderActiveBackground = Black0,
+    playerSliderInactiveBackground = Gray0,
+    playerSliderStroke = Gray1,
 )
 
 val lightVintrColors = VintrMusicColors(
@@ -120,6 +128,10 @@ val lightVintrColors = VintrMusicColors(
     coverBackground = Gray4,
     // Common
     lineSeparator = Gray5,
+    // Player Slider
+    playerSliderActiveBackground = White0,
+    playerSliderInactiveBackground = Gray5,
+    playerSliderStroke = Gray4,
 )
 
 private val darkColorScheme = darkColorScheme(

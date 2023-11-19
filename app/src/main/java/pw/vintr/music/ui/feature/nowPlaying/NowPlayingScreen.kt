@@ -1,6 +1,7 @@
 package pw.vintr.music.ui.feature.nowPlaying
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -37,6 +38,7 @@ import pw.vintr.music.tools.extension.Dash
 import pw.vintr.music.tools.extension.Space
 import pw.vintr.music.ui.kit.button.ButtonPlayerState
 import pw.vintr.music.ui.kit.button.SimpleIconButton
+import pw.vintr.music.ui.kit.player.PlayerProgressBar
 import pw.vintr.music.ui.theme.Gilroy16
 import pw.vintr.music.ui.theme.Gilroy24
 import pw.vintr.music.ui.theme.VintrMusicExtendedTheme
@@ -44,6 +46,7 @@ import pw.vintr.music.ui.theme.VintrMusicExtendedTheme
 @Composable
 fun NowPlayingScreen(viewModel: NowPlayingViewModel = getViewModel()) {
     val playerState = viewModel.playerStateFlow.collectAsState()
+    val progressState = viewModel.playerProgressFlow.collectAsState()
 
     playerState.value.currentTrack?.let { track ->
         AsyncImage(
@@ -108,12 +111,26 @@ fun NowPlayingScreen(viewModel: NowPlayingViewModel = getViewModel()) {
             Spacer(modifier = Modifier.height(32.dp))
         }
         Spacer(modifier = Modifier.weight(1f))
+        PlayerProgressBar(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 14.dp),
+            progress = progressState.value.progress,
+            trackDuration = progressState.value.duration,
+            onSeek = { viewModel.onSeek(it) },
+            onSeekEnd = { viewModel.onSeekEnd() }
+        )
         Box(
             modifier = Modifier
                 .padding(20.dp)
                 .navigationBarsPadding()
                 .clip(RoundedCornerShape(20.dp))
                 .background(MaterialTheme.colorScheme.background.copy(alpha = 0.9f))
+                .border(
+                    1.dp,
+                    VintrMusicExtendedTheme.colors.playerSliderStroke,
+                    RoundedCornerShape(20.dp)
+                )
                 .padding(20.dp)
         ) {
             Row(
@@ -132,7 +149,8 @@ fun NowPlayingScreen(viewModel: NowPlayingViewModel = getViewModel()) {
                     isPlaying = playerState.value.status == PlayerStatusModel.PLAYING,
                     onClick = {
                         when (playerState.value.status) {
-                            PlayerStatusModel.IDLE -> {
+                            PlayerStatusModel.IDLE,
+                            PlayerStatusModel.LOADING -> {
                                 // TODO: action
                             }
                             PlayerStatusModel.PAUSED -> {

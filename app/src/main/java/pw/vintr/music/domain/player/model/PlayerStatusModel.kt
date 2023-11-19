@@ -4,4 +4,5 @@ enum class PlayerStatusModel {
     IDLE,
     PAUSED,
     PLAYING,
+    LOADING,
 }
