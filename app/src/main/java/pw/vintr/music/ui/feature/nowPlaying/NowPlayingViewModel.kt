@@ -29,12 +29,17 @@ class NowPlayingViewModel(
         playerInteractor.playProgressState,
         seekProgress
     ) { playerProgress, seekSnapshot ->
+        val isLoading = playerProgress.isLoading
+        val seekCurrentMedia = seekSnapshot.seekMediaId == playerProgress.mediaId
+
         val progress = when {
             seekSnapshot.isSeeking -> {
                 seekSnapshot.value
             }
-            playerProgress.isLoading &&
-            seekSnapshot.seekMediaId == playerProgress.mediaId -> {
+            playerProgress.isOnStart -> {
+                playerProgress.progress
+            }
+            isLoading && seekCurrentMedia -> {
                 seekSnapshot.value
             }
             else -> {

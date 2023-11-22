@@ -5,4 +5,6 @@ data class PlayerProgressModel(
     val duration: Float = 0f,
     val mediaId: String? = null,
     val isLoading: Boolean = false
-)
+) {
+    val isOnStart: Boolean = progress == 0f
+}
