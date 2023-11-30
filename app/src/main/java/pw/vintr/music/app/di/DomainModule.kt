@@ -29,5 +29,5 @@ val domainModule = module {
     single { GetArtistListUseCase(get()) }
     single { GetArtistAlbumsUseCase(get()) }
 
-    single { PlayerInteractor(androidContext(), get()) } onClose { it?.close() }
+    single { PlayerInteractor(androidContext(), get(), get()) } onClose { it?.close() }
 }

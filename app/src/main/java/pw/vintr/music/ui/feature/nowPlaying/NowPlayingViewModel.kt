@@ -6,8 +6,10 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import pw.vintr.music.domain.player.interactor.PlayerInteractor
-import pw.vintr.music.domain.player.model.PlayerProgressModel
-import pw.vintr.music.domain.player.model.PlayerStateHolderModel
+import pw.vintr.music.domain.player.model.config.PlayerRepeatMode
+import pw.vintr.music.domain.player.model.config.PlayerShuffleMode
+import pw.vintr.music.domain.player.model.state.PlayerProgressModel
+import pw.vintr.music.domain.player.model.state.PlayerStateHolderModel
 import pw.vintr.music.ui.base.BaseViewModel
 
 class NowPlayingViewModel(
@@ -64,6 +66,25 @@ class NowPlayingViewModel(
 
     fun forward() {
         playerInteractor.forward()
+    }
+
+    fun setNextRepeatMode(currentRepeatMode: PlayerRepeatMode) {
+        val nextMode = when (currentRepeatMode) {
+            PlayerRepeatMode.OFF -> PlayerRepeatMode.ON_SESSION
+            PlayerRepeatMode.ON_SINGLE -> PlayerRepeatMode.OFF
+            PlayerRepeatMode.ON_SESSION -> PlayerRepeatMode.ON_SINGLE
+        }
+
+        playerInteractor.setRepeatMode(nextMode)
+    }
+
+    fun setNextShuffleMode(currentShuffleMode: PlayerShuffleMode) {
+        val nextMode = when (currentShuffleMode) {
+            PlayerShuffleMode.OFF -> PlayerShuffleMode.ON
+            PlayerShuffleMode.ON -> PlayerShuffleMode.OFF
+        }
+
+        playerInteractor.setShuffleMode(nextMode)
     }
 
     fun onSeek(value: Float) {

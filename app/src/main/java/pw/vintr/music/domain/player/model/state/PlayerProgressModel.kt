@@ -1,4 +1,4 @@
-package pw.vintr.music.domain.player.model
+package pw.vintr.music.domain.player.model.state
 
 data class PlayerProgressModel(
     val progress: Float = 0f,

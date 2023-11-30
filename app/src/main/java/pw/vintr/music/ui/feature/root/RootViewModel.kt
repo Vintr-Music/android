@@ -5,8 +5,8 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import pw.vintr.music.R
 import pw.vintr.music.domain.player.interactor.PlayerInteractor
-import pw.vintr.music.domain.player.model.PlayerStateHolderModel
-import pw.vintr.music.domain.player.model.PlayerStatusModel
+import pw.vintr.music.domain.player.model.state.PlayerStateHolderModel
+import pw.vintr.music.domain.player.model.state.PlayerStatusModel
 import pw.vintr.music.ui.base.BaseViewModel
 import pw.vintr.music.ui.navigation.NavigatorType
 import pw.vintr.music.ui.navigation.Screen

@@ -1,4 +1,4 @@
-package pw.vintr.music.domain.player.model
+package pw.vintr.music.domain.player.model.session
 
 import io.realm.kotlin.ext.copyFromRealm
 import io.realm.kotlin.ext.realmListOf

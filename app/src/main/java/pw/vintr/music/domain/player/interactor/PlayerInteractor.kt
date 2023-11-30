@@ -17,21 +17,26 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.shareIn
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.isActive
 import pw.vintr.music.app.service.VintrMusicService
+import pw.vintr.music.data.player.repository.PlayerConfigRepository
 import pw.vintr.music.data.player.repository.PlayerSessionRepository
 import pw.vintr.music.domain.library.model.album.AlbumModel
 import pw.vintr.music.domain.library.model.track.TrackModel
-import pw.vintr.music.domain.player.model.PlayerProgressModel
-import pw.vintr.music.domain.player.model.PlayerSessionModel
-import pw.vintr.music.domain.player.model.PlayerStateHolderModel
-import pw.vintr.music.domain.player.model.PlayerStatusModel
-import pw.vintr.music.domain.player.model.toModel
+import pw.vintr.music.domain.player.model.config.PlayerRepeatMode
+import pw.vintr.music.domain.player.model.config.PlayerShuffleMode
+import pw.vintr.music.domain.player.model.state.PlayerProgressModel
+import pw.vintr.music.domain.player.model.session.PlayerSessionModel
+import pw.vintr.music.domain.player.model.state.PlayerStateHolderModel
+import pw.vintr.music.domain.player.model.state.PlayerStatusModel
+import pw.vintr.music.domain.player.model.session.toModel
 import java.io.Closeable
 
 class PlayerInteractor(
     applicationContext: Context,
     private val playerSessionRepository: PlayerSessionRepository,
+    private val playerConfigRepository: PlayerConfigRepository,
 ) : CoroutineScope, Closeable {
 
     private val job = SupervisorJob()
@@ -49,7 +54,12 @@ class PlayerInteractor(
 
     private var controller: MediaController? = null
 
-    private val playerSnapshotFlow = MutableStateFlow(PlayerSnapshot())
+    private val playerSnapshotFlow = MutableStateFlow(
+        PlayerSnapshot(
+            repeatMode = PlayerRepeatMode.getByCode(playerConfigRepository.getRepeatMode()),
+            shuffleMode = PlayerShuffleMode.getByCode(playerConfigRepository.getShuffleMode())
+        )
+    )
 
     val playerState = combine(
         playerSessionRepository.getPlayerSessionFlow(),
@@ -62,6 +72,8 @@ class PlayerInteractor(
             session = session,
             currentTrack = track,
             status = snapshot.status,
+            repeatMode = snapshot.repeatMode,
+            shuffleMode = snapshot.shuffleMode
         )
     }.shareIn(scope = this, started = SharingStarted.Lazily, replay = 1)
 
@@ -90,6 +102,11 @@ class PlayerInteractor(
         controllerFuture.addListener({
             controller = controllerFuture.get()
 
+            controller?.repeatMode = playerSnapshotFlow.value.repeatMode
+                .toSystemRepeatMode()
+            controller?.shuffleModeEnabled = playerSnapshotFlow.value.shuffleMode
+                .toSystemShuffleMode()
+
             controller?.addListener(object : Player.Listener {
                 override fun onEvents(player: Player, events: Player.Events) {
                     onPlayerEvent(player)
@@ -100,23 +117,29 @@ class PlayerInteractor(
 
     private fun onPlayerEvent(player: Player) {
         val mediaId = player.currentMediaItem?.mediaId
-
-        playerSnapshotFlow.value = when {
+        val status = when {
             mediaId != null && player.isPlaying -> {
-                PlayerSnapshot(mediaId, PlayerStatusModel.PLAYING)
+                PlayerStatusModel.PLAYING
             }
             mediaId != null && player.isLoading -> {
-                PlayerSnapshot(mediaId, PlayerStatusModel.LOADING)
+                PlayerStatusModel.LOADING
             }
             mediaId != null -> {
-                PlayerSnapshot(mediaId, PlayerStatusModel.PAUSED)
+                PlayerStatusModel.PAUSED
             }
             player.isLoading -> {
-                PlayerSnapshot(status = PlayerStatusModel.LOADING)
+                PlayerStatusModel.LOADING
             }
             else -> {
-                PlayerSnapshot(status = PlayerStatusModel.IDLE)
+                PlayerStatusModel.IDLE
             }
+        }
+
+        playerSnapshotFlow.update { snapshot ->
+            snapshot.copy(
+                mediaId = mediaId,
+                status = status
+            )
         }
     }
 
@@ -162,6 +185,18 @@ class PlayerInteractor(
         controller?.seekTo(position)
     }
 
+    fun setRepeatMode(repeatMode: PlayerRepeatMode) {
+        playerConfigRepository.setRepeatMode(repeatMode.ordinal)
+        controller?.repeatMode = repeatMode.toSystemRepeatMode()
+        playerSnapshotFlow.update { snapshot -> snapshot.copy(repeatMode = repeatMode) }
+    }
+
+    fun setShuffleMode(shuffleMode: PlayerShuffleMode) {
+        playerConfigRepository.setShuffleMode(shuffleMode.ordinal)
+        controller?.shuffleModeEnabled = shuffleMode.toSystemShuffleMode()
+        playerSnapshotFlow.update { snapshot -> snapshot.copy(shuffleMode = shuffleMode) }
+    }
+
     private fun TrackModel.toMediaItem() = MediaItem.Builder()
         .setUri(playerUrl)
         .setMediaId(md5)
@@ -175,5 +210,18 @@ class PlayerInteractor(
     data class PlayerSnapshot(
         val mediaId: String? = null,
         val status: PlayerStatusModel = PlayerStatusModel.IDLE,
+        val repeatMode: PlayerRepeatMode = PlayerRepeatMode.OFF,
+        val shuffleMode: PlayerShuffleMode = PlayerShuffleMode.OFF,
     )
+
+    private fun PlayerRepeatMode.toSystemRepeatMode() = when (this) {
+        PlayerRepeatMode.OFF -> Player.REPEAT_MODE_OFF
+        PlayerRepeatMode.ON_SINGLE -> Player.REPEAT_MODE_ONE
+        PlayerRepeatMode.ON_SESSION -> Player.REPEAT_MODE_ALL
+    }
+
+    private fun PlayerShuffleMode.toSystemShuffleMode() = when (this) {
+        PlayerShuffleMode.OFF -> false
+        PlayerShuffleMode.ON -> true
+    }
 }

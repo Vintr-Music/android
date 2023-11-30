@@ -8,8 +8,8 @@ import pw.vintr.music.domain.library.model.album.AlbumModel
 import pw.vintr.music.domain.library.model.track.TrackModel
 import pw.vintr.music.domain.library.useCase.GetAlbumTracksUseCase
 import pw.vintr.music.domain.player.interactor.PlayerInteractor
-import pw.vintr.music.domain.player.model.PlayerSessionModel
-import pw.vintr.music.domain.player.model.PlayerStatusModel
+import pw.vintr.music.domain.player.model.session.PlayerSessionModel
+import pw.vintr.music.domain.player.model.state.PlayerStatusModel
 import pw.vintr.music.tools.extension.Comma
 import pw.vintr.music.tools.extension.Space
 import pw.vintr.music.tools.extension.withLoaded

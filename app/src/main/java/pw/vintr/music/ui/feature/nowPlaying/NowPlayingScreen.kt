@@ -41,12 +41,15 @@ import coil.request.ImageRequest
 import coil.size.Size
 import org.koin.androidx.compose.getViewModel
 import pw.vintr.music.R
-import pw.vintr.music.domain.player.model.PlayerStatusModel
+import pw.vintr.music.domain.player.model.config.PlayerRepeatMode
+import pw.vintr.music.domain.player.model.config.PlayerShuffleMode
+import pw.vintr.music.domain.player.model.state.PlayerStatusModel
 import pw.vintr.music.tools.extension.Dash
 import pw.vintr.music.tools.extension.Space
 import pw.vintr.music.ui.kit.button.ButtonPlayerState
 import pw.vintr.music.ui.kit.button.SimpleIconButton
 import pw.vintr.music.ui.kit.player.PlayerProgressBar
+import pw.vintr.music.ui.theme.Bee0
 import pw.vintr.music.ui.theme.Gilroy16
 import pw.vintr.music.ui.theme.Gilroy24
 import pw.vintr.music.ui.theme.VintrMusicExtendedTheme
@@ -165,6 +168,22 @@ fun NowPlayingScreen(viewModel: NowPlayingViewModel = getViewModel()) {
                 verticalAlignment = Alignment.CenterVertically,
             ) {
                 SimpleIconButton(
+                    iconRes = when (playerState.value.repeatMode) {
+                        PlayerRepeatMode.OFF,
+                        PlayerRepeatMode.ON_SESSION -> R.drawable.ic_repeat
+                        PlayerRepeatMode.ON_SINGLE -> R.drawable.ic_repeat_single
+                    },
+                    size = 40.dp,
+                    iconModifier = Modifier.size(28.dp),
+                    tint = when (playerState.value.repeatMode) {
+                        PlayerRepeatMode.OFF -> VintrMusicExtendedTheme.colors.textRegular
+                        PlayerRepeatMode.ON_SESSION,
+                        PlayerRepeatMode.ON_SINGLE -> Bee0
+                    },
+                    onClick = { viewModel.setNextRepeatMode(playerState.value.repeatMode) },
+                )
+                Spacer(modifier = Modifier.width(20.dp))
+                SimpleIconButton(
                     iconRes = R.drawable.ic_skip_backward,
                     size = 40.dp,
                     iconModifier = Modifier.size(28.dp),
@@ -175,9 +194,7 @@ fun NowPlayingScreen(viewModel: NowPlayingViewModel = getViewModel()) {
                     isPlaying = playerState.value.status == PlayerStatusModel.PLAYING,
                     onClick = {
                         when (playerState.value.status) {
-                            PlayerStatusModel.IDLE -> {
-                                // TODO: action
-                            }
+                            PlayerStatusModel.IDLE,
                             PlayerStatusModel.LOADING,
                             PlayerStatusModel.PAUSED -> {
                                 viewModel.resume()
@@ -194,6 +211,17 @@ fun NowPlayingScreen(viewModel: NowPlayingViewModel = getViewModel()) {
                     size = 40.dp,
                     iconModifier = Modifier.size(28.dp),
                     onClick = { viewModel.forward() }
+                )
+                Spacer(modifier = Modifier.width(20.dp))
+                SimpleIconButton(
+                    iconRes = R.drawable.ic_shuffle,
+                    size = 40.dp,
+                    iconModifier = Modifier.size(28.dp),
+                    tint = when (playerState.value.shuffleMode) {
+                        PlayerShuffleMode.OFF -> VintrMusicExtendedTheme.colors.textRegular
+                        PlayerShuffleMode.ON -> Bee0
+                    },
+                    onClick = { viewModel.setNextShuffleMode(playerState.value.shuffleMode) },
                 )
             }
         }

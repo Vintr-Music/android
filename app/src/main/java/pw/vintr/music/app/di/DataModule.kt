@@ -30,7 +30,9 @@ import pw.vintr.music.data.library.source.TrackRemoteDataSource
 import pw.vintr.music.data.mainPage.repository.MainPageRepository
 import pw.vintr.music.data.mainPage.source.MainPageRemoteDataSource
 import pw.vintr.music.data.player.cache.PlayerSessionCacheObject
+import pw.vintr.music.data.player.repository.PlayerConfigRepository
 import pw.vintr.music.data.player.repository.PlayerSessionRepository
+import pw.vintr.music.data.player.source.PlayerPreferencesDataStore
 import pw.vintr.music.data.player.source.PlayerSessionCacheDataStore
 import pw.vintr.music.data.server.repository.ServerRepository
 import pw.vintr.music.data.server.source.ServerPreferencesDataSource
@@ -160,4 +162,6 @@ val dataModule = module {
     // Player
     single { PlayerSessionCacheDataStore(get()) }
     single { PlayerSessionRepository(get()) }
+    single { PlayerPreferencesDataStore(get()) }
+    single { PlayerConfigRepository(get()) }
 }

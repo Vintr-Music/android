@@ -24,7 +24,7 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.Constraints
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.launch
-import pw.vintr.music.domain.player.model.PlayerStateHolderModel
+import pw.vintr.music.domain.player.model.state.PlayerStateHolderModel
 import pw.vintr.music.tools.composable.rememberSystemNavigationBarHeight
 import pw.vintr.music.ui.feature.nowPlaying.NowPlayingScreen
 import pw.vintr.music.ui.kit.dimen.DimensDp
