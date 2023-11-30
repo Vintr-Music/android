@@ -4,10 +4,10 @@ import android.os.Parcelable
 import io.realm.kotlin.ext.toRealmList
 import kotlinx.parcelize.IgnoredOnParcel
 import kotlinx.parcelize.Parcelize
-import pw.vintr.music.BuildConfig
 import pw.vintr.music.data.library.cache.track.TrackCacheObject
 import pw.vintr.music.data.library.dto.track.TrackDto
 import pw.vintr.music.domain.library.model.artist.ArtistModel
+import pw.vintr.music.tools.http.MediaUrlBuilder
 
 @Parcelize
 data class TrackModel(
@@ -18,10 +18,10 @@ data class TrackModel(
 ) : Parcelable {
 
     @IgnoredOnParcel
-    val playerUrl = BuildConfig.BASE_URL + "api/player/?key=$filePath"
+    val playerUrl = MediaUrlBuilder.player(filePath)
 
     @IgnoredOnParcel
-    val artworkUrl = BuildConfig.BASE_URL + "api/library/artworks/track?key=$filePath"
+    val artworkUrl = MediaUrlBuilder.artworkForTrack(filePath)
 
     fun toCacheObject() = TrackCacheObject(
         md5 = md5,

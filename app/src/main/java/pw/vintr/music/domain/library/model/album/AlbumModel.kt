@@ -4,9 +4,9 @@ import android.os.Parcelable
 import kotlinx.parcelize.IgnoredOnParcel
 import kotlinx.parcelize.Parcelize
 import pw.vintr.music.data.library.dto.album.AlbumDto
-import pw.vintr.music.BuildConfig
 import pw.vintr.music.data.library.cache.album.AlbumCacheObject
 import pw.vintr.music.domain.library.model.artist.ArtistModel
+import pw.vintr.music.tools.http.MediaUrlBuilder
 
 @Parcelize
 data class AlbumModel(
@@ -16,8 +16,10 @@ data class AlbumModel(
 ) : Parcelable {
 
     @IgnoredOnParcel
-    val artworkUrl = BuildConfig.BASE_URL +
-            "api/library/artworks/album?artist=${artist.name}&album=$name"
+    val artworkUrl: String = MediaUrlBuilder.artworkForAlbum(
+        artist = artist.name,
+        album = name
+    )
 
     fun toCacheObject() = AlbumCacheObject(
         artist = artist.name,
