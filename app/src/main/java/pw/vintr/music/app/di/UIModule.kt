@@ -13,6 +13,7 @@ import pw.vintr.music.ui.feature.menu.MenuViewModel
 import pw.vintr.music.ui.feature.nowPlaying.NowPlayingViewModel
 import pw.vintr.music.ui.feature.register.RegisterViewModel
 import pw.vintr.music.ui.feature.root.RootViewModel
+import pw.vintr.music.ui.feature.search.SearchViewModel
 import pw.vintr.music.ui.feature.serverSelection.ServerSelectionViewModel
 import pw.vintr.music.ui.feature.settings.SettingsViewModel
 import pw.vintr.music.ui.navigation.Navigator
@@ -27,6 +28,7 @@ val uiModule = module {
 
     viewModel { RootViewModel(get()) }
     viewModel { HomeViewModel(get()) }
+    viewModel { SearchViewModel() }
     viewModel { LibraryViewModel() }
     viewModel { ArtistListViewModel(get()) }
     viewModel { MenuViewModel(get()) }

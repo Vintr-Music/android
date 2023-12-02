@@ -26,4 +26,7 @@
     <string name="library">Library</string>
     <string name="library_artists">Artists</string>
     <string name="library_albums">Albums</string>
+
+    <string name="search_title">Search</string>
+    <string name="search_no_history_hint">Search history will be here</string>
 </resources>
