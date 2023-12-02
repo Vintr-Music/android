@@ -5,12 +5,14 @@ import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clipToBounds
@@ -32,7 +34,6 @@ import pw.vintr.music.ui.kit.player.BottomNowPlaying
 import pw.vintr.music.ui.kit.sliding.BottomSheetScaffold
 import pw.vintr.music.ui.kit.sliding.BottomSheetScaffoldState
 import pw.vintr.music.ui.kit.sliding.rememberBottomSheetScaffoldState
-import kotlin.math.max
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
@@ -66,16 +67,17 @@ fun NowPlayingLayout(
     val collapseProgress = (1 - expandProgress)
 
     // Nav bar dimens
-    val navBarHeightDp = if (expandProgress > 0.3f) {
+    val absoluteNavBarHeightDp = DimensDp.bottomNavigationHeight + bottomInset
+
+    val actualNavBarHeightDp = if (expandProgress > 0.3f) {
         0.dp
     } else {
-        DimensDp.bottomNavigationHeight + bottomInset
+        absoluteNavBarHeightDp
     }
-    val navBarHeightPx = with (density) { navBarHeightDp.toPx() }.toInt()
 
     // Nav bar animation
     val navBarAnimatedHeightDp = animateDpAsState(
-        targetValue = navBarHeightDp,
+        targetValue = actualNavBarHeightDp,
         animationSpec = tween(
             durationMillis = 150,
             easing = LinearEasing
@@ -88,90 +90,58 @@ fun NowPlayingLayout(
         CollapsingNavbarMeasurePolicy(navBarAnimatedHeightPx)
     }
 
-    Layout(
-        content = {
-            BottomSheetScaffold(
-                modifier = Modifier.fillMaxSize(),
-                scaffoldState = scaffoldState,
-                sheetContent = {
+    Box(modifier = modifier.fillMaxSize()) {
+        BottomSheetScaffold(
+            modifier = Modifier.fillMaxSize(),
+            scaffoldState = scaffoldState,
+            sheetContent = {
+                Box(
+                    modifier = Modifier
+                        .fillMaxSize()
+                ) {
                     Box(
                         modifier = Modifier
+                            .alpha(expandProgress)
                             .fillMaxSize()
                     ) {
-                        Box(
-                            modifier = Modifier
-                                .alpha(expandProgress)
-                                .fillMaxSize()
-                        ) {
-                            NowPlayingScreen()
-                        }
-                        BottomNowPlaying(
-                            modifier = Modifier
-                                .alpha(collapseProgress),
-                            track = state.currentTrack,
-                            playerStatus = state.status,
-                            onClick = {
-                                coroutineScope.launch {
-                                    scaffoldState.bottomSheetState.expand()
-                                }
-                            },
-                            onControlClick = onControlClick
-                        )
+                        NowPlayingScreen()
                     }
-                },
-                sheetBackgroundColor = MaterialTheme.colorScheme.background,
-                backgroundColor = Color.Transparent,
-                sheetElevation = 0.dp,
-                sheetPeekHeight = miniNowPlayingHeight.value,
-                content = {
-                    content(Modifier.padding(bottom = miniNowPlayingHeight.value))
-                },
-            )
-
-            Layout(
-                modifier = Modifier.clipToBounds(),
-                content = { bottomNavigation(Modifier) },
-                measurePolicy = measurePolicy
-            )
-        },
-        modifier = modifier
-    ) { measurables, constraints ->
-        val navBarConstraints = constraints.copy(
-            minWidth = 0,
-            minHeight = 0
+                    BottomNowPlaying(
+                        modifier = Modifier
+                            .alpha(collapseProgress),
+                        track = state.currentTrack,
+                        playerStatus = state.status,
+                        onClick = {
+                            coroutineScope.launch {
+                                scaffoldState.bottomSheetState.expand()
+                            }
+                        },
+                        onControlClick = onControlClick
+                    )
+                }
+            },
+            sheetBackgroundColor = MaterialTheme.colorScheme.background,
+            backgroundColor = Color.Transparent,
+            sheetElevation = 0.dp,
+            sheetPeekHeight = miniNowPlayingHeight.value,
+            sheetBottomPadding = actualNavBarHeightDp,
+            content = {
+                content(
+                    Modifier
+                        .fillMaxSize()
+                        .padding(bottom = absoluteNavBarHeightDp)
+                        .padding(bottom = miniNowPlayingHeight.value)
+                )
+            },
         )
-        val bodyConstraints = constraints.copy(
-            minWidth = 0,
-            minHeight = 0,
-            maxHeight = (constraints.maxHeight - navBarHeightPx).coerceAtLeast(0)
+        Layout(
+            modifier = Modifier
+                .fillMaxWidth()
+                .align(Alignment.BottomCenter)
+                .clipToBounds(),
+            content = { bottomNavigation(Modifier) },
+            measurePolicy = measurePolicy
         )
-
-        val navBarPlaceable = measurables[1].measure(navBarConstraints)
-
-        val bodyMeasurables = measurables.subList(0, measurables.size - 1)
-
-        val bodyPlaceableList = bodyMeasurables.map {
-            it.measure(bodyConstraints)
-        }
-
-        val navBarHeightActual = navBarPlaceable.height
-
-        val width = max(
-            navBarPlaceable.width,
-            bodyPlaceableList.maxOfOrNull { it.width } ?: 0
-        ).coerceIn(constraints.minWidth, constraints.maxWidth)
-
-        val height = max(
-            navBarHeightActual,
-            bodyPlaceableList.maxOfOrNull { it.height } ?: 0
-        ).coerceIn(constraints.minHeight, constraints.maxHeight)
-
-        layout(width, height) {
-            bodyPlaceableList.forEach { placeable ->
-                placeable.placeRelative(0, 0)
-            }
-            navBarPlaceable.placeRelative(0, height - navBarHeightActual)
-        }
     }
 }
 

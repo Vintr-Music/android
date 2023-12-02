@@ -315,7 +315,7 @@ class BottomSheetState @Deprecated(
 @ExperimentalMaterialApi
 fun rememberBottomSheetState(
     initialValue: BottomSheetValue,
-    animationSpec: AnimationSpec<Float> = SwipeableDefaults.AnimationSpec,
+    animationSpec: AnimationSpec<Float> = SpringSpec(stiffness = 1100f),
     confirmStateChange: (BottomSheetValue) -> Boolean = { true }
 ): BottomSheetState {
     val density = LocalDensity.current
@@ -399,6 +399,7 @@ fun BottomSheetScaffold(
     drawerScrimColor: Color = DrawerDefaults.scrimColor,
     backgroundColor: Color = MaterialTheme.colors.background,
     contentColor: Color = contentColorFor(backgroundColor),
+    sheetBottomPadding: Dp = 0.dp,
     content: @Composable (PaddingValues) -> Unit
 ) {
     // b/278692145 Remove this once deprecated methods without density are removed
@@ -409,7 +410,13 @@ fun BottomSheetScaffold(
         }
     }
 
-    val peekHeightPx = with(LocalDensity.current) { sheetPeekHeight.toPx() }
+    val peekHeightPx = with(LocalDensity.current) {
+        sheetPeekHeight.toPx()
+    }
+    val sheetBottomPaddingPx = with(LocalDensity.current) {
+        sheetBottomPadding.toPx().roundToInt()
+    }
+
     val child = @Composable {
         BottomSheetScaffoldLayout(
             topBar = topBar,
@@ -457,6 +464,7 @@ fun BottomSheetScaffold(
             },
             sheetOffset = { scaffoldState.bottomSheetState.requireOffset() },
             sheetPeekHeight = sheetPeekHeight,
+            sheetBottomPadding = sheetBottomPaddingPx,
             sheetState = scaffoldState.bottomSheetState,
             floatingActionButtonPosition = floatingActionButtonPosition
         )
@@ -570,6 +578,7 @@ private fun BottomSheetScaffoldLayout(
     floatingActionButton: (@Composable () -> Unit)?,
     snackbarHost: @Composable () -> Unit,
     sheetPeekHeight: Dp,
+    sheetBottomPadding: Int,
     floatingActionButtonPosition: FabPosition,
     sheetOffset: () -> Float,
     sheetState: BottomSheetState,
@@ -580,7 +589,7 @@ private fun BottomSheetScaffoldLayout(
         val looseConstraints = constraints.copy(minWidth = 0, minHeight = 0)
 
         val sheetPlaceables = subcompose(BottomSheetScaffoldLayoutSlot.Sheet) {
-            bottomSheet(layoutHeight)
+            bottomSheet(layoutHeight - sheetBottomPadding)
         }.map { it.measure(looseConstraints) }
         val sheetOffsetY = sheetOffset().roundToInt()
 
@@ -713,11 +722,8 @@ private fun BottomSheetScaffoldAnchorChangeCallback(
         }
     }
 
-@Suppress("PrivatePropertyName")
 private val FabSpacing = 16.dp
-@Suppress("PrivatePropertyName")
 private val BottomSheetScaffoldPositionalThreshold = 56.dp
-@Suppress("PrivatePropertyName")
 private val BottomSheetScaffoldVelocityThreshold = 125.dp
 
 /**
