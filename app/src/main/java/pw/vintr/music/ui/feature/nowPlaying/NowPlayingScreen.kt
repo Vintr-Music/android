@@ -5,6 +5,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -71,18 +72,26 @@ fun NowPlayingScreen(viewModel: NowPlayingViewModel = getViewModel()) {
             } ?: Color.Transparent
         }
 
-        AsyncImage(
-            modifier = Modifier.fillMaxSize(),
-            model = ImageRequest.Builder(LocalContext.current)
-                .data(track.artworkUrl)
-                .size(Size.ORIGINAL)
-                .crossfade(enable = true)
-                .allowHardware(enable = false)
-                .build(),
-            contentScale = ContentScale.Crop,
-            onSuccess = { bitmap = it.result.drawable.toBitmap() },
-            contentDescription = null
-        )
+        BoxWithConstraints(
+            modifier = Modifier.fillMaxSize()
+        ) {
+            AsyncImage(
+                modifier = Modifier.fillMaxSize(),
+                model = ImageRequest.Builder(LocalContext.current)
+                    .data(track.artworkUrl)
+                    .size(
+                        height = constraints.maxHeight,
+                        width = constraints.maxWidth
+                    )
+                    .crossfade(enable = true)
+                    .allowHardware(enable = false)
+                    .build(),
+                contentScale = ContentScale.Crop,
+                onSuccess = { bitmap = it.result.drawable.toBitmap() },
+                contentDescription = null
+            )
+        }
+
         Box(
             modifier = Modifier
                 .fillMaxSize()
