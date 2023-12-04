@@ -5,6 +5,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -28,6 +29,7 @@ fun TrackView(
     modifier: Modifier = Modifier,
     trackModel: TrackModel,
     isPlaying: Boolean = false,
+    contentPadding: PaddingValues = PaddingValues(vertical = 4.dp, horizontal = 20.dp),
     onMoreClick: () -> Unit = {},
     onClick: () -> Unit = {},
 ) {
@@ -45,7 +47,7 @@ fun TrackView(
             .fillMaxWidth()
             .background(backgroundColor.value)
             .clickable { onClick() }
-            .padding(vertical = 4.dp, horizontal = 20.dp),
+            .padding(contentPadding),
         horizontalArrangement = Arrangement.spacedBy(8.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {

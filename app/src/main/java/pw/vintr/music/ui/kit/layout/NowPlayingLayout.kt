@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.ime
 import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.ExperimentalMaterialApi
@@ -40,8 +41,12 @@ fun NowPlayingLayout(
     content: @Composable (Modifier) -> Unit,
 ) {
     val coroutineScope = rememberCoroutineScope()
+
     val bottomInset = with(LocalDensity.current) {
         WindowInsets.navigationBars.getBottom(density = this).toDp()
+    }
+    val keyboardInset = with(LocalDensity.current) {
+        WindowInsets.ime.getBottom(density = this).toDp()
     }
 
     val absoluteNavBarHeightDp = DimensDp.bottomNavigationHeight + bottomInset
@@ -105,7 +110,13 @@ fun NowPlayingLayout(
                 content(
                     Modifier
                         .fillMaxSize()
-                        .padding(bottom = miniNowPlayingHeight.value)
+                        .padding(
+                            bottom = if (miniNowPlayingHeight.value > keyboardInset) {
+                                miniNowPlayingHeight.value
+                            } else {
+                                keyboardInset
+                            }
+                        )
                 )
             },
         )

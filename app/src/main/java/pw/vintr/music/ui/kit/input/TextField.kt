@@ -29,6 +29,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import pw.vintr.music.tools.extension.Empty
+import pw.vintr.music.tools.extension.clearFocusOnKeyboardDismiss
 import pw.vintr.music.ui.theme.Gilroy11
 import pw.vintr.music.ui.theme.LocalVintrColors
 import pw.vintr.music.ui.theme.RubikRegular16
@@ -73,7 +74,8 @@ fun AppTextField(
                 .defaultMinSize(
                     minWidth = 64.dp,
                     minHeight = 40.dp
-                ),
+                )
+                .clearFocusOnKeyboardDismiss(),
             onValueChange = onValueChange,
             enabled = enabled,
             readOnly = readOnly,

@@ -79,6 +79,7 @@ fun RootScreen(
                 tabs.value.forEach { tab ->
                     composable(tab.route) {
                         TabNavigation(
+                            modifier = Modifier.fillMaxSize(),
                             rootScreen = tab.rootScreen,
                             navigatorType = tab.navigatorType,
                             scaffoldState = scaffoldState,
@@ -117,6 +118,7 @@ fun RootScreen(
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun TabNavigation(
+    modifier: Modifier = Modifier,
     rootScreen: Screen,
     navigatorType: NavigatorType,
     navigator: Navigator = rememberKoinInject(),
@@ -139,6 +141,7 @@ fun TabNavigation(
     }
 
     NavHost(
+        modifier = modifier,
         navController = navController,
         startDestination = rootScreen.route,
         enterTransition = { fadeIn(animationSpec = tween(TRANSITION_DURATION)) },

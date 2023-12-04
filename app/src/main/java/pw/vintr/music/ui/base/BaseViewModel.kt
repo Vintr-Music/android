@@ -35,11 +35,9 @@ abstract class BaseViewModel : ViewModel(), CoroutineScope, KoinComponent {
 
     protected fun <T> MutableStateFlow<BaseScreenState<T>>.loadWithStateHandling(
         block: suspend () -> T
-    ) {
-        launch(createExceptionHandler { value = BaseScreenState.Error() }) {
-            value = BaseScreenState.Loading()
-            value = BaseScreenState.Loaded(block())
-        }
+    ) = launch(createExceptionHandler { value = BaseScreenState.Error() }) {
+        value = BaseScreenState.Loading()
+        value = BaseScreenState.Loaded(block())
     }
 
     protected fun <T> Flow<T>.stateInThis(initialValue: T) = stateIn(

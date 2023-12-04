@@ -6,6 +6,7 @@ import org.koin.dsl.onClose
 import pw.vintr.music.domain.library.useCase.GetAlbumTracksUseCase
 import pw.vintr.music.domain.library.useCase.GetArtistAlbumsUseCase
 import pw.vintr.music.domain.library.useCase.GetArtistListUseCase
+import pw.vintr.music.domain.library.useCase.SearchLibraryUseCase
 import pw.vintr.music.domain.mainPage.useCase.GetMainPageContentUseCase
 import pw.vintr.music.domain.player.interactor.PlayerInteractor
 import pw.vintr.music.domain.server.useCase.GetSelectedServerIdUseCase
@@ -28,6 +29,7 @@ val domainModule = module {
     single { GetAlbumTracksUseCase(get()) }
     single { GetArtistListUseCase(get()) }
     single { GetArtistAlbumsUseCase(get()) }
+    single { SearchLibraryUseCase(get()) }
 
     single { PlayerInteractor(androidContext(), get(), get()) } onClose { it?.close() }
 }

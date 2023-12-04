@@ -165,6 +165,21 @@ class PlayerInteractor(
         controller?.play()
     }
 
+    suspend fun playQueue(tracks: List<TrackModel>, startIndex: Int = 0) {
+        controller?.stop()
+
+        playerSessionRepository.savePlayerSession(
+            session = PlayerSessionModel.Custom(tracks).toCacheObject()
+        )
+
+        controller?.setMediaItems(
+            tracks.map { it.toMediaItem() },
+            startIndex,
+            0
+        )
+        controller?.play()
+    }
+
     fun pause() {
         controller?.pause()
     }

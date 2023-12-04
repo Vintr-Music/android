@@ -23,9 +23,11 @@ import pw.vintr.music.data.library.cache.album.AlbumCacheObject
 import pw.vintr.music.data.library.cache.track.TrackCacheObject
 import pw.vintr.music.data.library.repository.AlbumRepository
 import pw.vintr.music.data.library.repository.ArtistRepository
+import pw.vintr.music.data.library.repository.SearchRepository
 import pw.vintr.music.data.library.repository.TrackRepository
 import pw.vintr.music.data.library.source.AlbumRemoteDataSource
 import pw.vintr.music.data.library.source.ArtistRemoteDataSource
+import pw.vintr.music.data.library.source.SearchRemoteDataSource
 import pw.vintr.music.data.library.source.TrackRemoteDataSource
 import pw.vintr.music.data.mainPage.repository.MainPageRepository
 import pw.vintr.music.data.mainPage.source.MainPageRemoteDataSource
@@ -158,6 +160,8 @@ val dataModule = module {
     single { ArtistRepository(get()) }
     single { AlbumRemoteDataSource(get()) }
     single { AlbumRepository(get()) }
+    single { SearchRemoteDataSource(get()) }
+    single { SearchRepository(get()) }
 
     // Player
     single { PlayerSessionCacheDataStore(get()) }
