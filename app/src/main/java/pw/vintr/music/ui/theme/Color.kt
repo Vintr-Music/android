@@ -16,3 +16,6 @@ val Gray3 = Color(0xFF828282)
 val Gray4 = Color(0xFFBDBDBD)
 val Gray5 = Color(0xFFE5E5ED)
 val Gray6 = Color(0xFFEDEDF4)
+
+val Card0 = Color(0xFF131313)
+val Card1 = Color(0xFFF9F9FB)

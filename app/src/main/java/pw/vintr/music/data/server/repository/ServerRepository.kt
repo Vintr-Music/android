@@ -10,6 +10,8 @@ class ServerRepository(
 
     suspend fun getServerList() = remoteDataSource.getServerList()
 
+    suspend fun getServerById(id: String) = remoteDataSource.getServerById(id)
+
     fun setSelectedServerId(serverId: String) = preferencesDataSource.setSelectedServerId(serverId)
 
     fun getSelectedServerId() = preferencesDataSource.getSelectedServerId()

@@ -2,20 +2,20 @@ package pw.vintr.music.app.main
 
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import pw.vintr.music.domain.server.useCase.GetSelectedServerIdUseCase
+import pw.vintr.music.domain.server.useCase.GetIsServerSelectedUseCase
 import pw.vintr.music.domain.user.useCase.GetAuthorizeStateUseCase
 import pw.vintr.music.ui.base.BaseViewModel
 
 class MainViewModel(
     private val getAuthorizeStateUseCase: GetAuthorizeStateUseCase,
-    private val getSelectedServerIdUseCase: GetSelectedServerIdUseCase
+    private val getSelectedServerIdUseCase: GetIsServerSelectedUseCase
 ) : BaseViewModel() {
 
     val initialState = MutableStateFlow(value = getInitialState()).asStateFlow()
 
     private fun getInitialState(): AppInitialState {
         val isAuthorized = getAuthorizeStateUseCase.invoke()
-        val serverSelected = !getSelectedServerIdUseCase.invoke().isNullOrBlank()
+        val serverSelected = getSelectedServerIdUseCase.invoke()
 
         return when {
             isAuthorized && serverSelected -> {

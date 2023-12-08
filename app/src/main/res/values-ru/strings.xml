@@ -1,19 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!--Common-->
     <string name="common_confirm">Подтвердить</string>
     <string name="common_data_error">Ошибка загрузки данных</string>
     <string name="common_retry">Повторить</string>
 
-    <!--Login Screen-->
     <string name="password">Пароль</string>
     <string name="login">Войти</string>
     <string name="register">Регистрация</string>
 
-    <!--Select Server Screen-->
     <string name="select_server">Выбрать сервер</string>
     <string name="add_new_server">Добавить новый</string>
 
+    <string name="selected_server">Выбранный сервер</string>
     <string name="settings">Настройки</string>
     <string name="settings_description">Кастомизация и интеграции</string>
 

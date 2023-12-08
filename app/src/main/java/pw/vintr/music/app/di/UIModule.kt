@@ -31,7 +31,7 @@ val uiModule = module {
     viewModel { SearchViewModel(get(), get()) }
     viewModel { LibraryViewModel() }
     viewModel { ArtistListViewModel(get()) }
-    viewModel { MenuViewModel(get()) }
+    viewModel { MenuViewModel(get(), get()) }
     viewModel { SettingsViewModel() }
     viewModel { params -> AlbumDetailsViewModel(params.get(), get(), get()) }
     viewModel { params -> ArtistDetailsViewModel(params.get(), get()) }
