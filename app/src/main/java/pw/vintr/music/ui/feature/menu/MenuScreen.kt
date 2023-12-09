@@ -51,6 +51,8 @@ fun MenuScreen(
             state = screenState.value,
             errorRetryAction = { viewModel.loadData() },
         ) { state ->
+            val screenData = state.data
+
             Column(
                 modifier = Modifier
                     .fillMaxSize()
@@ -60,7 +62,7 @@ fun MenuScreen(
                 Spacer(modifier = Modifier.height(40.dp))
                 Text(
                     modifier = Modifier.padding(horizontal = 20.dp),
-                    text = state.user.fullName,
+                    text = screenData.user.fullName,
                     style = Gilroy32,
                     color = VintrMusicExtendedTheme.colors.textRegular,
                 )
@@ -87,7 +89,7 @@ fun MenuScreen(
                             style = Gilroy16,
                             color = VintrMusicExtendedTheme.colors.textRegular
                         )
-                        ServerItem(server = state.server)
+                        ServerItem(server = screenData.server)
                     }
                     Icon(
                         painter = painterResource(id = R.drawable.ic_forward),

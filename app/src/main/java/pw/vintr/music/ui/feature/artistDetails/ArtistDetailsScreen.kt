@@ -53,7 +53,9 @@ fun ArtistDetailsScreen(
                 )
             },
             errorRetryAction = { viewModel.loadData() },
-        ) { screenData ->
+        ) { state ->
+            val screenData = state.data
+
             CollapsingLayout(
                 modifier = Modifier
                     .fillMaxSize(),

@@ -72,7 +72,9 @@ fun SearchScreen(viewModel: SearchViewModel = getViewModel()) {
 
         ScreenStateLayout(
             state = contentState.value,
-            loaded = { content ->
+            loaded = { state ->
+                val screenData = state.data
+
                 LazyVerticalGrid(
                     modifier = Modifier
                         .fillMaxSize(),
@@ -82,7 +84,7 @@ fun SearchScreen(viewModel: SearchViewModel = getViewModel()) {
                     contentPadding = PaddingValues(all = 20.dp)
                 ) {
                     // Artists
-                    if (content.artists.isNotEmpty()) {
+                    if (screenData.artists.isNotEmpty()) {
                         item(
                             key = TAG_ARTISTS_TITLE,
                             span = { GridItemSpan(currentLineSpan = 3) }
@@ -94,7 +96,7 @@ fun SearchScreen(viewModel: SearchViewModel = getViewModel()) {
                             )
                         }
                         items(
-                            content.artists.take(MAX_DISPLAY_ARTISTS)
+                            screenData.artists.take(MAX_DISPLAY_ARTISTS)
                         ) { artist ->
                             ArtistView(
                                 artist = artist,
@@ -104,7 +106,7 @@ fun SearchScreen(viewModel: SearchViewModel = getViewModel()) {
                     }
 
                     // Albums
-                    if (content.albums.isNotEmpty()) {
+                    if (screenData.albums.isNotEmpty()) {
                         item(
                             key = TAG_ALBUMS_TITLE,
                             span = { GridItemSpan(currentLineSpan = 3) }
@@ -116,7 +118,7 @@ fun SearchScreen(viewModel: SearchViewModel = getViewModel()) {
                             )
                         }
                         items(
-                            content.albums.take(MAX_DISPLAY_ALBUMS)
+                            screenData.albums.take(MAX_DISPLAY_ALBUMS)
                         ) { album ->
                             AlbumView(
                                 album = album,
@@ -126,7 +128,7 @@ fun SearchScreen(viewModel: SearchViewModel = getViewModel()) {
                     }
 
                     // Tracks
-                    if (content.tracks.isNotEmpty()) {
+                    if (screenData.tracks.isNotEmpty()) {
                         item(
                             key = TAG_TRACKS_TITLE,
                             span = { GridItemSpan(currentLineSpan = 3) }
@@ -138,7 +140,7 @@ fun SearchScreen(viewModel: SearchViewModel = getViewModel()) {
                             )
                         }
                         items(
-                            content.tracks,
+                            screenData.tracks,
                             span = { GridItemSpan(currentLineSpan = 3) }
                         ) { track ->
                             TrackView(
@@ -146,7 +148,7 @@ fun SearchScreen(viewModel: SearchViewModel = getViewModel()) {
                                 contentPadding = PaddingValues(vertical = 4.dp),
                                 onClick = {
                                     viewModel.onTrackClicked(
-                                        tracks = content.tracks,
+                                        tracks = screenData.tracks,
                                         track = track
                                     )
                                 }

@@ -25,13 +25,17 @@ class HomeViewModel(
     }
 
     fun loadData() {
-        _screenState.loadWithStateHandling {
-            HomeScreenData(
-                welcome = MainPageWelcomeModel.getByNowTime(),
-                items = getMainPageContentUseCase.invoke(),
-            )
-        }
+        _screenState.loadWithStateHandling { loadScreenData() }
     }
+
+    fun refreshData() {
+        _screenState.refreshWithStateHandling { loadScreenData() }
+    }
+
+    private suspend fun loadScreenData() = HomeScreenData(
+        welcome = MainPageWelcomeModel.getByNowTime(),
+        items = getMainPageContentUseCase.invoke(),
+    )
 
     fun onAlbumClick(album: AlbumModel) {
         navigator.forward(Screen.AlbumDetails, Screen.AlbumDetails.arguments(album))

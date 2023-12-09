@@ -22,8 +22,12 @@ class ArtistListViewModel(
         loadData()
     }
 
-    private fun loadData() {
+    fun loadData() {
         _screenState.loadWithStateHandling { getArtistListUseCase.invoke() }
+    }
+
+    fun refreshData() {
+        _screenState.refreshWithStateHandling { getArtistListUseCase.invoke() }
     }
 
     fun onArtistClick(artist: ArtistModel) {

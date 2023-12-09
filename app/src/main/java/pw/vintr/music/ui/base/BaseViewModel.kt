@@ -40,6 +40,17 @@ abstract class BaseViewModel : ViewModel(), CoroutineScope, KoinComponent {
         value = BaseScreenState.Loaded(block())
     }
 
+    protected fun <T> MutableStateFlow<BaseScreenState<T>>.refreshWithStateHandling(
+        block: suspend () -> T
+    ) = launch(createExceptionHandler { value = BaseScreenState.Error() }) {
+        val lockedValue = value
+
+        if (lockedValue is BaseScreenState.Loaded) {
+            value = BaseScreenState.Loaded(lockedValue.data, isRefreshing = true)
+            value = BaseScreenState.Loaded(block())
+        }
+    }
+
     protected fun <T> Flow<T>.stateInThis(initialValue: T) = stateIn(
         scope = this@BaseViewModel,
         started = SharingStarted.Lazily,

@@ -6,5 +6,8 @@ interface BaseScreenState<T> {
 
     class Error<T> : BaseScreenState<T>
 
-    data class Loaded<T>(val data: T) : BaseScreenState<T>
+    data class Loaded<T>(
+        val data: T,
+        val isRefreshing: Boolean = false,
+    ) : BaseScreenState<T>
 }

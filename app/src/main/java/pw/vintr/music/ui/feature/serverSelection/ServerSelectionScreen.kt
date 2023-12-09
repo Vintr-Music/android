@@ -54,6 +54,8 @@ fun ServerSelectionScreen(
             state = screenState.value,
             errorRetryAction = { viewModel.loadData() },
         ) { state ->
+            val screenData = state.data
+
             Column(
                 modifier = Modifier
                     .fillMaxSize()
@@ -67,10 +69,10 @@ fun ServerSelectionScreen(
                     ),
                     verticalArrangement = Arrangement.spacedBy(28.dp),
                 ) {
-                    items(state.servers) { server ->
+                    items(screenData.servers) { server ->
                         ServerSelectableItem(
                             server = server,
-                            selected = state.selection == server,
+                            selected = screenData.selection == server,
                             onClick = { viewModel.selectServer(server) },
                         )
                     }
@@ -78,7 +80,7 @@ fun ServerSelectionScreen(
                 ButtonRegular(
                     modifier = Modifier.padding(horizontal = 20.dp),
                     text = stringResource(id = R.string.common_confirm),
-                    enabled = state.formIsValid,
+                    enabled = screenData.formIsValid,
                     onClick = { viewModel.confirmSelection() },
                 )
                 Spacer(modifier = Modifier.height(20.dp))
