@@ -30,6 +30,7 @@ import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.unit.dp
 import org.koin.androidx.compose.getViewModel
 import pw.vintr.music.R
+import pw.vintr.music.tools.extension.escapePadding
 import pw.vintr.music.ui.kit.input.AppTextField
 import pw.vintr.music.ui.kit.layout.ScreenStateLayout
 import pw.vintr.music.ui.kit.library.AlbumView
@@ -42,8 +43,12 @@ private const val TAG_ARTISTS_TITLE = "tag-artists-title"
 private const val TAG_ALBUMS_TITLE = "tag-albums-title"
 private const val TAG_TRACKS_TITLE = "tag-tracks-title"
 
-private const val MAX_DISPLAY_ARTISTS = 9
-private const val MAX_DISPLAY_ALBUMS = 9
+private const val MAX_DISPLAY_ARTISTS = 6
+private const val MAX_DISPLAY_ALBUMS = 6
+
+private const val COLUMN_COUNT = 3
+
+private const val SPACING_DP = 20
 
 @Composable
 fun SearchScreen(viewModel: SearchViewModel = getViewModel()) {
@@ -55,6 +60,7 @@ fun SearchScreen(viewModel: SearchViewModel = getViewModel()) {
     ) {
         val contentState = viewModel.contentState.collectAsState()
         val queryState = viewModel.queryState.collectAsState()
+        val playerState = viewModel.playerState.collectAsState()
 
         Spacer(modifier = Modifier.height(20.dp))
         AppTextField(
@@ -80,18 +86,23 @@ fun SearchScreen(viewModel: SearchViewModel = getViewModel()) {
                 LazyVerticalGrid(
                     modifier = Modifier
                         .fillMaxSize(),
-                    columns = GridCells.Fixed(count = 3),
-                    verticalArrangement = Arrangement.spacedBy(20.dp),
-                    horizontalArrangement = Arrangement.spacedBy(20.dp),
-                    contentPadding = PaddingValues(all = 20.dp)
+                    columns = GridCells.Fixed(count = COLUMN_COUNT),
+                    verticalArrangement = Arrangement.spacedBy(SPACING_DP.dp),
+                    horizontalArrangement = Arrangement.spacedBy(SPACING_DP.dp),
+                    contentPadding = PaddingValues(
+                        start = SPACING_DP.dp,
+                        end = SPACING_DP.dp,
+                        bottom = SPACING_DP.dp
+                    )
                 ) {
                     // Artists
                     if (screenData.artists.isNotEmpty()) {
                         item(
                             key = TAG_ARTISTS_TITLE,
-                            span = { GridItemSpan(currentLineSpan = 3) }
+                            span = { GridItemSpan(currentLineSpan = COLUMN_COUNT) }
                         ) {
                             Text(
+                                modifier = Modifier.padding(top = 20.dp),
                                 text = stringResource(id = R.string.search_artists_title),
                                 style = Gilroy18,
                                 color = VintrMusicExtendedTheme.colors.textRegular
@@ -111,16 +122,17 @@ fun SearchScreen(viewModel: SearchViewModel = getViewModel()) {
                     if (screenData.albums.isNotEmpty()) {
                         item(
                             key = TAG_ALBUMS_TITLE,
-                            span = { GridItemSpan(currentLineSpan = 3) }
+                            span = { GridItemSpan(currentLineSpan = COLUMN_COUNT) }
                         ) {
                             Text(
+                                modifier = Modifier.padding(top = 20.dp),
                                 text = stringResource(id = R.string.search_albums_title),
                                 style = Gilroy18,
                                 color = VintrMusicExtendedTheme.colors.textRegular
                             )
                         }
                         items(
-                            screenData.albums.take(MAX_DISPLAY_ALBUMS)
+                            screenData.albums.take(MAX_DISPLAY_ALBUMS),
                         ) { album ->
                             AlbumView(
                                 album = album,
@@ -133,21 +145,24 @@ fun SearchScreen(viewModel: SearchViewModel = getViewModel()) {
                     if (screenData.tracks.isNotEmpty()) {
                         item(
                             key = TAG_TRACKS_TITLE,
-                            span = { GridItemSpan(currentLineSpan = 3) }
+                            span = { GridItemSpan(currentLineSpan = COLUMN_COUNT) }
                         ) {
                             Text(
-                                text = stringResource(id = R.string.search_albums_title),
+                                modifier = Modifier.padding(top = 20.dp),
+                                text = stringResource(id = R.string.search_tracks_title),
                                 style = Gilroy18,
                                 color = VintrMusicExtendedTheme.colors.textRegular
                             )
                         }
                         items(
                             screenData.tracks,
-                            span = { GridItemSpan(currentLineSpan = 3) }
+                            span = { GridItemSpan(currentLineSpan = COLUMN_COUNT) }
                         ) { track ->
                             TrackView(
+                                modifier = Modifier
+                                    .escapePadding(horizontal = SPACING_DP.dp),
                                 trackModel = track,
-                                contentPadding = PaddingValues(vertical = 4.dp),
+                                isPlaying = playerState.value.currentTrack == track,
                                 onClick = {
                                     viewModel.onTrackClicked(
                                         tracks = screenData.tracks,

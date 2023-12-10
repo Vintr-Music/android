@@ -11,7 +11,12 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.composed
 import androidx.compose.ui.focus.onFocusEvent
+import androidx.compose.ui.layout.layout
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.offset
 
 @OptIn(ExperimentalLayoutApi::class)
 fun Modifier.clearFocusOnKeyboardDismiss(): Modifier = composed {
@@ -35,5 +40,21 @@ fun Modifier.clearFocusOnKeyboardDismiss(): Modifier = composed {
                 keyboardAppearedSinceLastFocused = false
             }
         }
+    }
+}
+
+fun Modifier.escapePadding(horizontal: Dp = 0.dp, vertical: Dp = 0.dp) = composed {
+    val density = LocalDensity.current
+    val horizontalPx = with(density) { horizontal.roundToPx() }
+    val verticalPx = with(density) { vertical.roundToPx() }
+
+    layout { measurable, constraints ->
+        val looseConstraints = constraints.offset(
+            horizontal = horizontalPx * 2,
+            vertical = verticalPx * 2
+        )
+        val placeable = measurable.measure(looseConstraints)
+
+        layout(placeable.width, placeable.height) { placeable.placeRelative(x = 0, y = 0) }
     }
 }

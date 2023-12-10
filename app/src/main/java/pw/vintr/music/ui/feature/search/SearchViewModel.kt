@@ -10,6 +10,7 @@ import pw.vintr.music.domain.library.model.search.SearchContent
 import pw.vintr.music.domain.library.model.track.TrackModel
 import pw.vintr.music.domain.library.useCase.SearchLibraryUseCase
 import pw.vintr.music.domain.player.interactor.PlayerInteractor
+import pw.vintr.music.domain.player.model.state.PlayerStateHolderModel
 import pw.vintr.music.tools.extension.Empty
 import pw.vintr.music.ui.base.BaseScreenState
 import pw.vintr.music.ui.base.BaseViewModel
@@ -27,6 +28,7 @@ class SearchViewModel(
 
     val queryState = _queryState.asStateFlow()
     val contentState = _contentState.asStateFlow()
+    val playerState = playerInteractor.playerState.stateInThis(PlayerStateHolderModel())
 
     private var searchJob: Job? = null
 

@@ -39,9 +39,9 @@ class AlbumDetailsViewModel(
                 AlbumPlayingState.Paused(it.currentTrack)
             }
         } else {
-            AlbumPlayingState.Idle
+            AlbumPlayingState.Idle(it.currentTrack)
         }
-    }.stateInThis(AlbumPlayingState.Idle)
+    }.stateInThis(AlbumPlayingState.Idle())
 
     val screenState = _screenState.asStateFlow()
 
@@ -93,10 +93,7 @@ sealed interface AlbumPlayingState {
 
     val playingTrack: TrackModel?
 
-    object Idle : AlbumPlayingState {
-
-        override val playingTrack: TrackModel? = null
-    }
+    data class Idle(override val playingTrack: TrackModel? = null) : AlbumPlayingState
 
     data class Paused(override val playingTrack: TrackModel?) : AlbumPlayingState
 
