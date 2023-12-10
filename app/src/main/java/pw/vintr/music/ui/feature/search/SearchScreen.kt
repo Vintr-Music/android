@@ -66,6 +66,8 @@ fun SearchScreen(viewModel: SearchViewModel = getViewModel()) {
                 imeAction = ImeAction.Search,
                 capitalization = KeyboardCapitalization.Sentences
             ),
+            showClearButton = queryState.value.isNotEmpty(),
+            actionOnClear = { viewModel.clearSearch() },
             actionOnDone = { viewModel.performSearch() },
             leadingIconRes = R.drawable.ic_search
         )

@@ -48,6 +48,13 @@ class SearchViewModel(
         }
     }
 
+    fun clearSearch() {
+        searchJob?.cancel()
+
+        _queryState.value = String.Empty
+        _contentState.value = SearchContentState.Empty
+    }
+
     fun onArtistClick(artist: ArtistModel) {
         navigator.forward(Screen.ArtistDetails, Screen.ArtistDetails.arguments(artist))
     }

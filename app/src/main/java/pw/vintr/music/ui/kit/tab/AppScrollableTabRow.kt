@@ -46,6 +46,7 @@ fun AppScrollableTabRow(
                 color = Bee0
             )
         },
+        divider = {},
         backgroundColor = Color.Transparent,
     ) {
         tabs.forEachIndexed { tabIndex, tab ->

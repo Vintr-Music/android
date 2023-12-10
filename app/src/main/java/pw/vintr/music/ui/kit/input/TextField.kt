@@ -28,8 +28,10 @@ import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
+import pw.vintr.music.R
 import pw.vintr.music.tools.extension.Empty
 import pw.vintr.music.tools.extension.clearFocusOnKeyboardDismiss
+import pw.vintr.music.ui.kit.button.SimpleIconButton
 import pw.vintr.music.ui.theme.Gilroy11
 import pw.vintr.music.ui.theme.LocalVintrColors
 import pw.vintr.music.ui.theme.RubikRegular16
@@ -47,6 +49,8 @@ fun AppTextField(
     singleLine: Boolean = true,
     enabled: Boolean = true,
     readOnly: Boolean = false,
+    showClearButton: Boolean = false,
+    actionOnClear: (() -> Unit) = {},
     actionOnDone: ((String) -> Unit)? = null,
     visualTransformation: VisualTransformation = VisualTransformation.None,
 ) {
@@ -102,6 +106,7 @@ fun AppTextField(
                     modifier = Modifier.padding(horizontal = 12.dp),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
+                    // Leading icon
                     leadingIconRes?.let { res ->
                         Icon(
                             modifier = Modifier.size(20.dp),
@@ -111,6 +116,8 @@ fun AppTextField(
                         )
                         Spacer(modifier = Modifier.width(10.dp))
                     }
+
+                    // Text field
                     Box(
                         modifier = Modifier.weight(1f),
                     ) {
@@ -123,6 +130,16 @@ fun AppTextField(
                         }
 
                         innerTextField()
+                    }
+
+                    // Clear button
+                    if (showClearButton) {
+                        Spacer(modifier = Modifier.width(10.dp))
+                        SimpleIconButton(
+                            iconRes = R.drawable.ic_clear,
+                            tint = LocalVintrColors.current.textFieldHint,
+                            onClick = actionOnClear
+                        )
                     }
                 }
             }
