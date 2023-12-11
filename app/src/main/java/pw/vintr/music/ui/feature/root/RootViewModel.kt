@@ -75,6 +75,12 @@ class RootViewModel(
         navigator.switchNavigatorType(navigatorType)
     }
 
+    fun restoreNavigatorType(route: String) {
+        tabs
+            .find { it.route == route }
+            ?.let { setNavigatorType(it.navigatorType) }
+    }
+
     fun onNowPlayingControlClick(state: PlayerStateHolderModel) {
         when (state.status) {
             PlayerStatusModel.IDLE,

@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
@@ -60,6 +61,14 @@ fun RootScreen(
     val tabs = viewModel.bottomTabs.collectAsState()
     val playerState = viewModel.playerStateFlow.collectAsState()
     val scaffoldState = rememberBottomSheetScaffoldState()
+
+    // Restore navigator type in case of "warm start"
+    LaunchedEffect(key1 = true) {
+        val navBackStackEntry = navController.currentBackStackEntry
+        val currentDestination = navBackStackEntry?.destination
+
+        currentDestination?.route?.let { viewModel.restoreNavigatorType(it) }
+    }
 
     NowPlayingLayout(
         modifier = Modifier
