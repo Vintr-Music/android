@@ -39,6 +39,7 @@ import pw.vintr.music.ui.theme.RubikRegular16
 @Composable
 fun AppTextField(
     modifier: Modifier = Modifier,
+    textFieldModifier: Modifier = Modifier,
     value: String = String.Empty,
     onValueChange: (String) -> Unit = {},
     hint: String = String.Empty,
@@ -69,7 +70,7 @@ fun AppTextField(
         }
         BasicTextField(
             value = value,
-            modifier = Modifier
+            modifier = textFieldModifier
                 .fillMaxWidth()
                 .background(
                     LocalVintrColors.current.textFieldBackground,

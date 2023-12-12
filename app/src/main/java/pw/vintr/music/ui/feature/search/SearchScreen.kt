@@ -21,8 +21,11 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
@@ -62,9 +65,14 @@ fun SearchScreen(viewModel: SearchViewModel = getViewModel()) {
         val queryState = viewModel.queryState.collectAsState()
         val playerState = viewModel.playerState.collectAsState()
 
+        val focusRequester = remember { FocusRequester() }
+
         Spacer(modifier = Modifier.height(20.dp))
         AppTextField(
-            modifier = Modifier.padding(horizontal = 20.dp),
+            modifier = Modifier
+                .padding(horizontal = 20.dp),
+            textFieldModifier = Modifier
+                .focusRequester(focusRequester),
             hint = stringResource(id = R.string.search_title),
             value = queryState.value,
             onValueChange = { viewModel.changeQuery(it) },
@@ -73,7 +81,10 @@ fun SearchScreen(viewModel: SearchViewModel = getViewModel()) {
                 capitalization = KeyboardCapitalization.Sentences
             ),
             showClearButton = queryState.value.isNotEmpty(),
-            actionOnClear = { viewModel.clearSearch() },
+            actionOnClear = {
+                viewModel.clearSearch()
+                focusRequester.requestFocus()
+            },
             actionOnDone = { viewModel.performSearch() },
             leadingIconRes = R.drawable.ic_search
         )
@@ -156,13 +167,16 @@ fun SearchScreen(viewModel: SearchViewModel = getViewModel()) {
                         }
                         items(
                             screenData.tracks,
-                            span = { GridItemSpan(currentLineSpan = COLUMN_COUNT) }
+                            span = { GridItemSpan(currentLineSpan = COLUMN_COUNT) },
+                            key = { it.md5 }
                         ) { track ->
                             TrackView(
                                 modifier = Modifier
                                     .escapePadding(horizontal = SPACING_DP.dp),
                                 trackModel = track,
                                 isPlaying = playerState.value.currentTrack == track,
+                                showArtwork = true,
+                                contentPadding = PaddingValues(horizontal = 20.dp),
                                 onClick = {
                                     viewModel.onTrackClicked(
                                         tracks = screenData.tracks,
