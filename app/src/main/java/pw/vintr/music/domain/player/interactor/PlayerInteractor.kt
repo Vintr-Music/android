@@ -200,6 +200,11 @@ class PlayerInteractor(
         controller?.seekTo(position)
     }
 
+    fun destroySession() {
+        controller?.stop()
+        controller?.clearMediaItems()
+    }
+
     fun setRepeatMode(repeatMode: PlayerRepeatMode) {
         playerConfigRepository.setRepeatMode(repeatMode.ordinal)
         controller?.repeatMode = repeatMode.toSystemRepeatMode()

@@ -2,6 +2,7 @@ package pw.vintr.music.ui.kit.modifier
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -13,7 +14,10 @@ import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.unit.dp
 import pw.vintr.music.ui.theme.VintrMusicExtendedTheme
 
-fun Modifier.cardContainer(shape: Shape = RoundedCornerShape(20.dp)) = composed {
+fun Modifier.cardContainer(
+    shape: Shape = RoundedCornerShape(20.dp),
+    onClick: (() -> Unit)? = null
+) = composed {
     val backgroundColor = VintrMusicExtendedTheme.colors.cardBackground
     val strokeColor = VintrMusicExtendedTheme.colors.cardStroke
 
@@ -21,5 +25,6 @@ fun Modifier.cardContainer(shape: Shape = RoundedCornerShape(20.dp)) = composed 
         .clip(shape)
         .background(backgroundColor)
         .border(1.dp, SolidColor(strokeColor), shape)
+        .clickable(enabled = onClick != null) { onClick?.invoke() }
         .padding(20.dp)
 }

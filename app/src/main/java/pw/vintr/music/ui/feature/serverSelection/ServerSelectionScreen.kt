@@ -6,10 +6,12 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.statusBars
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -17,11 +19,9 @@ import androidx.compose.material.Text
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import org.koin.androidx.compose.getViewModel
@@ -32,23 +32,37 @@ import pw.vintr.music.ui.kit.button.ButtonText
 import pw.vintr.music.ui.kit.server.ServerSelectableItem
 import pw.vintr.music.ui.kit.layout.ScreenStateLayout
 import pw.vintr.music.ui.kit.toolbar.ToolbarPrimaryMount
+import pw.vintr.music.ui.kit.toolbar.ToolbarRegular
 import pw.vintr.music.ui.theme.Gilroy32
 
 @Composable
 fun ServerSelectionScreen(
+    usePrimaryMountToolbar: Boolean = true,
     viewModel: ServerSelectionViewModel = getViewModel()
 ) {
-    val barHeight by remember { mutableStateOf(200.dp) }
+    val statusBarHeight = with (LocalDensity.current) {
+        WindowInsets.statusBars.getTop(density = this).toDp()
+    }
+    val barHeight = statusBarHeight + 120.dp
     val screenState = viewModel.screenState.collectAsState()
 
-    StatusBarEffect(useDarkIcons = true)
+    if (usePrimaryMountToolbar) {
+        StatusBarEffect(useDarkIcons = true)
+    }
 
-    Box(
+    Column(
         modifier = Modifier
             .background(MaterialTheme.colorScheme.background)
             .fillMaxSize()
     ) {
-        SelectServerBar(modifier = Modifier.height(barHeight))
+        if (usePrimaryMountToolbar) {
+            SelectServerBar(modifier = Modifier.height(barHeight))
+        } else {
+            ToolbarRegular(
+                title = stringResource(id = R.string.servers),
+                onBackPressed = { viewModel.navigateBack() }
+            )
+        }
 
         ScreenStateLayout(
             state = screenState.value,
@@ -63,10 +77,7 @@ fun ServerSelectionScreen(
             ) {
                 LazyColumn(
                     modifier = Modifier.weight(1f),
-                    contentPadding = PaddingValues(
-                        top = barHeight + 24.dp,
-                        bottom = 24.dp
-                    ),
+                    contentPadding = PaddingValues(vertical = 24.dp),
                     verticalArrangement = Arrangement.spacedBy(28.dp),
                 ) {
                     items(screenData.servers) { server ->
@@ -101,7 +112,10 @@ private fun SelectServerBar(modifier: Modifier) {
         modifier = modifier,
         contentAlignment = Alignment.TopStart
     ) {
-        ToolbarPrimaryMount()
+        ToolbarPrimaryMount(
+            leftInset = 40.dp,
+            rightInset = 60.dp
+        )
         Text(
             modifier = Modifier
                 .statusBarsPadding()

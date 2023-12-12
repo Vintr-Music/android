@@ -73,7 +73,7 @@ fun MenuScreen(
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(20.dp)
-                        .cardContainer(),
+                        .cardContainer(onClick = { viewModel.openServerSelection() }),
                     horizontalArrangement = Arrangement.spacedBy(20.dp),
                     verticalAlignment = Alignment.CenterVertically
                 ) {

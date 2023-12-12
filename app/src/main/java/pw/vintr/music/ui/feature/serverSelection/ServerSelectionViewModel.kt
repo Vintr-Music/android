@@ -2,18 +2,23 @@ package pw.vintr.music.ui.feature.serverSelection
 
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import pw.vintr.music.domain.player.interactor.PlayerInteractor
 import pw.vintr.music.domain.server.model.ServerModel
+import pw.vintr.music.domain.server.useCase.GetSelectedServerUseCase
 import pw.vintr.music.domain.server.useCase.GetServerListUseCase
 import pw.vintr.music.domain.server.useCase.SelectServerUseCase
 import pw.vintr.music.tools.extension.updateLoaded
 import pw.vintr.music.tools.extension.withLoaded
 import pw.vintr.music.ui.base.BaseScreenState
 import pw.vintr.music.ui.base.BaseViewModel
+import pw.vintr.music.ui.navigation.NavigatorType
 import pw.vintr.music.ui.navigation.Screen
 
 class ServerSelectionViewModel(
     private val getServerListUseCase: GetServerListUseCase,
+    private val getSelectedServerUseCase: GetSelectedServerUseCase,
     private val selectServerUseCase: SelectServerUseCase,
+    private val playerInteractor: PlayerInteractor
 ) : BaseViewModel() {
 
     private val _screenState = MutableStateFlow<BaseScreenState<ServerSelectionScreenData>>(
@@ -28,7 +33,13 @@ class ServerSelectionViewModel(
 
     fun loadData() {
         _screenState.loadWithStateHandling {
-            ServerSelectionScreenData(servers = getServerListUseCase.invoke())
+            val selectedServer = getSelectedServerUseCase.invoke()
+
+            ServerSelectionScreenData(
+                servers = getServerListUseCase.invoke(),
+                selection = selectedServer,
+                savedSelection = selectedServer
+            )
         }
     }
 
@@ -39,8 +50,9 @@ class ServerSelectionViewModel(
     fun confirmSelection() {
         _screenState.withLoaded { state ->
             state.selection?.let { server ->
+                playerInteractor.destroySession()
                 selectServerUseCase.invoke(server)
-                navigator.replaceAll(Screen.Root)
+                navigator.replaceAll(Screen.Root, type = NavigatorType.Root)
             }
         }
     }
@@ -53,6 +65,7 @@ class ServerSelectionViewModel(
 data class ServerSelectionScreenData(
     val servers: List<ServerModel>,
     val selection: ServerModel? = null,
+    val savedSelection: ServerModel? = null,
 ) {
-    val formIsValid = selection != null
+    val formIsValid = selection != savedSelection
 }

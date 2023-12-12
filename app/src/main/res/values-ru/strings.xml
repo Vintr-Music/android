@@ -10,6 +10,7 @@
 
     <string name="select_server">Выбрать сервер</string>
     <string name="add_new_server">Добавить новый</string>
+    <string name="servers">Серверы</string>
 
     <string name="selected_server">Выбранный сервер</string>
     <string name="settings">Настройки</string>

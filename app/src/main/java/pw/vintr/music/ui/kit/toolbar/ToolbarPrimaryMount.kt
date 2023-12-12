@@ -12,12 +12,15 @@ import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.graphics.PathEffect
 import androidx.compose.ui.graphics.drawOutline
 import androidx.compose.ui.graphics.drawscope.drawIntoCanvas
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import pw.vintr.music.ui.theme.Gray5
 
 @Composable
 fun ToolbarPrimaryMount(
     modifier: Modifier = Modifier,
+    leftInset: Dp = 80.dp,
+    rightInset: Dp = 100.dp
 ) {
     Canvas(
         modifier = modifier
@@ -41,7 +44,7 @@ fun ToolbarPrimaryMount(
                 )
                 lineTo(
                     x = rect.bottomLeft.x,
-                    y = rect.bottomLeft.y - 80.dp.toPx()
+                    y = rect.bottomLeft.y - leftInset.toPx()
                 )
                 lineTo(
                     x = xDisplacedCenter.x,
@@ -49,7 +52,7 @@ fun ToolbarPrimaryMount(
                 )
                 lineTo(
                     x = rect.bottomRight.x,
-                    y = rect.bottomRight.y - 100.dp.toPx()
+                    y = rect.bottomRight.y - rightInset.toPx()
                 )
                 lineTo(
                     x = rect.topRight.x,

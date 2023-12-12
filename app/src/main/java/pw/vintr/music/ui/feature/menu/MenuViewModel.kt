@@ -9,6 +9,7 @@ import pw.vintr.music.domain.user.model.UserModel
 import pw.vintr.music.domain.user.useCase.GetProfileUseCase
 import pw.vintr.music.ui.base.BaseScreenState
 import pw.vintr.music.ui.base.BaseViewModel
+import pw.vintr.music.ui.navigation.NavigatorType
 import pw.vintr.music.ui.navigation.Screen
 
 class MenuViewModel(
@@ -36,6 +37,13 @@ class MenuViewModel(
                 server = server.await()
             )
         }
+    }
+
+    fun openServerSelection() {
+        navigator.forward(
+            Screen.SelectServer(usePrimaryMountToolbar = false),
+            type = NavigatorType.Root
+        )
     }
 
     fun openSettings() {

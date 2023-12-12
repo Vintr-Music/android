@@ -35,21 +35,29 @@ class Navigator {
         )
     }
 
-    fun forward(screen: Screen, arguments: Bundle? = null) {
+    fun forward(
+        screen: Screen,
+        arguments: Bundle? = null,
+        type: NavigatorType? = null
+    ) {
         _actionFlow.tryEmit(
             NavigatorAction.Forward(
                 screen = screen,
-                navigatorType = currentNavigatorType,
+                navigatorType = type ?: currentNavigatorType,
                 arguments = arguments,
             )
         )
     }
 
-    fun replaceAll(screen: Screen, arguments: Bundle? = null) {
+    fun replaceAll(
+        screen: Screen,
+        arguments: Bundle? = null,
+        type: NavigatorType? = null
+    ) {
         _actionFlow.tryEmit(
             NavigatorAction.ReplaceAll(
                 screen = screen,
-                navigatorType = currentNavigatorType,
+                navigatorType = type ?: currentNavigatorType,
                 arguments = arguments,
             )
         )
@@ -120,9 +128,7 @@ fun NavigatorEffect(
                         }
                     }
                     is NavigatorAction.ReplaceAll -> {
-                        controller.navigate(
-                            action.screen.route
-                        ) { popUpToTop(controller) }
+                        controller.navigate(action.screen.route) { popUpToTop(controller) }
 
                         action.arguments?.let { arguments ->
                             controller.currentBackStackEntry?.arguments?.putAll(arguments)

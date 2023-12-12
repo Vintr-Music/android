@@ -25,13 +25,15 @@ import pw.vintr.music.ui.theme.Bee1
 import pw.vintr.music.ui.theme.Gilroy18
 import pw.vintr.music.ui.theme.VintrMusicExtendedTheme
 
+val REGULAR_TOOLBAR_HEIGHT = 56.dp
+
 @Composable
 fun ToolbarRegular(
     modifier: Modifier = Modifier,
     title: String = String.Empty,
     titleOpacity: Float = 1f,
     showBackButton: Boolean = true,
-    onBackPressed: () -> Unit,
+    onBackPressed: () -> Unit = {},
     paddingValues: PaddingValues = PaddingValues(horizontal = 16.dp),
     backButtonColor: Color = Bee1,
     center: @Composable (BoxScope.() -> Unit)? = null,
@@ -41,7 +43,7 @@ fun ToolbarRegular(
         modifier = modifier
             .fillMaxWidth()
             .statusBarsPadding()
-            .height(56.dp)
+            .height(REGULAR_TOOLBAR_HEIGHT)
             .padding(paddingValues),
         verticalAlignment = Alignment.CenterVertically,
     ) {

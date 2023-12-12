@@ -12,6 +12,7 @@
 
     <string name="select_server">Select server</string>
     <string name="add_new_server">Add new</string>
+    <string name="servers">Servers</string>
 
     <string name="selected_server">Selected server</string>
     <string name="settings">Settings</string>

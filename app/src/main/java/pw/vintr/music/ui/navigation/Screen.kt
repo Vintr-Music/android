@@ -7,6 +7,24 @@ import kotlinx.parcelize.Parcelize
 import pw.vintr.music.domain.library.model.album.AlbumModel
 import pw.vintr.music.domain.library.model.artist.ArtistModel
 
+@Suppress("SameParameterValue")
+private fun buildRoute(
+    destination: String,
+    params: Map<String, String> = mapOf()
+) = buildString {
+    append(destination)
+    params.forEach { append("?${it.key}=${it.value}") }
+}
+
+@Suppress("SameParameterValue")
+private fun buildRouteTemplate(
+    destination: String,
+    paramKeys: List<String>
+) = buildString {
+    append(destination)
+    paramKeys.forEach { append("?$it={$it}") }
+}
+
 @Parcelize
 sealed class Screen(val route: String) : Parcelable {
 
@@ -14,7 +32,24 @@ sealed class Screen(val route: String) : Parcelable {
 
     object Register : Screen(route = "register")
 
-    object SelectServer : Screen(route = "select-server")
+    data class SelectServer(
+        val usePrimaryMountToolbar: Boolean = true,
+    ) : Screen(
+        route = buildRoute(
+            destination = "select-server",
+            params = mapOf(ARG_USE_PRIMARY_TOOLBAR to usePrimaryMountToolbar.toString())
+        )
+    ) {
+        companion object {
+            const val ARG_USE_PRIMARY_TOOLBAR = "arg-use-primary-mount-toolbar"
+            private const val ROUTE_DESTINATION = "select-server"
+
+            val route = buildRouteTemplate(
+                ROUTE_DESTINATION,
+                listOf(ARG_USE_PRIMARY_TOOLBAR)
+            )
+        }
+    }
 
     object Root : Screen(route = "root")
 

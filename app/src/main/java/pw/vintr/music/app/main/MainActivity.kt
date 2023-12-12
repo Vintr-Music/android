@@ -27,6 +27,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.compose.KoinContext
 import org.koin.compose.rememberKoinInject
@@ -65,7 +66,7 @@ class MainActivity : ComponentActivity() {
                             rootScreen = when (initialState.value) {
                                 AppInitialState.Authorized -> Screen.Root
                                 AppInitialState.Login -> Screen.Login
-                                AppInitialState.ServerSelection -> Screen.SelectServer
+                                AppInitialState.ServerSelection -> Screen.SelectServer()
                             }
                         )
                     }
@@ -95,7 +96,19 @@ fun Navigation(
     ) {
         composable(Screen.Login.route) { LoginScreen() }
         composable(Screen.Register.route) { RegisterScreen() }
-        composable(Screen.SelectServer.route) { ServerSelectionScreen() }
+        composable(
+            Screen.SelectServer.route,
+            arguments = listOf(
+                navArgument(
+                    name = Screen.SelectServer.ARG_USE_PRIMARY_TOOLBAR
+                ) { defaultValue = true }
+            )
+        ) {
+            val usePrimaryMountToolbar = it.arguments
+                ?.getBoolean(Screen.SelectServer.ARG_USE_PRIMARY_TOOLBAR) ?: true
+
+            ServerSelectionScreen(usePrimaryMountToolbar = usePrimaryMountToolbar)
+        }
         composable(Screen.Root.route) { RootScreen() }
     }
 }

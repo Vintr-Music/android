@@ -46,7 +46,7 @@ class LoginViewModel(
     }
 
     private fun openSelectServer() {
-        navigator.replaceAll(Screen.SelectServer)
+        navigator.replaceAll(Screen.SelectServer())
     }
 }
 
