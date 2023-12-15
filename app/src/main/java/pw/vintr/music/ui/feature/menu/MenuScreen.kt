@@ -25,6 +25,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import org.koin.androidx.compose.getViewModel
+import pw.vintr.music.BuildConfig
 import pw.vintr.music.R
 import pw.vintr.music.ui.kit.menu.MenuItemIconified
 import pw.vintr.music.ui.kit.layout.ScreenStateLayout
@@ -107,6 +108,18 @@ fun MenuScreen(
                     title = stringResource(id = R.string.settings),
                     subtitle = stringResource(id = R.string.settings_description),
                     iconRes = R.drawable.ic_settings,
+                )
+                Spacer(modifier = Modifier.height(8.dp))
+                MenuItemIconified(
+                    modifier = Modifier
+                        .clickable { viewModel.openAbout() }
+                        .padding(horizontal = 28.dp, vertical = 8.dp),
+                    title = stringResource(id = R.string.about_title),
+                    subtitle = stringResource(
+                        id = R.string.about_description,
+                        BuildConfig.VERSION_NAME
+                    ),
+                    iconRes = R.drawable.ic_info,
                 )
             }
         }

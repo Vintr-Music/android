@@ -49,6 +49,10 @@ class MenuViewModel(
     fun openSettings() {
         navigator.forward(Screen.Settings)
     }
+
+    fun openAbout() {
+        // TODO: open about
+    }
 }
 
 data class MenuScreenData(

@@ -6,6 +6,8 @@ import io.ktor.client.request.get
 import io.ktor.client.request.parameter
 import io.ktor.client.request.url
 import pw.vintr.music.data.library.dto.track.TrackDto
+import pw.vintr.music.tools.extension.encodedParameter
+import java.net.URLEncoder
 
 class TrackRemoteDataSource(private val client: HttpClient) {
 
@@ -15,6 +17,13 @@ class TrackRemoteDataSource(private val client: HttpClient) {
     ): List<TrackDto> = client.get {
         url(urlString = "api/library/tracks/by-album")
         parameter("artist", artist)
-        parameter("album", album)
+        encodedParameter(
+            "album",
+            URLEncoder
+                .encode(album, Charsets.UTF_8.name())
+                .replace("+", "%20")
+                .replace("%28", "(")
+                .replace("%29", ")")
+        )
     }.body()
 }

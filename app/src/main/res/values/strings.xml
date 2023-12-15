@@ -31,4 +31,7 @@
     <string name="search_artists_title">Artists</string>
     <string name="search_albums_title">Albums</string>
     <string name="search_tracks_title">Tracks</string>
+
+    <string name="about_title">Settings</string>
+    <string name="about_description" translatable="false">Vintr Music %1s</string>
 </resources>

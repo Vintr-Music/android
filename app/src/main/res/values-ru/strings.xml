@@ -29,4 +29,6 @@
     <string name="search_artists_title">Исполнители</string>
     <string name="search_albums_title">Альбомы</string>
     <string name="search_tracks_title">Треки</string>
+
+    <string name="about_title">О приложении</string>
 </resources>
