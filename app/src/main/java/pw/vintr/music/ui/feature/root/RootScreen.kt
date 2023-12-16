@@ -18,6 +18,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.navigation.NavController
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.NavHost
@@ -103,19 +104,19 @@ fun RootScreen(
                 val currentDestination = navBackStackEntry?.destination
 
                 tabs.value.forEach { tab ->
+                    val isSelected = currentDestination?.hierarchy
+                        ?.any { it.route == tab.route } == true
+
                     AppNavBarItem(
-                        selected = currentDestination?.hierarchy
-                            ?.any { it.route == tab.route } == true,
+                        selected = isSelected,
                         icon = tab.iconRes,
                         onClick = {
-                            navController.navigate(tab.route) {
-                                popUpTo(navController.graph.findStartDestination().id) {
-                                    saveState = true
-                                }
-                                launchSingleTop = true
-                                restoreState = true
+                            if (isSelected) {
+                                viewModel.backToTabStart(tab.navigatorType)
+                            } else {
+                                navController.openTab(tab)
+                                viewModel.setNavigatorType(tab.navigatorType)
                             }
-                            viewModel.setNavigatorType(tab.navigatorType)
                         }
                     )
                 }
@@ -182,5 +183,14 @@ fun TabNavigation(
     // Scaffold bottom sheet back handler
     BackHandler(enabled = scaffoldState.bottomSheetState.isExpanded) {
         coroutineScope.launch { scaffoldState.bottomSheetState.collapse() }
+    }
+}
+
+private fun NavController.openTab(tab: Tab) {
+    navigate(tab.route) {
+        popUpTo(graph.findStartDestination().id) { saveState = true }
+
+        launchSingleTop = true
+        restoreState = true
     }
 }

@@ -7,6 +7,7 @@ import androidx.core.net.toUri
 import androidx.navigation.NavController
 import androidx.navigation.NavDeepLinkRequest
 import androidx.navigation.NavDestination
+import androidx.navigation.NavGraph.Companion.findStartDestination
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.launchIn
@@ -30,6 +31,14 @@ class Navigator {
     fun back(type: NavigatorType? = null) {
         _actionFlow.tryEmit(
             NavigatorAction.Back(
+                navigatorType = type ?: currentNavigatorType
+            )
+        )
+    }
+
+    fun backToStart(type: NavigatorType? = null) {
+        _actionFlow.tryEmit(
+            NavigatorAction.BackToStart(
                 navigatorType = type ?: currentNavigatorType
             )
         )
@@ -74,6 +83,10 @@ sealed class NavigatorAction {
         override val navigatorType: NavigatorType
     ) : NavigatorAction()
 
+    data class BackToStart(
+        override val navigatorType: NavigatorType
+    ) : NavigatorAction()
+
     data class Forward(
         val screen: Screen,
         override val navigatorType: NavigatorType,
@@ -103,6 +116,12 @@ fun NavigatorEffect(
                 when (action) {
                     is NavigatorAction.Back -> {
                         controller.navigateUp()
+                    }
+                    is NavigatorAction.BackToStart -> {
+                        controller.popBackStack(
+                            destinationId = controller.graph.findStartDestination().id,
+                            inclusive = false
+                        )
                     }
                     is NavigatorAction.Forward -> {
                         val args = action.arguments

@@ -75,6 +75,10 @@ class RootViewModel(
         navigator.switchNavigatorType(navigatorType)
     }
 
+    fun backToTabStart(navigatorType: NavigatorType) {
+        navigator.backToStart(navigatorType)
+    }
+
     fun restoreNavigatorType(route: String) {
         tabs
             .find { it.route == route }
