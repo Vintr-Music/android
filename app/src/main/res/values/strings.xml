@@ -34,4 +34,12 @@
 
     <string name="about_title">Settings</string>
     <string name="about_description" translatable="false">Vintr Music %1s</string>
+
+    <string name="settings_playback_section">Playback</string>
+    <string name="equalizer">Equalizer</string>
+    <string name="equalizer_description">Manual tuning and presets</string>
+    <string name="manual_tuning">Manual tuning</string>
+
+    <string name="hz" translatable="false">Hz</string>
+    <string name="khz" translatable="false">kHz</string>
 </resources>

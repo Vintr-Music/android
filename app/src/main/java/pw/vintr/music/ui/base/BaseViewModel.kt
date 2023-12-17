@@ -15,6 +15,7 @@ import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent
 import pw.vintr.music.ui.navigation.Navigator
 import org.koin.core.component.inject
+import pw.vintr.music.ui.navigation.NavigatorType
 
 abstract class BaseViewModel : ViewModel(), CoroutineScope, KoinComponent {
 
@@ -24,7 +25,7 @@ abstract class BaseViewModel : ViewModel(), CoroutineScope, KoinComponent {
 
     protected val navigator: Navigator by inject()
 
-    fun navigateBack() { navigator.back() }
+    fun navigateBack(type: NavigatorType? = null) { navigator.back(type) }
 
     protected fun createExceptionHandler(
         onException: (Throwable) -> Unit = { }

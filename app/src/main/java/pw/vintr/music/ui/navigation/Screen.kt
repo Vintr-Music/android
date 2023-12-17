@@ -63,6 +63,8 @@ sealed class Screen(val route: String) : Parcelable {
 
     object Settings : Screen(route = "settings")
 
+    object Equalizer : Screen(route = "equalizer")
+
     object AlbumDetails : Screen(route = "album-details") {
 
         @IgnoredOnParcel

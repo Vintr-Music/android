@@ -59,6 +59,8 @@ data class VintrMusicColors(
     // Card
     val cardBackground: Color = Color.Unspecified,
     val cardStroke: Color = Color.Unspecified,
+    // Equalizer
+    val equalizerSliderBackground: Color = Color.Unspecified
 )
 
 val LocalVintrColors = staticCompositionLocalOf { VintrMusicColors() }
@@ -101,6 +103,8 @@ val darkVintrColors = VintrMusicColors(
     // Card
     cardBackground = Card0,
     cardStroke = Gray2,
+    // Equalizer
+    equalizerSliderBackground = Gray1,
 )
 
 val lightVintrColors = VintrMusicColors(
@@ -141,6 +145,8 @@ val lightVintrColors = VintrMusicColors(
     // Card
     cardBackground = Card1,
     cardStroke = Gray5,
+    // Equalizer
+    equalizerSliderBackground = Gray5,
 )
 
 private val darkColorScheme = darkColorScheme(

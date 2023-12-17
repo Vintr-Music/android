@@ -22,6 +22,7 @@ import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.ModalBottomSheetValue
 import androidx.compose.material.SwipeableDefaults
 import androidx.compose.material.rememberModalBottomSheetState
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.collectAsState
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
@@ -55,20 +56,22 @@ class MainActivity : ComponentActivity() {
             val bottomSheetNavigator = rememberBottomSheetNavigator(skipHalfExpanded = true)
             val navController = rememberNavController(bottomSheetNavigator)
 
-            KoinContext {
-                VintrMusicTheme {
-                    Surface(
-                        modifier = Modifier.fillMaxSize(),
-                        color = MaterialTheme.colorScheme.background
-                    ) {
-                        Navigation(
-                            navController = navController,
-                            rootScreen = when (initialState.value) {
-                                AppInitialState.Authorized -> Screen.Root
-                                AppInitialState.Login -> Screen.Login
-                                AppInitialState.ServerSelection -> Screen.SelectServer()
-                            }
-                        )
+            CompositionLocalProvider(LocalActivity provides this) {
+                KoinContext {
+                    VintrMusicTheme {
+                        Surface(
+                            modifier = Modifier.fillMaxSize(),
+                            color = MaterialTheme.colorScheme.background
+                        ) {
+                            Navigation(
+                                navController = navController,
+                                rootScreen = when (initialState.value) {
+                                    AppInitialState.Authorized -> Screen.Root
+                                    AppInitialState.Login -> Screen.Login
+                                    AppInitialState.ServerSelection -> Screen.SelectServer()
+                                }
+                            )
+                        }
                     }
                 }
             }

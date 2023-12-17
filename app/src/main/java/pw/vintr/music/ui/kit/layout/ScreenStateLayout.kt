@@ -10,17 +10,22 @@ import pw.vintr.music.ui.kit.state.ErrorState
 
 @Composable
 fun <T> ScreenStateLayout(
+    modifier: Modifier = Modifier,
     state: BaseScreenState<T>,
     errorRetryAction: () -> Unit = { },
     toolbar: @Composable () -> Unit = { },
     loading: @Composable () -> Unit = {
-        Column {
+        Column(
+            modifier = modifier
+        ) {
             toolbar()
             LoaderScreen(modifier = Modifier.weight(1f))
         }
     },
     error: @Composable () -> Unit = {
-        Column {
+        Column(
+            modifier = modifier
+        ) {
             toolbar()
             ErrorState(
                 modifier = Modifier

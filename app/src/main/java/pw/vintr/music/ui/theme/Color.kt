@@ -19,3 +19,6 @@ val Gray6 = Color(0xFFEDEDF4)
 
 val Card0 = Color(0xFF131313)
 val Card1 = Color(0xFFF9F9FB)
+
+val Gradient0 = Color(0xFFA451DA)
+val Gradient1 = Color(0xFFD77650)

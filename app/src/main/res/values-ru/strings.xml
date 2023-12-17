@@ -31,4 +31,9 @@
     <string name="search_tracks_title">Треки</string>
 
     <string name="about_title">О приложении</string>
+
+    <string name="settings_playback_section">Воспроизведение</string>
+    <string name="equalizer">Эквалайзер</string>
+    <string name="equalizer_description">Ручная настройка и пресеты</string>
+    <string name="manual_tuning">Ручная настройка</string>
 </resources>

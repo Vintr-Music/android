@@ -4,6 +4,7 @@ import android.content.ComponentName
 import android.content.Context
 import androidx.media3.common.MediaItem
 import androidx.media3.common.Player
+import androidx.media3.common.util.UnstableApi
 import androidx.media3.session.MediaController
 import androidx.media3.session.SessionToken
 import com.google.common.util.concurrent.MoreExecutors
@@ -53,6 +54,7 @@ class PlayerInteractor(
         .buildAsync()
 
     private var controller: MediaController? = null
+    private var audioSessionId: Int? = null
 
     private val playerSnapshotFlow = MutableStateFlow(
         PlayerSnapshot(
@@ -107,9 +109,14 @@ class PlayerInteractor(
             controller?.shuffleModeEnabled = playerSnapshotFlow.value.shuffleMode
                 .toSystemShuffleMode()
 
-            controller?.addListener(object : Player.Listener {
+            controller?.addListener(@UnstableApi object : Player.Listener {
                 override fun onEvents(player: Player, events: Player.Events) {
                     onPlayerEvent(player)
+                }
+
+                override fun onAudioSessionIdChanged(audioSessionId: Int) {
+                    super.onAudioSessionIdChanged(audioSessionId)
+                    this@PlayerInteractor.audioSessionId = audioSessionId
                 }
             })
         }, MoreExecutors.directExecutor())

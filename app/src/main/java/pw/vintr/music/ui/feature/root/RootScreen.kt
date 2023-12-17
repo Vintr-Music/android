@@ -34,6 +34,7 @@ import pw.vintr.music.tools.composable.StatusBarEffect
 import pw.vintr.music.tools.extension.getRequiredArg
 import pw.vintr.music.ui.feature.albumDetails.AlbumDetailsScreen
 import pw.vintr.music.ui.feature.artistDetails.ArtistDetailsScreen
+import pw.vintr.music.ui.feature.equalizer.EqualizerScreen
 import pw.vintr.music.ui.feature.home.HomeScreen
 import pw.vintr.music.ui.feature.library.LibraryScreen
 import pw.vintr.music.ui.feature.menu.MenuScreen
@@ -162,6 +163,7 @@ fun TabNavigation(
         composable(Screen.Library.route) { LibraryScreen() }
         composable(Screen.Menu.route) { MenuScreen() }
         composable(Screen.Settings.route) { SettingsScreen() }
+        composable(Screen.Equalizer.route) { EqualizerScreen() }
         composable(Screen.AlbumDetails.route) {entry ->
             val album = entry.arguments.getRequiredArg(
                 Screen.AlbumDetails.ARG_KEY_ALBUM,
