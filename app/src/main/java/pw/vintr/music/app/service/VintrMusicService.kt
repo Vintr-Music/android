@@ -20,6 +20,7 @@ import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import pw.vintr.music.R
 import pw.vintr.music.app.main.MainActivity
+import pw.vintr.music.data.audioSession.repository.AudioSessionRepository
 
 class VintrMusicService : MediaSessionService(), KoinComponent {
 
@@ -30,6 +31,8 @@ class VintrMusicService : MediaSessionService(), KoinComponent {
     private var mediaSession: MediaSession? = null
 
     private val okHttpClient: OkHttpClient by inject()
+
+    private val audioSessionRepository: AudioSessionRepository by inject()
 
     private val noisyAudioStreamReceiver = BecomingNoisyReceiver()
 
@@ -42,7 +45,7 @@ class VintrMusicService : MediaSessionService(), KoinComponent {
 
     // Create your player and media session in the onCreate lifecycle event
     @UnstableApi
-    override fun  onCreate() {
+    override fun onCreate() {
         super.onCreate()
 
         // Notification init
@@ -77,6 +80,8 @@ class VintrMusicService : MediaSessionService(), KoinComponent {
                 )
             )
             .build()
+
+        audioSessionRepository.setSessionId(player.audioSessionId)
 
         // Noisy audio detection
         registerReceiver(noisyAudioStreamReceiver, noisyAudioIntentFilter)

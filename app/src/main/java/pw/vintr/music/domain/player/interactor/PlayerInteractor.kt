@@ -8,10 +8,6 @@ import androidx.media3.common.util.UnstableApi
 import androidx.media3.session.MediaController
 import androidx.media3.session.SessionToken
 import com.google.common.util.concurrent.MoreExecutors
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.SupervisorJob
-import kotlinx.coroutines.cancel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -23,6 +19,7 @@ import kotlinx.coroutines.isActive
 import pw.vintr.music.app.service.VintrMusicService
 import pw.vintr.music.data.player.repository.PlayerConfigRepository
 import pw.vintr.music.data.player.repository.PlayerSessionRepository
+import pw.vintr.music.domain.base.BaseInteractor
 import pw.vintr.music.domain.library.model.album.AlbumModel
 import pw.vintr.music.domain.library.model.track.TrackModel
 import pw.vintr.music.domain.player.model.config.PlayerRepeatMode
@@ -32,17 +29,14 @@ import pw.vintr.music.domain.player.model.session.PlayerSessionModel
 import pw.vintr.music.domain.player.model.state.PlayerStateHolderModel
 import pw.vintr.music.domain.player.model.state.PlayerStatusModel
 import pw.vintr.music.domain.player.model.session.toModel
-import java.io.Closeable
 
 class PlayerInteractor(
     applicationContext: Context,
     private val playerSessionRepository: PlayerSessionRepository,
     private val playerConfigRepository: PlayerConfigRepository,
-) : CoroutineScope, Closeable {
+) : BaseInteractor() {
 
-    private val job = SupervisorJob()
-
-    override val coroutineContext = Dispatchers.Main + job
+    private var controller: MediaController? = null
 
     private val sessionToken = SessionToken(
         applicationContext,
@@ -52,9 +46,6 @@ class PlayerInteractor(
     private val controllerFuture = MediaController
         .Builder(applicationContext, sessionToken)
         .buildAsync()
-
-    private var controller: MediaController? = null
-    private var audioSessionId: Int? = null
 
     private val playerSnapshotFlow = MutableStateFlow(
         PlayerSnapshot(
@@ -112,11 +103,6 @@ class PlayerInteractor(
             controller?.addListener(@UnstableApi object : Player.Listener {
                 override fun onEvents(player: Player, events: Player.Events) {
                     onPlayerEvent(player)
-                }
-
-                override fun onAudioSessionIdChanged(audioSessionId: Int) {
-                    super.onAudioSessionIdChanged(audioSessionId)
-                    this@PlayerInteractor.audioSessionId = audioSessionId
                 }
             })
         }, MoreExecutors.directExecutor())
@@ -230,7 +216,7 @@ class PlayerInteractor(
         .build()
 
     override fun close() {
-        if (isActive) cancel()
+        super.close()
         MediaController.releaseFuture(controllerFuture)
     }
 

@@ -19,6 +19,8 @@ import io.realm.kotlin.RealmConfiguration
 import okhttp3.OkHttpClient
 import org.koin.dsl.module
 import org.koin.dsl.onClose
+import pw.vintr.music.data.audioSession.repository.AudioSessionRepository
+import pw.vintr.music.data.audioSession.source.AudioSessionPreferencesDataSource
 import pw.vintr.music.data.library.cache.album.AlbumCacheObject
 import pw.vintr.music.data.library.cache.track.TrackCacheObject
 import pw.vintr.music.data.library.repository.AlbumRepository
@@ -162,6 +164,10 @@ val dataModule = module {
     single { AlbumRepository(get()) }
     single { SearchRemoteDataSource(get()) }
     single { SearchRepository(get()) }
+
+    // Audio Session
+    single { AudioSessionPreferencesDataSource(get()) }
+    single { AudioSessionRepository(get()) }
 
     // Player
     single { PlayerSessionCacheDataStore(get()) }

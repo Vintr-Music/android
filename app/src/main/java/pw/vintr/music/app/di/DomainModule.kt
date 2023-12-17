@@ -2,7 +2,8 @@ package pw.vintr.music.app.di
 
 import org.koin.android.ext.koin.androidContext
 import org.koin.dsl.module
-import org.koin.dsl.onClose
+import pw.vintr.music.app.extension.interactor
+import pw.vintr.music.domain.equalizer.interactor.EqualizerInteractor
 import pw.vintr.music.domain.library.useCase.GetAlbumTracksUseCase
 import pw.vintr.music.domain.library.useCase.GetArtistAlbumsUseCase
 import pw.vintr.music.domain.library.useCase.GetArtistListUseCase
@@ -33,5 +34,6 @@ val domainModule = module {
     single { GetArtistAlbumsUseCase(get()) }
     single { SearchLibraryUseCase(get()) }
 
-    single { PlayerInteractor(androidContext(), get(), get()) } onClose { it?.close() }
+    interactor { PlayerInteractor(androidContext(), get(), get()) }
+    interactor { EqualizerInteractor(get()) }
 }

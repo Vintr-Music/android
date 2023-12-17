@@ -39,7 +39,7 @@ class SearchViewModel(
     fun performSearch() {
         searchJob?.cancel()
 
-        val query = _queryState.value
+        val query = _queryState.value.trim()
 
         if (query.isNotEmpty()) {
             searchJob = _contentState.loadWithStateHandling {
