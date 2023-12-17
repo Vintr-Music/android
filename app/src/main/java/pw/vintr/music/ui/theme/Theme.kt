@@ -6,6 +6,7 @@ import androidx.compose.material.ripple.LocalRippleTheme
 import androidx.compose.material.ripple.RippleAlpha
 import androidx.compose.material.ripple.RippleTheme
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.SwitchDefaults
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
@@ -60,7 +61,13 @@ data class VintrMusicColors(
     val cardBackground: Color = Color.Unspecified,
     val cardStroke: Color = Color.Unspecified,
     // Equalizer
-    val equalizerSliderBackground: Color = Color.Unspecified
+    val equalizerSliderBackground: Color = Color.Unspecified,
+    val equalizerInactiveSliderColor: Color = Color.Unspecified,
+    // Switch
+    val switchActiveThumbColor: Color = Color.Unspecified,
+    val switchActiveBackgroundColor: Color = Color.Unspecified,
+    val switchInactiveThumbColor: Color = Color.Unspecified,
+    val switchInactiveBackgroundColor: Color = Color.Unspecified,
 )
 
 val LocalVintrColors = staticCompositionLocalOf { VintrMusicColors() }
@@ -105,6 +112,12 @@ val darkVintrColors = VintrMusicColors(
     cardStroke = Gray2,
     // Equalizer
     equalizerSliderBackground = Gray1,
+    equalizerInactiveSliderColor = Gray2,
+    // Switch
+    switchActiveThumbColor = Gray1,
+    switchActiveBackgroundColor = Gray5,
+    switchInactiveBackgroundColor = Gray1,
+    switchInactiveThumbColor = Gray5,
 )
 
 val lightVintrColors = VintrMusicColors(
@@ -147,6 +160,12 @@ val lightVintrColors = VintrMusicColors(
     cardStroke = Gray5,
     // Equalizer
     equalizerSliderBackground = Gray5,
+    equalizerInactiveSliderColor = Gray4,
+    // Switch
+    switchActiveThumbColor = White0,
+    switchActiveBackgroundColor = Bee0,
+    switchInactiveBackgroundColor = White0,
+    switchInactiveThumbColor = Bee0,
 )
 
 private val darkColorScheme = darkColorScheme(
@@ -223,3 +242,21 @@ object VintrMusicExtendedTheme {
         @Composable
         get() = LocalVintrColors.current
 }
+
+@Composable
+fun switchColors() = SwitchDefaults.colors(
+    checkedThumbColor = VintrMusicExtendedTheme.colors.switchActiveThumbColor,
+    uncheckedThumbColor = VintrMusicExtendedTheme.colors.switchInactiveThumbColor,
+    checkedTrackColor = VintrMusicExtendedTheme.colors.switchActiveBackgroundColor,
+    uncheckedTrackColor = VintrMusicExtendedTheme.colors.switchInactiveBackgroundColor,
+    checkedBorderColor = VintrMusicExtendedTheme.colors.switchActiveBackgroundColor,
+    uncheckedBorderColor = VintrMusicExtendedTheme.colors.switchActiveBackgroundColor,
+    disabledCheckedThumbColor = VintrMusicExtendedTheme.colors.switchActiveThumbColor
+        .copy(alpha = 0.5f),
+    disabledCheckedTrackColor = VintrMusicExtendedTheme.colors.switchActiveBackgroundColor
+        .copy(alpha = 0.5f),
+    disabledUncheckedThumbColor = VintrMusicExtendedTheme.colors.switchInactiveThumbColor
+        .copy(alpha = 0.5f),
+    disabledUncheckedTrackColor = VintrMusicExtendedTheme.colors.switchInactiveBackgroundColor
+        .copy(alpha = 0.5f),
+)

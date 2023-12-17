@@ -19,6 +19,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.graphics.TransformOrigin
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.layout.layout
@@ -39,6 +40,7 @@ import pw.vintr.music.ui.theme.VintrMusicExtendedTheme
 @Preview
 fun EqualizerBandSlider(
     modifier: Modifier = Modifier,
+    isActive: Boolean = true,
     currentLevel: Float = 500f,
     lowerLevel: Float = 0f,
     upperLevel: Float = 1000f,
@@ -77,7 +79,14 @@ fun EqualizerBandSlider(
                 onValueChangeFinished = { onValueChangeFinished() },
                 valueRange = lowerLevel..upperLevel,
                 track = { sliderPositions ->
-                    SliderTrack(sliderPositions)
+                    SliderTrack(
+                        sliderPositions = sliderPositions,
+                        activeTrackBrush = if (isActive) {
+                            Brush.horizontalGradient(listOf(Gradient0, Gradient1))
+                        } else {
+                            SolidColor(VintrMusicExtendedTheme.colors.equalizerInactiveSliderColor)
+                        }
+                    )
                 },
                 thumb = {
                     Spacer(Modifier.size(32.dp))
@@ -102,7 +111,7 @@ fun EqualizerBandSlider(
 }
 
 @Composable
-private fun SliderTrack(sliderPositions: SliderPositions) {
+private fun SliderTrack(sliderPositions: SliderPositions, activeTrackBrush: Brush) {
     val inactiveTrackColor = VintrMusicExtendedTheme.colors
         .equalizerSliderBackground
         .copy(alpha = 0.5f)
@@ -138,11 +147,9 @@ private fun SliderTrack(sliderPositions: SliderPositions) {
             y = center.y
         )
 
-        val activeBrush = Brush.horizontalGradient(listOf(Gradient0, Gradient1))
-
         // Active track
         drawLine(
-            activeBrush,
+            activeTrackBrush,
             activeSliderValueStart,
             activeSliderValueEnd,
             trackStrokeWidth,

@@ -38,6 +38,7 @@
     <string name="settings_playback_section">Playback</string>
     <string name="equalizer">Equalizer</string>
     <string name="equalizer_description">Manual tuning and presets</string>
+    <string name="use_equalizer">Use equalizer</string>
     <string name="manual_tuning">Manual tuning</string>
 
     <string name="hz" translatable="false">Hz</string>

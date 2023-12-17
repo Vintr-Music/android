@@ -31,6 +31,13 @@ class EqualizerViewModel(
         }
     }
 
+    fun changeUseEqualizer(useEqualizer: Boolean) {
+        _screenState.updateLoaded { equalizer ->
+            equalizer.copy(enabled = useEqualizer)
+        }
+        applyChanges()
+    }
+
     fun changeBandLevel(band: BandModel, level: Float) {
         _screenState.updateLoaded { equalizer ->
             equalizer.copy(

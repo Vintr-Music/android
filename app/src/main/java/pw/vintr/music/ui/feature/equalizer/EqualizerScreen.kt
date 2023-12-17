@@ -1,6 +1,7 @@
 package pw.vintr.music.ui.feature.equalizer
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -20,8 +21,10 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import org.koin.androidx.compose.getViewModel
 import pw.vintr.music.R
+import pw.vintr.music.tools.extension.scaffoldPadding
 import pw.vintr.music.ui.kit.equalizer.EqualizerBandSlider
 import pw.vintr.music.ui.kit.layout.ScreenStateLayout
+import pw.vintr.music.ui.kit.menu.MenuItemSwitchable
 import pw.vintr.music.ui.kit.menu.MenuSectionTitle
 import pw.vintr.music.ui.kit.toolbar.ToolbarRegular
 
@@ -49,11 +52,20 @@ fun EqualizerScreen(viewModel: EqualizerViewModel = getViewModel()) {
 
             Column(
                 modifier = Modifier
-                    .padding(scaffoldPadding)
+                    .scaffoldPadding(scaffoldPadding)
                     .fillMaxSize()
                     .verticalScroll(rememberScrollState())
                     .padding(vertical = 24.dp)
             ) {
+                MenuItemSwitchable(
+                    modifier = Modifier
+                        .clickable { viewModel.changeUseEqualizer(!equalizerData.enabled) }
+                        .padding(horizontal = 20.dp),
+                    title = stringResource(id = R.string.use_equalizer),
+                    checked = equalizerData.enabled,
+                    onCheckedChange = { viewModel.changeUseEqualizer(it) }
+                )
+                Spacer(modifier = Modifier.height(40.dp))
                 MenuSectionTitle(
                     modifier = Modifier
                         .padding(horizontal = 20.dp),
@@ -63,11 +75,13 @@ fun EqualizerScreen(viewModel: EqualizerViewModel = getViewModel()) {
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(horizontal = 30.dp),
+                        .padding(horizontal = 20.dp),
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
                     equalizerData.bands.forEach { band ->
                         EqualizerBandSlider(
+                            modifier = Modifier.weight(1f),
+                            isActive = equalizerData.enabled,
                             currentLevel = band.currentLevel.toFloat(),
                             lowerLevel = band.lowerLevel.toFloat(),
                             upperLevel = band.upperLevel.toFloat(),

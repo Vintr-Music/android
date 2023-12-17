@@ -6,12 +6,14 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.Icon
+import androidx.compose.material3.Switch
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import pw.vintr.music.ui.theme.Bee0
+import pw.vintr.music.ui.theme.switchColors
 
 @Composable
 fun MenuItem(
@@ -57,5 +59,26 @@ fun MenuItemIconified(
             )
         },
         trailing = trailing,
+    )
+}
+
+@Composable
+fun MenuItemSwitchable(
+    modifier: Modifier = Modifier,
+    title: String,
+    subtitle: String? = null,
+    checked: Boolean = false,
+    onCheckedChange: (Boolean) -> Unit
+) {
+    MenuItem(
+        modifier = modifier,
+        title = title,
+        subtitle = subtitle,
+        trailing = {
+            Switch(
+                checked = checked,
+                onCheckedChange = onCheckedChange,
+                colors = switchColors())
+        },
     )
 }
