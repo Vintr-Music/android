@@ -21,6 +21,7 @@ import org.koin.core.component.inject
 import pw.vintr.music.R
 import pw.vintr.music.app.main.MainActivity
 import pw.vintr.music.data.audioSession.repository.AudioSessionRepository
+import pw.vintr.music.domain.equalizer.interactor.EqualizerInteractor
 
 class VintrMusicService : MediaSessionService(), KoinComponent {
 
@@ -33,6 +34,8 @@ class VintrMusicService : MediaSessionService(), KoinComponent {
     private val okHttpClient: OkHttpClient by inject()
 
     private val audioSessionRepository: AudioSessionRepository by inject()
+
+    private val equalizerInteractor: EqualizerInteractor by inject()
 
     private val noisyAudioStreamReceiver = BecomingNoisyReceiver()
 
@@ -82,6 +85,7 @@ class VintrMusicService : MediaSessionService(), KoinComponent {
             .build()
 
         audioSessionRepository.setSessionId(player.audioSessionId)
+        equalizerInteractor.initAsync(player.audioSessionId)
 
         // Noisy audio detection
         registerReceiver(noisyAudioStreamReceiver, noisyAudioIntentFilter)

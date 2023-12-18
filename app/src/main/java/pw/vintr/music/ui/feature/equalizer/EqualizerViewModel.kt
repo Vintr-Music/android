@@ -1,10 +1,13 @@
 package pw.vintr.music.ui.feature.equalizer
 
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.launch
 import pw.vintr.music.domain.equalizer.interactor.EqualizerInteractor
 import pw.vintr.music.domain.equalizer.model.BandModel
 import pw.vintr.music.domain.equalizer.model.EqualizerModel
+import pw.vintr.music.tools.extension.cancelIfActive
 import pw.vintr.music.tools.extension.updateItem
 import pw.vintr.music.tools.extension.updateLoaded
 import pw.vintr.music.tools.extension.withLoaded
@@ -21,13 +24,15 @@ class EqualizerViewModel(
 
     val screenState = _screenState.asStateFlow()
 
+    private var saveEqualizerJob: Job? = null
+
     init {
         initializeEqualizer()
     }
 
     fun initializeEqualizer() {
         _screenState.loadWithStateHandling {
-            requireNotNull(equalizerInteractor.mEqualizerModel)
+            requireNotNull(equalizerInteractor.getEqualizer())
         }
     }
 
@@ -52,8 +57,11 @@ class EqualizerViewModel(
     }
 
     fun applyChanges() {
-        _screenState.withLoaded { equalizer ->
-            equalizerInteractor.applyEqualizer(equalizer)
+        saveEqualizerJob.cancelIfActive()
+        saveEqualizerJob = launch {
+            _screenState.withLoaded { equalizer ->
+                equalizerInteractor.applyEqualizer(equalizer)
+            }
         }
     }
 }

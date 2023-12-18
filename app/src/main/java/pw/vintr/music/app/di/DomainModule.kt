@@ -35,5 +35,5 @@ val domainModule = module {
     single { SearchLibraryUseCase(get()) }
 
     interactor { PlayerInteractor(androidContext(), get(), get()) }
-    interactor { EqualizerInteractor(get()) }
+    interactor { EqualizerInteractor(get(), get()) }
 }

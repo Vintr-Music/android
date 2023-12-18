@@ -33,7 +33,8 @@ class ServerSelectionViewModel(
 
     fun loadData() {
         _screenState.loadWithStateHandling {
-            val selectedServer = getSelectedServerUseCase.invoke()
+            val selectedServer = runCatching { getSelectedServerUseCase.invoke() }
+                .getOrNull()
 
             ServerSelectionScreenData(
                 servers = getServerListUseCase.invoke(),
