@@ -37,4 +37,11 @@
     <string name="equalizer_description">Ручная настройка и пресеты</string>
     <string name="use_equalizer">Использовать эквалайзер</string>
     <string name="manual_tuning">Ручная настройка</string>
+    <string name="bitrate_value">%s Кб/c</string>
+    <string name="bitrate">Битрейт</string>
+    <string name="codec">Кодек</string>
+    <string name="common_no">Нет</string>
+    <string name="common_yes">Да</string>
+    <string name="open_album">Перейти к альбому</string>
+    <string name="open_artist">Перейти к исполнителю</string>
 </resources>

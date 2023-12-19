@@ -1,12 +1,16 @@
 package pw.vintr.music.tools.extension
 
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.calculateEndPadding
 import androidx.compose.foundation.layout.calculateStartPadding
 import androidx.compose.foundation.layout.isImeVisible
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -14,6 +18,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.composed
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.focus.onFocusEvent
 import androidx.compose.ui.layout.layout
 import androidx.compose.ui.platform.LocalDensity
@@ -22,6 +27,7 @@ import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.offset
+import pw.vintr.music.ui.theme.VintrMusicExtendedTheme
 
 @OptIn(ExperimentalLayoutApi::class)
 fun Modifier.clearFocusOnKeyboardDismiss(): Modifier = composed {
@@ -70,4 +76,17 @@ fun Modifier.scaffoldPadding(scaffoldPadding: PaddingValues) = composed {
         start = scaffoldPadding.calculateStartPadding(LocalLayoutDirection.current),
         end = scaffoldPadding.calculateEndPadding(LocalLayoutDirection.current)
     )
+}
+
+fun Modifier.bottomSheetContainer() = composed {
+    navigationBarsPadding()
+        .padding(16.dp)
+        .clip(RoundedCornerShape(20.dp))
+        .background(VintrMusicExtendedTheme.colors.bottomSheetBackground)
+        .border(
+            width = 1.dp,
+            color = VintrMusicExtendedTheme.colors.bottomSheetStroke,
+            shape = RoundedCornerShape(20.dp)
+        )
+        .padding(24.dp)
 }

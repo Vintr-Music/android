@@ -4,6 +4,7 @@ import android.os.Parcelable
 import kotlinx.parcelize.IgnoredOnParcel
 import kotlinx.parcelize.Parcelize
 import pw.vintr.music.data.library.dto.track.TrackMetadataDto
+import pw.vintr.music.domain.library.model.album.AlbumModel
 import pw.vintr.music.domain.library.model.artist.ArtistModel
 import pw.vintr.music.tools.extension.Comma
 import pw.vintr.music.tools.extension.Space
@@ -20,6 +21,9 @@ data class TrackMetadataModel(
 
     @IgnoredOnParcel
     val artist = artists.joinToString(separator = String.Comma + String.Space) { it.name }
+
+    @IgnoredOnParcel
+    val albumModel = AlbumModel(artists.first(), album, year)
 }
 
 fun TrackMetadataDto.toModel() = TrackMetadataModel(

@@ -2,6 +2,7 @@ package pw.vintr.music.ui.feature.nowPlaying
 
 import android.graphics.Bitmap
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
@@ -101,6 +102,10 @@ fun NowPlayingScreen(viewModel: NowPlayingViewModel = getViewModel()) {
                         )
                     )
                 )
+                .clickable {
+                    playerState.value.currentTrack
+                        ?.let { viewModel.openTrackDetails(it) }
+                }
         ) {
             val title = playerState.value.currentTrack?.let { track ->
                 buildString {

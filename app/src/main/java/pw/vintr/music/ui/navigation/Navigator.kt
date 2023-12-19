@@ -1,5 +1,6 @@
 package pw.vintr.music.ui.navigation
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -18,7 +19,7 @@ private const val NAVIGATION_EFFECT_KEY = "navigation"
 
 class Navigator {
 
-    private val _actionFlow = MutableSharedFlow<NavigatorAction>(extraBufferCapacity = 1)
+    private val _actionFlow = MutableSharedFlow<NavigatorAction>(extraBufferCapacity = 10)
 
     private var currentNavigatorType: NavigatorType = NavigatorType.Root
 
@@ -26,6 +27,10 @@ class Navigator {
 
     fun switchNavigatorType(type: NavigatorType) {
         currentNavigatorType = type
+    }
+
+    fun closeNowPlaying() {
+        _actionFlow.tryEmit(NavigatorAction.CloseNowPlaying(currentNavigatorType))
     }
 
     fun back(type: NavigatorType? = null) {
@@ -79,6 +84,10 @@ sealed class NavigatorAction {
 
     open val arguments: Bundle? = null
 
+    data class CloseNowPlaying(
+        override val navigatorType: NavigatorType
+    ) : NavigatorAction()
+
     data class Back(
         override val navigatorType: NavigatorType
     ) : NavigatorAction()
@@ -104,11 +113,13 @@ interface NavigatorType {
     object Root : NavigatorType
 }
 
+@SuppressLint("RestrictedApi")
 @Composable
 fun NavigatorEffect(
     type: NavigatorType,
     navigator: Navigator,
-    controller: NavController
+    controller: NavController,
+    onCustomCommand: (NavigatorAction) -> Unit = {},
 ) {
     LaunchedEffect(NAVIGATION_EFFECT_KEY) {
         navigator.actionFlow.onEach { action ->
@@ -152,6 +163,9 @@ fun NavigatorEffect(
                         action.arguments?.let { arguments ->
                             controller.currentBackStackEntry?.arguments?.putAll(arguments)
                         }
+                    }
+                    else -> {
+                        onCustomCommand(action)
                     }
                 }
             }

@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import pw.vintr.music.ui.theme.Gilroy14
 import pw.vintr.music.ui.theme.RubikMedium18
@@ -16,6 +17,7 @@ import pw.vintr.music.ui.theme.VintrMusicExtendedTheme
 fun MenuTitle(
     modifier: Modifier = Modifier,
     title: String,
+    titleStyle: TextStyle = RubikMedium18,
     subtitle: String? = null,
 ) {
     Column(
@@ -24,7 +26,7 @@ fun MenuTitle(
     ) {
         Text(
             text = title,
-            style = RubikMedium18,
+            style = titleStyle,
             color = VintrMusicExtendedTheme.colors.textRegular,
         )
         subtitle?.let {

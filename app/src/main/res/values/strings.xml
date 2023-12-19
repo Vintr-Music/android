@@ -4,6 +4,8 @@
     <string name="common_confirm">Confirm</string>
     <string name="common_data_error">Error data loading</string>
     <string name="common_retry">Retry</string>
+    <string name="common_no">No</string>
+    <string name="common_yes">Yes</string>
 
     <string name="email" translatable="false">Email</string>
     <string name="password">Password</string>
@@ -43,4 +45,11 @@
 
     <string name="hz" translatable="false">Hz</string>
     <string name="khz" translatable="false">kHz</string>
+    <string name="bitrate_value">%s kbps</string>
+    <string name="bitrate">Bitrate</string>
+    <string name="codec">Codec</string>
+    <string name="loseless" translatable="false">Loseless</string>
+
+    <string name="open_album">Go to album</string>
+    <string name="open_artist">Go to artist</string>
 </resources>

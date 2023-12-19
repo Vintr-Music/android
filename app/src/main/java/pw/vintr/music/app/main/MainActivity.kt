@@ -2,6 +2,7 @@ package pw.vintr.music.app.main
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
+import androidx.activity.compose.BackHandler
 import androidx.activity.compose.setContent
 import androidx.compose.animation.core.AnimationSpec
 import androidx.compose.animation.core.tween
@@ -24,17 +25,24 @@ import androidx.compose.material.SwipeableDefaults
 import androidx.compose.material.rememberModalBottomSheetState
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.collectAsState
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import com.google.accompanist.navigation.material.ModalBottomSheetLayout
+import com.google.accompanist.navigation.material.bottomSheet
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.compose.KoinContext
 import org.koin.compose.rememberKoinInject
+import pw.vintr.music.domain.library.model.track.TrackModel
+import pw.vintr.music.tools.extension.getRequiredArg
 import pw.vintr.music.ui.feature.register.RegisterScreen
 import pw.vintr.music.ui.feature.root.RootScreen
 import pw.vintr.music.ui.feature.serverSelection.ServerSelectionScreen
+import pw.vintr.music.ui.feature.trackDetails.TrackDetailsBottomSheet
 import pw.vintr.music.ui.navigation.Navigator
 import pw.vintr.music.ui.navigation.NavigatorEffect
 import pw.vintr.music.ui.navigation.NavigatorType
@@ -63,14 +71,23 @@ class MainActivity : ComponentActivity() {
                             modifier = Modifier.fillMaxSize(),
                             color = MaterialTheme.colorScheme.background
                         ) {
-                            Navigation(
-                                navController = navController,
-                                rootScreen = when (initialState.value) {
-                                    AppInitialState.Authorized -> Screen.Root
-                                    AppInitialState.Login -> Screen.Login
-                                    AppInitialState.ServerSelection -> Screen.SelectServer()
-                                }
-                            )
+                            ModalBottomSheetLayout(
+                                bottomSheetNavigator = bottomSheetNavigator,
+                                sheetContentColor = Color.Transparent,
+                                sheetBackgroundColor = Color.Transparent,
+                                scrimColor = MaterialTheme.colorScheme.background
+                                    .copy(alpha = 0.9f),
+                                sheetElevation = 0.dp
+                            ) {
+                                Navigation(
+                                    navController = navController,
+                                    rootScreen = when (initialState.value) {
+                                        AppInitialState.Authorized -> Screen.Root
+                                        AppInitialState.Login -> Screen.Login
+                                        AppInitialState.ServerSelection -> Screen.SelectServer()
+                                    }
+                                )
+                            }
                         }
                     }
                 }
@@ -79,6 +96,7 @@ class MainActivity : ComponentActivity() {
     }
 }
 
+@OptIn(ExperimentalMaterialNavigationApi::class)
 @Composable
 fun Navigation(
     navigator: Navigator = rememberKoinInject(),
@@ -113,6 +131,15 @@ fun Navigation(
             ServerSelectionScreen(usePrimaryMountToolbar = usePrimaryMountToolbar)
         }
         composable(Screen.Root.route) { RootScreen() }
+        bottomSheet(Screen.TrackDetails.route) {
+            BackHandler { navController.navigateUp() }
+
+            val trackModel = it.arguments.getRequiredArg(
+                Screen.TrackDetails.ARG_TRACK_MODEL,
+                TrackModel::class.java
+            )
+            TrackDetailsBottomSheet(trackModel = trackModel)
+        }
     }
 }
 

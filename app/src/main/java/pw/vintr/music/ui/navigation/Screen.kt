@@ -6,6 +6,7 @@ import kotlinx.parcelize.IgnoredOnParcel
 import kotlinx.parcelize.Parcelize
 import pw.vintr.music.domain.library.model.album.AlbumModel
 import pw.vintr.music.domain.library.model.artist.ArtistModel
+import pw.vintr.music.domain.library.model.track.TrackModel
 
 @Suppress("SameParameterValue")
 private fun buildRoute(
@@ -36,7 +37,7 @@ sealed class Screen(val route: String) : Parcelable {
         val usePrimaryMountToolbar: Boolean = true,
     ) : Screen(
         route = buildRoute(
-            destination = "select-server",
+            destination = ROUTE_DESTINATION,
             params = mapOf(ARG_USE_PRIMARY_TOOLBAR to usePrimaryMountToolbar.toString())
         )
     ) {
@@ -79,5 +80,13 @@ sealed class Screen(val route: String) : Parcelable {
         const val ARG_KEY_ARTIST = "arg-key-artist"
 
         fun arguments(artist: ArtistModel) = bundleOf(ARG_KEY_ARTIST to artist)
+    }
+
+    object TrackDetails : Screen(route = "track-details") {
+
+        @IgnoredOnParcel
+        const val ARG_TRACK_MODEL = "arg-track-model"
+
+        fun arguments(trackModel: TrackModel) = bundleOf(ARG_TRACK_MODEL to trackModel)
     }
 }

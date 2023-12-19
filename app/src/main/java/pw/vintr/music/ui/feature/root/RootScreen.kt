@@ -46,6 +46,7 @@ import pw.vintr.music.ui.kit.navbar.AppNavigationBar
 import pw.vintr.music.ui.kit.sliding.BottomSheetScaffoldState
 import pw.vintr.music.ui.kit.sliding.rememberBottomSheetScaffoldState
 import pw.vintr.music.ui.navigation.Navigator
+import pw.vintr.music.ui.navigation.NavigatorAction
 import pw.vintr.music.ui.navigation.NavigatorEffect
 import pw.vintr.music.ui.navigation.NavigatorType
 import pw.vintr.music.ui.navigation.Screen
@@ -140,10 +141,19 @@ fun TabNavigation(
     val activity = (LocalContext.current as? Activity)
     val coroutineScope = rememberCoroutineScope()
 
+    fun closeNowPlaying() {
+        coroutineScope.launch { scaffoldState.bottomSheetState.collapse() }
+    }
+
     NavigatorEffect(
         type = navigatorType,
         navigator = navigator,
-        controller = navController
+        controller = navController,
+        onCustomCommand = { action ->
+            if (action is NavigatorAction.CloseNowPlaying) {
+                closeNowPlaying()
+            }
+        }
     )
 
     // Root back handler
@@ -183,9 +193,7 @@ fun TabNavigation(
     }
 
     // Scaffold bottom sheet back handler
-    BackHandler(enabled = scaffoldState.bottomSheetState.isExpanded) {
-        coroutineScope.launch { scaffoldState.bottomSheetState.collapse() }
-    }
+    BackHandler(enabled = scaffoldState.bottomSheetState.isExpanded) { closeNowPlaying() }
 }
 
 private fun NavController.openTab(tab: Tab) {

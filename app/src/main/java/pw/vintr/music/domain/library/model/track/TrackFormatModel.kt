@@ -21,6 +21,9 @@ data class TrackFormatModel(
 ) : Parcelable {
     @IgnoredOnParcel
     val durationFormat = DurationFormat.formatSeconds(duration.toLong())
+
+    @IgnoredOnParcel
+    val bitrateFormat = (bitrate / 1000).toInt().toString()
 }
 
 fun TrackFormatDto.toModel() = TrackFormatModel(

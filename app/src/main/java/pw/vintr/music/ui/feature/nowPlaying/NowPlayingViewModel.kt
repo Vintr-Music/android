@@ -5,12 +5,15 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import pw.vintr.music.domain.library.model.track.TrackModel
 import pw.vintr.music.domain.player.interactor.PlayerInteractor
 import pw.vintr.music.domain.player.model.config.PlayerRepeatMode
 import pw.vintr.music.domain.player.model.config.PlayerShuffleMode
 import pw.vintr.music.domain.player.model.state.PlayerProgressModel
 import pw.vintr.music.domain.player.model.state.PlayerStateHolderModel
 import pw.vintr.music.ui.base.BaseViewModel
+import pw.vintr.music.ui.navigation.NavigatorType
+import pw.vintr.music.ui.navigation.Screen
 
 class NowPlayingViewModel(
     private val playerInteractor: PlayerInteractor,
@@ -101,5 +104,13 @@ class NowPlayingViewModel(
             delay(timeMillis = 500)
             seekProgress.update { it.copy(isSeeking = false) }
         }
+    }
+
+    fun openTrackDetails(trackModel: TrackModel) {
+        navigator.forward(
+            screen = Screen.TrackDetails,
+            arguments = Screen.TrackDetails.arguments(trackModel),
+            type = NavigatorType.Root
+        )
     }
 }

@@ -20,6 +20,7 @@ import pw.vintr.music.ui.feature.root.RootViewModel
 import pw.vintr.music.ui.feature.search.SearchViewModel
 import pw.vintr.music.ui.feature.serverSelection.ServerSelectionViewModel
 import pw.vintr.music.ui.feature.settings.SettingsViewModel
+import pw.vintr.music.ui.feature.trackDetails.TrackDetailsViewModel
 import pw.vintr.music.ui.navigation.Navigator
 
 val uiModule = module {
@@ -44,4 +45,5 @@ val uiModule = module {
     viewModel { params -> ArtistDetailsViewModel(params.get(), get()) }
     viewModel { NowPlayingViewModel(get()) }
     viewModel { EqualizerViewModel(get()) }
+    viewModel { TrackDetailsViewModel() }
 }
