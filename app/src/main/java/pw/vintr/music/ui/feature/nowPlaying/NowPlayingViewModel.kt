@@ -108,8 +108,7 @@ class NowPlayingViewModel(
 
     fun openTrackDetails(trackModel: TrackModel) {
         navigator.forward(
-            screen = Screen.TrackDetails,
-            arguments = Screen.TrackDetails.arguments(trackModel),
+            screen = Screen.TrackDetails(trackModel),
             type = NavigatorType.Root
         )
     }

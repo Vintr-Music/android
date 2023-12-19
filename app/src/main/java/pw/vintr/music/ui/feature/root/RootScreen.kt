@@ -25,6 +25,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import kotlinx.coroutines.launch
 import org.koin.androidx.compose.getViewModel
 import org.koin.compose.rememberKoinInject
@@ -50,6 +51,7 @@ import pw.vintr.music.ui.navigation.NavigatorAction
 import pw.vintr.music.ui.navigation.NavigatorEffect
 import pw.vintr.music.ui.navigation.NavigatorType
 import pw.vintr.music.ui.navigation.Screen
+import pw.vintr.music.ui.navigation.navargs.parcelable.ParcelableNavType
 
 private const val TRANSITION_DURATION = 300
 
@@ -174,7 +176,14 @@ fun TabNavigation(
         composable(Screen.Menu.route) { MenuScreen() }
         composable(Screen.Settings.route) { SettingsScreen() }
         composable(Screen.Equalizer.route) { EqualizerScreen() }
-        composable(Screen.AlbumDetails.route) {entry ->
+        composable(
+            Screen.AlbumDetails.routeTemplate,
+            arguments = listOf(
+                navArgument(Screen.AlbumDetails.ARG_KEY_ALBUM) {
+                    type = ParcelableNavType(AlbumModel::class.java)
+                }
+            )
+        ) {entry ->
             val album = entry.arguments.getRequiredArg(
                 Screen.AlbumDetails.ARG_KEY_ALBUM,
                 AlbumModel::class.java
@@ -182,7 +191,14 @@ fun TabNavigation(
 
             AlbumDetailsScreen(album = album)
         }
-        composable(Screen.ArtistDetails.route) {entry ->
+        composable(
+            route = Screen.ArtistDetails.routeTemplate,
+            arguments = listOf(
+                navArgument(Screen.ArtistDetails.ARG_KEY_ARTIST) {
+                    type = ParcelableNavType(ArtistModel::class.java)
+                }
+            )
+        ) {entry ->
             val artist = entry.arguments.getRequiredArg(
                 Screen.ArtistDetails.ARG_KEY_ARTIST,
                 ArtistModel::class.java

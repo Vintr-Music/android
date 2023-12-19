@@ -1,12 +1,10 @@
 package pw.vintr.music.ui.navigation
 
 import android.os.Parcelable
-import androidx.core.os.bundleOf
-import kotlinx.parcelize.IgnoredOnParcel
-import kotlinx.parcelize.Parcelize
 import pw.vintr.music.domain.library.model.album.AlbumModel
 import pw.vintr.music.domain.library.model.artist.ArtistModel
 import pw.vintr.music.domain.library.model.track.TrackModel
+import pw.vintr.music.ui.navigation.navargs.parcelable.ParcelableNavTypeSerializer
 
 @Suppress("SameParameterValue")
 private fun buildRoute(
@@ -26,8 +24,27 @@ private fun buildRouteTemplate(
     paramKeys.forEach { append("?$it={$it}") }
 }
 
-@Parcelize
-sealed class Screen(val route: String) : Parcelable {
+sealed class Screen(val route: String) {
+
+    abstract class ScreenWithArgs(
+        destination: String,
+        args: Map<String, Any>
+    ) : Screen(
+        route = buildRoute(
+            destination = destination,
+            params = args.mapValues {
+                when (val value = it.value) {
+                    is Parcelable -> {
+                        ParcelableNavTypeSerializer(value.javaClass)
+                            .toRouteString(value)
+                    }
+                    else -> {
+                        it.value.toString()
+                    }
+                }
+            }
+        )
+    )
 
     object Login : Screen(route = "login")
 
@@ -35,17 +52,15 @@ sealed class Screen(val route: String) : Parcelable {
 
     data class SelectServer(
         val usePrimaryMountToolbar: Boolean = true,
-    ) : Screen(
-        route = buildRoute(
-            destination = ROUTE_DESTINATION,
-            params = mapOf(ARG_USE_PRIMARY_TOOLBAR to usePrimaryMountToolbar.toString())
-        )
+    ) : ScreenWithArgs(
+        destination = ROUTE_DESTINATION,
+        args = mapOf(ARG_USE_PRIMARY_TOOLBAR to usePrimaryMountToolbar)
     ) {
         companion object {
             const val ARG_USE_PRIMARY_TOOLBAR = "arg-use-primary-mount-toolbar"
             private const val ROUTE_DESTINATION = "select-server"
 
-            val route = buildRouteTemplate(
+            val routeTemplate = buildRouteTemplate(
                 ROUTE_DESTINATION,
                 listOf(ARG_USE_PRIMARY_TOOLBAR)
             )
@@ -66,27 +81,48 @@ sealed class Screen(val route: String) : Parcelable {
 
     object Equalizer : Screen(route = "equalizer")
 
-    object AlbumDetails : Screen(route = "album-details") {
+    data class AlbumDetails(val album: AlbumModel) : ScreenWithArgs(
+        destination = ROUTE_DESTINATION,
+        args = mapOf(ARG_KEY_ALBUM to album)
+    ) {
+        companion object {
+            const val ARG_KEY_ALBUM = "arg-key-album"
+            private const val ROUTE_DESTINATION = "album-details"
 
-        @IgnoredOnParcel
-        const val ARG_KEY_ALBUM = "arg-key-album"
-
-        fun arguments(album: AlbumModel) = bundleOf(ARG_KEY_ALBUM to album)
+            val routeTemplate = buildRouteTemplate(
+                ROUTE_DESTINATION,
+                listOf(ARG_KEY_ALBUM)
+            )
+        }
     }
 
-    object ArtistDetails : Screen(route = "artist-details") {
+    data class ArtistDetails(val artist: ArtistModel) : ScreenWithArgs(
+        destination = ROUTE_DESTINATION,
+        args = mapOf(ARG_KEY_ARTIST to artist)
+    ) {
+        companion object {
+            const val ARG_KEY_ARTIST = "arg-key-artist"
+            private const val ROUTE_DESTINATION = "artist-details"
 
-        @IgnoredOnParcel
-        const val ARG_KEY_ARTIST = "arg-key-artist"
-
-        fun arguments(artist: ArtistModel) = bundleOf(ARG_KEY_ARTIST to artist)
+            val routeTemplate = buildRouteTemplate(
+                ROUTE_DESTINATION,
+                listOf(ARG_KEY_ARTIST)
+            )
+        }
     }
 
-    object TrackDetails : Screen(route = "track-details") {
+    data class TrackDetails(val trackModel: TrackModel) : ScreenWithArgs(
+        destination = ROUTE_DESTINATION,
+        args = mapOf(ARG_KEY_TRACK to trackModel)
+    ) {
+        companion object {
+            const val ARG_KEY_TRACK = "arg-track-model"
+            private const val ROUTE_DESTINATION = "track-details"
 
-        @IgnoredOnParcel
-        const val ARG_TRACK_MODEL = "arg-track-model"
-
-        fun arguments(trackModel: TrackModel) = bundleOf(ARG_TRACK_MODEL to trackModel)
+            val routeTemplate = buildRouteTemplate(
+                ROUTE_DESTINATION,
+                listOf(ARG_KEY_TRACK)
+            )
+        }
     }
 }

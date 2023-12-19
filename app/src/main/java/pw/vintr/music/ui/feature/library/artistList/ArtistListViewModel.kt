@@ -31,6 +31,6 @@ class ArtistListViewModel(
     }
 
     fun onArtistClick(artist: ArtistModel) {
-        navigator.forward(Screen.ArtistDetails, Screen.ArtistDetails.arguments(artist))
+        navigator.forward(Screen.ArtistDetails(artist))
     }
 }

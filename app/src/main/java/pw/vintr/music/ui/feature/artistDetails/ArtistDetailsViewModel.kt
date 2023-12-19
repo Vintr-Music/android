@@ -34,7 +34,7 @@ class ArtistDetailsViewModel(
     }
 
     fun onAlbumClick(album: AlbumModel) {
-        navigator.forward(Screen.AlbumDetails, Screen.AlbumDetails.arguments(album))
+        navigator.forward(Screen.AlbumDetails(album))
     }
 }
 

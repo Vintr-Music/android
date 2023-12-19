@@ -58,11 +58,11 @@ class SearchViewModel(
     }
 
     fun onArtistClick(artist: ArtistModel) {
-        navigator.forward(Screen.ArtistDetails, Screen.ArtistDetails.arguments(artist))
+        navigator.forward(Screen.ArtistDetails(artist))
     }
 
     fun onAlbumClick(album: AlbumModel) {
-        navigator.forward(Screen.AlbumDetails, Screen.AlbumDetails.arguments(album))
+        navigator.forward(Screen.AlbumDetails(album))
     }
 
     fun onTrackClicked(tracks: List<TrackModel>, track: TrackModel) {

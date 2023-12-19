@@ -1,13 +1,9 @@
 package pw.vintr.music.ui.navigation
 
 import android.annotation.SuppressLint
-import android.os.Bundle
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.core.net.toUri
 import androidx.navigation.NavController
-import androidx.navigation.NavDeepLinkRequest
-import androidx.navigation.NavDestination
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
@@ -51,28 +47,24 @@ class Navigator {
 
     fun forward(
         screen: Screen,
-        arguments: Bundle? = null,
         type: NavigatorType? = null
     ) {
         _actionFlow.tryEmit(
             NavigatorAction.Forward(
                 screen = screen,
                 navigatorType = type ?: currentNavigatorType,
-                arguments = arguments,
             )
         )
     }
 
     fun replaceAll(
         screen: Screen,
-        arguments: Bundle? = null,
         type: NavigatorType? = null
     ) {
         _actionFlow.tryEmit(
             NavigatorAction.ReplaceAll(
                 screen = screen,
                 navigatorType = type ?: currentNavigatorType,
-                arguments = arguments,
             )
         )
     }
@@ -81,8 +73,6 @@ class Navigator {
 sealed class NavigatorAction {
 
     abstract val navigatorType: NavigatorType
-
-    open val arguments: Bundle? = null
 
     data class CloseNowPlaying(
         override val navigatorType: NavigatorType
@@ -99,13 +89,11 @@ sealed class NavigatorAction {
     data class Forward(
         val screen: Screen,
         override val navigatorType: NavigatorType,
-        override val arguments: Bundle? = null,
     ) : NavigatorAction()
 
     data class ReplaceAll(
         val screen: Screen,
         override val navigatorType: NavigatorType,
-        override val arguments: Bundle? = null,
     ) : NavigatorAction()
 }
 
@@ -135,34 +123,10 @@ fun NavigatorEffect(
                         )
                     }
                     is NavigatorAction.Forward -> {
-                        val args = action.arguments
-
-                        if (args != null) {
-                            val routeLink = NavDeepLinkRequest
-                                .Builder
-                                .fromUri(NavDestination.createRoute(action.screen.route).toUri())
-                                .build()
-
-                            val deepLinkMatch = controller.graph.matchDeepLink(routeLink)
-
-                            if (deepLinkMatch != null) {
-                                val destination = deepLinkMatch.destination
-                                val id = destination.id
-
-                                controller.navigate(id, args)
-                            } else {
-                                controller.navigate(action.screen.route)
-                            }
-                        } else {
-                            controller.navigate(action.screen.route)
-                        }
+                        controller.navigate(action.screen.route)
                     }
                     is NavigatorAction.ReplaceAll -> {
                         controller.navigate(action.screen.route) { popUpToTop(controller) }
-
-                        action.arguments?.let { arguments ->
-                            controller.currentBackStackEntry?.arguments?.putAll(arguments)
-                        }
                     }
                     else -> {
                         onCustomCommand(action)

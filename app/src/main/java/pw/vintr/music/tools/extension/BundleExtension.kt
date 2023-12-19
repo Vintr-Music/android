@@ -5,10 +5,7 @@ import android.os.Bundle
 import android.os.Parcelable
 
 @Suppress("DEPRECATION")
-inline fun <reified T : Parcelable> Bundle?.getRequiredArg(
-    key: String,
-    clazz: Class<T>,
-): T {
+fun <T : Parcelable> Bundle?.getRequiredArg(key: String, clazz: Class<T>): T {
     return requireNotNull(this) { "arguments bundle is null" }.run {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             requireNotNull(getParcelable(key, clazz)) { "argument for $key is null" }

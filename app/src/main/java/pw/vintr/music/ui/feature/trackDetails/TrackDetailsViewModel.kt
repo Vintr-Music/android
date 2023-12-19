@@ -9,19 +9,13 @@ class TrackDetailsViewModel : BaseViewModel() {
 
     fun openAlbum(trackModel: TrackModel) {
         navigator.closeNowPlaying()
-        navigator.forward(
-            Screen.AlbumDetails,
-            Screen.AlbumDetails.arguments(trackModel.metadata.albumModel)
-        )
+        navigator.forward(Screen.AlbumDetails(trackModel.metadata.albumModel))
         navigator.back(NavigatorType.Root)
     }
 
     fun openArtist(trackModel: TrackModel) {
         navigator.closeNowPlaying()
-        navigator.forward(
-            Screen.ArtistDetails,
-            Screen.ArtistDetails.arguments(trackModel.metadata.artists.first())
-        )
+        navigator.forward(Screen.ArtistDetails(trackModel.metadata.artists.first()))
         navigator.back(NavigatorType.Root)
     }
 }

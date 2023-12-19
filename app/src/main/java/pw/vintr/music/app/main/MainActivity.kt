@@ -47,6 +47,7 @@ import pw.vintr.music.ui.navigation.Navigator
 import pw.vintr.music.ui.navigation.NavigatorEffect
 import pw.vintr.music.ui.navigation.NavigatorType
 import pw.vintr.music.ui.navigation.Screen
+import pw.vintr.music.ui.navigation.navargs.parcelable.ParcelableNavType
 
 private const val TRANSITION_DURATION = 300
 
@@ -118,11 +119,9 @@ fun Navigation(
         composable(Screen.Login.route) { LoginScreen() }
         composable(Screen.Register.route) { RegisterScreen() }
         composable(
-            Screen.SelectServer.route,
+            Screen.SelectServer.routeTemplate,
             arguments = listOf(
-                navArgument(
-                    name = Screen.SelectServer.ARG_USE_PRIMARY_TOOLBAR
-                ) { defaultValue = true }
+                navArgument(Screen.SelectServer.ARG_USE_PRIMARY_TOOLBAR) { defaultValue = true }
             )
         ) {
             val usePrimaryMountToolbar = it.arguments
@@ -131,11 +130,18 @@ fun Navigation(
             ServerSelectionScreen(usePrimaryMountToolbar = usePrimaryMountToolbar)
         }
         composable(Screen.Root.route) { RootScreen() }
-        bottomSheet(Screen.TrackDetails.route) {
+        bottomSheet(
+            Screen.TrackDetails.routeTemplate,
+            arguments = listOf(
+                navArgument(Screen.TrackDetails.ARG_KEY_TRACK) {
+                    type = ParcelableNavType(TrackModel::class.java)
+                }
+            )
+        ) {
             BackHandler { navController.navigateUp() }
 
             val trackModel = it.arguments.getRequiredArg(
-                Screen.TrackDetails.ARG_TRACK_MODEL,
+                Screen.TrackDetails.ARG_KEY_TRACK,
                 TrackModel::class.java
             )
             TrackDetailsBottomSheet(trackModel = trackModel)
