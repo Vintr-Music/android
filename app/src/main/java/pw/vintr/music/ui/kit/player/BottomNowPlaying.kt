@@ -15,10 +15,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import pw.vintr.music.R
 import pw.vintr.music.domain.library.model.track.TrackModel
 import pw.vintr.music.domain.player.model.state.PlayerStatusModel
-import pw.vintr.music.ui.kit.button.SimpleIconButton
+import pw.vintr.music.ui.kit.button.ButtonPlayerStateMini
 import pw.vintr.music.ui.kit.separator.LineSeparator
 import pw.vintr.music.ui.theme.RubikMedium16
 import pw.vintr.music.ui.theme.RubikRegular14
@@ -66,14 +65,9 @@ fun BottomNowPlaying(
                 )
             }
             Spacer(modifier = Modifier.width(8.dp))
-            SimpleIconButton(
-                iconRes = when (playerStatus) {
-                    PlayerStatusModel.IDLE,
-                    PlayerStatusModel.LOADING,
-                    PlayerStatusModel.PAUSED -> R.drawable.ic_play
-                    PlayerStatusModel.PLAYING -> R.drawable.ic_pause
-                },
-                tint = VintrMusicExtendedTheme.colors.textRegular,
+            ButtonPlayerStateMini(
+                isPlaying = playerStatus == PlayerStatusModel.PLAYING,
+                isLoading = playerStatus == PlayerStatusModel.LOADING,
                 onClick = { onControlClick() }
             )
         }

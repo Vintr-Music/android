@@ -28,15 +28,16 @@ class AlbumDetailsViewModel(
 
     val albumPlayingState = playerInteractor.playerState.map {
         val isPlaying = it.status == PlayerStatusModel.PLAYING
+        val isLoading = it.status == PlayerStatusModel.LOADING
 
         if (
             it.session is PlayerSessionModel.Album &&
             it.session.album == album
         ) {
-            if (isPlaying) {
-                AlbumPlayingState.Playing(it.currentTrack)
-            } else {
-                AlbumPlayingState.Paused(it.currentTrack)
+            when {
+                isLoading -> AlbumPlayingState.Loading(it.currentTrack)
+                isPlaying -> AlbumPlayingState.Playing(it.currentTrack)
+                else -> AlbumPlayingState.Paused(it.currentTrack)
             }
         } else {
             AlbumPlayingState.Idle(it.currentTrack)
@@ -98,4 +99,6 @@ sealed interface AlbumPlayingState {
     data class Paused(override val playingTrack: TrackModel?) : AlbumPlayingState
 
     data class Playing(override val playingTrack: TrackModel?) : AlbumPlayingState
+
+    data class Loading(override val playingTrack: TrackModel?) : AlbumPlayingState
 }

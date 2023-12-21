@@ -89,6 +89,7 @@ fun PlayerControls(
             )
             ButtonPlayerState(
                 isPlaying = playerState.status == PlayerStatusModel.PLAYING,
+                isLoading = playerState.status == PlayerStatusModel.LOADING,
                 onClick = { onChangePlayerState() }
             )
             SimpleIconButton(

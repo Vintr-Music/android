@@ -123,6 +123,7 @@ fun AlbumDetailsScreen(
                         ) {
                             val horizontalBias = -collapsingLayoutState.toolbarState.progress
                             val isPlaying = albumState is AlbumPlayingState.Playing
+                            val isLoading = albumState is AlbumPlayingState.Loading
 
                             ButtonPlayerState(
                                 modifier = Modifier.align(
@@ -132,6 +133,7 @@ fun AlbumDetailsScreen(
                                     )
                                 ),
                                 isPlaying = isPlaying,
+                                isLoading = isLoading,
                                 onClick = {
                                     when (albumState) {
                                         is AlbumPlayingState.Idle -> {
@@ -143,6 +145,7 @@ fun AlbumDetailsScreen(
                                         is AlbumPlayingState.Playing -> {
                                             viewModel.pauseAlbum()
                                         }
+                                        else -> Unit
                                     }
                                 }
                             )
