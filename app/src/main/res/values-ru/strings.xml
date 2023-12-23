@@ -44,4 +44,6 @@
     <string name="common_yes">Да</string>
     <string name="open_album">Перейти к альбому</string>
     <string name="open_artist">Перейти к исполнителю</string>
+    <string name="visualization">Визуализация</string>
+    <string name="visualization_description">Потребуется разрешение на запись аудио</string>
 </resources>

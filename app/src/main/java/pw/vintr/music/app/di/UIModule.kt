@@ -1,8 +1,5 @@
 package pw.vintr.music.app.di
 
-import android.content.Context
-import android.media.AudioManager
-import org.koin.android.ext.koin.androidApplication
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 import pw.vintr.music.app.main.MainViewModel
@@ -25,17 +22,14 @@ import pw.vintr.music.ui.navigation.Navigator
 
 val uiModule = module {
     single { Navigator() }
-    factory<AudioManager> {
-        androidApplication().getSystemService(Context.AUDIO_SERVICE) as AudioManager
-    }
 
-    viewModel { MainViewModel(get(), get()) }
+    viewModel { MainViewModel(get(), get(), get()) }
     viewModel { LoginViewModel(get()) }
     viewModel { RegisterViewModel() }
     viewModel { ServerSelectionViewModel(get(), get(), get(), get()) }
 
     viewModel { RootViewModel(get()) }
-    viewModel { HomeViewModel(get()) }
+    viewModel { HomeViewModel(get(), get()) }
     viewModel { SearchViewModel(get(), get()) }
     viewModel { LibraryViewModel() }
     viewModel { ArtistListViewModel(get()) }

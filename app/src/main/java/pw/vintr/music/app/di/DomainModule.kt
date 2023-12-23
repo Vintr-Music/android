@@ -17,6 +17,7 @@ import pw.vintr.music.domain.server.useCase.SelectServerUseCase
 import pw.vintr.music.domain.user.useCase.AuthorizeUseCase
 import pw.vintr.music.domain.user.useCase.GetAuthorizeStateUseCase
 import pw.vintr.music.domain.user.useCase.GetProfileUseCase
+import pw.vintr.music.domain.visualizer.VisualizerInteractor
 
 val domainModule = module {
     single { AuthorizeUseCase(get()) }
@@ -36,4 +37,5 @@ val domainModule = module {
 
     interactor { PlayerInteractor(androidContext(), get(), get()) }
     interactor { EqualizerInteractor(get(), get()) }
+    interactor { VisualizerInteractor(get(), get()) }
 }

@@ -93,6 +93,7 @@ dependencies {
     // Navigation | Accompanist
     implementation("androidx.navigation:navigation-compose:$navigationVersion")
     implementation("com.google.accompanist:accompanist-navigation-material:$accompanistVersion")
+    implementation("com.google.accompanist:accompanist-permissions:$accompanistVersion")
 
     // Ktor | HTTP
     implementation("io.ktor:ktor-client-android:$ktorVersion")

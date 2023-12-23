@@ -6,12 +6,15 @@ import pw.vintr.music.domain.library.model.album.AlbumModel
 import pw.vintr.music.domain.mainPage.model.MainPageItemModel
 import pw.vintr.music.domain.mainPage.model.MainPageWelcomeModel
 import pw.vintr.music.domain.mainPage.useCase.GetMainPageContentUseCase
+import pw.vintr.music.domain.visualizer.VisualizerInteractor
+import pw.vintr.music.domain.visualizer.model.VisualizerState
 import pw.vintr.music.ui.base.BaseScreenState
 import pw.vintr.music.ui.base.BaseViewModel
 import pw.vintr.music.ui.navigation.Screen
 
 class HomeViewModel(
-    private val getMainPageContentUseCase: GetMainPageContentUseCase
+    private val getMainPageContentUseCase: GetMainPageContentUseCase,
+    visualizerInteractor: VisualizerInteractor,
 ) : BaseViewModel() {
 
     private val _screenState = MutableStateFlow<BaseScreenState<HomeScreenData>>(
@@ -19,6 +22,9 @@ class HomeViewModel(
     )
 
     val screenState = _screenState.asStateFlow()
+
+    val visualizerData = visualizerInteractor.visualizerStateFlow
+        .stateInThis(initialValue = VisualizerState())
 
     init {
         loadData()

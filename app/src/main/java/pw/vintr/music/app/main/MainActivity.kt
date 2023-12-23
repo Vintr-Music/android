@@ -24,6 +24,7 @@ import androidx.compose.material.ModalBottomSheetValue
 import androidx.compose.material.SwipeableDefaults
 import androidx.compose.material.rememberModalBottomSheetState
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
@@ -34,6 +35,9 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.google.accompanist.navigation.material.ModalBottomSheetLayout
 import com.google.accompanist.navigation.material.bottomSheet
+import com.google.accompanist.permissions.ExperimentalPermissionsApi
+import com.google.accompanist.permissions.isGranted
+import com.google.accompanist.permissions.rememberPermissionState
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.compose.KoinContext
 import org.koin.compose.rememberKoinInject
@@ -55,7 +59,7 @@ class MainActivity : ComponentActivity() {
 
     private val viewModel: MainViewModel by viewModel()
 
-    @OptIn(ExperimentalMaterialNavigationApi::class)
+    @OptIn(ExperimentalMaterialNavigationApi::class, ExperimentalPermissionsApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         WindowCompat.setDecorFitsSystemWindows(window, false)
@@ -64,6 +68,17 @@ class MainActivity : ComponentActivity() {
             val initialState = viewModel.initialState.collectAsState()
             val bottomSheetNavigator = rememberBottomSheetNavigator(skipHalfExpanded = true)
             val navController = rememberNavController(bottomSheetNavigator)
+
+            val audioRecordPermissionState = rememberPermissionState(
+                permission = android.Manifest.permission.RECORD_AUDIO
+            )
+
+            LaunchedEffect(Unit) {
+                audioRecordPermissionState.launchPermissionRequest()
+            }
+            LaunchedEffect(audioRecordPermissionState.status.isGranted) {
+                viewModel.setAudioPermissionGranted(audioRecordPermissionState.status.isGranted)
+            }
 
             CompositionLocalProvider(LocalActivity provides this) {
                 KoinContext {

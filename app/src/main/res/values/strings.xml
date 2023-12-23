@@ -52,4 +52,7 @@
 
     <string name="open_album">Go to album</string>
     <string name="open_artist">Go to artist</string>
+
+    <string name="visualization">Visualization</string>
+    <string name="visualization_description">Audio record permission is needed</string>
 </resources>

@@ -4,11 +4,13 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import pw.vintr.music.domain.server.useCase.GetIsServerSelectedUseCase
 import pw.vintr.music.domain.user.useCase.GetAuthorizeStateUseCase
+import pw.vintr.music.domain.visualizer.VisualizerInteractor
 import pw.vintr.music.ui.base.BaseViewModel
 
 class MainViewModel(
     private val getAuthorizeStateUseCase: GetAuthorizeStateUseCase,
-    private val getSelectedServerIdUseCase: GetIsServerSelectedUseCase
+    private val getSelectedServerIdUseCase: GetIsServerSelectedUseCase,
+    private val visualizerInteractor: VisualizerInteractor,
 ) : BaseViewModel() {
 
     val initialState = MutableStateFlow(value = getInitialState()).asStateFlow()
@@ -28,6 +30,10 @@ class MainViewModel(
                 AppInitialState.Login
             }
         }
+    }
+
+    fun setAudioPermissionGranted(isGranted: Boolean) {
+        visualizerInteractor.setPermissionGranted(isGranted)
     }
 }
 

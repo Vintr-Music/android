@@ -1,10 +1,15 @@
 package pw.vintr.music.ui.feature.home
 
+import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.lazy.grid.GridCells
@@ -25,6 +30,7 @@ import pw.vintr.music.ui.kit.layout.PullRefreshLayout
 import pw.vintr.music.ui.kit.library.AlbumView
 import pw.vintr.music.ui.kit.library.tools.rememberLibraryGridCellsCount
 import pw.vintr.music.ui.kit.layout.ScreenStateLayout
+import pw.vintr.music.ui.kit.visualizer.Visualizer
 import pw.vintr.music.ui.theme.Gilroy18
 import pw.vintr.music.ui.theme.Gilroy24
 import pw.vintr.music.ui.theme.VintrMusicExtendedTheme
@@ -71,12 +77,33 @@ fun HomeScreen(
                         key = KEY_WELCOME_TEXT,
                         span = { GridItemSpan(currentLineSpan = cellsCount) },
                     ) {
-                        Text(
-                            modifier = Modifier.padding(bottom = 20.dp),
-                            text = stringResource(id = screenData.welcome.textRes),
-                            style = Gilroy24,
-                            color = VintrMusicExtendedTheme.colors.textRegular,
-                        )
+                        Column(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .animateContentSize()
+                        ) {
+                            Text(
+                                modifier = Modifier.padding(bottom = 20.dp),
+                                text = stringResource(id = screenData.welcome.textRes),
+                                style = Gilroy24,
+                                color = VintrMusicExtendedTheme.colors.textRegular,
+                            )
+
+                            // Visualizer
+                            val visualizerData = viewModel.visualizerData.collectAsState()
+
+                            if (visualizerData.value.enabled) {
+                                Spacer(modifier = Modifier.height(28.dp))
+                                Visualizer(
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .padding(horizontal = 20.dp)
+                                        .height(80.dp),
+                                    bytes = visualizerData.value.bytes,
+                                )
+                                Spacer(modifier = Modifier.height(28.dp))
+                            }
+                        }
                     }
 
                     screenData.items.forEach { item ->
