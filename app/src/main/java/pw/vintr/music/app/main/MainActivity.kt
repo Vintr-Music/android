@@ -43,6 +43,7 @@ import org.koin.compose.KoinContext
 import org.koin.compose.rememberKoinInject
 import pw.vintr.music.domain.library.model.track.TrackModel
 import pw.vintr.music.tools.extension.getRequiredArg
+import pw.vintr.music.ui.feature.menu.logout.LogoutConfirmDialog
 import pw.vintr.music.ui.feature.register.RegisterScreen
 import pw.vintr.music.ui.feature.root.RootScreen
 import pw.vintr.music.ui.feature.serverSelection.ServerSelectionScreen
@@ -51,7 +52,8 @@ import pw.vintr.music.ui.navigation.Navigator
 import pw.vintr.music.ui.navigation.NavigatorEffect
 import pw.vintr.music.ui.navigation.NavigatorType
 import pw.vintr.music.ui.navigation.Screen
-import pw.vintr.music.ui.navigation.navargs.parcelable.ParcelableNavType
+import pw.vintr.music.ui.navigation.navArgs.parcelable.ParcelableNavType
+import pw.vintr.music.ui.navigation.navGraph.extendedDialog
 
 private const val TRANSITION_DURATION = 300
 
@@ -161,6 +163,10 @@ fun Navigation(
             )
             TrackDetailsBottomSheet(trackModel = trackModel)
         }
+        extendedDialog(
+            route = Screen.LogoutConfirmDialog.route,
+            controller = navController
+        ) { LogoutConfirmDialog() }
     }
 }
 

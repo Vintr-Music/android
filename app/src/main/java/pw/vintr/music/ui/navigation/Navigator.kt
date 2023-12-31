@@ -1,6 +1,5 @@
 package pw.vintr.music.ui.navigation
 
-import android.annotation.SuppressLint
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.navigation.NavController
@@ -10,12 +9,16 @@ import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import pw.vintr.music.tools.extension.popUpToTop
+import pw.vintr.music.ui.navigation.navResult.ResultListenerHandler
+import pw.vintr.music.ui.navigation.navResult.ResultWire
 
 private const val NAVIGATION_EFFECT_KEY = "navigation"
 
 class Navigator {
 
     private val _actionFlow = MutableSharedFlow<NavigatorAction>(extraBufferCapacity = 10)
+
+    private val resultWire = ResultWire()
 
     private var currentNavigatorType: NavigatorType = NavigatorType.Root
 
@@ -37,6 +40,18 @@ class Navigator {
         )
     }
 
+    fun <T: Any> back(type: NavigatorType? = null, resultKey: String, result: T? = null) {
+        _actionFlow.tryEmit(
+            NavigatorAction.Back(
+                navigatorType = type ?: currentNavigatorType
+            )
+        )
+
+        result
+            ?.let { resultWire.sendResult(resultKey, it) }
+            ?: run { resultWire.removeListener(resultKey) }
+    }
+
     fun backToStart(type: NavigatorType? = null) {
         _actionFlow.tryEmit(
             NavigatorAction.BackToStart(
@@ -55,6 +70,23 @@ class Navigator {
                 navigatorType = type ?: currentNavigatorType,
             )
         )
+    }
+
+    @Suppress("UNCHECKED_CAST")
+    fun <T> forwardWithResult(
+        screen: Screen,
+        type: NavigatorType? = null,
+        resultKey: String,
+        resultCallback: (T) -> Unit
+    ): ResultListenerHandler {
+        _actionFlow.tryEmit(
+            NavigatorAction.Forward(
+                screen = screen,
+                navigatorType = type ?: currentNavigatorType,
+            )
+        )
+
+        return resultWire.setResultListener(resultKey) { resultCallback(it as T) }
     }
 
     fun replaceAll(
@@ -101,7 +133,6 @@ interface NavigatorType {
     object Root : NavigatorType
 }
 
-@SuppressLint("RestrictedApi")
 @Composable
 fun NavigatorEffect(
     type: NavigatorType,

@@ -11,6 +11,7 @@ import pw.vintr.music.ui.feature.library.LibraryViewModel
 import pw.vintr.music.ui.feature.library.artistList.ArtistListViewModel
 import pw.vintr.music.ui.feature.login.LoginViewModel
 import pw.vintr.music.ui.feature.menu.MenuViewModel
+import pw.vintr.music.ui.feature.menu.logout.LogoutConfirmViewModel
 import pw.vintr.music.ui.feature.nowPlaying.NowPlayingViewModel
 import pw.vintr.music.ui.feature.register.RegisterViewModel
 import pw.vintr.music.ui.feature.root.RootViewModel
@@ -40,4 +41,5 @@ val uiModule = module {
     viewModel { NowPlayingViewModel(get()) }
     viewModel { EqualizerViewModel(get()) }
     viewModel { TrackDetailsViewModel() }
+    viewModel { LogoutConfirmViewModel() }
 }

@@ -69,8 +69,8 @@ data class VintrMusicColors(
     val switchInactiveThumbColor: Color = Color.Unspecified,
     val switchInactiveBackgroundColor: Color = Color.Unspecified,
     // BottomSheet
-    val bottomSheetBackground: Color = Color.Unspecified,
-    val bottomSheetStroke: Color = Color.Unspecified,
+    val dialogBackground: Color = Color.Unspecified,
+    val dialogStroke: Color = Color.Unspecified,
 )
 
 val LocalVintrColors = staticCompositionLocalOf { VintrMusicColors() }
@@ -122,8 +122,8 @@ val darkVintrColors = VintrMusicColors(
     switchInactiveBackgroundColor = Gray1,
     switchInactiveThumbColor = Gray5,
     // BottomSheet
-    bottomSheetBackground = Card2,
-    bottomSheetStroke = Gray1,
+    dialogBackground = Card2,
+    dialogStroke = Gray1,
 )
 
 val lightVintrColors = VintrMusicColors(
@@ -173,8 +173,8 @@ val lightVintrColors = VintrMusicColors(
     switchInactiveBackgroundColor = White0,
     switchInactiveThumbColor = Bee0,
     // BottomSheet
-    bottomSheetBackground = Gray5,
-    bottomSheetStroke = Gray4,
+    dialogBackground = Gray5,
+    dialogStroke = Gray4,
 )
 
 private val darkColorScheme = darkColorScheme(

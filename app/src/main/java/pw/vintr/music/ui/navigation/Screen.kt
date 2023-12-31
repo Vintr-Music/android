@@ -4,7 +4,7 @@ import android.os.Parcelable
 import pw.vintr.music.domain.library.model.album.AlbumModel
 import pw.vintr.music.domain.library.model.artist.ArtistModel
 import pw.vintr.music.domain.library.model.track.TrackModel
-import pw.vintr.music.ui.navigation.navargs.parcelable.ParcelableNavTypeSerializer
+import pw.vintr.music.ui.navigation.navArgs.parcelable.ParcelableNavTypeSerializer
 
 @Suppress("SameParameterValue")
 private fun buildRoute(
@@ -125,4 +125,6 @@ sealed class Screen(val route: String) {
             )
         }
     }
+
+    object LogoutConfirmDialog : Screen("logout-confirm")
 }

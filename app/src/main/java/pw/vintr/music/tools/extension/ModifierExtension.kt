@@ -78,14 +78,14 @@ fun Modifier.scaffoldPadding(scaffoldPadding: PaddingValues) = composed {
     )
 }
 
-fun Modifier.bottomSheetContainer() = composed {
+fun Modifier.dialogContainer() = composed {
     navigationBarsPadding()
         .padding(16.dp)
         .clip(RoundedCornerShape(20.dp))
-        .background(VintrMusicExtendedTheme.colors.bottomSheetBackground)
+        .background(VintrMusicExtendedTheme.colors.dialogBackground)
         .border(
             width = 1.dp,
-            color = VintrMusicExtendedTheme.colors.bottomSheetStroke,
+            color = VintrMusicExtendedTheme.colors.dialogStroke,
             shape = RoundedCornerShape(20.dp)
         )
         .padding(24.dp)

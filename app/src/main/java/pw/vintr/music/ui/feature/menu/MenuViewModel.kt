@@ -9,8 +9,10 @@ import pw.vintr.music.domain.user.model.UserModel
 import pw.vintr.music.domain.user.useCase.GetProfileUseCase
 import pw.vintr.music.ui.base.BaseScreenState
 import pw.vintr.music.ui.base.BaseViewModel
+import pw.vintr.music.ui.feature.menu.logout.LogoutConfirmResult
 import pw.vintr.music.ui.navigation.NavigatorType
 import pw.vintr.music.ui.navigation.Screen
+import pw.vintr.music.ui.navigation.navResult.ResultListenerHandler
 
 class MenuViewModel(
     private val getProfileUseCase: GetProfileUseCase,
@@ -22,6 +24,8 @@ class MenuViewModel(
     )
 
     val screenState = _screenState.asStateFlow()
+
+    private var logoutResultListenerHandler: ResultListenerHandler? = null
 
     init {
         loadData()
@@ -41,7 +45,7 @@ class MenuViewModel(
 
     fun openServerSelection() {
         navigator.forward(
-            Screen.SelectServer(usePrimaryMountToolbar = false),
+            screen = Screen.SelectServer(usePrimaryMountToolbar = false),
             type = NavigatorType.Root
         )
     }
@@ -50,8 +54,25 @@ class MenuViewModel(
         navigator.forward(Screen.Settings)
     }
 
+    fun openLogoutDialog() {
+        logoutResultListenerHandler = navigator.forwardWithResult<LogoutConfirmResult>(
+            screen = Screen.LogoutConfirmDialog,
+            type = NavigatorType.Root,
+            resultKey = LogoutConfirmResult.KEY,
+        ) { logout() }
+    }
+
+    private fun logout() {
+        // TODO: logout
+    }
+
     fun openAbout() {
         // TODO: open about
+    }
+
+    override fun onCleared() {
+        logoutResultListenerHandler?.dispose()
+        super.onCleared()
     }
 }
 

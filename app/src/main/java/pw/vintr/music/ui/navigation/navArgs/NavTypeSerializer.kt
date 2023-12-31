@@ -1,4 +1,4 @@
-package pw.vintr.music.ui.navigation.navargs
+package pw.vintr.music.ui.navigation.navArgs
 
 interface NavTypeSerializer<T: Any> {
 

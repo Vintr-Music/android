@@ -27,6 +27,7 @@ import androidx.compose.ui.unit.dp
 import org.koin.androidx.compose.getViewModel
 import pw.vintr.music.BuildConfig
 import pw.vintr.music.R
+import pw.vintr.music.ui.kit.button.SimpleIconButton
 import pw.vintr.music.ui.kit.menu.MenuItemIconified
 import pw.vintr.music.ui.kit.layout.ScreenStateLayout
 import pw.vintr.music.ui.kit.modifier.cardContainer
@@ -61,12 +62,25 @@ fun MenuScreen(
             ) {
                 // Profile Info
                 Spacer(modifier = Modifier.height(40.dp))
-                Text(
-                    modifier = Modifier.padding(horizontal = 20.dp),
-                    text = screenData.user.fullName,
-                    style = Gilroy32,
-                    color = VintrMusicExtendedTheme.colors.textRegular,
-                )
+                Row(
+                    modifier = Modifier
+                        .padding(horizontal = 20.dp),
+                    horizontalArrangement = Arrangement.spacedBy(20.dp),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Text(
+                        modifier = Modifier.weight(1f),
+                        text = screenData.user.fullName,
+                        style = Gilroy32,
+                        color = VintrMusicExtendedTheme.colors.textRegular,
+                    )
+                    SimpleIconButton(
+                        iconRes = R.drawable.ic_exit,
+                        size = 36.dp,
+                        iconModifier = Modifier.padding(6.dp),
+                        onClick = { viewModel.openLogoutDialog() }
+                    )
+                }
                 Spacer(modifier = Modifier.height(28.dp))
 
                 // Selected server info

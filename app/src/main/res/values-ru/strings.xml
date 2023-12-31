@@ -3,6 +3,7 @@
     <string name="common_confirm">Подтвердить</string>
     <string name="common_data_error">Ошибка загрузки данных</string>
     <string name="common_retry">Повторить</string>
+    <string name="common_cancel">Отмена</string>
 
     <string name="password">Пароль</string>
     <string name="login">Войти</string>
@@ -46,4 +47,8 @@
     <string name="open_artist">Перейти к исполнителю</string>
     <string name="visualization">Визуализация</string>
     <string name="visualization_description">Потребуется разрешение на запись аудио</string>
+
+    <string name="confirm_logout_title">Выйти из аккаунта?</string>
+    <string name="confirm_logout_description">Все настройки сохранятся</string>
+    <string name="logout">Выйти</string>
 </resources>

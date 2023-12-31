@@ -51,7 +51,7 @@ import pw.vintr.music.ui.navigation.NavigatorAction
 import pw.vintr.music.ui.navigation.NavigatorEffect
 import pw.vintr.music.ui.navigation.NavigatorType
 import pw.vintr.music.ui.navigation.Screen
-import pw.vintr.music.ui.navigation.navargs.parcelable.ParcelableNavType
+import pw.vintr.music.ui.navigation.navArgs.parcelable.ParcelableNavType
 
 private const val TRANSITION_DURATION = 300
 

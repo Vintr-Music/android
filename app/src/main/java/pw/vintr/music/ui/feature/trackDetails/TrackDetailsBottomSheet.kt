@@ -27,7 +27,7 @@ import coil.request.ImageRequest
 import org.koin.androidx.compose.getViewModel
 import pw.vintr.music.R
 import pw.vintr.music.domain.library.model.track.TrackModel
-import pw.vintr.music.tools.extension.bottomSheetContainer
+import pw.vintr.music.tools.extension.dialogContainer
 import pw.vintr.music.tools.extension.toStringRes
 import pw.vintr.music.ui.kit.menu.MenuItemIconified
 import pw.vintr.music.ui.kit.modifier.artworkContainer
@@ -44,7 +44,7 @@ fun TrackDetailsBottomSheet(
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .bottomSheetContainer()
+            .dialogContainer()
     ) {
         // Track main info
         Row(

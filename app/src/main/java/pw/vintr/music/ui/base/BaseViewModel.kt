@@ -25,7 +25,7 @@ abstract class BaseViewModel : ViewModel(), CoroutineScope, KoinComponent {
 
     protected val navigator: Navigator by inject()
 
-    fun navigateBack(type: NavigatorType? = null) { navigator.back(type) }
+    open fun navigateBack(type: NavigatorType? = null) { navigator.back(type) }
 
     protected fun createExceptionHandler(
         onException: (Throwable) -> Unit = { }

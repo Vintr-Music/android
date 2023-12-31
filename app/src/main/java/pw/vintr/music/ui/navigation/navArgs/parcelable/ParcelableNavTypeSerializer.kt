@@ -1,9 +1,9 @@
-package pw.vintr.music.ui.navigation.navargs.parcelable
+package pw.vintr.music.ui.navigation.navArgs.parcelable
 
 import android.os.BadParcelableException
 import android.os.Parcel
 import android.os.Parcelable
-import pw.vintr.music.ui.navigation.navargs.NavTypeSerializer
+import pw.vintr.music.ui.navigation.navArgs.NavTypeSerializer
 import java.lang.reflect.Modifier
 import java.nio.charset.StandardCharsets
 import java.util.Base64

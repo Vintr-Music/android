@@ -6,6 +6,7 @@
     <string name="common_retry">Retry</string>
     <string name="common_no">No</string>
     <string name="common_yes">Yes</string>
+    <string name="common_cancel">Cancel</string>
 
     <string name="email" translatable="false">Email</string>
     <string name="password">Password</string>
@@ -55,4 +56,8 @@
 
     <string name="visualization">Visualization</string>
     <string name="visualization_description">Audio record permission is needed</string>
+
+    <string name="confirm_logout_title">Log out of your account?</string>
+    <string name="confirm_logout_description">All your settings will be saved</string>
+    <string name="logout">Log out</string>
 </resources>

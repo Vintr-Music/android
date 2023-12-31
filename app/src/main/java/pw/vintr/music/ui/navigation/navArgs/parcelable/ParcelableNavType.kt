@@ -1,4 +1,4 @@
-package pw.vintr.music.ui.navigation.navargs.parcelable
+package pw.vintr.music.ui.navigation.navArgs.parcelable
 
 import android.os.Bundle
 import android.os.Parcelable
