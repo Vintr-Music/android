@@ -17,9 +17,7 @@ import org.koin.androidx.compose.getViewModel
 import pw.vintr.music.R
 import pw.vintr.music.ui.kit.button.ButtonText
 import pw.vintr.music.ui.navigation.NavigatorType
-import pw.vintr.music.ui.theme.Gilroy16
 import pw.vintr.music.ui.theme.Gilroy20
-import pw.vintr.music.ui.theme.Gilroy24
 import pw.vintr.music.ui.theme.RubikRegular14
 import pw.vintr.music.ui.theme.VintrMusicExtendedTheme
 

@@ -15,4 +15,6 @@ class ServerPreferencesDataSource(
     }
 
     fun getSelectedServerId() = sharedPreferences.getString(KEY_SERVER_ID, null)
+
+    fun removeSelectedServerId() = sharedPreferences.edit { remove(KEY_SERVER_ID) }
 }

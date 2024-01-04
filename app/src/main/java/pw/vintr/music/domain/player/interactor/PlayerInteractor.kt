@@ -193,9 +193,11 @@ class PlayerInteractor(
         controller?.seekTo(position)
     }
 
-    fun destroySession() {
+    suspend fun destroySession() {
         controller?.stop()
         controller?.clearMediaItems()
+
+        playerSessionRepository.removePlayerSession()
     }
 
     fun setRepeatMode(repeatMode: PlayerRepeatMode) {

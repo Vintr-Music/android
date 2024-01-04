@@ -1,7 +1,9 @@
 package pw.vintr.music.ui.feature.serverSelection
 
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.launch
 import pw.vintr.music.domain.player.interactor.PlayerInteractor
 import pw.vintr.music.domain.server.model.ServerModel
 import pw.vintr.music.domain.server.useCase.GetSelectedServerUseCase
@@ -49,11 +51,13 @@ class ServerSelectionViewModel(
     }
 
     fun confirmSelection() {
-        _screenState.withLoaded { state ->
-            state.selection?.let { server ->
-                playerInteractor.destroySession()
-                selectServerUseCase.invoke(server)
-                navigator.replaceAll(Screen.Root, type = NavigatorType.Root)
+        launch(Dispatchers.Main) {
+            _screenState.withLoaded { state ->
+                state.selection?.let { server ->
+                    playerInteractor.destroySession()
+                    selectServerUseCase.invoke(server)
+                    navigator.replaceAll(Screen.Root, type = NavigatorType.Root)
+                }
             }
         }
     }

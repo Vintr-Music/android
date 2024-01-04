@@ -91,7 +91,8 @@ class Navigator {
 
     fun replaceAll(
         screen: Screen,
-        type: NavigatorType? = null
+        type: NavigatorType? = null,
+        applyNavigatorType: Boolean = false
     ) {
         _actionFlow.tryEmit(
             NavigatorAction.ReplaceAll(
@@ -99,6 +100,10 @@ class Navigator {
                 navigatorType = type ?: currentNavigatorType,
             )
         )
+
+        if (applyNavigatorType && type != null) {
+            currentNavigatorType = type
+        }
     }
 }
 

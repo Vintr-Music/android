@@ -15,4 +15,6 @@ class UserPreferencesDataSource(
     }
 
     fun getAccessToken() = sharedPreferences.getString(KEY_USER_ACCESS_TOKEN, null)
+
+    fun removeAccessToken() = sharedPreferences.edit { remove(KEY_USER_ACCESS_TOKEN) }
 }

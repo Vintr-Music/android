@@ -30,4 +30,8 @@ class PlayerSessionCacheDataStore(private val realm: Realm) {
         .first()
         .asFlow()
         .map { it.obj }
+
+    suspend fun removePlayerSession() {
+        realm.write { delete(query<PlayerSessionCacheObject>().find()) }
+    }
 }

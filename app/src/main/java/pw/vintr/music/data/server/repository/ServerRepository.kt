@@ -15,4 +15,6 @@ class ServerRepository(
     fun setSelectedServerId(serverId: String) = preferencesDataSource.setSelectedServerId(serverId)
 
     fun getSelectedServerId() = preferencesDataSource.getSelectedServerId()
+
+    fun removeSelectedServerId() = preferencesDataSource.removeSelectedServerId()
 }

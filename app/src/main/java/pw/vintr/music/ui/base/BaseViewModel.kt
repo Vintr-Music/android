@@ -16,6 +16,7 @@ import org.koin.core.component.KoinComponent
 import pw.vintr.music.ui.navigation.Navigator
 import org.koin.core.component.inject
 import pw.vintr.music.ui.navigation.NavigatorType
+import pw.vintr.music.ui.navigation.navResult.ResultListenerHandler
 
 abstract class BaseViewModel : ViewModel(), CoroutineScope, KoinComponent {
 
@@ -24,6 +25,8 @@ abstract class BaseViewModel : ViewModel(), CoroutineScope, KoinComponent {
     override val coroutineContext = Dispatchers.Main + job
 
     protected val navigator: Navigator by inject()
+
+    private val resultHandlerListeners: MutableMap<String, ResultListenerHandler> = mutableMapOf()
 
     open fun navigateBack(type: NavigatorType? = null) { navigator.back(type) }
 
@@ -58,8 +61,18 @@ abstract class BaseViewModel : ViewModel(), CoroutineScope, KoinComponent {
         initialValue = initialValue,
     )
 
+    protected fun handleResult(key: String, block: () -> ResultListenerHandler) {
+        resultHandlerListeners += key to block()
+    }
+
     override fun onCleared() {
+        // Cancel all suspend operations
         if (isActive) cancel()
+
+        // Clear all result handlers
+        resultHandlerListeners.forEach { it.value.dispose() }
+        resultHandlerListeners.clear()
+
         super.onCleared()
     }
 }
