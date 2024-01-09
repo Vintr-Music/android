@@ -12,6 +12,9 @@
     <string name="password">Password</string>
     <string name="login">Login</string>
     <string name="register">Register</string>
+    <string name="enter_password">Enter password</string>
+    <string name="repeat_password">Repeat password</string>
+    <string name="make_register">Register</string>
 
     <string name="select_server">Select server</string>
     <string name="add_new_server">Add new</string>

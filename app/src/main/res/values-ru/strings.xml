@@ -8,6 +8,9 @@
     <string name="password">Пароль</string>
     <string name="login">Войти</string>
     <string name="register">Регистрация</string>
+    <string name="enter_password">Введите пароль</string>
+    <string name="repeat_password">Повторите пароль</string>
+    <string name="make_register">Зарегистрироваться</string>
 
     <string name="select_server">Выбрать сервер</string>
     <string name="add_new_server">Добавить новый</string>
