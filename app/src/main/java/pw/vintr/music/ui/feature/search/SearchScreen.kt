@@ -120,7 +120,8 @@ fun SearchScreen(viewModel: SearchViewModel = getViewModel()) {
                             )
                         }
                         items(
-                            screenData.artists.take(MAX_DISPLAY_ARTISTS)
+                            screenData.artists.take(MAX_DISPLAY_ARTISTS),
+                            key = { it.name }
                         ) { artist ->
                             ArtistView(
                                 artist = artist,
@@ -144,6 +145,7 @@ fun SearchScreen(viewModel: SearchViewModel = getViewModel()) {
                         }
                         items(
                             screenData.albums.take(MAX_DISPLAY_ALBUMS),
+                            key = { it.id }
                         ) { album ->
                             AlbumView(
                                 album = album,

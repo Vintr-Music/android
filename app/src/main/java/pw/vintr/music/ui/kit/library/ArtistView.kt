@@ -18,7 +18,6 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
-import coil.size.Size
 import pw.vintr.music.domain.library.model.artist.ArtistModel
 import pw.vintr.music.ui.kit.modifier.artworkContainer
 import pw.vintr.music.ui.theme.Gilroy16
@@ -43,7 +42,7 @@ fun ArtistView(
                 modifier = Modifier.fillMaxSize(),
                 model = ImageRequest.Builder(LocalContext.current)
                     .data(artist.artworkUrl)
-                    .size(Size.ORIGINAL)
+                    .size(300)
                     .crossfade(enable = true)
                     .build(),
                 contentDescription = null

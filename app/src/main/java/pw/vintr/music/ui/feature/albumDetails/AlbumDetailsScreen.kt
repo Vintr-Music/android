@@ -152,7 +152,10 @@ fun AlbumDetailsScreen(
                         }
                     }
 
-                    itemsIndexed(screenData.tracks) { index, track ->
+                    itemsIndexed(
+                        items = screenData.tracks,
+                        key = { _, track -> track.md5 }
+                    ) { index, track ->
                         TrackView(
                             trackModel = track,
                             isPlaying = albumState.playingTrack == track,

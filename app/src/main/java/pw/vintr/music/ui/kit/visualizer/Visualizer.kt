@@ -31,6 +31,8 @@ private const val DEFAULT_MIN_BAR_HEIGHT = 3F
 private val BarWidth = 3.dp
 private val GapWidth = 2.dp
 
+private val UnitWidth = 8.dp
+
 @Composable
 fun Visualizer(
     modifier: Modifier = Modifier,
@@ -40,19 +42,20 @@ fun Visualizer(
         modifier = modifier,
         contentAlignment = Alignment.Center
     ) {
-        val barWidthPx = with(LocalDensity.current) { BarWidth.toPx() }
-        val gapWidthPx = with(LocalDensity.current) { GapWidth.toPx() }
+        val maxWidthDp = with(LocalDensity.current) { constraints.maxWidth.toDp() }
 
         val barsCount = remember(constraints.maxWidth) {
-            (constraints.maxWidth / (barWidthPx + (gapWidthPx * 2)))
+            val count = (maxWidthDp / UnitWidth)
                 .toInt()
                 .coerceIn(MIN_BARS_COUNT, MAX_BARS_COUNT)
+
+            count
         }
 
         Row(
             modifier = Modifier.fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.Center,
+            horizontalArrangement = Arrangement.Absolute.Center,
         ) {
             val div = bytes.size / barsCount
 
@@ -77,7 +80,6 @@ fun Visualizer(
             }
         }
     }
-
 }
 
 @Composable

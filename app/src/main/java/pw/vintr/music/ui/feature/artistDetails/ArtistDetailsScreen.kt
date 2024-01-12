@@ -92,7 +92,10 @@ fun ArtistDetailsScreen(
                     horizontalArrangement = Arrangement.spacedBy(20.dp),
                     contentPadding = PaddingValues(20.dp)
                 ) {
-                    items(screenData.albums) { album ->
+                    items(
+                        items = screenData.albums,
+                        key = { it.id }
+                    ) { album ->
                         AlbumView(
                             album = album,
                             onClick = { viewModel.onAlbumClick(album) }

@@ -46,7 +46,10 @@ fun ArtistListTab(
                 horizontalArrangement = Arrangement.spacedBy(20.dp),
                 contentPadding = PaddingValues(20.dp)
             ) {
-                items(artistList) { artist ->
+                items(
+                    items = artistList,
+                    key = { it.name }
+                ) { artist ->
                     ArtistView(
                         artist = artist,
                         onClick = { viewModel.onArtistClick(artist) }

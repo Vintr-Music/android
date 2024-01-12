@@ -20,11 +20,11 @@ class LibraryViewModel : BaseViewModel() {
 
 enum class LibraryTab(@StringRes val titleRes: Int) {
     ARTISTS(titleRes = R.string.library_artists),
-    ALBUMS(titleRes = R.string.library_albums)
+    PLAYLISTS(titleRes = R.string.library_playlists)
 }
 
 data class LibraryScreenState(
-    val tabs: List<LibraryTab> = listOf(LibraryTab.ARTISTS, LibraryTab.ALBUMS),
+    val tabs: List<LibraryTab> = listOf(LibraryTab.ARTISTS, LibraryTab.PLAYLISTS),
     val selectedTab: LibraryTab = LibraryTab.ARTISTS
 ) {
     val selectedIndex = tabs.indexOf(selectedTab)

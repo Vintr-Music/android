@@ -97,7 +97,6 @@ fun HomeScreen(
                                 Visualizer(
                                     modifier = Modifier
                                         .fillMaxWidth()
-                                        .padding(horizontal = 20.dp)
                                         .height(80.dp),
                                     bytes = visualizerData.value.bytes,
                                 )
@@ -117,7 +116,10 @@ fun HomeScreen(
                                 color = VintrMusicExtendedTheme.colors.textRegular,
                             )
                         }
-                        items(item.albums) { album ->
+                        items(
+                            items = item.albums,
+                            key = { it.id }
+                        ) { album ->
                             AlbumView(
                                 album = album,
                                 onClick = { viewModel.onAlbumClick(album) }

@@ -16,7 +16,6 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
-import coil.size.Size
 import pw.vintr.music.domain.library.model.album.AlbumModel
 import pw.vintr.music.tools.extension.Comma
 import pw.vintr.music.tools.extension.Space
@@ -44,7 +43,7 @@ fun AlbumView(
                 modifier = Modifier.fillMaxSize(),
                 model = ImageRequest.Builder(LocalContext.current)
                     .data(album.artworkUrl)
-                    .size(Size.ORIGINAL)
+                    .size(300)
                     .crossfade(enable = true)
                     .build(),
                 contentScale = ContentScale.Crop,

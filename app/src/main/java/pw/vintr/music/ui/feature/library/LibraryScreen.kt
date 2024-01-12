@@ -48,8 +48,8 @@ fun LibraryScreen(
             LibraryTab.ARTISTS -> {
                 ArtistListTab()
             }
-            LibraryTab.ALBUMS -> {
-                // TODO: album tab
+            LibraryTab.PLAYLISTS -> {
+                // TODO: playlist tab
             }
         }
     }
