@@ -5,6 +5,7 @@
     <string name="common_retry">Повторить</string>
     <string name="common_cancel">Отмена</string>
 
+    <string name="login_field">Логин</string>
     <string name="password">Пароль</string>
     <string name="login">Войти</string>
     <string name="register">Регистрация</string>

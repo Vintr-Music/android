@@ -56,8 +56,8 @@ fun LoginScreen(
         Spacer(modifier = Modifier.weight(1f))
         AppTextField(
             modifier = Modifier.padding(horizontal = 20.dp),
-            label = stringResource(id = R.string.login),
-            hint = stringResource(id = R.string.login),
+            label = stringResource(id = R.string.login_field),
+            hint = stringResource(id = R.string.login_field),
             value = screenState.value.login,
             onValueChange = { viewModel.changeLogin(it) },
             keyboardOptions = KeyboardOptions(
