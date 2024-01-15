@@ -17,8 +17,8 @@ class LoginViewModel(
 
     val screenState = _screenState.asStateFlow()
 
-    fun changeEmail(value: String) {
-        _screenState.update { it.copy(email = value) }
+    fun changeLogin(value: String) {
+        _screenState.update { it.copy(login = value) }
     }
 
     fun changePassword(value: String) {
@@ -32,7 +32,7 @@ class LoginViewModel(
             _screenState.update { it.copy(isAuthorizing = true) }
 
             authorizeUseCase.invoke(
-                email = _screenState.value.email,
+                email = _screenState.value.login,
                 password = _screenState.value.password,
             )
 
@@ -51,9 +51,9 @@ class LoginViewModel(
 }
 
 data class LoginScreenState(
-    val email: String = String.Empty,
+    val login: String = String.Empty,
     val password: String = String.Empty,
     val isAuthorizing: Boolean = false,
 ) {
-    val formIsValid = email.isNotBlank() && password.isNotBlank()
+    val formIsValid = login.isNotBlank() && password.isNotBlank()
 }

@@ -63,12 +63,12 @@ fun RegisterScreen(
             ) {
                 AppTextField(
                     modifier = Modifier.padding(horizontal = 20.dp),
-                    label = stringResource(id = R.string.email),
-                    hint = stringResource(id = R.string.email),
-                    value = screenState.value.email,
-                    onValueChange = { viewModel.changeEmail(it) },
+                    label = stringResource(id = R.string.login),
+                    hint = stringResource(id = R.string.login),
+                    value = screenState.value.login,
+                    onValueChange = { viewModel.changeLogin(it) },
                     keyboardOptions = KeyboardOptions(
-                        keyboardType = KeyboardType.Email,
+                        keyboardType = KeyboardType.Text,
                         imeAction = ImeAction.Next,
                     )
                 )

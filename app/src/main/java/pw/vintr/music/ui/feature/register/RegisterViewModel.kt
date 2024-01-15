@@ -12,8 +12,8 @@ class RegisterViewModel : BaseViewModel() {
 
     val screenState = _screenState.asStateFlow()
 
-    fun changeEmail(value: String) {
-        _screenState.update { it.copy(email = value) }
+    fun changeLogin(value: String) {
+        _screenState.update { it.copy(login = value) }
     }
 
     fun changePassword(value: String) {
@@ -30,10 +30,10 @@ class RegisterViewModel : BaseViewModel() {
 }
 
 data class RegisterScreenState(
-    val email: String = String.Empty,
+    val login: String = String.Empty,
     val password: String = String.Empty,
     val repeatPassword: String = String.Empty,
     val isRegistering: Boolean = false,
 ) {
-    val formIsValid = email.isNotBlank() && password.isNotBlank() && password == repeatPassword
+    val formIsValid = login.isNotBlank() && password.isNotBlank() && password == repeatPassword
 }
