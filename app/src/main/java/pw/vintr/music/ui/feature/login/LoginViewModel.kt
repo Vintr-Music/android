@@ -32,7 +32,7 @@ class LoginViewModel(
             _screenState.update { it.copy(isAuthorizing = true) }
 
             authorizeUseCase.invoke(
-                email = _screenState.value.login,
+                login = _screenState.value.login,
                 password = _screenState.value.password,
             )
 

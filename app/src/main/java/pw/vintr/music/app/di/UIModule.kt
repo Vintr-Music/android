@@ -26,7 +26,7 @@ val uiModule = module {
 
     viewModel { MainViewModel(get(), get(), get()) }
     viewModel { LoginViewModel(get()) }
-    viewModel { RegisterViewModel() }
+    viewModel { RegisterViewModel(get()) }
     viewModel { ServerSelectionViewModel(get(), get(), get(), get()) }
 
     viewModel { RootViewModel(get()) }

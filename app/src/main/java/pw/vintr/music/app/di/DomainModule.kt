@@ -18,10 +18,12 @@ import pw.vintr.music.domain.user.useCase.AuthorizeUseCase
 import pw.vintr.music.domain.user.useCase.GetAuthorizeStateUseCase
 import pw.vintr.music.domain.user.useCase.GetProfileUseCase
 import pw.vintr.music.domain.user.useCase.LogoutUseCase
+import pw.vintr.music.domain.user.useCase.RegisterUseCase
 import pw.vintr.music.domain.visualizer.VisualizerInteractor
 
 val domainModule = module {
     single { AuthorizeUseCase(get()) }
+    single { RegisterUseCase(get()) }
     single { LogoutUseCase(get(), get()) }
     single { GetAuthorizeStateUseCase(get()) }
     single { GetProfileUseCase(get()) }

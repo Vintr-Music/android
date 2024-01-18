@@ -9,6 +9,7 @@ import io.ktor.client.request.url
 import pw.vintr.music.data.user.dto.UserDto
 import pw.vintr.music.data.user.dto.auth.AuthorizeRequestDto
 import pw.vintr.music.data.user.dto.auth.AuthorizeResponseDto
+import pw.vintr.music.data.user.dto.register.RegisterRequestDto
 
 class UserRemoteDataSource(private val client: HttpClient) {
 
@@ -16,6 +17,13 @@ class UserRemoteDataSource(private val client: HttpClient) {
         request: AuthorizeRequestDto
     ): AuthorizeResponseDto = client.post {
         url("gate/user/auth/login")
+        setBody(request)
+    }.body()
+
+    suspend fun register(
+        request: RegisterRequestDto
+    ): AuthorizeResponseDto = client.post {
+        url("gate/user/auth/register")
         setBody(request)
     }.body()
 

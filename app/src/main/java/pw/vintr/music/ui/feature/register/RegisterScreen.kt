@@ -19,6 +19,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
@@ -94,6 +95,30 @@ fun RegisterScreen(
                     keyboardOptions = KeyboardOptions(
                         keyboardType = KeyboardType.Password,
                         imeAction = ImeAction.Done,
+                    )
+                )
+                AppTextField(
+                    modifier = Modifier.padding(horizontal = 20.dp),
+                    label = stringResource(id = R.string.first_name),
+                    hint = stringResource(id = R.string.first_name),
+                    value = screenState.value.login,
+                    onValueChange = { viewModel.changeFirstName(it) },
+                    keyboardOptions = KeyboardOptions(
+                        keyboardType = KeyboardType.Text,
+                        imeAction = ImeAction.Next,
+                        capitalization = KeyboardCapitalization.Words
+                    )
+                )
+                AppTextField(
+                    modifier = Modifier.padding(horizontal = 20.dp),
+                    label = stringResource(id = R.string.last_name),
+                    hint = stringResource(id = R.string.last_name),
+                    value = screenState.value.login,
+                    onValueChange = { viewModel.changeLastName(it) },
+                    keyboardOptions = KeyboardOptions(
+                        keyboardType = KeyboardType.Text,
+                        imeAction = ImeAction.Next,
+                        capitalization = KeyboardCapitalization.Words
                     )
                 )
             }
