@@ -11,4 +11,10 @@ class SearchRepository(
         limit: Int,
         offset: Int
     ) = searchRemoteDataSource.getSearchResults(query, limit, offset)
+
+    suspend fun searchTracks(
+        query: String,
+        limit: Int,
+        offset: Int
+    ) = searchRemoteDataSource.getTracksSearchResults(query, limit, offset)
 }
