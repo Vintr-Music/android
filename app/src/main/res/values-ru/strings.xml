@@ -19,6 +19,7 @@
     <string name="add_new_server">Добавить новый</string>
     <string name="add_server">Добавить сервер</string>
     <string name="servers">Серверы</string>
+    <string name="point_camera_at_qr">Наведите камеру на QR код</string>
 
     <string name="server_add_by_qr">QR код</string>
     <string name="server_add_by_manual">Вручную</string>

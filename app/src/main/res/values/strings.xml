@@ -22,6 +22,7 @@
     <string name="add_new_server">Add new server</string>
     <string name="add_server">Add server</string>
     <string name="servers">Servers</string>
+    <string name="point_camera_at_qr">Point your camera at the QR code</string>
 
     <string name="server_add_by_qr">Scan QR</string>
     <string name="server_add_by_manual">Enter manual</string>

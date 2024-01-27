@@ -7,6 +7,7 @@ import kotlinx.coroutines.flow.update
 import pw.vintr.music.R
 import pw.vintr.music.tools.extension.Empty
 import pw.vintr.music.ui.base.BaseViewModel
+import pw.vintr.music.ui.navigation.NavigatorType
 
 class ConnectNewServerViewModel : BaseViewModel() {
 
@@ -21,6 +22,15 @@ class ConnectNewServerViewModel : BaseViewModel() {
         }
 
         _screenState.update { it.copy(tabData = newTabData) }
+    }
+
+    fun onQRCodeScanned(data: String) {
+        // TODO: process data
+    }
+
+    override fun navigateBack(type: NavigatorType?) {
+        _screenState.update { it.copy(hideQRCamera = true) }
+        super.navigateBack(type)
     }
 }
 
@@ -56,5 +66,6 @@ sealed interface ConnectNewServerTabData {
 
 data class ConnectNewServerScreenState(
     val isConnectingServer: Boolean = false,
+    val hideQRCamera: Boolean = false,
     val tabData: ConnectNewServerTabData = ConnectNewServerTabData.QRTab()
 )

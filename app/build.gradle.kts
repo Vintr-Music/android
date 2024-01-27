@@ -67,6 +67,8 @@ dependencies {
     val realmVersion = "1.11.0"
     val realmCoroutinesVersion = "1.7.3"
     val paletteVersion = "1.0.0"
+    val cameraxVersion = "1.3.1"
+    val zxingVersion = "3.5.2"
 
     // Common Android
     implementation("androidx.core:core-ktx:1.12.0")
@@ -118,4 +120,13 @@ dependencies {
     // Realm
     implementation("io.realm.kotlin:library-base:$realmVersion")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$realmCoroutinesVersion")
+
+    // Camera X
+    implementation("androidx.camera:camera-core:$cameraxVersion")
+    implementation("androidx.camera:camera-camera2:$cameraxVersion")
+    implementation("androidx.camera:camera-view:$cameraxVersion")
+    implementation("androidx.camera:camera-lifecycle:$cameraxVersion")
+
+    // ZXing Scanner
+    implementation("com.google.zxing:core:$zxingVersion")
 }
