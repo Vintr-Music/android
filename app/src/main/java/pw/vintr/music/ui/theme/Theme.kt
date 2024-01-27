@@ -71,6 +71,10 @@ data class VintrMusicColors(
     // BottomSheet
     val dialogBackground: Color = Color.Unspecified,
     val dialogStroke: Color = Color.Unspecified,
+    // Segment Control
+    val segmentBackground: Color = Color.Unspecified,
+    val segmentIndicatorStroke: Color = Color.Unspecified,
+    val segmentIndicatorBackground: Color = Color.Unspecified,
 )
 
 val LocalVintrColors = staticCompositionLocalOf { VintrMusicColors() }
@@ -124,6 +128,10 @@ val darkVintrColors = VintrMusicColors(
     // BottomSheet
     dialogBackground = Card2,
     dialogStroke = Gray1,
+    // Segment Control
+    segmentBackground = Gray1,
+    segmentIndicatorStroke = Bee0,
+    segmentIndicatorBackground = BeeDark0,
 )
 
 val lightVintrColors = VintrMusicColors(
@@ -175,6 +183,10 @@ val lightVintrColors = VintrMusicColors(
     // BottomSheet
     dialogBackground = Gray5,
     dialogStroke = Gray4,
+    // Segment Control
+    segmentBackground = Gray6,
+    segmentIndicatorStroke = Bee3,
+    segmentIndicatorBackground = Bee4,
 )
 
 private val darkColorScheme = darkColorScheme(

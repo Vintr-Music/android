@@ -47,10 +47,8 @@ class MenuViewModel(
     }
 
     fun openServerSelection() {
-        navigator.forward(
-            screen = Screen.SelectServer(usePrimaryMountToolbar = false),
-            type = NavigatorType.Root
-        )
+        navigator.switchNavigatorType(NavigatorType.Root)
+        navigator.forward(Screen.SelectServer(usePrimaryMountToolbar = false))
     }
 
     fun openSettings() {

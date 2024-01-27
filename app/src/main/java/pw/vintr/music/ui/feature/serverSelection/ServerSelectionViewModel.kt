@@ -63,7 +63,7 @@ class ServerSelectionViewModel(
     }
 
     fun openAddNewServer() {
-        // TODO: navigate to add server
+        navigator.forward(Screen.ConnectNewServer)
     }
 }
 

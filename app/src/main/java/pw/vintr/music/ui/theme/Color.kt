@@ -8,6 +8,10 @@ val White0 = Color(0xFFFFFFFF)
 val Bee0 = Color(0xFFDE6B00)
 val Bee1 = Color(0xFFE88224)
 val Bee2 = Color(0xFFFF9800)
+val Bee3 = Color(0xFFFFD6B1)
+val Bee4 = Color(0xFFFFECDE)
+
+val BeeDark0 = Color(0xFF9A4A00)
 
 val Gray0 = Color(0xFF1D1D1D)
 val Gray1 = Color(0xFF2C2C31)

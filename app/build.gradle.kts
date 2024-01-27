@@ -59,18 +59,18 @@ android {
 dependencies {
     val navigationVersion = "2.7.6"
     val accompanistVersion = "0.32.0"
-    val ktorVersion = "2.3.5"
+    val ktorVersion = "2.3.7"
     val koinVersion = "3.5.0"
     val preferenceVersion = "1.2.1"
     val coilVersion = "2.4.0"
-    val media3Version = "1.2.0"
+    val media3Version = "1.2.1"
     val realmVersion = "1.11.0"
     val realmCoroutinesVersion = "1.7.3"
     val paletteVersion = "1.0.0"
 
     // Common Android
     implementation("androidx.core:core-ktx:1.12.0")
-    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.6.2")
+    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.7.0")
     implementation("androidx.activity:activity-compose:1.8.2")
     implementation(platform("androidx.compose:compose-bom:2023.10.01"))
     implementation("androidx.compose.ui:ui")

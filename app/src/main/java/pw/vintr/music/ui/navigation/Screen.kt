@@ -67,6 +67,8 @@ sealed class Screen(val route: String) {
         }
     }
 
+    object ConnectNewServer : Screen(route = "new-server")
+
     object Root : Screen(route = "root")
 
     object Home : Screen(route = "home")

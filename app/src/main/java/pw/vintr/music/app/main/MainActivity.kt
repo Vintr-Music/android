@@ -47,6 +47,7 @@ import pw.vintr.music.ui.feature.menu.logout.LogoutConfirmDialog
 import pw.vintr.music.ui.feature.register.RegisterScreen
 import pw.vintr.music.ui.feature.root.RootScreen
 import pw.vintr.music.ui.feature.serverSelection.ServerSelectionScreen
+import pw.vintr.music.ui.feature.serverSelection.connectNewServer.ConnectNewServerScreen
 import pw.vintr.music.ui.feature.trackDetails.TrackDetailsBottomSheet
 import pw.vintr.music.ui.navigation.Navigator
 import pw.vintr.music.ui.navigation.NavigatorEffect
@@ -146,6 +147,7 @@ fun Navigation(
 
             ServerSelectionScreen(usePrimaryMountToolbar = usePrimaryMountToolbar)
         }
+        composable(Screen.ConnectNewServer.route) { ConnectNewServerScreen() }
         composable(Screen.Root.route) { RootScreen() }
         bottomSheet(
             Screen.TrackDetails.routeTemplate,

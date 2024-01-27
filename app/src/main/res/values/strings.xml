@@ -19,8 +19,12 @@
     <string name="last_name">Last name</string>
 
     <string name="select_server">Select server</string>
-    <string name="add_new_server">Add new</string>
+    <string name="add_new_server">Add new server</string>
+    <string name="add_server">Add server</string>
     <string name="servers">Servers</string>
+
+    <string name="server_add_by_qr">Scan QR</string>
+    <string name="server_add_by_manual">Enter manual</string>
 
     <string name="selected_server">Selected server</string>
     <string name="settings">Settings</string>

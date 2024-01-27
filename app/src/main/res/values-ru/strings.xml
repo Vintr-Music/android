@@ -12,11 +12,16 @@
     <string name="enter_password">Введите пароль</string>
     <string name="repeat_password">Повторите пароль</string>
     <string name="make_register">Зарегистрироваться</string>
-
     <string name="first_name">Имя</string>
+    <string name="last_name">Фамилия</string>
+
     <string name="select_server">Выбрать сервер</string>
     <string name="add_new_server">Добавить новый</string>
+    <string name="add_server">Добавить сервер</string>
     <string name="servers">Серверы</string>
+
+    <string name="server_add_by_qr">QR код</string>
+    <string name="server_add_by_manual">Вручную</string>
 
     <string name="selected_server">Выбранный сервер</string>
     <string name="settings">Настройки</string>
@@ -56,5 +61,4 @@
     <string name="confirm_logout_title">Выйти из аккаунта?</string>
     <string name="confirm_logout_description">Все настройки сохранятся</string>
     <string name="logout">Выйти</string>
-    <string name="last_name">Фамилия</string>
 </resources>
