@@ -17,8 +17,8 @@ class ConnectNewServerViewModel : BaseViewModel() {
 
     fun selectTab(tabType: ConnectNewServerTabType) {
         val newTabData = when (tabType) {
-            ConnectNewServerTabType.QR -> ConnectNewServerTabData.QRTab()
-            ConnectNewServerTabType.MANUAl -> ConnectNewServerTabData.ManualTab()
+            ConnectNewServerTabType.QR -> ConnectNewServerTabData.QR()
+            ConnectNewServerTabType.MANUAl -> ConnectNewServerTabData.Manual()
         }
 
         _screenState.update { it.copy(tabData = newTabData) }
@@ -26,6 +26,28 @@ class ConnectNewServerViewModel : BaseViewModel() {
 
     fun onQRCodeScanned(data: String) {
         // TODO: process data
+    }
+
+    fun changeServerName(value: String) {
+        updateManualData { it.copy(serverName = value) }
+    }
+
+    fun changeInviteCode(value: String) {
+        updateManualData { it.copy(inviteCode = value) }
+    }
+
+    fun connectManual() {
+        // TODO: connect manual
+    }
+
+    private fun updateManualData(
+        mutation: (ConnectNewServerTabData.Manual) -> ConnectNewServerTabData.Manual
+    ) {
+        _screenState.update { state ->
+            (state.tabData as? ConnectNewServerTabData.Manual)?.let { tabData ->
+                state.copy(tabData = mutation(tabData))
+            } ?: state
+        }
     }
 
     override fun navigateBack(type: NavigatorType?) {
@@ -50,22 +72,29 @@ sealed interface ConnectNewServerTabData {
 
     val tabType: ConnectNewServerTabType
 
-    data class QRTab(
+    data class QR(
         val qrData: String = String.Empty,
     ) : ConnectNewServerTabData {
         override val tabType = ConnectNewServerTabType.QR
     }
 
-    data class ManualTab(
+    data class Manual(
         val serverName: String = String.Empty,
         val inviteCode: String = String.Empty,
     ) : ConnectNewServerTabData {
+        companion object {
+            const val INVITE_CODE_LENGTH = 8
+        }
+
         override val tabType = ConnectNewServerTabType.MANUAl
+
+        val formIsValid: Boolean = serverName.isNotEmpty() &&
+                inviteCode.length == INVITE_CODE_LENGTH
     }
 }
 
 data class ConnectNewServerScreenState(
     val isConnectingServer: Boolean = false,
     val hideQRCamera: Boolean = false,
-    val tabData: ConnectNewServerTabData = ConnectNewServerTabData.QRTab()
+    val tabData: ConnectNewServerTabData = ConnectNewServerTabData.QR()
 )

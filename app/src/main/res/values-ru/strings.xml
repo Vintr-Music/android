@@ -20,6 +20,11 @@
     <string name="add_server">Добавить сервер</string>
     <string name="servers">Серверы</string>
     <string name="point_camera_at_qr">Наведите камеру на QR код</string>
+    <string name="server_make_connection">Подключиться</string>
+    <string name="server_name_title">Имя сервера</string>
+    <string name="server_name_hint">Максимум 32 символа</string>
+    <string name="invite_code_title">Код подключения</string>
+    <string name="invite_code_hint">8 цифр</string>
 
     <string name="server_add_by_qr">QR код</string>
     <string name="server_add_by_manual">Вручную</string>

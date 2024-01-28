@@ -13,7 +13,11 @@ import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -27,13 +31,17 @@ import androidx.compose.ui.draw.clipToBounds
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardCapitalization
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.isGranted
 import com.google.accompanist.permissions.rememberPermissionState
 import org.koin.androidx.compose.getViewModel
 import pw.vintr.music.R
-import pw.vintr.music.tools.extension.scaffoldPadding
+import pw.vintr.music.ui.kit.button.ButtonRegular
+import pw.vintr.music.ui.kit.input.AppTextField
 import pw.vintr.music.ui.kit.scanner.QRScanner
 import pw.vintr.music.ui.kit.selector.SegmentControl
 import pw.vintr.music.ui.kit.toolbar.ToolbarRegular
@@ -59,7 +67,8 @@ fun ConnectNewServerScreen(
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .scaffoldPadding(scaffoldPadding)
+                .imePadding()
+                .padding(scaffoldPadding)
         ) {
             val screenState = viewModel.screenState.collectAsState()
 
@@ -74,8 +83,8 @@ fun ConnectNewServerScreen(
                 onSelectedTab = { viewModel.selectTab(ConnectNewServerTabType.records[it]) }
             )
 
-            when (screenState.value.tabData) {
-                is ConnectNewServerTabData.QRTab -> {
+            when (val data = screenState.value.tabData) {
+                is ConnectNewServerTabData.QR -> {
                     val cameraPermissionState = rememberPermissionState(
                         permission = Manifest.permission.CAMERA
                     )
@@ -132,8 +141,53 @@ fun ConnectNewServerScreen(
                         }
                     }
                 }
-                is ConnectNewServerTabData.ManualTab -> {
-                    // TODO: manual input tab
+                is ConnectNewServerTabData.Manual -> {
+                    Column(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .weight(1f),
+                    ) {
+                        Column(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .weight(1f)
+                                .verticalScroll(rememberScrollState()),
+                        ) {
+                            Spacer(modifier = Modifier.height(8.dp))
+                            AppTextField(
+                                modifier = Modifier.padding(horizontal = 20.dp),
+                                label = stringResource(id = R.string.server_name_title),
+                                hint = stringResource(id = R.string.server_name_hint),
+                                value = data.serverName,
+                                onValueChange = { viewModel.changeServerName(it) },
+                                keyboardOptions = KeyboardOptions(
+                                    keyboardType = KeyboardType.Text,
+                                    capitalization = KeyboardCapitalization.Sentences,
+                                    imeAction = ImeAction.Next,
+                                )
+                            )
+                            Spacer(modifier = Modifier.height(20.dp))
+                            AppTextField(
+                                modifier = Modifier.padding(horizontal = 20.dp),
+                                label = stringResource(id = R.string.invite_code_title),
+                                hint = stringResource(id = R.string.invite_code_hint),
+                                value = data.inviteCode,
+                                onValueChange = { viewModel.changeInviteCode(it) },
+                                keyboardOptions = KeyboardOptions(
+                                    keyboardType = KeyboardType.Number,
+                                    imeAction = ImeAction.Done,
+                                )
+                            )
+                        }
+                        Spacer(modifier = Modifier.height(20.dp))
+                        ButtonRegular(
+                            modifier = Modifier.padding(horizontal = 20.dp),
+                            text = stringResource(id = R.string.server_make_connection),
+                            enabled = data.formIsValid,
+                            onClick = { viewModel.connectManual() },
+                        )
+                        Spacer(modifier = Modifier.height(32.dp))
+                    }
                 }
             }
         }
