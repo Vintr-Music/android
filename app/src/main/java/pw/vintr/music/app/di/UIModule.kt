@@ -29,7 +29,7 @@ val uiModule = module {
     viewModel { LoginViewModel(get()) }
     viewModel { RegisterViewModel(get()) }
     viewModel { ServerSelectionViewModel(get(), get(), get(), get()) }
-    viewModel { ConnectNewServerViewModel() }
+    viewModel { ConnectNewServerViewModel(get()) }
 
     viewModel { RootViewModel(get()) }
     viewModel { HomeViewModel(get(), get()) }

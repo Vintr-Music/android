@@ -13,6 +13,7 @@ import pw.vintr.music.tools.extension.updateLoaded
 import pw.vintr.music.tools.extension.withLoaded
 import pw.vintr.music.ui.base.BaseScreenState
 import pw.vintr.music.ui.base.BaseViewModel
+import pw.vintr.music.ui.feature.server.selection.connectNew.ConnectNewServerResult
 import pw.vintr.music.ui.navigation.NavigatorType
 import pw.vintr.music.ui.navigation.Screen
 
@@ -63,7 +64,25 @@ class ServerSelectionViewModel(
     }
 
     fun openAddNewServer() {
-        navigator.forward(Screen.ConnectNewServer)
+        handleResult(ConnectNewServerResult.KEY) {
+            navigator.forwardWithResult(
+                screen = Screen.ConnectNewServer,
+                resultKey = ConnectNewServerResult.KEY,
+                resultCallback = ::handleConnectNewServerResult
+            )
+        }
+    }
+
+    private fun handleConnectNewServerResult(result: ConnectNewServerResult) {
+        _screenState.updateLoaded {
+            it.copy(
+                servers = listOf(
+                    *it.servers.toTypedArray(),
+                    result.connectedServer
+                ),
+                selection = result.connectedServer
+            )
+        }
     }
 }
 
