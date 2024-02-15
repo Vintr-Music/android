@@ -51,7 +51,7 @@ fun PlayerProgressBar(
             modifier = Modifier
                 .align(Alignment.CenterStart)
                 .padding(start = 32.dp),
-            text = DurationFormat.format(progress.toLong()),
+            text = DurationFormat.formatMillis(progress.toLong()),
             style = Gilroy12,
             color = VintrMusicExtendedTheme.colors.textRegular
         )
@@ -59,7 +59,7 @@ fun PlayerProgressBar(
             modifier = Modifier
                 .align(Alignment.CenterEnd)
                 .padding(end = 32.dp),
-            text = DurationFormat.format(trackDuration.toLong()),
+            text = DurationFormat.formatMillis(trackDuration.toLong()),
             style = Gilroy12,
             color = VintrMusicExtendedTheme.colors.textRegular
         )

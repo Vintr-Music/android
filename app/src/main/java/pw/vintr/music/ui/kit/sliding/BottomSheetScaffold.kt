@@ -16,7 +16,6 @@ import androidx.compose.material.ModalDrawer
 import androidx.compose.material.SnackbarHost
 import androidx.compose.material.SnackbarHostState
 import androidx.compose.material.Surface
-import androidx.compose.material.SwipeableDefaults
 import androidx.compose.material.contentColorFor
 import androidx.compose.material.rememberDrawerState
 import androidx.compose.runtime.SideEffect
@@ -99,7 +98,7 @@ enum class BottomSheetValue {
 @ExperimentalMaterialApi
 fun BottomSheetScaffoldState(
     initialValue: BottomSheetValue,
-    animationSpec: AnimationSpec<Float> = SwipeableDefaults.AnimationSpec,
+    animationSpec: AnimationSpec<Float> = AnchoredDraggableDefaults.AnimationSpec,
     confirmStateChange: (BottomSheetValue) -> Boolean
 ) = BottomSheetState(
     initialValue = initialValue,
@@ -121,7 +120,7 @@ fun BottomSheetScaffoldState(
 fun BottomSheetState(
     initialValue: BottomSheetValue,
     density: Density,
-    animationSpec: AnimationSpec<Float> = SwipeableDefaults.AnimationSpec,
+    animationSpec: AnimationSpec<Float> = AnchoredDraggableDefaults.AnimationSpec,
     confirmValueChange: (BottomSheetValue) -> Boolean = { true }
 ) = BottomSheetState(initialValue, animationSpec, confirmValueChange).also {
     it.density = density
@@ -151,7 +150,7 @@ class BottomSheetState @Deprecated(
     )
 ) constructor(
     initialValue: BottomSheetValue,
-    animationSpec: AnimationSpec<Float> = SwipeableDefaults.AnimationSpec,
+    animationSpec: AnimationSpec<Float> = AnchoredDraggableDefaults.AnimationSpec,
     confirmValueChange: (BottomSheetValue) -> Boolean = { true }
 ) {
 

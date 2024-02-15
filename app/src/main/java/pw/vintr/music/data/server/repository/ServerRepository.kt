@@ -1,7 +1,6 @@
 package pw.vintr.music.data.server.repository
 
 import pw.vintr.music.data.server.dto.ConnectNewServerRequestDto
-import pw.vintr.music.data.server.dto.ServerDto
 import pw.vintr.music.data.server.source.ServerPreferencesDataSource
 import pw.vintr.music.data.server.source.ServerRemoteDataSource
 

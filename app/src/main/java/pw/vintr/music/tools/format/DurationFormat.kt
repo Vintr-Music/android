@@ -6,9 +6,9 @@ object DurationFormat {
 
     private val secondsFormat = DecimalFormat("00")
 
-    fun formatSeconds(seconds: Long) = format(millis = seconds * 1000)
+    fun formatSeconds(seconds: Long) = formatMillis(millis = seconds * 1000)
 
-    fun format(millis: Long): String {
+    fun formatMillis(millis: Long): String {
         val secMilSec: Long = 1000
         val minMilSec = 60 * secMilSec
         val hourMilSec = 60 * minMilSec
