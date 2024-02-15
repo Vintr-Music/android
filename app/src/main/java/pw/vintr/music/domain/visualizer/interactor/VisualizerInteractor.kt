@@ -1,4 +1,4 @@
-package pw.vintr.music.domain.visualizer
+package pw.vintr.music.domain.visualizer.interactor
 
 import android.media.audiofx.Visualizer
 import android.media.audiofx.Visualizer.OnDataCaptureListener

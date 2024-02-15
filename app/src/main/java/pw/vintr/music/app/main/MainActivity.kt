@@ -46,8 +46,8 @@ import pw.vintr.music.tools.extension.getRequiredArg
 import pw.vintr.music.ui.feature.menu.logout.LogoutConfirmDialog
 import pw.vintr.music.ui.feature.register.RegisterScreen
 import pw.vintr.music.ui.feature.root.RootScreen
-import pw.vintr.music.ui.feature.serverSelection.ServerSelectionScreen
-import pw.vintr.music.ui.feature.serverSelection.connectNewServer.ConnectNewServerScreen
+import pw.vintr.music.ui.feature.server.selection.ServerSelectionScreen
+import pw.vintr.music.ui.feature.server.selection.connectNew.ConnectNewServerScreen
 import pw.vintr.music.ui.feature.trackDetails.TrackDetailsBottomSheet
 import pw.vintr.music.ui.navigation.Navigator
 import pw.vintr.music.ui.navigation.NavigatorEffect

@@ -1,15 +1,20 @@
-package pw.vintr.music.ui.feature.serverSelection.connectNewServer
+package pw.vintr.music.ui.feature.server.selection.connectNew
 
 import androidx.annotation.StringRes
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
 import pw.vintr.music.R
+import pw.vintr.music.domain.server.model.ServerModel
+import pw.vintr.music.domain.server.useCase.connectNew.ConnectNewServerUseCase
 import pw.vintr.music.tools.extension.Empty
 import pw.vintr.music.ui.base.BaseViewModel
 import pw.vintr.music.ui.navigation.NavigatorType
 
-class ConnectNewServerViewModel : BaseViewModel() {
+class ConnectNewServerViewModel(
+    private val connectNewServerUseCase: ConnectNewServerUseCase
+) : BaseViewModel() {
 
     private val _screenState = MutableStateFlow(ConnectNewServerScreenState())
 
@@ -25,7 +30,7 @@ class ConnectNewServerViewModel : BaseViewModel() {
     }
 
     fun onQRCodeScanned(data: String) {
-        // TODO: process data
+        connectServer { connectNewServerUseCase.invoke(data) }
     }
 
     fun changeServerName(value: String) {
@@ -37,7 +42,30 @@ class ConnectNewServerViewModel : BaseViewModel() {
     }
 
     fun connectManual() {
-        // TODO: connect manual
+        (_screenState.value.tabData as? ConnectNewServerTabData.Manual)?.let { tabData ->
+            connectServer {
+                connectNewServerUseCase.invoke(
+                    serverName = tabData.serverName,
+                    inviteCode = tabData.inviteCode
+                )
+            }
+        }
+    }
+
+    private fun connectServer(connectAction: suspend () -> ServerModel) {
+        launch {
+            withLoading(
+                setLoadingCallback = { isLoading ->
+                    _screenState.update { it.copy(isConnectingServer = isLoading) }
+                },
+                action = {
+                    navigator.back(
+                        result = ConnectNewServerResult(connectAction()),
+                        resultKey = ConnectNewServerResult.KEY
+                    )
+                }
+            )
+        }
     }
 
     private fun updateManualData(

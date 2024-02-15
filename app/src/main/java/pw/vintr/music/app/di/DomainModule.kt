@@ -10,16 +10,17 @@ import pw.vintr.music.domain.library.useCase.GetArtistListUseCase
 import pw.vintr.music.domain.library.useCase.SearchLibraryUseCase
 import pw.vintr.music.domain.mainPage.useCase.GetMainPageContentUseCase
 import pw.vintr.music.domain.player.interactor.PlayerInteractor
-import pw.vintr.music.domain.server.useCase.GetIsServerSelectedUseCase
-import pw.vintr.music.domain.server.useCase.GetSelectedServerUseCase
-import pw.vintr.music.domain.server.useCase.GetServerListUseCase
-import pw.vintr.music.domain.server.useCase.SelectServerUseCase
+import pw.vintr.music.domain.server.useCase.connectNew.ConnectNewServerUseCase
+import pw.vintr.music.domain.server.useCase.selection.GetIsServerSelectedUseCase
+import pw.vintr.music.domain.server.useCase.selection.GetSelectedServerUseCase
+import pw.vintr.music.domain.server.useCase.list.GetServerListUseCase
+import pw.vintr.music.domain.server.useCase.selection.SelectServerUseCase
 import pw.vintr.music.domain.user.useCase.AuthorizeUseCase
 import pw.vintr.music.domain.user.useCase.GetAuthorizeStateUseCase
 import pw.vintr.music.domain.user.useCase.GetProfileUseCase
 import pw.vintr.music.domain.user.useCase.LogoutUseCase
 import pw.vintr.music.domain.user.useCase.RegisterUseCase
-import pw.vintr.music.domain.visualizer.VisualizerInteractor
+import pw.vintr.music.domain.visualizer.interactor.VisualizerInteractor
 
 val domainModule = module {
     single { AuthorizeUseCase(get()) }
@@ -32,6 +33,7 @@ val domainModule = module {
     single { GetServerListUseCase(get()) }
     single { SelectServerUseCase(get()) }
     single { GetIsServerSelectedUseCase(get()) }
+    single { ConnectNewServerUseCase(get()) }
 
     single { GetMainPageContentUseCase(get()) }
     single { GetAlbumTracksUseCase(get()) }

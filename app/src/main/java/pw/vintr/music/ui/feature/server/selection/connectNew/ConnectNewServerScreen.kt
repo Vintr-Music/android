@@ -1,4 +1,4 @@
-package pw.vintr.music.ui.feature.serverSelection.connectNewServer
+package pw.vintr.music.ui.feature.server.selection.connectNew
 
 import android.Manifest
 import androidx.activity.compose.BackHandler

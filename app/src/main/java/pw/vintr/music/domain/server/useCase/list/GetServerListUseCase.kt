@@ -1,4 +1,4 @@
-package pw.vintr.music.domain.server.useCase
+package pw.vintr.music.domain.server.useCase.list
 
 import pw.vintr.music.data.server.repository.ServerRepository
 import pw.vintr.music.domain.server.model.ServerModel

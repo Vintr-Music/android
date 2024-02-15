@@ -57,7 +57,7 @@ android {
 }
 
 dependencies {
-    val navigationVersion = "2.7.6"
+    val navigationVersion = "2.7.7"
     val accompanistVersion = "0.32.0"
     val ktorVersion = "2.3.7"
     val koinVersion = "3.5.0"
@@ -79,10 +79,10 @@ dependencies {
     implementation("androidx.compose.ui:ui-graphics")
     implementation("androidx.compose.ui:ui-tooling-preview")
     implementation("androidx.compose.material3:material3")
-    implementation("androidx.compose.material:material:1.5.4")
+    implementation("androidx.compose.material:material:1.6.1")
     implementation("androidx.preference:preference-ktx:$preferenceVersion")
     implementation("androidx.palette:palette-ktx:$paletteVersion")
-    implementation("androidx.compose.runtime:runtime-livedata:1.5.4")
+    implementation("androidx.compose.runtime:runtime-livedata:1.6.1")
 
     // Tests
     testImplementation("junit:junit:4.13.2")

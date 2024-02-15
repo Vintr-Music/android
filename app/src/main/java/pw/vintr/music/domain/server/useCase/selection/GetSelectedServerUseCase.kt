@@ -1,4 +1,4 @@
-package pw.vintr.music.domain.server.useCase
+package pw.vintr.music.domain.server.useCase.selection
 
 import pw.vintr.music.data.server.repository.ServerRepository
 import pw.vintr.music.domain.exception.ServerNotSelectedException

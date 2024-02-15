@@ -1,4 +1,4 @@
-package pw.vintr.music.ui.feature.serverSelection
+package pw.vintr.music.ui.feature.server.selection
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement

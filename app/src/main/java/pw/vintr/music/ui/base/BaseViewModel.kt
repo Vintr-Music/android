@@ -55,6 +55,25 @@ abstract class BaseViewModel : ViewModel(), CoroutineScope, KoinComponent {
         }
     }
 
+    suspend fun withLoading(
+        setLoadingCallback: (Boolean) -> Unit,
+        showLoading: Boolean = true,
+        action: suspend () -> Unit,
+    ) {
+        try {
+            if (showLoading) {
+                setLoadingCallback(true)
+            }
+            action()
+            if (showLoading) {
+                setLoadingCallback(false)
+            }
+        } catch (e: Throwable) {
+            setLoadingCallback(false)
+            throw e
+        }
+    }
+
     protected fun <T> Flow<T>.stateInThis(initialValue: T) = stateIn(
         scope = this@BaseViewModel,
         started = SharingStarted.Lazily,

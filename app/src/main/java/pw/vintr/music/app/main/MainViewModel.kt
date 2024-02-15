@@ -2,9 +2,9 @@ package pw.vintr.music.app.main
 
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import pw.vintr.music.domain.server.useCase.GetIsServerSelectedUseCase
+import pw.vintr.music.domain.server.useCase.selection.GetIsServerSelectedUseCase
 import pw.vintr.music.domain.user.useCase.GetAuthorizeStateUseCase
-import pw.vintr.music.domain.visualizer.VisualizerInteractor
+import pw.vintr.music.domain.visualizer.interactor.VisualizerInteractor
 import pw.vintr.music.ui.base.BaseViewModel
 
 class MainViewModel(

@@ -7,7 +7,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import pw.vintr.music.domain.player.interactor.PlayerInteractor
 import pw.vintr.music.domain.server.model.ServerModel
-import pw.vintr.music.domain.server.useCase.GetSelectedServerUseCase
+import pw.vintr.music.domain.server.useCase.selection.GetSelectedServerUseCase
 import pw.vintr.music.domain.user.model.UserModel
 import pw.vintr.music.domain.user.useCase.GetProfileUseCase
 import pw.vintr.music.domain.user.useCase.LogoutUseCase

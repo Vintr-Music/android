@@ -1,4 +1,4 @@
-package pw.vintr.music.ui.feature.serverSelection
+package pw.vintr.music.ui.feature.server.selection
 
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -6,9 +6,9 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import pw.vintr.music.domain.player.interactor.PlayerInteractor
 import pw.vintr.music.domain.server.model.ServerModel
-import pw.vintr.music.domain.server.useCase.GetSelectedServerUseCase
-import pw.vintr.music.domain.server.useCase.GetServerListUseCase
-import pw.vintr.music.domain.server.useCase.SelectServerUseCase
+import pw.vintr.music.domain.server.useCase.selection.GetSelectedServerUseCase
+import pw.vintr.music.domain.server.useCase.list.GetServerListUseCase
+import pw.vintr.music.domain.server.useCase.selection.SelectServerUseCase
 import pw.vintr.music.tools.extension.updateLoaded
 import pw.vintr.music.tools.extension.withLoaded
 import pw.vintr.music.ui.base.BaseScreenState
