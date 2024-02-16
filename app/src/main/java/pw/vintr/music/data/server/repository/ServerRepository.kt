@@ -22,4 +22,10 @@ class ServerRepository(
 
     suspend fun connectNewServer(requestDto: ConnectNewServerRequestDto) = remoteDataSource
         .connectNewServer(requestDto)
+
+    suspend fun getServerInvites(serverId: String) = remoteDataSource
+        .getServerInvites(serverId)
+
+    suspend fun getServerMembers(serverId: String) = remoteDataSource
+        .getServerMembers(serverId)
 }

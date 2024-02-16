@@ -10,6 +10,8 @@ import pw.vintr.music.domain.library.useCase.GetArtistListUseCase
 import pw.vintr.music.domain.library.useCase.SearchLibraryUseCase
 import pw.vintr.music.domain.mainPage.useCase.GetMainPageContentUseCase
 import pw.vintr.music.domain.player.interactor.PlayerInteractor
+import pw.vintr.music.domain.server.useCase.accessControl.GetServerInviteList
+import pw.vintr.music.domain.server.useCase.accessControl.GetServerMemberList
 import pw.vintr.music.domain.server.useCase.connectNew.ConnectNewServerUseCase
 import pw.vintr.music.domain.server.useCase.selection.GetIsServerSelectedUseCase
 import pw.vintr.music.domain.server.useCase.selection.GetSelectedServerUseCase
@@ -34,6 +36,8 @@ val domainModule = module {
     single { SelectServerUseCase(get()) }
     single { GetIsServerSelectedUseCase(get()) }
     single { ConnectNewServerUseCase(get()) }
+    single { GetServerInviteList(get()) }
+    single { GetServerMemberList(get()) }
 
     single { GetMainPageContentUseCase(get()) }
     single { GetAlbumTracksUseCase(get()) }

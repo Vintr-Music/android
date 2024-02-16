@@ -54,7 +54,7 @@ private const val BASE_URL = "http://188.225.9.157:4001/"
 
 private const val BEARER_PREFIX = "Bearer "
 
-private const val HEADER_MEDIA_SERVER_ID = "x-media-server-id"
+const val HEADER_MEDIA_SERVER_ID = "x-media-server-id"
 
 private const val REALM_SCHEMA_VERSION = 1L
 
@@ -121,8 +121,10 @@ val dataModule = module {
                 }
 
                 // Media configuration
-                serverPreferencesDataSource.getSelectedServerId()?.let { serverId ->
-                    header(HEADER_MEDIA_SERVER_ID, serverId)
+                if (!headers.contains(HEADER_MEDIA_SERVER_ID)) {
+                    serverPreferencesDataSource.getSelectedServerId()?.let { serverId ->
+                        header(HEADER_MEDIA_SERVER_ID, serverId)
+                    }
                 }
             }
         }
