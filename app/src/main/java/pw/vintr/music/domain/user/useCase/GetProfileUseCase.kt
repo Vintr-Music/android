@@ -11,4 +11,5 @@ class GetProfileUseCase(
     suspend operator fun invoke(): UserModel = userRepository
         .getProfile()
         .toModel()
+        .also { userRepository.setUserId(it.id) }
 }

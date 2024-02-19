@@ -26,6 +26,12 @@ data class VintrMusicColors(
     val regularButtonContent: Color = Color.Unspecified,
     val regularButtonDisabledBackground: Color = Color.Unspecified,
     val regularButtonDisabledContent: Color = Color.Unspecified,
+    // Secondary button
+    val secondaryButtonBackground: Color = Color.Unspecified,
+    val secondaryButtonStroke: Color = Color.Unspecified,
+    val secondaryButtonContent: Color = Color.Unspecified,
+    val secondaryButtonDisabledBackground: Color = Color.Unspecified,
+    val secondaryButtonDisabledContent: Color = Color.Unspecified,
     // Text button
     val textButtonContent: Color = Color.Unspecified,
     val textButtonDisabledContent: Color = Color.Unspecified,
@@ -85,6 +91,12 @@ val darkVintrColors = VintrMusicColors(
     regularButtonContent = White0,
     regularButtonDisabledBackground = Gray1,
     regularButtonDisabledContent = Gray3,
+    // Secondary button
+    secondaryButtonBackground = Black0,
+    secondaryButtonStroke = Gray2,
+    secondaryButtonContent = Bee0,
+    secondaryButtonDisabledBackground = Gray1,
+    secondaryButtonDisabledContent = Gray3,
     // Text button
     textButtonContent = White0,
     textButtonDisabledContent = Gray3,
@@ -140,6 +152,12 @@ val lightVintrColors = VintrMusicColors(
     regularButtonContent = White0,
     regularButtonDisabledBackground = Gray5,
     regularButtonDisabledContent = Gray3,
+    // Secondary button
+    secondaryButtonBackground = White0,
+    secondaryButtonStroke = Gray4,
+    secondaryButtonContent = Bee0,
+    secondaryButtonDisabledBackground = Gray5,
+    secondaryButtonDisabledContent = Gray3,
     // Text button
     textButtonContent = Black0,
     textButtonDisabledContent = Gray3,

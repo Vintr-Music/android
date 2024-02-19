@@ -139,13 +139,13 @@ fun Navigation(
         composable(
             Screen.SelectServer.routeTemplate,
             arguments = listOf(
-                navArgument(Screen.SelectServer.ARG_USE_PRIMARY_TOOLBAR) { defaultValue = true }
+                navArgument(Screen.SelectServer.ARG_IS_INITIALIZE_MODE) { defaultValue = true }
             )
         ) {
-            val usePrimaryMountToolbar = it.arguments
-                ?.getBoolean(Screen.SelectServer.ARG_USE_PRIMARY_TOOLBAR) ?: true
+            val isInitializeMode = it.arguments
+                ?.getBoolean(Screen.SelectServer.ARG_IS_INITIALIZE_MODE) ?: true
 
-            ServerSelectionScreen(usePrimaryMountToolbar = usePrimaryMountToolbar)
+            ServerSelectionScreen(isInitializeMode = isInitializeMode)
         }
         composable(Screen.ConnectNewServer.route) { ConnectNewServerScreen() }
         composable(Screen.Root.route) { RootScreen() }

@@ -20,5 +20,11 @@ class UserRepository(
 
     fun removeAccessToken() = preferencesDataSource.removeAccessToken()
 
+    fun setUserId(userId: String) = preferencesDataSource.setUserId(userId)
+
+    fun getUserId() = preferencesDataSource.getUserId()
+
+    fun removeUserId() = preferencesDataSource.removeUserId()
+
     suspend fun getProfile() = remoteDataSource.getProfile()
 }

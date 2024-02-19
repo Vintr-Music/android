@@ -38,7 +38,7 @@ import pw.vintr.music.ui.theme.Gilroy32
 
 @Composable
 fun ServerSelectionScreen(
-    usePrimaryMountToolbar: Boolean = true,
+    isInitializeMode: Boolean = true,
     viewModel: ServerSelectionViewModel = getViewModel()
 ) {
     val statusBarHeight = with (LocalDensity.current) {
@@ -47,7 +47,7 @@ fun ServerSelectionScreen(
     val barHeight = statusBarHeight + 120.dp
     val screenState = viewModel.screenState.collectAsState()
 
-    if (usePrimaryMountToolbar) {
+    if (isInitializeMode) {
         StatusBarEffect(useDarkIcons = true)
     }
 
@@ -56,7 +56,7 @@ fun ServerSelectionScreen(
             .background(MaterialTheme.colorScheme.background)
             .fillMaxSize()
     ) {
-        if (usePrimaryMountToolbar) {
+        if (isInitializeMode) {
             SelectServerBar(modifier = Modifier.height(barHeight))
         } else {
             ToolbarRegular(
@@ -85,6 +85,8 @@ fun ServerSelectionScreen(
                         ServerSelectableItem(
                             server = server,
                             selected = screenData.selection == server,
+                            canShowAccessControlButton = !isInitializeMode,
+                            onAccessControlClick = { viewModel.openAccessControl(server) },
                             onClick = { viewModel.selectServer(server) },
                         )
                     }

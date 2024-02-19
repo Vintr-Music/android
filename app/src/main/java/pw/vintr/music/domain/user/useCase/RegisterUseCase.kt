@@ -19,6 +19,7 @@ class RegisterUseCase(
             .register(RegisterRequestDto(login, password, firstName, lastName))
 
         userRepository.setAccessToken(authResponse.token)
+        userRepository.setUserId(authResponse.user.id)
 
         return authResponse.user.toModel()
     }

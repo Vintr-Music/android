@@ -47,6 +47,10 @@ class ServerSelectionViewModel(
         }
     }
 
+    fun openAccessControl(server: ServerModel) {
+        // TODO: open access control
+    }
+
     fun selectServer(server: ServerModel) {
         _screenState.updateLoaded { it.copy(selection = server) }
     }

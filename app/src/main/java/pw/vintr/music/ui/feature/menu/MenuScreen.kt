@@ -27,7 +27,9 @@ import androidx.compose.ui.unit.dp
 import org.koin.androidx.compose.getViewModel
 import pw.vintr.music.BuildConfig
 import pw.vintr.music.R
-import pw.vintr.music.ui.kit.button.SimpleIconButton
+import pw.vintr.music.ui.kit.button.ButtonSecondary
+import pw.vintr.music.ui.kit.button.ButtonSecondarySize
+import pw.vintr.music.ui.kit.button.ButtonSimpleIcon
 import pw.vintr.music.ui.kit.menu.MenuItemIconified
 import pw.vintr.music.ui.kit.layout.ScreenStateLayout
 import pw.vintr.music.ui.kit.modifier.cardContainer
@@ -74,7 +76,7 @@ fun MenuScreen(
                         style = Gilroy32,
                         color = VintrMusicExtendedTheme.colors.textRegular,
                     )
-                    SimpleIconButton(
+                    ButtonSimpleIcon(
                         iconRes = R.drawable.ic_exit,
                         size = 36.dp,
                         iconModifier = Modifier.padding(6.dp),
@@ -84,33 +86,44 @@ fun MenuScreen(
                 Spacer(modifier = Modifier.height(28.dp))
 
                 // Selected server info
-                Row(
+                Column(
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(20.dp)
                         .cardContainer(onClick = { viewModel.openServerSelection() }),
-                    horizontalArrangement = Arrangement.spacedBy(20.dp),
-                    verticalAlignment = Alignment.CenterVertically
+                    verticalArrangement = Arrangement.spacedBy(20.dp),
                 ) {
-                    Column(
-                        modifier = Modifier
-                            .weight(1f),
-                        verticalArrangement = Arrangement.spacedBy(20.dp)
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.spacedBy(20.dp),
+                        verticalAlignment = Alignment.CenterVertically
                     ) {
-                        Text(
+                        Column(
                             modifier = Modifier
-                                .fillMaxWidth(),
-                            text = stringResource(id = R.string.selected_server),
-                            style = Gilroy16,
-                            color = VintrMusicExtendedTheme.colors.textRegular
+                                .weight(1f),
+                            verticalArrangement = Arrangement.spacedBy(20.dp)
+                        ) {
+                            Text(
+                                modifier = Modifier
+                                    .fillMaxWidth(),
+                                text = stringResource(id = R.string.selected_server),
+                                style = Gilroy16,
+                                color = VintrMusicExtendedTheme.colors.textRegular
+                            )
+                            ServerItem(server = screenData.server)
+                        }
+                        Icon(
+                            painter = painterResource(id = R.drawable.ic_forward),
+                            contentDescription = null,
+                            tint = Bee0,
                         )
-                        ServerItem(server = screenData.server)
                     }
-                    Icon(
-                        painter = painterResource(id = R.drawable.ic_forward),
-                        contentDescription = null,
-                        tint = Bee0,
-                    )
+                    if (screenData.server.haveAccessControl) {
+                        ButtonSecondary(
+                            text = stringResource(id = R.string.access_control),
+                            size = ButtonSecondarySize.MEDIUM
+                        ) { viewModel.openAccessControl(screenData.server) }
+                    }
                 }
                 Spacer(modifier = Modifier.height(28.dp))
 

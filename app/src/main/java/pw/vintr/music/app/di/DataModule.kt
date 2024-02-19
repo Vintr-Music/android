@@ -117,6 +117,7 @@ val dataModule = module {
 
                 // Auth configuration
                 userPreferencesDataSource.getAccessToken()?.let { accessToken ->
+                    Log.d("HTTP auth token:", accessToken)
                     header(HttpHeaders.Authorization, BEARER_PREFIX + accessToken)
                 }
 

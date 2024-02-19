@@ -116,14 +116,14 @@ fun ButtonPlayerStateMini(
                     )
                 }
                 ButtonState.IDLE -> {
-                    SimpleIconButton(
+                    ButtonSimpleIcon(
                         iconRes = R.drawable.ic_play,
                         tint = VintrMusicExtendedTheme.colors.textRegular,
                         onClick = onClick
                     )
                 }
                 ButtonState.PLAYING -> {
-                    SimpleIconButton(
+                    ButtonSimpleIcon(
                         iconRes = R.drawable.ic_pause,
                         tint = VintrMusicExtendedTheme.colors.textRegular,
                         onClick = onClick

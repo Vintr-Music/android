@@ -20,7 +20,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import pw.vintr.music.R
 import pw.vintr.music.tools.extension.Empty
-import pw.vintr.music.ui.kit.button.SimpleIconButton
+import pw.vintr.music.ui.kit.button.ButtonSimpleIcon
 import pw.vintr.music.ui.theme.Bee1
 import pw.vintr.music.ui.theme.Gilroy18
 import pw.vintr.music.ui.theme.VintrMusicExtendedTheme
@@ -52,7 +52,7 @@ fun ToolbarRegular(
                 modifier = Modifier.size(24.dp),
                 contentAlignment = Alignment.Center,
             ) {
-                SimpleIconButton(
+                ButtonSimpleIcon(
                     iconRes = R.drawable.ic_back,
                     onClick = onBackPressed,
                     tint = backButtonColor,

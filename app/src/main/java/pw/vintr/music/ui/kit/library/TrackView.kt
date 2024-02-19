@@ -27,7 +27,7 @@ import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import pw.vintr.music.R
 import pw.vintr.music.domain.library.model.track.TrackModel
-import pw.vintr.music.ui.kit.button.SimpleIconButton
+import pw.vintr.music.ui.kit.button.ButtonSimpleIcon
 import pw.vintr.music.ui.kit.modifier.artworkContainer
 import pw.vintr.music.ui.theme.RubikMedium16
 import pw.vintr.music.ui.theme.RubikRegular14
@@ -104,7 +104,7 @@ fun TrackView(
             color = VintrMusicExtendedTheme.colors.textRegular
         )
         Spacer(modifier = Modifier.width(8.dp))
-        SimpleIconButton(
+        ButtonSimpleIcon(
             iconRes = R.drawable.ic_more,
             onClick = onMoreClick,
             tint = VintrMusicExtendedTheme.colors.textRegular,

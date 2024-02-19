@@ -31,7 +31,7 @@ import androidx.compose.ui.unit.dp
 import pw.vintr.music.R
 import pw.vintr.music.tools.extension.Empty
 import pw.vintr.music.tools.extension.clearFocusOnKeyboardDismiss
-import pw.vintr.music.ui.kit.button.SimpleIconButton
+import pw.vintr.music.ui.kit.button.ButtonSimpleIcon
 import pw.vintr.music.ui.theme.Gilroy11
 import pw.vintr.music.ui.theme.LocalVintrColors
 import pw.vintr.music.ui.theme.RubikRegular16
@@ -136,7 +136,7 @@ fun AppTextField(
                     // Clear button
                     if (showClearButton) {
                         Spacer(modifier = Modifier.width(10.dp))
-                        SimpleIconButton(
+                        ButtonSimpleIcon(
                             iconRes = R.drawable.ic_clear,
                             tint = LocalVintrColors.current.textFieldHint,
                             onClick = actionOnClear

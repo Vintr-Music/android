@@ -10,6 +10,7 @@ class LogoutUseCase(
 
     operator fun invoke() {
         userRepository.removeAccessToken()
+        userRepository.removeUserId()
         serverRepository.removeSelectedServerId()
     }
 }

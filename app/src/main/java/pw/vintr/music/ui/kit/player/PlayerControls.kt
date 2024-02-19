@@ -25,7 +25,7 @@ import pw.vintr.music.domain.player.model.config.PlayerShuffleMode
 import pw.vintr.music.domain.player.model.state.PlayerStateHolderModel
 import pw.vintr.music.domain.player.model.state.PlayerStatusModel
 import pw.vintr.music.ui.kit.button.ButtonPlayerState
-import pw.vintr.music.ui.kit.button.SimpleIconButton
+import pw.vintr.music.ui.kit.button.ButtonSimpleIcon
 import pw.vintr.music.ui.theme.Bee0
 import pw.vintr.music.ui.theme.VintrMusicExtendedTheme
 
@@ -66,7 +66,7 @@ fun PlayerControls(
             horizontalArrangement = Arrangement.SpaceEvenly,
             verticalAlignment = Alignment.CenterVertically,
         ) {
-            SimpleIconButton(
+            ButtonSimpleIcon(
                 iconRes = when (playerState.repeatMode) {
                     PlayerRepeatMode.OFF,
                     PlayerRepeatMode.ON_SESSION -> R.drawable.ic_repeat
@@ -81,7 +81,7 @@ fun PlayerControls(
                 },
                 onClick = { onSetNextRepeatMode(playerState.repeatMode) },
             )
-            SimpleIconButton(
+            ButtonSimpleIcon(
                 iconRes = R.drawable.ic_skip_backward,
                 size = 40.dp,
                 iconModifier = Modifier.size(28.dp),
@@ -92,13 +92,13 @@ fun PlayerControls(
                 isLoading = playerState.status == PlayerStatusModel.LOADING,
                 onClick = { onChangePlayerState() }
             )
-            SimpleIconButton(
+            ButtonSimpleIcon(
                 iconRes = R.drawable.ic_skip_forward,
                 size = 40.dp,
                 iconModifier = Modifier.size(28.dp),
                 onClick = { onForward() }
             )
-            SimpleIconButton(
+            ButtonSimpleIcon(
                 iconRes = R.drawable.ic_shuffle,
                 size = 40.dp,
                 iconModifier = Modifier.size(28.dp),

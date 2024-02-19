@@ -54,15 +54,15 @@ sealed class Screen(val route: String) {
         val usePrimaryMountToolbar: Boolean = true,
     ) : ScreenWithArgs(
         destination = ROUTE_DESTINATION,
-        args = mapOf(ARG_USE_PRIMARY_TOOLBAR to usePrimaryMountToolbar)
+        args = mapOf(ARG_IS_INITIALIZE_MODE to usePrimaryMountToolbar)
     ) {
         companion object {
-            const val ARG_USE_PRIMARY_TOOLBAR = "arg-use-primary-mount-toolbar"
+            const val ARG_IS_INITIALIZE_MODE = "arg-is-initialize-mode"
             private const val ROUTE_DESTINATION = "select-server"
 
             val routeTemplate = buildRouteTemplate(
                 ROUTE_DESTINATION,
-                listOf(ARG_USE_PRIMARY_TOOLBAR)
+                listOf(ARG_IS_INITIALIZE_MODE)
             )
         }
     }

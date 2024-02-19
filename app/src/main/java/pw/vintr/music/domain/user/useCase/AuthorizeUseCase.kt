@@ -14,6 +14,7 @@ class AuthorizeUseCase(
             .authorize(AuthorizeRequestDto(login, password))
 
         userRepository.setAccessToken(authResponse.token)
+        userRepository.setUserId(authResponse.user.id)
 
         return authResponse.user.toModel()
     }

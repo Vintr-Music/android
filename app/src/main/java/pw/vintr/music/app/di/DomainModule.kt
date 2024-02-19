@@ -30,9 +30,9 @@ val domainModule = module {
     single { LogoutUseCase(get(), get()) }
     single { GetAuthorizeStateUseCase(get()) }
     single { GetProfileUseCase(get()) }
-    single { GetSelectedServerUseCase(get()) }
+    single { GetSelectedServerUseCase(get(), get()) }
 
-    single { GetServerListUseCase(get()) }
+    single { GetServerListUseCase(get(), get()) }
     single { SelectServerUseCase(get()) }
     single { GetIsServerSelectedUseCase(get()) }
     single { ConnectNewServerUseCase(get()) }

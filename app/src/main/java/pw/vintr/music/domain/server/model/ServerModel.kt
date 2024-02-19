@@ -7,6 +7,9 @@ data class ServerModel(
     val name: String,
     val owner: String,
     val users: List<String>,
+    val haveAccessControl: Boolean
 )
 
-fun ServerDto.toModel() = ServerModel(id, name, owner, users)
+fun ServerDto.toModel(
+    haveAccessControl: Boolean = false
+) = ServerModel(id, name, owner, users, haveAccessControl)

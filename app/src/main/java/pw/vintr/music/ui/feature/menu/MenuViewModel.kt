@@ -1,7 +1,6 @@
 package pw.vintr.music.ui.feature.menu
 
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
@@ -36,12 +35,12 @@ class MenuViewModel(
 
     fun loadData() {
         _screenState.loadWithStateHandling {
-            val user = async { getProfileUseCase.invoke() }
-            val server = async { getSelectedServerUseCase.invoke() }
+            val user = getProfileUseCase.invoke()
+            val server = getSelectedServerUseCase.invoke()
 
             MenuScreenData(
-                user = user.await(),
-                server = server.await()
+                user = user,
+                server = server
             )
         }
     }
@@ -49,6 +48,10 @@ class MenuViewModel(
     fun openServerSelection() {
         navigator.switchNavigatorType(NavigatorType.Root)
         navigator.forward(Screen.SelectServer(usePrimaryMountToolbar = false))
+    }
+
+    fun openAccessControl(server: ServerModel) {
+        // TODO: open access control
     }
 
     fun openSettings() {

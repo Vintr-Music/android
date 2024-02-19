@@ -13,7 +13,7 @@ import androidx.compose.ui.unit.dp
 import pw.vintr.music.ui.theme.VintrMusicExtendedTheme
 
 @Composable
-fun SimpleIconButton(
+fun ButtonSimpleIcon(
     modifier: Modifier = Modifier,
     iconModifier: Modifier = Modifier,
     @DrawableRes
