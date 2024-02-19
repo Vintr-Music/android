@@ -41,10 +41,12 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.compose.KoinContext
 import org.koin.compose.rememberKoinInject
 import pw.vintr.music.domain.library.model.track.TrackModel
+import pw.vintr.music.tools.extension.Empty
 import pw.vintr.music.tools.extension.getRequiredArg
 import pw.vintr.music.ui.feature.menu.logout.LogoutConfirmDialog
 import pw.vintr.music.ui.feature.register.RegisterScreen
 import pw.vintr.music.ui.feature.root.RootScreen
+import pw.vintr.music.ui.feature.server.accessControl.ServerAccessControlScreen
 import pw.vintr.music.ui.feature.server.selection.ServerSelectionScreen
 import pw.vintr.music.ui.feature.server.selection.connectNew.ConnectNewServerScreen
 import pw.vintr.music.ui.feature.trackDetails.TrackDetailsBottomSheet
@@ -134,6 +136,7 @@ fun Navigation(
         enterTransition = { fadeIn(animationSpec = tween(TRANSITION_DURATION)) },
         exitTransition = { fadeOut(animationSpec = tween(TRANSITION_DURATION)) }
     ) {
+        // Login flow
         composable(Screen.Login.route) { LoginScreen() }
         composable(Screen.Register.route) { RegisterScreen() }
         composable(
@@ -147,7 +150,24 @@ fun Navigation(
 
             ServerSelectionScreen(isInitializeMode = isInitializeMode)
         }
+
+        // Server flow
         composable(Screen.ConnectNewServer.route) { ConnectNewServerScreen() }
+        composable(
+            Screen.ServerAccessControl.routeTemplate,
+            arguments = listOf(
+                navArgument(Screen.ServerAccessControl.ARG_KEY_SERVER_ID) {
+                    defaultValue = String.Empty
+                }
+            )
+        ) {
+            val serverId = it.arguments
+                ?.getString(Screen.ServerAccessControl.ARG_KEY_SERVER_ID) ?: String.Empty
+
+            ServerAccessControlScreen(serverId = serverId)
+        }
+
+        // Root, bottom sheets, dialogs
         composable(Screen.Root.route) { RootScreen() }
         bottomSheet(
             Screen.TrackDetails.routeTemplate,

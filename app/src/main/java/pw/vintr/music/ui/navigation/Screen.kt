@@ -69,6 +69,21 @@ sealed class Screen(val route: String) {
 
     object ConnectNewServer : Screen(route = "new-server")
 
+    data class ServerAccessControl(val serverId: String) : ScreenWithArgs(
+        destination = ROUTE_DESTINATION,
+        args = mapOf(ARG_KEY_SERVER_ID to serverId)
+    ) {
+        companion object {
+            const val ARG_KEY_SERVER_ID = "arg-key-server-id"
+            private const val ROUTE_DESTINATION = "server-access-control"
+
+            val routeTemplate = buildRouteTemplate(
+                ROUTE_DESTINATION,
+                listOf(ARG_KEY_SERVER_ID)
+            )
+        }
+    }
+
     object Root : Screen(route = "root")
 
     object Home : Screen(route = "home")

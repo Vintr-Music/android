@@ -16,6 +16,8 @@ import pw.vintr.music.ui.feature.nowPlaying.NowPlayingViewModel
 import pw.vintr.music.ui.feature.register.RegisterViewModel
 import pw.vintr.music.ui.feature.root.RootViewModel
 import pw.vintr.music.ui.feature.search.SearchViewModel
+import pw.vintr.music.ui.feature.server.accessControl.ServerAccessControlViewModel
+import pw.vintr.music.ui.feature.server.accessControl.invite.ServerInviteListViewModel
 import pw.vintr.music.ui.feature.server.selection.ServerSelectionViewModel
 import pw.vintr.music.ui.feature.server.selection.connectNew.ConnectNewServerViewModel
 import pw.vintr.music.ui.feature.settings.SettingsViewModel
@@ -28,8 +30,16 @@ val uiModule = module {
     viewModel { MainViewModel(get(), get(), get()) }
     viewModel { LoginViewModel(get()) }
     viewModel { RegisterViewModel(get()) }
+
     viewModel { ServerSelectionViewModel(get(), get(), get(), get()) }
     viewModel { ConnectNewServerViewModel(get()) }
+    viewModel { ServerAccessControlViewModel() }
+    viewModel { params ->
+        ServerInviteListViewModel(
+            serverId = params.get(),
+            getServerInviteListUseCase = get()
+        )
+    }
 
     viewModel { RootViewModel(get()) }
     viewModel { HomeViewModel(get(), get()) }

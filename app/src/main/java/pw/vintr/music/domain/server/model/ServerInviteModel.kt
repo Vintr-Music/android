@@ -6,7 +6,7 @@ import java.util.Date
 
 data class ServerInviteModel(
     val id: String,
-    val serverId: String,
+    val server: ServerModel,
     val code: Int,
     val isUnlimited: Boolean,
     val expiry: Date?
@@ -14,7 +14,7 @@ data class ServerInviteModel(
 
 fun ServerInviteDto.toModel() = ServerInviteModel(
     id = id,
-    serverId = server,
+    server = server.toModel(haveAccessControl = true),
     code = code,
     isUnlimited = isUnlimited,
     expiry = DateFormat.parseDate(expiry)

@@ -51,7 +51,8 @@ class MenuViewModel(
     }
 
     fun openAccessControl(server: ServerModel) {
-        // TODO: open access control
+        navigator.switchNavigatorType(NavigatorType.Root)
+        navigator.forward(Screen.ServerAccessControl(server.id))
     }
 
     fun openSettings() {

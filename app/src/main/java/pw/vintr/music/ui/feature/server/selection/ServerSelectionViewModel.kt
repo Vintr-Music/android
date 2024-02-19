@@ -48,7 +48,8 @@ class ServerSelectionViewModel(
     }
 
     fun openAccessControl(server: ServerModel) {
-        // TODO: open access control
+        navigator.switchNavigatorType(NavigatorType.Root)
+        navigator.forward(Screen.ServerAccessControl(server.id))
     }
 
     fun selectServer(server: ServerModel) {

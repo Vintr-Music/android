@@ -6,7 +6,7 @@ data class ServerInviteDto(
     @SerializedName("_id")
     val id: String,
     @SerializedName("server")
-    val server: String,
+    val server: ServerDto,
     @SerializedName("code")
     val code: Int,
     @SerializedName("isUnlimited")

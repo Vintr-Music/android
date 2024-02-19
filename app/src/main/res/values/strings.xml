@@ -33,6 +33,13 @@
     <string name="server_add_by_manual">Enter manual</string>
 
     <string name="access_control">Access control</string>
+    <string name="invite_unlimited">Unlimited invitation</string>
+    <string name="invite_one_time">One-time invitation</string>
+    <string name="invite_code">Code: %1s</string>
+    <string name="invite_no_expiration">Valid indefinitely</string>
+    <string name="invite_until">Valid until: %1s</string>
+    <string name="invites">Invites</string>
+    <string name="members">Members</string>
 
     <string name="selected_server">Selected server</string>
     <string name="settings">Settings</string>

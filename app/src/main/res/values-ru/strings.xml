@@ -30,6 +30,13 @@
     <string name="server_add_by_manual">Вручную</string>
 
     <string name="access_control">Управление доступом</string>
+    <string name="invite_unlimited">Безлимитное приглашение</string>
+    <string name="invite_one_time">Единоразовое приглашение</string>
+    <string name="invite_code">Код: %1s</string>
+    <string name="invite_no_expiration">Действует бессрочно</string>
+    <string name="invite_until">Действует до: %1s</string>
+    <string name="invites">Приглашения</string>
+    <string name="members">Участники</string>
 
     <string name="selected_server">Выбранный сервер</string>
     <string name="settings">Настройки</string>
