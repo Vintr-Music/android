@@ -30,11 +30,11 @@ class RegisterViewModel(
     }
 
     fun changeFirstName(value: String) {
-        _screenState.update { it.copy(login = value) }
+        _screenState.update { it.copy(firstName = value) }
     }
 
     fun changeLastName(value: String) {
-        _screenState.update { it.copy(login = value) }
+        _screenState.update { it.copy(lastName = value) }
     }
 
     fun register() {

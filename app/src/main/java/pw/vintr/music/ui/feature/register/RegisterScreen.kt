@@ -89,7 +89,7 @@ fun RegisterScreen(
                     modifier = Modifier.padding(horizontal = 20.dp),
                     label = stringResource(id = R.string.repeat_password),
                     hint = stringResource(id = R.string.repeat_password),
-                    value = screenState.value.password,
+                    value = screenState.value.repeatPassword,
                     visualTransformation = PasswordVisualTransformation(),
                     onValueChange = { viewModel.changeRepeatPassword(it) },
                     keyboardOptions = KeyboardOptions(
@@ -101,7 +101,7 @@ fun RegisterScreen(
                     modifier = Modifier.padding(horizontal = 20.dp),
                     label = stringResource(id = R.string.first_name),
                     hint = stringResource(id = R.string.first_name),
-                    value = screenState.value.login,
+                    value = screenState.value.firstName,
                     onValueChange = { viewModel.changeFirstName(it) },
                     keyboardOptions = KeyboardOptions(
                         keyboardType = KeyboardType.Text,
@@ -113,7 +113,7 @@ fun RegisterScreen(
                     modifier = Modifier.padding(horizontal = 20.dp),
                     label = stringResource(id = R.string.last_name),
                     hint = stringResource(id = R.string.last_name),
-                    value = screenState.value.login,
+                    value = screenState.value.lastName,
                     onValueChange = { viewModel.changeLastName(it) },
                     keyboardOptions = KeyboardOptions(
                         keyboardType = KeyboardType.Text,

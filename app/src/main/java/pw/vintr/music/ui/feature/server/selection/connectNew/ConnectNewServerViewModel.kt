@@ -30,7 +30,9 @@ class ConnectNewServerViewModel(
     }
 
     fun onQRCodeScanned(data: String) {
-        connectServer { connectNewServerUseCase.invoke(data) }
+        if (!_screenState.value.isConnectingServer) {
+            connectServer { connectNewServerUseCase.invoke(data) }
+        }
     }
 
     fun changeServerName(value: String) {
@@ -53,7 +55,7 @@ class ConnectNewServerViewModel(
     }
 
     private fun connectServer(connectAction: suspend () -> ServerModel) {
-        launch {
+        launch(createExceptionHandler {  }) {
             withLoading(
                 setLoadingCallback = { isLoading ->
                     _screenState.update { it.copy(isConnectingServer = isLoading) }
