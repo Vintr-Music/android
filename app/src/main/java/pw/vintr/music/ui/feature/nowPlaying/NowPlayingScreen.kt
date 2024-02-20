@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Text
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
@@ -26,6 +27,7 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.unit.coerceAtMost
 import androidx.compose.ui.unit.dp
 import androidx.core.graphics.drawable.toBitmap
 import androidx.palette.graphics.Palette
@@ -33,6 +35,7 @@ import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import org.koin.androidx.compose.getViewModel
 import pw.vintr.music.domain.player.model.state.PlayerStatusModel
+import pw.vintr.music.tools.composable.rememberDisplayRoundness
 import pw.vintr.music.tools.extension.Dash
 import pw.vintr.music.tools.extension.Space
 import pw.vintr.music.ui.kit.player.PlayerControls
@@ -41,10 +44,16 @@ import pw.vintr.music.ui.theme.Gilroy16
 import pw.vintr.music.ui.theme.Gilroy24
 import pw.vintr.music.ui.theme.VintrMusicExtendedTheme
 
+private val MAX_CONTROLS_ROUNDNESS = 20.dp
+
 @Composable
 fun NowPlayingScreen(viewModel: NowPlayingViewModel = getViewModel()) {
     val playerState = viewModel.playerStateFlow.collectAsState()
     val progressState = viewModel.playerProgressFlow.collectAsState()
+
+    val baseControlsRoundness = rememberDisplayRoundness(MAX_CONTROLS_ROUNDNESS)
+        .coerceAtMost(MAX_CONTROLS_ROUNDNESS)
+    val semiControlRoundness = remember(baseControlsRoundness) { baseControlsRoundness / 2 }
 
     playerState.value.currentTrack?.let { track ->
         var bitmap by remember { mutableStateOf<Bitmap?>(value = null) }
@@ -143,6 +152,7 @@ fun NowPlayingScreen(viewModel: NowPlayingViewModel = getViewModel()) {
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(horizontal = 14.dp),
+            RoundedCornerShape(semiControlRoundness),
             progress = progressState.value.progress,
             trackDuration = progressState.value.duration,
             onSeek = { viewModel.onSeek(it) },
@@ -150,6 +160,7 @@ fun NowPlayingScreen(viewModel: NowPlayingViewModel = getViewModel()) {
         )
         PlayerControls(
             playerState = playerState.value,
+            shape = RoundedCornerShape(baseControlsRoundness),
             onBackward = { viewModel.backward() },
             onChangePlayerState = {
                 when (playerState.value.status) {

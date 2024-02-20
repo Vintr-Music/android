@@ -18,6 +18,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import pw.vintr.music.tools.format.DurationFormat
@@ -28,6 +29,7 @@ import pw.vintr.music.ui.theme.VintrMusicExtendedTheme
 @Composable
 fun PlayerProgressBar(
     modifier: Modifier = Modifier,
+    shape: Shape = RoundedCornerShape(10.dp),
     progress: Float = 0f,
     trackDuration: Float = 0f,
     onSeek: (Float) -> Unit = {},
@@ -41,7 +43,10 @@ fun PlayerProgressBar(
             onValueChangeFinished = { onSeekEnd() },
             valueRange = 0f..trackDuration,
             track = { sliderPositions ->
-                SliderTrack(sliderPositions)
+                SliderTrack(
+                    sliderPositions = sliderPositions,
+                    shape = shape
+                )
             },
             thumb = {
                 Spacer(Modifier.size(32.dp))
@@ -67,7 +72,10 @@ fun PlayerProgressBar(
 }
 
 @Composable
-private fun SliderTrack(sliderPositions: SliderPositions) {
+private fun SliderTrack(
+    sliderPositions: SliderPositions,
+    shape: Shape = RoundedCornerShape(10.dp),
+) {
     val inactiveTrackColor = VintrMusicExtendedTheme.colors
         .playerSliderInactiveBackground
         .copy(alpha = 0.5f)
@@ -80,8 +88,8 @@ private fun SliderTrack(sliderPositions: SliderPositions) {
         modifier = Modifier
             .fillMaxWidth()
             .height(32.dp)
-            .clip(RoundedCornerShape(10.dp))
-            .border(1.dp, strokeColor, RoundedCornerShape(10.dp)),
+            .clip(shape)
+            .border(1.dp, strokeColor, shape),
     ) {
         val isRtl = layoutDirection == LayoutDirection.Rtl
         val sliderLeft = Offset(0f, center.y)

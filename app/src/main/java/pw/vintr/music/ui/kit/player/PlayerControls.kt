@@ -16,6 +16,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -33,6 +34,7 @@ import pw.vintr.music.ui.theme.VintrMusicExtendedTheme
 @Preview(widthDp = 400)
 fun PlayerControls(
     playerState: PlayerStateHolderModel = PlayerStateHolderModel(),
+    shape: Shape = RoundedCornerShape(20.dp),
     onBackward: () -> Unit = {},
     onChangePlayerState: () -> Unit = {},
     onForward: () -> Unit = {},
@@ -44,12 +46,12 @@ fun PlayerControls(
             .padding(20.dp)
             .navigationBarsPadding()
             .fillMaxWidth()
-            .clip(RoundedCornerShape(20.dp))
+            .clip(shape)
             .background(MaterialTheme.colorScheme.background.copy(alpha = 0.9f))
             .border(
                 1.dp,
                 VintrMusicExtendedTheme.colors.playerSliderStroke,
-                RoundedCornerShape(20.dp)
+                shape
             )
             .padding(vertical = 20.dp),
         contentAlignment = Alignment.Center,
