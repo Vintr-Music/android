@@ -42,7 +42,7 @@ fun ServerInviteCard(
         )
         ServerInviteData(
             modifier = Modifier
-                .fillMaxWidth(),
+                .weight(1f),
             invite = invite
         )
     }
