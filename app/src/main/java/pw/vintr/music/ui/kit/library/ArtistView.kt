@@ -1,7 +1,7 @@
 package pw.vintr.music.ui.kit.library
 
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.BoxWithConstraints
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -34,7 +34,7 @@ fun ArtistView(
             .clip(RoundedCornerShape(4.dp))
             .clickable { onClick() }
     ) {
-        BoxWithConstraints(
+        Box(
             modifier = Modifier
                 .artworkContainer(CircleShape),
         ) {

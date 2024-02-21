@@ -4,6 +4,7 @@ import android.os.Parcelable
 import pw.vintr.music.domain.library.model.album.AlbumModel
 import pw.vintr.music.domain.library.model.artist.ArtistModel
 import pw.vintr.music.domain.library.model.track.TrackModel
+import pw.vintr.music.domain.server.model.ServerInviteModel
 import pw.vintr.music.ui.navigation.navArgs.parcelable.ParcelableNavTypeSerializer
 
 @Suppress("SameParameterValue")
@@ -80,6 +81,21 @@ sealed class Screen(val route: String) {
             val routeTemplate = buildRouteTemplate(
                 ROUTE_DESTINATION,
                 listOf(ARG_KEY_SERVER_ID)
+            )
+        }
+    }
+
+    data class ServerInviteDetails(val invite: ServerInviteModel) : ScreenWithArgs(
+        destination = ROUTE_DESTINATION,
+        args = mapOf(ARG_KEY_SERVER_INVITE to invite)
+    ) {
+        companion object {
+            const val ARG_KEY_SERVER_INVITE = "arg-server-invite"
+            private const val ROUTE_DESTINATION = "server-invite-details"
+
+            val routeTemplate = buildRouteTemplate(
+                ROUTE_DESTINATION,
+                listOf(ARG_KEY_SERVER_INVITE)
             )
         }
     }

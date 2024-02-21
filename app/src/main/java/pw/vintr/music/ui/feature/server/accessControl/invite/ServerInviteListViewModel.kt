@@ -6,6 +6,7 @@ import pw.vintr.music.domain.server.model.ServerInviteModel
 import pw.vintr.music.domain.server.useCase.accessControl.GetServerInviteListUseCase
 import pw.vintr.music.ui.base.BaseScreenState
 import pw.vintr.music.ui.base.BaseViewModel
+import pw.vintr.music.ui.navigation.Screen
 
 class ServerInviteListViewModel(
     private val serverId: String,
@@ -30,6 +31,6 @@ class ServerInviteListViewModel(
     }
 
     fun openInviteDetails(inviteModel: ServerInviteModel) {
-        // TODO: open details
+        navigator.forward(Screen.ServerInviteDetails(inviteModel))
     }
 }

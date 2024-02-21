@@ -18,7 +18,7 @@ fun rememberDisplayRoundness(defaultValue: Dp = 0.dp): Dp {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
             insets.getRoundedCorner(RoundedCorner.POSITION_BOTTOM_LEFT)?.let {
                 with(density) { it.radius.toDp() }
-            } ?: defaultValue
+            } ?: 0.dp
         } else {
             defaultValue
         }

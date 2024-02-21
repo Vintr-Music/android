@@ -41,12 +41,14 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.compose.KoinContext
 import org.koin.compose.rememberKoinInject
 import pw.vintr.music.domain.library.model.track.TrackModel
+import pw.vintr.music.domain.server.model.ServerInviteModel
 import pw.vintr.music.tools.extension.Empty
 import pw.vintr.music.tools.extension.getRequiredArg
 import pw.vintr.music.ui.feature.menu.logout.LogoutConfirmDialog
 import pw.vintr.music.ui.feature.register.RegisterScreen
 import pw.vintr.music.ui.feature.root.RootScreen
 import pw.vintr.music.ui.feature.server.accessControl.ServerAccessControlScreen
+import pw.vintr.music.ui.feature.server.accessControl.invite.details.ServerInviteDetailsBottomSheet
 import pw.vintr.music.ui.feature.server.selection.ServerSelectionScreen
 import pw.vintr.music.ui.feature.server.selection.connectNew.ConnectNewServerScreen
 import pw.vintr.music.ui.feature.trackDetails.TrackDetailsBottomSheet
@@ -165,6 +167,22 @@ fun Navigation(
                 ?.getString(Screen.ServerAccessControl.ARG_KEY_SERVER_ID) ?: String.Empty
 
             ServerAccessControlScreen(serverId = serverId)
+        }
+        bottomSheet(
+            Screen.ServerInviteDetails.routeTemplate,
+            arguments = listOf(
+                navArgument(Screen.ServerInviteDetails.ARG_KEY_SERVER_INVITE) {
+                    type = ParcelableNavType(ServerInviteModel::class.java)
+                }
+            )
+        ) {
+            BackHandler { navController.navigateUp() }
+
+            val invite = it.arguments.getRequiredArg(
+                Screen.ServerInviteDetails.ARG_KEY_SERVER_INVITE,
+                ServerInviteModel::class.java
+            )
+            ServerInviteDetailsBottomSheet(invite = invite)
         }
 
         // Root, bottom sheets, dialogs
