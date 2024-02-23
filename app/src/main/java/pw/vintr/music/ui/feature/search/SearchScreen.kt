@@ -179,6 +179,9 @@ fun SearchScreen(viewModel: SearchViewModel = getViewModel()) {
                                 isPlaying = playerState.value.currentTrack == track,
                                 showArtwork = true,
                                 contentPadding = PaddingValues(horizontal = 20.dp),
+                                onMoreClick = {
+                                    viewModel.openTrackDetails(track)
+                                },
                                 onClick = {
                                     viewModel.onTrackClicked(
                                         tracks = screenData.tracks,

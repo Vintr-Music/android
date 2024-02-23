@@ -44,6 +44,7 @@ import pw.vintr.music.domain.library.model.track.TrackModel
 import pw.vintr.music.domain.server.model.ServerInviteModel
 import pw.vintr.music.tools.extension.Empty
 import pw.vintr.music.tools.extension.getRequiredArg
+import pw.vintr.music.tools.extension.getRequiredArgList
 import pw.vintr.music.ui.feature.menu.logout.LogoutConfirmDialog
 import pw.vintr.music.ui.feature.register.RegisterScreen
 import pw.vintr.music.ui.feature.root.RootScreen
@@ -52,12 +53,14 @@ import pw.vintr.music.ui.feature.server.accessControl.invite.details.ServerInvit
 import pw.vintr.music.ui.feature.server.selection.ServerSelectionScreen
 import pw.vintr.music.ui.feature.server.selection.connectNew.ConnectNewServerScreen
 import pw.vintr.music.ui.feature.trackDetails.TrackDetailsBottomSheet
+import pw.vintr.music.ui.feature.trackDetails.entity.TrackDetailsOption
 import pw.vintr.music.ui.kit.sliding.AnchoredDraggableDefaults
 import pw.vintr.music.ui.navigation.Navigator
 import pw.vintr.music.ui.navigation.NavigatorEffect
 import pw.vintr.music.ui.navigation.NavigatorType
 import pw.vintr.music.ui.navigation.Screen
 import pw.vintr.music.ui.navigation.navArgs.parcelable.ParcelableNavType
+import pw.vintr.music.ui.navigation.navArgs.parcelableList.ParcelableListNavType
 import pw.vintr.music.ui.navigation.navGraph.extendedDialog
 
 private const val TRANSITION_DURATION = 300
@@ -178,9 +181,8 @@ fun Navigation(
         ) {
             BackHandler { navController.navigateUp() }
 
-            val invite = it.arguments.getRequiredArg(
+            val invite = it.arguments.getRequiredArg<ServerInviteModel>(
                 Screen.ServerInviteDetails.ARG_KEY_SERVER_INVITE,
-                ServerInviteModel::class.java
             )
             ServerInviteDetailsBottomSheet(invite = invite)
         }
@@ -192,16 +194,24 @@ fun Navigation(
             arguments = listOf(
                 navArgument(Screen.TrackDetails.ARG_KEY_TRACK) {
                     type = ParcelableNavType(TrackModel::class.java)
+                },
+                navArgument(Screen.TrackDetails.ARG_KEY_OPTIONS) {
+                    type = ParcelableListNavType<TrackDetailsOption>()
                 }
             )
         ) {
             BackHandler { navController.navigateUp() }
 
-            val trackModel = it.arguments.getRequiredArg(
-                Screen.TrackDetails.ARG_KEY_TRACK,
-                TrackModel::class.java
+            val trackModel = it.arguments.getRequiredArg<TrackModel>(
+                Screen.TrackDetails.ARG_KEY_TRACK
             )
-            TrackDetailsBottomSheet(trackModel = trackModel)
+            val allowedOptions = it.arguments.getRequiredArgList<TrackDetailsOption>(
+                Screen.TrackDetails.ARG_KEY_OPTIONS
+            )
+            TrackDetailsBottomSheet(
+                trackModel = trackModel,
+                allowedOptions = allowedOptions
+            )
         }
         extendedDialog(
             route = Screen.LogoutConfirmDialog.route,

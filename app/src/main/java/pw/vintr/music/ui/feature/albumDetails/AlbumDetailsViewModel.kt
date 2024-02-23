@@ -15,6 +15,9 @@ import pw.vintr.music.tools.extension.Space
 import pw.vintr.music.tools.extension.withLoaded
 import pw.vintr.music.ui.base.BaseScreenState
 import pw.vintr.music.ui.base.BaseViewModel
+import pw.vintr.music.ui.feature.trackDetails.entity.TrackDetailsOption
+import pw.vintr.music.ui.navigation.NavigatorType
+import pw.vintr.music.ui.navigation.Screen
 
 class AlbumDetailsViewModel(
     private val album: AlbumModel,
@@ -76,6 +79,16 @@ class AlbumDetailsViewModel(
 
     fun resumeAlbum() {
         playerInteractor.resume()
+    }
+
+    fun openTrackDetails(track: TrackModel) {
+        navigator.forward(
+            Screen.TrackDetails(
+                trackModel = track,
+                allowedOptions = TrackDetailsOption.optionsExceptAlbumNavigate
+            ),
+            NavigatorType.Root
+        )
     }
 }
 

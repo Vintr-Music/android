@@ -5,7 +5,9 @@ import pw.vintr.music.domain.library.model.album.AlbumModel
 import pw.vintr.music.domain.library.model.artist.ArtistModel
 import pw.vintr.music.domain.library.model.track.TrackModel
 import pw.vintr.music.domain.server.model.ServerInviteModel
+import pw.vintr.music.ui.feature.trackDetails.entity.TrackDetailsOption
 import pw.vintr.music.ui.navigation.navArgs.parcelable.ParcelableNavTypeSerializer
+import pw.vintr.music.ui.navigation.navArgs.parcelableList.ParcelableListWrapper
 
 @Suppress("SameParameterValue")
 private fun buildRoute(
@@ -38,6 +40,11 @@ sealed class Screen(val route: String) {
                     is Parcelable -> {
                         ParcelableNavTypeSerializer(value.javaClass)
                             .toRouteString(value)
+                    }
+                    is List<*> -> {
+                        val parcelableValues = value.filterIsInstance<Parcelable>()
+                        ParcelableNavTypeSerializer(ParcelableListWrapper::class.java)
+                            .toRouteString(ParcelableListWrapper(parcelableValues))
                     }
                     else -> {
                         it.value.toString()
@@ -144,17 +151,24 @@ sealed class Screen(val route: String) {
         }
     }
 
-    data class TrackDetails(val trackModel: TrackModel) : ScreenWithArgs(
+    data class TrackDetails(
+        val trackModel: TrackModel,
+        val allowedOptions: List<TrackDetailsOption> = listOf(
+            TrackDetailsOption.GO_TO_ALBUM,
+            TrackDetailsOption.GO_TO_ARTIST
+        ),
+    ) : ScreenWithArgs(
         destination = ROUTE_DESTINATION,
-        args = mapOf(ARG_KEY_TRACK to trackModel)
+        args = mapOf(ARG_KEY_TRACK to trackModel, ARG_KEY_OPTIONS to allowedOptions)
     ) {
         companion object {
             const val ARG_KEY_TRACK = "arg-track-model"
+            const val ARG_KEY_OPTIONS = "arg-options"
             private const val ROUTE_DESTINATION = "track-details"
 
             val routeTemplate = buildRouteTemplate(
                 ROUTE_DESTINATION,
-                listOf(ARG_KEY_TRACK)
+                listOf(ARG_KEY_TRACK, ARG_KEY_OPTIONS)
             )
         }
     }

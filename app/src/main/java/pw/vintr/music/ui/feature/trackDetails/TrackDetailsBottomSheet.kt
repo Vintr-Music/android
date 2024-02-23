@@ -27,8 +27,10 @@ import coil.request.ImageRequest
 import org.koin.androidx.compose.getViewModel
 import pw.vintr.music.R
 import pw.vintr.music.domain.library.model.track.TrackModel
+import pw.vintr.music.tools.composable.ColumnItems
 import pw.vintr.music.tools.extension.dialogContainer
 import pw.vintr.music.tools.extension.toStringRes
+import pw.vintr.music.ui.feature.trackDetails.entity.TrackDetailsOption
 import pw.vintr.music.ui.kit.menu.MenuItemIconified
 import pw.vintr.music.ui.kit.modifier.artworkContainer
 import pw.vintr.music.ui.theme.RubikMedium14
@@ -39,6 +41,10 @@ import pw.vintr.music.ui.theme.VintrMusicExtendedTheme
 @Composable
 fun TrackDetailsBottomSheet(
     trackModel: TrackModel,
+    allowedOptions: List<TrackDetailsOption> = listOf(
+        TrackDetailsOption.GO_TO_ALBUM,
+        TrackDetailsOption.GO_TO_ARTIST
+    ),
     viewModel: TrackDetailsViewModel = getViewModel()
 ) {
     Column(
@@ -111,29 +117,31 @@ fun TrackDetailsBottomSheet(
         Spacer(modifier = Modifier.height(20.dp))
 
         // Actions
-        MenuItemIconified(
-            modifier = Modifier
-                .clip(RoundedCornerShape(8.dp))
-                .clickable { viewModel.openAlbum(trackModel) }
-                .padding(vertical = 8.dp),
-            title = stringResource(id = R.string.open_album),
-            titleStyle = RubikMedium16,
-            iconRes = R.drawable.ic_album,
-            iconSize = 20.dp,
-            iconTint = VintrMusicExtendedTheme.colors.textRegular
-        )
-        Spacer(modifier = Modifier.height(8.dp))
-        MenuItemIconified(
-            modifier = Modifier
-                .clip(RoundedCornerShape(8.dp))
-                .clickable { viewModel.openArtist(trackModel) }
-                .padding(vertical = 8.dp),
-            title = stringResource(id = R.string.open_artist),
-            titleStyle = RubikMedium16,
-            iconRes = R.drawable.ic_artist,
-            iconSize = 20.dp,
-            iconTint = VintrMusicExtendedTheme.colors.textRegular
-        )
+        ColumnItems(
+            items = allowedOptions,
+            spacing = 8.dp
+        ) {
+            MenuItemIconified(
+                modifier = Modifier
+                    .clip(RoundedCornerShape(8.dp))
+                    .clickable {
+                        when(it) {
+                            TrackDetailsOption.GO_TO_ALBUM -> {
+                                viewModel.openAlbum(trackModel)
+                            }
+                            TrackDetailsOption.GO_TO_ARTIST -> {
+                                viewModel.openArtist(trackModel)
+                            }
+                        }
+                    }
+                    .padding(vertical = 8.dp),
+                title = stringResource(id = it.titleRes),
+                titleStyle = RubikMedium16,
+                iconRes = it.iconRes,
+                iconSize = 20.dp,
+                iconTint = VintrMusicExtendedTheme.colors.textRegular
+            )
+        }
     }
 }
 

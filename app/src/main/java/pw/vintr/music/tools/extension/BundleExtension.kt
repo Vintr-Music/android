@@ -3,12 +3,30 @@ package pw.vintr.music.tools.extension
 import android.os.Build
 import android.os.Bundle
 import android.os.Parcelable
+import pw.vintr.music.ui.navigation.navArgs.parcelableList.ParcelableListWrapper
 
 @Suppress("DEPRECATION")
 fun <T : Parcelable> Bundle?.getRequiredArg(key: String, clazz: Class<T>): T {
     return requireNotNull(this) { "arguments bundle is null" }.run {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             requireNotNull(getParcelable(key, clazz)) { "argument for $key is null" }
+        } else {
+            requireNotNull(getParcelable(key)) { "argument for $key is null" }
+        }
+    }
+}
+
+@Suppress("DEPRECATION")
+@JvmName("getRequiredArgReified")
+inline fun <reified T : Parcelable> Bundle?.getRequiredArg(
+    key: String,
+    clazz: Class<T>? = null,
+): T {
+    return requireNotNull(this) { "arguments bundle is null" }.run {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            requireNotNull(
+                getParcelable(key, clazz ?: T::class.java)
+            ) { "argument for $key is null" }
         } else {
             requireNotNull(getParcelable(key)) { "argument for $key is null" }
         }
@@ -28,15 +46,14 @@ inline fun <reified T : Parcelable> Bundle?.getOptionalArg(
 }
 
 @Suppress("DEPRECATION")
-inline fun <reified T : Parcelable> Bundle?.getRequiredArgList(
-    key: String,
-    clazz: Class<T>,
-): List<T> {
+inline fun <reified T : Parcelable> Bundle?.getRequiredArgList(key: String): List<T> {
     return requireNotNull(this) { "arguments bundle is null" }.run {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            requireNotNull(getParcelableArrayList(key, clazz)) { "argument for $key is null" }
+            requireNotNull(
+                getParcelable(key, ParcelableListWrapper::class.java)
+            ) { "argument for $key is null" }.content.filterIsInstance<T>()
         } else {
-            requireNotNull(getParcelableArrayList(key)) { "argument for $key is null" }
+            requireNotNull(getParcelable(key)) { "argument for $key is null" }
         }
     }
 }

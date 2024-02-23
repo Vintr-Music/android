@@ -159,6 +159,7 @@ fun AlbumDetailsScreen(
                         TrackView(
                             trackModel = track,
                             isPlaying = albumState.playingTrack == track,
+                            onMoreClick = { viewModel.openTrackDetails(track) },
                             onClick = { viewModel.playAlbum(index) }
                         )
                     }

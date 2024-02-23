@@ -14,6 +14,7 @@ import pw.vintr.music.domain.player.model.state.PlayerStateHolderModel
 import pw.vintr.music.tools.extension.Empty
 import pw.vintr.music.ui.base.BaseScreenState
 import pw.vintr.music.ui.base.BaseViewModel
+import pw.vintr.music.ui.navigation.NavigatorType
 import pw.vintr.music.ui.navigation.Screen
 
 class SearchViewModel(
@@ -72,6 +73,13 @@ class SearchViewModel(
                 startIndex = tracks.indexOf(track)
             )
         }
+    }
+
+    fun openTrackDetails(track: TrackModel) {
+        navigator.forward(
+            Screen.TrackDetails(track),
+            NavigatorType.Root
+        )
     }
 }
 
