@@ -45,7 +45,8 @@ import pw.vintr.music.domain.server.model.ServerInviteModel
 import pw.vintr.music.tools.extension.Empty
 import pw.vintr.music.tools.extension.getRequiredArg
 import pw.vintr.music.tools.extension.getRequiredArgList
-import pw.vintr.music.ui.feature.menu.logout.LogoutConfirmDialog
+import pw.vintr.music.ui.feature.dialog.ConfirmDialog
+import pw.vintr.music.ui.feature.dialog.entity.ConfirmDialogData
 import pw.vintr.music.ui.feature.register.RegisterScreen
 import pw.vintr.music.ui.feature.root.RootScreen
 import pw.vintr.music.ui.feature.server.accessControl.ServerAccessControlScreen
@@ -214,9 +215,19 @@ fun Navigation(
             )
         }
         extendedDialog(
-            route = Screen.LogoutConfirmDialog.route,
-            controller = navController
-        ) { LogoutConfirmDialog() }
+            route = Screen.ConfirmDialog.routeTemplate,
+            controller = navController,
+            arguments = listOf(
+                navArgument(Screen.ConfirmDialog.ARG_KEY_DATA) {
+                    type = ParcelableNavType(ConfirmDialogData::class.java)
+                },
+            )
+        ) {
+            val dialogData = it.arguments.getRequiredArg<ConfirmDialogData>(
+                Screen.ConfirmDialog.ARG_KEY_DATA
+            )
+            ConfirmDialog(data = dialogData)
+        }
     }
 }
 

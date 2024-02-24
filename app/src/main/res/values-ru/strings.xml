@@ -4,6 +4,7 @@
     <string name="common_data_error">Ошибка загрузки данных</string>
     <string name="common_retry">Повторить</string>
     <string name="common_cancel">Отмена</string>
+    <string name="common_ok">Ок</string>
 
     <string name="login_field">Логин</string>
     <string name="password">Пароль</string>

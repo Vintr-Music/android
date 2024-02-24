@@ -12,7 +12,8 @@ import pw.vintr.music.domain.user.useCase.GetProfileUseCase
 import pw.vintr.music.domain.user.useCase.LogoutUseCase
 import pw.vintr.music.ui.base.BaseScreenState
 import pw.vintr.music.ui.base.BaseViewModel
-import pw.vintr.music.ui.feature.menu.logout.LogoutConfirmResult
+import pw.vintr.music.ui.feature.dialog.entity.ConfirmDialogTemplate.openLogoutConfirmDialog
+import pw.vintr.music.ui.feature.dialog.entity.ConfirmResult
 import pw.vintr.music.ui.navigation.NavigatorType
 import pw.vintr.music.ui.navigation.Screen
 
@@ -60,12 +61,8 @@ class MenuViewModel(
     }
 
     fun openLogoutDialog() {
-        handleResult(LogoutConfirmResult.KEY) {
-            navigator.forwardWithResult<LogoutConfirmResult>(
-                screen = Screen.LogoutConfirmDialog,
-                type = NavigatorType.Root,
-                resultKey = LogoutConfirmResult.KEY,
-            ) { logout() }
+        handleResult(ConfirmResult.KEY) {
+            navigator.openLogoutConfirmDialog { logout() }
         }
     }
 

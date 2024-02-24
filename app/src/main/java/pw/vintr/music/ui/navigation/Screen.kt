@@ -5,6 +5,7 @@ import pw.vintr.music.domain.library.model.album.AlbumModel
 import pw.vintr.music.domain.library.model.artist.ArtistModel
 import pw.vintr.music.domain.library.model.track.TrackModel
 import pw.vintr.music.domain.server.model.ServerInviteModel
+import pw.vintr.music.ui.feature.dialog.entity.ConfirmDialogData
 import pw.vintr.music.ui.feature.trackDetails.entity.TrackDetailsOption
 import pw.vintr.music.ui.navigation.navArgs.parcelable.ParcelableNavTypeSerializer
 import pw.vintr.music.ui.navigation.navArgs.parcelableList.ParcelableListWrapper
@@ -173,5 +174,18 @@ sealed class Screen(val route: String) {
         }
     }
 
-    object LogoutConfirmDialog : Screen("logout-confirm")
+    data class ConfirmDialog(val data: ConfirmDialogData) : ScreenWithArgs(
+        destination = ROUTE_DESTINATION,
+        args = mapOf(ARG_KEY_DATA to data)
+    ) {
+        companion object {
+            const val ARG_KEY_DATA = "arg-key-data"
+            private const val ROUTE_DESTINATION = "dialog-confirm"
+
+            val routeTemplate = buildRouteTemplate(
+                ROUTE_DESTINATION,
+                listOf(ARG_KEY_DATA)
+            )
+        }
+    }
 }

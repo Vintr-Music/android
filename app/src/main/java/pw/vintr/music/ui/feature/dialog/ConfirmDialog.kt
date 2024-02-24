@@ -1,4 +1,4 @@
-package pw.vintr.music.ui.feature.menu.logout
+package pw.vintr.music.ui.feature.dialog
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -15,15 +15,16 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import org.koin.androidx.compose.getViewModel
 import pw.vintr.music.R
+import pw.vintr.music.ui.feature.dialog.entity.ConfirmDialogData
 import pw.vintr.music.ui.kit.button.ButtonText
-import pw.vintr.music.ui.navigation.NavigatorType
 import pw.vintr.music.ui.theme.Gilroy20
 import pw.vintr.music.ui.theme.RubikRegular14
 import pw.vintr.music.ui.theme.VintrMusicExtendedTheme
 
 @Composable
-fun LogoutConfirmDialog(
-    viewModel: LogoutConfirmViewModel = getViewModel()
+fun ConfirmDialog(
+    data: ConfirmDialogData,
+    viewModel: ConfirmViewModel = getViewModel()
 ) {
     Column(
         modifier = Modifier
@@ -31,14 +32,28 @@ fun LogoutConfirmDialog(
             .wrapContentHeight()
     ) {
         Text(
-            text = stringResource(id = R.string.confirm_logout_title),
+            text = when (data) {
+                is ConfirmDialogData.Resource -> {
+                    stringResource(id = data.titleRes)
+                }
+                is ConfirmDialogData.Text -> {
+                    data.title
+                }
+            },
             color = VintrMusicExtendedTheme.colors.textRegular,
             textAlign = TextAlign.Center,
             style = Gilroy20
         )
         Spacer(modifier = Modifier.height(12.dp))
         Text(
-            text = stringResource(id = R.string.confirm_logout_description),
+            text = when (data) {
+                is ConfirmDialogData.Resource -> {
+                    stringResource(id = data.messageRes)
+                }
+                is ConfirmDialogData.Text -> {
+                    data.message
+                }
+            },
             color = VintrMusicExtendedTheme.colors.textSecondary,
             textAlign = TextAlign.Center,
             style = RubikRegular14
@@ -51,14 +66,30 @@ fun LogoutConfirmDialog(
         ) {
             ButtonText(
                 modifier = Modifier.weight(1f),
-                text = stringResource(id = R.string.common_cancel),
-                onClick = { viewModel.navigateBack(type = NavigatorType.Root) }
+                text = when (data) {
+                    is ConfirmDialogData.Resource -> {
+                        data.declineTextRes?.let { stringResource(id = it) }
+
+                    }
+                    is ConfirmDialogData.Text -> {
+                        data.declineText
+                    }
+                } ?: stringResource(id = R.string.common_cancel),
+                onClick = { viewModel.decline() }
             )
             Spacer(modifier = Modifier.width(12.dp))
             ButtonText(
                 modifier = Modifier.weight(1f),
-                text = stringResource(id = R.string.logout),
-                onClick = { viewModel.logout() }
+                text = when (data) {
+                    is ConfirmDialogData.Resource -> {
+                        data.acceptTextRes?.let { stringResource(id = it) }
+
+                    }
+                    is ConfirmDialogData.Text -> {
+                        data.acceptText
+                    }
+                } ?: stringResource(id = R.string.common_ok),
+                onClick = { viewModel.accept() }
             )
         }
     }

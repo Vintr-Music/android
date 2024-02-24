@@ -6,6 +6,14 @@ plugins {
 }
 
 android {
+    signingConfigs {
+        create("release") {
+            storeFile = file("D:\\Android KEYS\\VintrMusic\\VMKey.jks")
+            storePassword = "Ruslan99"
+            keyAlias = "vmusic"
+            keyPassword = "Ruslan99"
+        }
+    }
     namespace = "pw.vintr.music"
     compileSdk = 34
 
@@ -79,10 +87,10 @@ dependencies {
     implementation("androidx.compose.ui:ui-graphics")
     implementation("androidx.compose.ui:ui-tooling-preview")
     implementation("androidx.compose.material3:material3")
-    implementation("androidx.compose.material:material:1.6.1")
+    implementation("androidx.compose.material:material:1.6.2")
     implementation("androidx.preference:preference-ktx:$preferenceVersion")
     implementation("androidx.palette:palette-ktx:$paletteVersion")
-    implementation("androidx.compose.runtime:runtime-livedata:1.6.1")
+    implementation("androidx.compose.runtime:runtime-livedata:1.6.2")
 
     // Tests
     testImplementation("junit:junit:4.13.2")
