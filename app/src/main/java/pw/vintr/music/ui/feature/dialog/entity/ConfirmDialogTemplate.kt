@@ -24,4 +24,21 @@ object ConfirmDialogTemplate {
             if (it == ConfirmResult.ACCEPT) { onLogout() }
         }
     }
+
+    fun Navigator.openSpeakerPlayConfirmDialog(onPlay: () -> Unit): ResultListenerHandler {
+        return forwardWithResult<ConfirmResult>(
+            screen = Screen.ConfirmDialog(
+                data = ConfirmDialogData.Resource(
+                    titleRes = R.string.common_attention,
+                    messageRes = R.string.headphones_not_connected_message,
+                    acceptTextRes = R.string.common_ok,
+                    declineTextRes = R.string.common_cancel
+                )
+            ),
+            type = NavigatorType.Root,
+            resultKey = ConfirmResult.KEY,
+        ) {
+            if (it == ConfirmResult.ACCEPT) { onPlay() }
+        }
+    }
 }

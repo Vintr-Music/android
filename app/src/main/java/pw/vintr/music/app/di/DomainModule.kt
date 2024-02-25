@@ -18,6 +18,7 @@ import pw.vintr.music.domain.server.useCase.selection.GetIsServerSelectedUseCase
 import pw.vintr.music.domain.server.useCase.selection.GetSelectedServerUseCase
 import pw.vintr.music.domain.server.useCase.list.GetServerListUseCase
 import pw.vintr.music.domain.server.useCase.selection.SelectServerUseCase
+import pw.vintr.music.domain.settings.PlaybackSettingsInteractor
 import pw.vintr.music.domain.user.useCase.AuthorizeUseCase
 import pw.vintr.music.domain.user.useCase.GetAuthorizeStateUseCase
 import pw.vintr.music.domain.user.useCase.GetProfileUseCase
@@ -47,7 +48,8 @@ val domainModule = module {
     single { GetArtistAlbumsUseCase(get()) }
     single { SearchLibraryUseCase(get()) }
 
-    interactor { PlayerInteractor(androidContext(), get(), get()) }
+    interactor { PlayerInteractor(androidContext(), get(), get(), get()) }
+    interactor { PlaybackSettingsInteractor(get()) }
     interactor { EqualizerInteractor(get(), get()) }
     interactor { VisualizerInteractor(get(), get()) }
 }

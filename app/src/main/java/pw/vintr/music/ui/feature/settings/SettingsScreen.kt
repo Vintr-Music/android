@@ -13,12 +13,14 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import org.koin.androidx.compose.getViewModel
 import pw.vintr.music.R
 import pw.vintr.music.ui.kit.menu.MenuItem
+import pw.vintr.music.ui.kit.menu.MenuItemSwitchable
 import pw.vintr.music.ui.kit.menu.MenuSectionTitle
 import pw.vintr.music.ui.kit.toolbar.ToolbarRegular
 
@@ -37,6 +39,8 @@ fun SettingsScreen(
             )
         },
     ) {
+        val screenState = viewModel.screenState.collectAsState()
+
         Column(
             modifier = Modifier
                 .padding(it)
@@ -56,6 +60,20 @@ fun SettingsScreen(
                     .padding(horizontal = 20.dp, vertical = 4.dp),
                 title = stringResource(id = R.string.equalizer),
                 subtitle = stringResource(id = R.string.equalizer_description)
+            )
+            Spacer(modifier = Modifier.height(14.dp))
+            MenuItemSwitchable(
+                modifier = Modifier
+                    .clickable {
+                        viewModel.setNeedSpeakerNotification(
+                            !screenState.value.needSpeakerNotification
+                        )
+                    }
+                    .padding(horizontal = 20.dp),
+                title = stringResource(id = R.string.settings_speaker_notification_title),
+                subtitle = stringResource(id = R.string.settings_speaker_notification_message),
+                checked = screenState.value.needSpeakerNotification,
+                onCheckedChange = { value -> viewModel.setNeedSpeakerNotification(value) }
             )
         }
     }

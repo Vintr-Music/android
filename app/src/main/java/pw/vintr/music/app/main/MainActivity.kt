@@ -216,7 +216,6 @@ fun Navigation(
         }
         extendedDialog(
             route = Screen.ConfirmDialog.routeTemplate,
-            controller = navController,
             arguments = listOf(
                 navArgument(Screen.ConfirmDialog.ARG_KEY_DATA) {
                     type = ParcelableNavType(ConfirmDialogData::class.java)

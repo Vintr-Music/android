@@ -2,23 +2,29 @@ package pw.vintr.music.domain.player.interactor
 
 import android.content.ComponentName
 import android.content.Context
+import android.media.AudioDeviceInfo
+import android.media.AudioManager
 import androidx.media3.common.MediaItem
 import androidx.media3.common.Player
 import androidx.media3.common.util.UnstableApi
 import androidx.media3.session.MediaController
 import androidx.media3.session.SessionToken
 import com.google.common.util.concurrent.MoreExecutors
+import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.shareIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.isActive
+import kotlinx.coroutines.launch
 import pw.vintr.music.app.service.VintrMusicService
 import pw.vintr.music.data.player.repository.PlayerConfigRepository
 import pw.vintr.music.data.player.repository.PlayerSessionRepository
+import pw.vintr.music.data.settings.repository.SettingsRepository
 import pw.vintr.music.domain.base.BaseInteractor
 import pw.vintr.music.domain.library.model.album.AlbumModel
 import pw.vintr.music.domain.library.model.track.TrackModel
@@ -34,9 +40,14 @@ class PlayerInteractor(
     applicationContext: Context,
     private val playerSessionRepository: PlayerSessionRepository,
     private val playerConfigRepository: PlayerConfigRepository,
+    private val settingsRepository: SettingsRepository,
 ) : BaseInteractor() {
 
     private var controller: MediaController? = null
+
+    private val audioManager = applicationContext.getSystemService(
+        Context.AUDIO_SERVICE
+    ) as AudioManager
 
     private val sessionToken = SessionToken(
         applicationContext,
@@ -53,6 +64,9 @@ class PlayerInteractor(
             shuffleMode = PlayerShuffleMode.getByCode(playerConfigRepository.getShuffleMode())
         )
     )
+
+    private val _askPlaySpeakersEvent = Channel<suspend () -> Unit>()
+    val askPlaySpeakersEvent by lazy { _askPlaySpeakersEvent.receiveAsFlow() }
 
     val playerState = combine(
         playerSessionRepository.getPlayerSessionFlow(),
@@ -141,36 +155,40 @@ class PlayerInteractor(
         album: AlbumModel,
         startIndex: Int = 0
     ) {
-        controller?.stop()
+        withAskPlaySpeakers {
+            controller?.stop()
 
-        playerSessionRepository.savePlayerSession(
-            session = PlayerSessionModel.Album(
-                album = album,
-                tracks = tracks
-            ).toCacheObject()
-        )
+            playerSessionRepository.savePlayerSession(
+                session = PlayerSessionModel.Album(
+                    album = album,
+                    tracks = tracks
+                ).toCacheObject()
+            )
 
-        controller?.setMediaItems(
-            tracks.map { it.toMediaItem() },
-            startIndex,
-            0
-        )
-        controller?.play()
+            controller?.setMediaItems(
+                tracks.map { it.toMediaItem() },
+                startIndex,
+                0
+            )
+            controller?.play()
+        }
     }
 
     suspend fun playQueue(tracks: List<TrackModel>, startIndex: Int = 0) {
-        controller?.stop()
+        withAskPlaySpeakers {
+            controller?.stop()
 
-        playerSessionRepository.savePlayerSession(
-            session = PlayerSessionModel.Custom(tracks).toCacheObject()
-        )
+            playerSessionRepository.savePlayerSession(
+                session = PlayerSessionModel.Custom(tracks).toCacheObject()
+            )
 
-        controller?.setMediaItems(
-            tracks.map { it.toMediaItem() },
-            startIndex,
-            0
-        )
-        controller?.play()
+            controller?.setMediaItems(
+                tracks.map { it.toMediaItem() },
+                startIndex,
+                0
+            )
+            controller?.play()
+        }
     }
 
     fun pause() {
@@ -178,7 +196,11 @@ class PlayerInteractor(
     }
 
     fun resume() {
-        controller?.play()
+        launch {
+            withAskPlaySpeakers {
+                controller?.play()
+            }
+        }
     }
 
     fun backward() {
@@ -238,5 +260,28 @@ class PlayerInteractor(
     private fun PlayerShuffleMode.toSystemShuffleMode() = when (this) {
         PlayerShuffleMode.OFF -> false
         PlayerShuffleMode.ON -> true
+    }
+
+    private suspend fun withAskPlaySpeakers(action: suspend () -> Unit) {
+        if (controller?.isPlaying != true && needSpeakersWarning()) {
+            _askPlaySpeakersEvent.send(action)
+        } else {
+            action()
+        }
+    }
+
+    private fun needSpeakersWarning(): Boolean {
+        audioManager.getDevices(AudioManager.GET_DEVICES_OUTPUTS).forEach { device ->
+            if (
+                device.type == AudioDeviceInfo.TYPE_WIRED_HEADSET ||
+                device.type == AudioDeviceInfo.TYPE_WIRED_HEADPHONES ||
+                device.type == AudioDeviceInfo.TYPE_BLUETOOTH_A2DP ||
+                device.type == AudioDeviceInfo.TYPE_BLUETOOTH_SCO
+            ) {
+                return false
+            }
+        }
+
+        return settingsRepository.getNeedSpeakerNotification()
     }
 }

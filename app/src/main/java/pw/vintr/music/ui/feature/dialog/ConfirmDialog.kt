@@ -11,7 +11,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import org.koin.androidx.compose.getViewModel
 import pw.vintr.music.R
@@ -41,7 +40,6 @@ fun ConfirmDialog(
                 }
             },
             color = VintrMusicExtendedTheme.colors.textRegular,
-            textAlign = TextAlign.Center,
             style = Gilroy20
         )
         Spacer(modifier = Modifier.height(12.dp))
@@ -55,7 +53,6 @@ fun ConfirmDialog(
                 }
             },
             color = VintrMusicExtendedTheme.colors.textSecondary,
-            textAlign = TextAlign.Center,
             style = RubikRegular14
         )
         Spacer(modifier = Modifier.height(24.dp))

@@ -46,6 +46,8 @@ import pw.vintr.music.data.player.source.PlayerSessionCacheDataStore
 import pw.vintr.music.data.server.repository.ServerRepository
 import pw.vintr.music.data.server.source.ServerPreferencesDataSource
 import pw.vintr.music.data.server.source.ServerRemoteDataSource
+import pw.vintr.music.data.settings.repository.SettingsRepository
+import pw.vintr.music.data.settings.source.SettingsPreferenceDataSource
 import pw.vintr.music.data.user.repository.UserRepository
 import pw.vintr.music.data.user.source.UserPreferencesDataSource
 import pw.vintr.music.data.user.source.UserRemoteDataSource
@@ -185,6 +187,10 @@ val dataModule = module {
     single { PlayerSessionRepository(get()) }
     single { PlayerPreferencesDataStore(get()) }
     single { PlayerConfigRepository(get()) }
+
+    // Settings
+    single { SettingsPreferenceDataSource(get()) }
+    single { SettingsRepository(get()) }
 
     // Equalizer
     single { EqualizerCacheDataStore(get()) }

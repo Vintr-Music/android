@@ -5,6 +5,7 @@
     <string name="common_retry">Повторить</string>
     <string name="common_cancel">Отмена</string>
     <string name="common_ok">Ок</string>
+    <string name="common_attention">Внимание!</string>
 
     <string name="login_field">Логин</string>
     <string name="password">Пароль</string>
@@ -42,6 +43,8 @@
     <string name="selected_server">Выбранный сервер</string>
     <string name="settings">Настройки</string>
     <string name="settings_description">Кастомизация и интеграции</string>
+    <string name="settings_speaker_notification_title">Предупреждать об использовании динамиков</string>
+    <string name="settings_speaker_notification_message">Перед воспроизведением приложение оповестит о том, что наушники не подключены</string>
 
     <string name="welcome_title_morning">Доброе утро</string>
     <string name="welcome_title_day">Добрый день</string>
@@ -77,4 +80,6 @@
     <string name="confirm_logout_title">Выйти из аккаунта?</string>
     <string name="confirm_logout_description">Все настройки сохранятся</string>
     <string name="logout">Выйти</string>
+
+    <string name="headphones_not_connected_message">Нашуники не подключены, воспроизведение будет осуществляться с помощью встроенных дианмиков устройства</string>
 </resources>

@@ -29,7 +29,7 @@ import pw.vintr.music.ui.navigation.Navigator
 val uiModule = module {
     single { Navigator() }
 
-    viewModel { MainViewModel(get(), get(), get()) }
+    viewModel { MainViewModel(get(), get(), get(), get()) }
     viewModel { LoginViewModel(get()) }
     viewModel { RegisterViewModel(get()) }
 
@@ -61,9 +61,13 @@ val uiModule = module {
     viewModel { LibraryViewModel() }
     viewModel { ArtistListViewModel(get()) }
     viewModel { MenuViewModel(get(), get(), get(), get()) }
-    viewModel { SettingsViewModel() }
-    viewModel { params -> AlbumDetailsViewModel(params.get(), get(), get()) }
-    viewModel { params -> ArtistDetailsViewModel(params.get(), get()) }
+    viewModel { SettingsViewModel(get()) }
+    viewModel { params ->
+        AlbumDetailsViewModel(params.get(), get(), get())
+    }
+    viewModel { params ->
+        ArtistDetailsViewModel(params.get(), get())
+    }
     viewModel { NowPlayingViewModel(get()) }
     viewModel { EqualizerViewModel(get()) }
     viewModel { TrackDetailsViewModel() }

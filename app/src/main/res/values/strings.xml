@@ -8,6 +8,7 @@
     <string name="common_yes">Yes</string>
     <string name="common_cancel">Cancel</string>
     <string name="common_ok">OK</string>
+    <string name="common_attention">Attention!</string>
 
     <string name="login_field">Login</string>
     <string name="password">Password</string>
@@ -46,6 +47,8 @@
     <string name="selected_server">Selected server</string>
     <string name="settings">Settings</string>
     <string name="settings_description">Customization and integrations</string>
+    <string name="settings_speaker_notification_title">Warn about using speakers</string>
+    <string name="settings_speaker_notification_message">Before playback, the application will notify you that the headphones are not connected</string>
 
     <string name="welcome_title_morning">Good morning</string>
     <string name="welcome_title_day">Good afternoon</string>
@@ -86,4 +89,6 @@
     <string name="confirm_logout_title">Log out of your account?</string>
     <string name="confirm_logout_description">All your settings will be saved</string>
     <string name="logout">Log out</string>
+
+    <string name="headphones_not_connected_message">Headphones are not connected, playback will be carried out using the device’s built-in speakers</string>
 </resources>

@@ -1,19 +1,29 @@
 package pw.vintr.music.app.main
 
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
+import pw.vintr.music.domain.player.interactor.PlayerInteractor
 import pw.vintr.music.domain.server.useCase.selection.GetIsServerSelectedUseCase
 import pw.vintr.music.domain.user.useCase.GetAuthorizeStateUseCase
 import pw.vintr.music.domain.visualizer.interactor.VisualizerInteractor
 import pw.vintr.music.ui.base.BaseViewModel
+import pw.vintr.music.ui.feature.dialog.entity.ConfirmDialogTemplate.openSpeakerPlayConfirmDialog
 
 class MainViewModel(
     private val getAuthorizeStateUseCase: GetAuthorizeStateUseCase,
     private val getSelectedServerIdUseCase: GetIsServerSelectedUseCase,
     private val visualizerInteractor: VisualizerInteractor,
+    private val playerInteractor: PlayerInteractor,
 ) : BaseViewModel() {
 
     val initialState = MutableStateFlow(value = getInitialState()).asStateFlow()
+
+    init {
+        collectAskPlaySpeakersEvent()
+    }
 
     private fun getInitialState(): AppInitialState {
         val isAuthorized = getAuthorizeStateUseCase.invoke()
@@ -34,6 +44,16 @@ class MainViewModel(
 
     fun setAudioPermissionGranted(isGranted: Boolean) {
         visualizerInteractor.setPermissionGranted(isGranted)
+    }
+
+    private fun collectAskPlaySpeakersEvent() {
+        launch(Dispatchers.Main) {
+            playerInteractor.askPlaySpeakersEvent.collectLatest {
+                navigator.openSpeakerPlayConfirmDialog {
+                    launch(Dispatchers.Main) { it.invoke() }
+                }
+            }
+        }
     }
 }
 
