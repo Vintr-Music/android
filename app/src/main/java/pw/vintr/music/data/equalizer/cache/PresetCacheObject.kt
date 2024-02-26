@@ -1,8 +1,10 @@
 package pw.vintr.music.data.equalizer.cache
 
+import androidx.annotation.Keep
 import io.realm.kotlin.types.EmbeddedRealmObject
 import pw.vintr.music.tools.extension.Empty
 
+@Keep
 class PresetCacheObject() : EmbeddedRealmObject {
 
     var number: Short = 0

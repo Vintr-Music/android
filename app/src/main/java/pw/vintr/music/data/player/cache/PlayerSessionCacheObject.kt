@@ -1,11 +1,13 @@
 package pw.vintr.music.data.player.cache
 
+import androidx.annotation.Keep
 import io.realm.kotlin.ext.realmListOf
 import io.realm.kotlin.types.RealmList
 import io.realm.kotlin.types.RealmObject
 import pw.vintr.music.data.library.cache.album.AlbumCacheObject
 import pw.vintr.music.data.library.cache.track.TrackCacheObject
 
+@Keep
 class PlayerSessionCacheObject() : RealmObject {
 
     var album: AlbumCacheObject? = null

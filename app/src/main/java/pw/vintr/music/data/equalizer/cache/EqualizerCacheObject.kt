@@ -1,9 +1,11 @@
 package pw.vintr.music.data.equalizer.cache
 
+import androidx.annotation.Keep
 import io.realm.kotlin.ext.realmListOf
 import io.realm.kotlin.types.RealmList
 import io.realm.kotlin.types.RealmObject
 
+@Keep
 class EqualizerCacheObject() : RealmObject {
 
     var bands: RealmList<BandCacheObject> = realmListOf()

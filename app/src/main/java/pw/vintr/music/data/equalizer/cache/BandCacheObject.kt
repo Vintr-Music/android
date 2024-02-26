@@ -1,7 +1,9 @@
 package pw.vintr.music.data.equalizer.cache
 
+import androidx.annotation.Keep
 import io.realm.kotlin.types.EmbeddedRealmObject
 
+@Keep
 class BandCacheObject() : EmbeddedRealmObject {
 
     var number: Short = 0

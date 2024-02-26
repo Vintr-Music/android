@@ -1,8 +1,10 @@
 package pw.vintr.music.data.library.cache.album
 
+import androidx.annotation.Keep
 import io.realm.kotlin.types.EmbeddedRealmObject
 import pw.vintr.music.tools.extension.Empty
 
+@Keep
 open class AlbumCacheObject() : EmbeddedRealmObject {
 
     var name: String? = null

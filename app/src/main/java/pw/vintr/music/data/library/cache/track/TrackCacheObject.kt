@@ -1,10 +1,12 @@
 package pw.vintr.music.data.library.cache.track
 
+import androidx.annotation.Keep
 import io.realm.kotlin.ext.realmListOf
 import io.realm.kotlin.types.EmbeddedRealmObject
 import io.realm.kotlin.types.RealmList
 import pw.vintr.music.tools.extension.Empty
 
+@Keep
 class TrackCacheObject() : EmbeddedRealmObject {
 
     var md5: String = String.Empty
