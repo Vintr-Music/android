@@ -53,7 +53,7 @@ fun ManageSessionScreen(
         ) {
             itemsIndexed(
                 items = screenData.value.session.tracks,
-                key = { _, track -> track.md5 }
+                key = { index, track -> index.toString() + track.md5 }
             ) { index, track ->
                 TrackView(
                     trackModel = track,

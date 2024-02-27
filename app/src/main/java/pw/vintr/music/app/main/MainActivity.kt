@@ -231,6 +231,7 @@ fun Navigation(
 
         // Session management
         bottomSheet(Screen.ManageSession.route) {
+            BackHandler { navController.navigateUp() }
             ManageSessionScreen()
         }
     }

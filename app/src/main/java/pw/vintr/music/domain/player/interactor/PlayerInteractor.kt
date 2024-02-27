@@ -191,6 +191,59 @@ class PlayerInteractor(
         }
     }
 
+    suspend fun setPlayNext(tracks: List<TrackModel>) {
+        playerSessionRepository.getPlayerSession()?.let { session ->
+            val hasNoMediaItems = controller?.mediaItemCount == 0
+            val currentSessionModel = session.toModel()
+            val currentPlayingIndex = session.tracks
+                .indexOfFirst { it.md5 == controller?.currentMediaItem?.mediaId }
+                .takeIf { it != -1 } ?: 0
+            val newItemsStartIndex = currentPlayingIndex + 1
+
+            val modifiedSession = currentSessionModel
+                .toCustomSession()
+                .let { customSession ->
+                    val newTrackList = if (hasNoMediaItems || customSession.isEmpty()) {
+                        tracks
+                    } else {
+                        customSession.tracks
+                            .toMutableList()
+                            .apply { addAll(newItemsStartIndex, tracks) }
+                    }
+
+                    customSession.copy(tracks = newTrackList)
+                }
+
+            playerSessionRepository.savePlayerSession(session = modifiedSession.toCacheObject())
+            controller?.addMediaItems(newItemsStartIndex, tracks.map { it.toMediaItem() })
+
+            if (hasNoMediaItems) { resume() }
+        }
+    }
+
+    suspend fun addToQueue(tracks: List<TrackModel>) {
+        playerSessionRepository.getPlayerSession()?.let { session ->
+            val hasNoMediaItems = controller?.mediaItemCount == 0
+            val currentSessionModel = session.toModel()
+            val modifiedSession = currentSessionModel
+                .toCustomSession()
+                .let { customSession ->
+                    val newTrackList = if (hasNoMediaItems || customSession.isEmpty()) {
+                        tracks
+                    } else {
+                        customSession.tracks + tracks
+                    }
+
+                    customSession.copy(tracks = newTrackList)
+                }
+
+            playerSessionRepository.savePlayerSession(session = modifiedSession.toCacheObject())
+            controller?.addMediaItems(tracks.map { it.toMediaItem() })
+
+            if (hasNoMediaItems) { resume() }
+        }
+    }
+
     fun pause() {
         controller?.pause()
     }

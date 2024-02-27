@@ -83,4 +83,6 @@
 
     <string name="headphones_not_connected_message">Нашуники не подключены, воспроизведение будет осуществляться с помощью встроенных дианмиков устройства</string>
     <string name="now_playing">Сейчас играет</string>
+    <string name="play_next">Играть следующим</string>
+    <string name="add_to_queue">Добавить в очередь</string>
 </resources>

@@ -11,7 +11,12 @@ class PlayerSessionRepository(
         session: PlayerSessionCacheObject
     ) = playerSessionCacheDataStore.savePlayerSession(session)
 
-    fun getPlayerSessionFlow() = playerSessionCacheDataStore.getPlayerSessionFlow()
+    fun getPlayerSessionFlow() = playerSessionCacheDataStore
+        .getPlayerSessionFlow()
 
-    suspend fun removePlayerSession() = playerSessionCacheDataStore.removePlayerSession()
+    suspend fun getPlayerSession(): PlayerSessionCacheObject? = playerSessionCacheDataStore
+        .getPlayerSession()
+
+    suspend fun removePlayerSession() = playerSessionCacheDataStore
+        .removePlayerSession()
 }

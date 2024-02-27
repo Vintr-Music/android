@@ -71,7 +71,7 @@ val uiModule = module {
     }
     viewModel { NowPlayingViewModel(get()) }
     viewModel { EqualizerViewModel(get()) }
-    viewModel { TrackDetailsViewModel() }
+    viewModel { TrackDetailsViewModel(get()) }
     viewModel { ConfirmViewModel() }
     viewModel { ManageSessionViewModel(get()) }
 }

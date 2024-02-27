@@ -16,6 +16,10 @@ sealed class PlayerSessionModel {
 
     abstract fun toCacheObject(): PlayerSessionCacheObject
 
+    abstract fun toCustomSession(): Custom
+
+    fun isEmpty() = tracks.isEmpty()
+
     object Empty : PlayerSessionModel() {
         override val tracks: List<TrackModel> = listOf()
 
@@ -24,6 +28,8 @@ sealed class PlayerSessionModel {
             artist = null,
             tracks = realmListOf(),
         )
+
+        override fun toCustomSession(): Custom = Custom(listOf())
     }
 
     data class Album(
@@ -38,7 +44,7 @@ sealed class PlayerSessionModel {
                 .toRealmList()
         )
 
-        fun toCustomSession() = Custom(tracks)
+        override fun toCustomSession() = Custom(tracks)
     }
 
     data class Artist(
@@ -53,7 +59,7 @@ sealed class PlayerSessionModel {
                 .toRealmList()
         )
 
-        fun toCustomSession() = Custom(tracks)
+        override fun toCustomSession() = Custom(tracks)
     }
 
     data class Custom(override val tracks: List<TrackModel>) : PlayerSessionModel() {
@@ -63,12 +69,14 @@ sealed class PlayerSessionModel {
                 .map { it.toCacheObject() }
                 .toRealmList()
         )
+
+        override fun toCustomSession() = this
     }
 }
 
 fun PlayerSessionCacheObject.toModel(): PlayerSessionModel {
-    val tracks = tracks.map { it.copyFromRealm().toModel() }
-    val album = album?.copyFromRealm()
+    val tracks = tracks.map { it.toModel() }
+    val album = album
     val artist = artist
 
     return when {

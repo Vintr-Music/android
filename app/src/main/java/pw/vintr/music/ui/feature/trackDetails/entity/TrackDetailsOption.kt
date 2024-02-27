@@ -20,14 +20,26 @@ enum class TrackDetailsOption(
     GO_TO_ARTIST(
         iconRes = R.drawable.ic_artist,
         titleRes = R.string.open_artist
+    ),
+    PLAY_NEXT(
+        iconRes = R.drawable.ic_play_next,
+        titleRes = R.string.play_next
+    ),
+    ADD_TO_QUEUE(
+        iconRes = R.drawable.ic_add_to_queue,
+        titleRes = R.string.add_to_queue
     );
 
     companion object {
         val optionsExceptAlbumNavigate = listOf(
-            GO_TO_ARTIST
+            GO_TO_ARTIST,
+            PLAY_NEXT,
+            ADD_TO_QUEUE
         )
         val optionsExceptArtistNavigate = listOf(
-            GO_TO_ALBUM
+            GO_TO_ALBUM,
+            PLAY_NEXT,
+            ADD_TO_QUEUE
         )
     }
 }

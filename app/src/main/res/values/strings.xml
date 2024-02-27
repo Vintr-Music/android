@@ -78,7 +78,7 @@
     <string name="bitrate_value">%s kbps</string>
     <string name="bitrate">Bitrate</string>
     <string name="codec">Codec</string>
-    <string name="loseless" translatable="false">Loseless</string>
+    <string name="lossless" translatable="false">Lossless</string>
 
     <string name="open_album">Go to album</string>
     <string name="open_artist">Go to artist</string>
@@ -92,4 +92,6 @@
 
     <string name="headphones_not_connected_message">Headphones are not connected, playback will be carried out using the device’s built-in speakers</string>
     <string name="now_playing">Now playing</string>
+    <string name="play_next">Play next</string>
+    <string name="add_to_queue">Add to queue</string>
 </resources>

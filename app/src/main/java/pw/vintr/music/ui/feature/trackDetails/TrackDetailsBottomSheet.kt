@@ -43,7 +43,9 @@ fun TrackDetailsBottomSheet(
     trackModel: TrackModel,
     allowedOptions: List<TrackDetailsOption> = listOf(
         TrackDetailsOption.GO_TO_ALBUM,
-        TrackDetailsOption.GO_TO_ARTIST
+        TrackDetailsOption.GO_TO_ARTIST,
+        TrackDetailsOption.PLAY_NEXT,
+        TrackDetailsOption.ADD_TO_QUEUE,
     ),
     viewModel: TrackDetailsViewModel = getViewModel()
 ) {
@@ -111,7 +113,7 @@ fun TrackDetailsBottomSheet(
         )
         Spacer(modifier = Modifier.height(8.dp))
         TrackParam(
-            title = stringResource(id = R.string.loseless),
+            title = stringResource(id = R.string.lossless),
             value = stringResource(id = trackModel.format.lossless.toStringRes()),
         )
         Spacer(modifier = Modifier.height(20.dp))
@@ -125,12 +127,18 @@ fun TrackDetailsBottomSheet(
                 modifier = Modifier
                     .clip(RoundedCornerShape(8.dp))
                     .clickable {
-                        when(it) {
+                        when (it) {
                             TrackDetailsOption.GO_TO_ALBUM -> {
                                 viewModel.openAlbum(trackModel)
                             }
                             TrackDetailsOption.GO_TO_ARTIST -> {
                                 viewModel.openArtist(trackModel)
+                            }
+                            TrackDetailsOption.PLAY_NEXT -> {
+                                viewModel.playNext(trackModel)
+                            }
+                            TrackDetailsOption.ADD_TO_QUEUE -> {
+                                viewModel.addToQueue(trackModel)
                             }
                         }
                     }
