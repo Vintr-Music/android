@@ -82,4 +82,5 @@
     <string name="logout">Выйти</string>
 
     <string name="headphones_not_connected_message">Нашуники не подключены, воспроизведение будет осуществляться с помощью встроенных дианмиков устройства</string>
+    <string name="now_playing">Сейчас играет</string>
 </resources>

@@ -47,6 +47,7 @@ import pw.vintr.music.tools.extension.getRequiredArg
 import pw.vintr.music.tools.extension.getRequiredArgList
 import pw.vintr.music.ui.feature.dialog.ConfirmDialog
 import pw.vintr.music.ui.feature.dialog.entity.ConfirmDialogData
+import pw.vintr.music.ui.feature.nowPlaying.manageSession.ManageSessionScreen
 import pw.vintr.music.ui.feature.register.RegisterScreen
 import pw.vintr.music.ui.feature.root.RootScreen
 import pw.vintr.music.ui.feature.server.accessControl.ServerAccessControlScreen
@@ -226,6 +227,11 @@ fun Navigation(
                 Screen.ConfirmDialog.ARG_KEY_DATA
             )
             ConfirmDialog(data = dialogData)
+        }
+
+        // Session management
+        bottomSheet(Screen.ManageSession.route) {
+            ManageSessionScreen()
         }
     }
 }

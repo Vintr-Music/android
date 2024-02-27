@@ -39,6 +39,7 @@ fun TrackView(
     trackModel: TrackModel,
     isPlaying: Boolean = false,
     showArtwork: Boolean = false,
+    showTrailingAction: Boolean = true,
     contentPadding: PaddingValues = PaddingValues(vertical = 4.dp, horizontal = 20.dp),
     onMoreClick: () -> Unit = {},
     onClick: () -> Unit = {},
@@ -103,11 +104,13 @@ fun TrackView(
             style = RubikRegular14,
             color = VintrMusicExtendedTheme.colors.textRegular
         )
-        Spacer(modifier = Modifier.width(8.dp))
-        ButtonSimpleIcon(
-            iconRes = R.drawable.ic_more,
-            onClick = onMoreClick,
-            tint = VintrMusicExtendedTheme.colors.textRegular,
-        )
+        if (showTrailingAction) {
+            Spacer(modifier = Modifier.width(8.dp))
+            ButtonSimpleIcon(
+                iconRes = R.drawable.ic_more,
+                onClick = onMoreClick,
+                tint = VintrMusicExtendedTheme.colors.textRegular,
+            )
+        }
     }
 }

@@ -215,6 +215,14 @@ class PlayerInteractor(
         controller?.seekTo(position)
     }
 
+    fun seekToTrack(trackIndex: Int, autoPlay: Boolean = true) {
+        controller?.seekTo(trackIndex, 0L)
+
+        if (controller?.isPlaying != true && autoPlay) {
+            controller?.play()
+        }
+    }
+
     suspend fun destroySession() {
         controller?.stop()
         controller?.clearMediaItems()
@@ -233,11 +241,6 @@ class PlayerInteractor(
         controller?.shuffleModeEnabled = shuffleMode.toSystemShuffleMode()
         playerSnapshotFlow.update { snapshot -> snapshot.copy(shuffleMode = shuffleMode) }
     }
-
-    private fun TrackModel.toMediaItem() = MediaItem.Builder()
-        .setUri(playerUrl)
-        .setMediaId(md5)
-        .build()
 
     override fun close() {
         super.close()
@@ -261,6 +264,11 @@ class PlayerInteractor(
         PlayerShuffleMode.OFF -> false
         PlayerShuffleMode.ON -> true
     }
+
+    private fun TrackModel.toMediaItem() = MediaItem.Builder()
+        .setUri(playerUrl)
+        .setMediaId(md5)
+        .build()
 
     private suspend fun withAskPlaySpeakers(action: suspend () -> Unit) {
         if (controller?.isPlaying != true && needSpeakersWarning()) {

@@ -35,6 +35,9 @@ data class VintrMusicColors(
     // Text button
     val textButtonContent: Color = Color.Unspecified,
     val textButtonDisabledContent: Color = Color.Unspecified,
+    // Icon Bordered button
+    val borderedIconButtonBackground: Color = Color.Unspecified,
+    val borderedIconButtonStroke: Color = Color.Unspecified,
     // Text Field
     val textFieldBackground: Color = Color.Unspecified,
     val textFieldContent: Color = Color.Unspecified,
@@ -100,6 +103,9 @@ val darkVintrColors = VintrMusicColors(
     // Text button
     textButtonContent = White0,
     textButtonDisabledContent = Gray3,
+    // Icon Bordered button
+    borderedIconButtonBackground = Gray0.copy(alpha = 0.7f),
+    borderedIconButtonStroke = Gray1,
     // Text Field
     textFieldBackground = Gray1,
     textFieldContent = White0,
@@ -161,6 +167,9 @@ val lightVintrColors = VintrMusicColors(
     // Text button
     textButtonContent = Black0,
     textButtonDisabledContent = Gray3,
+    // Icon Bordered button
+    borderedIconButtonBackground = Gray5.copy(alpha = 0.7f),
+    borderedIconButtonStroke = Gray4,
     // Text Field
     textFieldBackground = Gray6,
     textFieldContent = White0,

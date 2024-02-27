@@ -112,4 +112,11 @@ class NowPlayingViewModel(
             type = NavigatorType.Root
         )
     }
+
+    fun openManageSession() {
+        navigator.forward(
+            screen = Screen.ManageSession,
+            type = NavigatorType.Root
+        )
+    }
 }

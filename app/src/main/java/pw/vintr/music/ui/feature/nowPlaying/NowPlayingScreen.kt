@@ -3,15 +3,18 @@ package pw.vintr.music.ui.feature.nowPlaying
 import android.graphics.Bitmap
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Text
@@ -34,10 +37,12 @@ import androidx.palette.graphics.Palette
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import org.koin.androidx.compose.getViewModel
+import pw.vintr.music.R
 import pw.vintr.music.domain.player.model.state.PlayerStatusModel
 import pw.vintr.music.tools.composable.rememberDisplayRoundness
 import pw.vintr.music.tools.extension.Dash
 import pw.vintr.music.tools.extension.Space
+import pw.vintr.music.ui.kit.button.ButtonBorderedIcon
 import pw.vintr.music.ui.kit.player.PlayerControls
 import pw.vintr.music.ui.kit.player.PlayerProgressBar
 import pw.vintr.music.ui.theme.Gilroy16
@@ -148,6 +153,25 @@ fun NowPlayingScreen(viewModel: NowPlayingViewModel = getViewModel()) {
             Spacer(modifier = Modifier.height(32.dp))
         }
         Spacer(modifier = Modifier.weight(1f))
+        Row(
+            modifier = Modifier
+                .fillMaxWidth(),
+            horizontalArrangement = Arrangement.Center,
+        ) {
+            ButtonBorderedIcon(
+                iconRes = R.drawable.ic_track_queue,
+                onClick = { viewModel.openManageSession() }
+            )
+            Spacer(modifier = Modifier.width(16.dp))
+            ButtonBorderedIcon(
+                iconRes = R.drawable.ic_more_horizontal,
+                onClick = {
+                    playerState.value.currentTrack
+                        ?.let { viewModel.openTrackDetails(it) }
+                }
+            )
+        }
+        Spacer(modifier = Modifier.height(20.dp))
         PlayerProgressBar(
             modifier = Modifier
                 .fillMaxWidth()

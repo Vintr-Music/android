@@ -37,6 +37,8 @@ sealed class PlayerSessionModel {
                 .map { it.toCacheObject() }
                 .toRealmList()
         )
+
+        fun toCustomSession() = Custom(tracks)
     }
 
     data class Artist(
@@ -50,6 +52,8 @@ sealed class PlayerSessionModel {
                 .map { it.toCacheObject() }
                 .toRealmList()
         )
+
+        fun toCustomSession() = Custom(tracks)
     }
 
     data class Custom(override val tracks: List<TrackModel>) : PlayerSessionModel() {

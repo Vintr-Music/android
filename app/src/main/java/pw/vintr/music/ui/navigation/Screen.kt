@@ -188,4 +188,6 @@ sealed class Screen(val route: String) {
             )
         }
     }
+
+    object ManageSession : Screen(route = "manage-session")
 }
