@@ -7,9 +7,11 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -43,6 +45,20 @@ fun ManageSessionScreen(
         },
     ) {
         val screenData = viewModel.screenData.collectAsState()
+        val sessionIsEmpty = screenData.value.session.isEmpty()
+
+        val listState = rememberLazyListState()
+
+        LaunchedEffect(key1 = sessionIsEmpty) {
+            if (!sessionIsEmpty) {
+                val currentTrackIndex = screenData.value.session.tracks
+                    .indexOf(screenData.value.currentTrack)
+
+                if (currentTrackIndex != -1) {
+                    listState.scrollToItem(currentTrackIndex)
+                }
+            }
+        }
 
         LazyColumn(
             modifier = Modifier
@@ -50,6 +66,7 @@ fun ManageSessionScreen(
                 .fillMaxSize(),
             contentPadding = PaddingValues(vertical = 20.dp),
             verticalArrangement = Arrangement.spacedBy(16.dp),
+            state = listState,
         ) {
             itemsIndexed(
                 items = screenData.value.session.tracks,
