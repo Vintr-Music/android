@@ -18,7 +18,13 @@ class LoginViewModel(
     val screenState = _screenState.asStateFlow()
 
     fun changeLogin(value: String) {
-        _screenState.update { it.copy(login = value) }
+        _screenState.update {
+            if ((value.length - it.login.length) > 1) {
+                it.copy(login = value.trim())
+            } else {
+                it.copy(login = value)
+            }
+        }
     }
 
     fun changePassword(value: String) {
@@ -32,8 +38,8 @@ class LoginViewModel(
             _screenState.update { it.copy(isAuthorizing = true) }
 
             authorizeUseCase.invoke(
-                login = _screenState.value.login,
-                password = _screenState.value.password,
+                login = _screenState.value.login.trim(),
+                password = _screenState.value.password.trim(),
             )
 
             _screenState.update { it.copy(isAuthorizing = false) }

@@ -1,6 +1,5 @@
 package pw.vintr.music.domain.player.model.session
 
-import io.realm.kotlin.ext.copyFromRealm
 import io.realm.kotlin.ext.realmListOf
 import io.realm.kotlin.ext.toRealmList
 import pw.vintr.music.data.player.cache.PlayerSessionCacheObject

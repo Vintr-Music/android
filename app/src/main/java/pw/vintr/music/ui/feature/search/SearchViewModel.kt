@@ -44,7 +44,7 @@ class SearchViewModel(
 
         if (query.isNotEmpty()) {
             searchJob = _contentState.loadWithStateHandling {
-                searchLibraryUseCase.invoke(_queryState.value)
+                searchLibraryUseCase.invoke(query)
             }
         } else {
             _contentState.value = SearchContentState.Empty
