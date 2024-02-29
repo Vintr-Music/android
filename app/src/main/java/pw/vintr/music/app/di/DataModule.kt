@@ -43,6 +43,9 @@ import pw.vintr.music.data.player.repository.PlayerConfigRepository
 import pw.vintr.music.data.player.repository.PlayerSessionRepository
 import pw.vintr.music.data.player.source.PlayerPreferencesDataStore
 import pw.vintr.music.data.player.source.PlayerSessionCacheDataStore
+import pw.vintr.music.data.search.cache.SearchHistoryCacheObject
+import pw.vintr.music.data.search.repository.SearchHistoryRepository
+import pw.vintr.music.data.search.source.SearchHistoryCacheDataSource
 import pw.vintr.music.data.server.repository.ServerRepository
 import pw.vintr.music.data.server.source.ServerPreferencesDataSource
 import pw.vintr.music.data.server.source.ServerRemoteDataSource
@@ -75,7 +78,8 @@ val dataModule = module {
                 PlayerSessionCacheObject::class,
                 PresetCacheObject::class,
                 BandCacheObject::class,
-                EqualizerCacheObject::class
+                EqualizerCacheObject::class,
+                SearchHistoryCacheObject::class,
             )
         )
             .schemaVersion(REALM_SCHEMA_VERSION)
@@ -195,4 +199,8 @@ val dataModule = module {
     // Equalizer
     single { EqualizerCacheDataStore(get()) }
     single { EqualizerRepository(get()) }
+
+    // Search history
+    single { SearchHistoryCacheDataSource(get()) }
+    single { SearchHistoryRepository(get()) }
 }

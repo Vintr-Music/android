@@ -61,7 +61,7 @@ fun SearchScreen(viewModel: SearchViewModel = getViewModel()) {
             .statusBarsPadding()
             .fillMaxSize()
     ) {
-        val contentState = viewModel.contentState.collectAsState()
+        val contentState = viewModel.screenState.collectAsState()
         val queryState = viewModel.queryState.collectAsState()
         val playerState = viewModel.playerState.collectAsState()
 
