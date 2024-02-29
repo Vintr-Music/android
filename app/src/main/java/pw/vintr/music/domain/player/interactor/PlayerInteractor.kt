@@ -35,6 +35,7 @@ import pw.vintr.music.domain.player.model.session.PlayerSessionModel
 import pw.vintr.music.domain.player.model.state.PlayerStateHolderModel
 import pw.vintr.music.domain.player.model.state.PlayerStatusModel
 import pw.vintr.music.domain.player.model.session.toModel
+import pw.vintr.music.tools.extension.reorder
 
 class PlayerInteractor(
     applicationContext: Context,
@@ -241,6 +242,27 @@ class PlayerInteractor(
             controller?.addMediaItems(tracks.map { it.toMediaItem() })
 
             if (hasNoMediaItems) { resume() }
+        }
+    }
+
+    suspend fun reorder(fromIndex: Int, toIndex: Int) {
+        playerSessionRepository.getPlayerSession()?.let { session ->
+            val hasNoMediaItems = controller?.mediaItemCount == 0
+            val currentSessionModel = session.toModel()
+            val modifiedSession = currentSessionModel
+                .toCustomSession()
+                .let { customSession ->
+                    val newTrackList = if (hasNoMediaItems || customSession.isEmpty()) {
+                        listOf()
+                    } else {
+                        customSession.tracks.reorder(fromIndex, toIndex)
+                    }
+
+                    customSession.copy(tracks = newTrackList)
+                }
+
+            playerSessionRepository.savePlayerSession(session = modifiedSession.toCacheObject())
+            controller?.moveMediaItem(fromIndex, toIndex)
         }
     }
 

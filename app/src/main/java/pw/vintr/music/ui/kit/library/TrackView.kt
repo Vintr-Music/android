@@ -40,8 +40,18 @@ fun TrackView(
     isPlaying: Boolean = false,
     showArtwork: Boolean = false,
     showTrailingAction: Boolean = true,
-    contentPadding: PaddingValues = PaddingValues(vertical = 4.dp, horizontal = 20.dp),
+    contentPadding: PaddingValues = PaddingValues(
+        vertical = 4.dp,
+        horizontal = 20.dp
+    ),
     onMoreClick: () -> Unit = {},
+    trailingAction: @Composable () -> Unit = {
+        ButtonSimpleIcon(
+            iconRes = R.drawable.ic_more,
+            onClick = onMoreClick,
+            tint = VintrMusicExtendedTheme.colors.textRegular,
+        )
+    },
     onClick: () -> Unit = {},
 ) {
     val backgroundColor = animateColorAsState(
@@ -106,11 +116,7 @@ fun TrackView(
         )
         if (showTrailingAction) {
             Spacer(modifier = Modifier.width(8.dp))
-            ButtonSimpleIcon(
-                iconRes = R.drawable.ic_more,
-                onClick = onMoreClick,
-                tint = VintrMusicExtendedTheme.colors.textRegular,
-            )
+            trailingAction()
         }
     }
 }

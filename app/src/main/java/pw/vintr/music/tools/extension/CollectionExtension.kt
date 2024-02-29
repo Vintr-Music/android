@@ -8,3 +8,6 @@ fun <T: Any> List<T>.updateItem(
         list[index] = mutation(list[index])
     }
 }
+
+fun <T: Any> List<T>.reorder(from: Int, to: Int) = toMutableList()
+    .apply { add(to, removeAt(from)) }
