@@ -9,7 +9,7 @@ import pw.vintr.music.data.equalizer.cache.EqualizerCacheObject
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
 
-class EqualizerCacheDataStore(private val realm: Realm) {
+class EqualizerCacheDataSource(private val realm: Realm) {
 
     suspend fun saveEqualizer(equalizer: EqualizerCacheObject) {
         realm.write {

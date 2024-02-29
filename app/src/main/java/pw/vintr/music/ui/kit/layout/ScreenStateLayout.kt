@@ -35,7 +35,7 @@ fun <T> ScreenStateLayout(
             )
         }
     },
-    other: @Composable () -> Unit = { },
+    other: @Composable (BaseScreenState<T>) -> Unit = { },
     loaded: @Composable (BaseScreenState.Loaded<T>) -> Unit,
 ) {
     when (state) {
@@ -49,7 +49,7 @@ fun <T> ScreenStateLayout(
             loaded(state)
         }
         else -> {
-            other()
+            other(state)
         }
     }
 }

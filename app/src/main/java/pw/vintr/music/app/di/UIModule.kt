@@ -58,7 +58,7 @@ val uiModule = module {
 
     viewModel { RootViewModel(get()) }
     viewModel { HomeViewModel(get(), get()) }
-    viewModel { SearchViewModel(get(), get()) }
+    viewModel { SearchViewModel(get(), get(), get()) }
     viewModel { LibraryViewModel() }
     viewModel { ArtistListViewModel(get()) }
     viewModel { MenuViewModel(get(), get(), get(), get()) }

@@ -26,10 +26,17 @@ class SearchHistoryCacheDataSource(private val realm: Realm) {
                     .toMutableList()
                     .apply { addAll(0, history) }
                     .take(MAX_HISTORY_ITEMS)
+                    .distinct()
                     .toRealmList()
             } ?: run {
                 // Save new history
-                SearchHistoryCacheObject(history.take(MAX_HISTORY_ITEMS))
+                copyToRealm(
+                    SearchHistoryCacheObject(
+                        history
+                            .take(MAX_HISTORY_ITEMS)
+                            .distinct()
+                    )
+                )
             }
         }
     }

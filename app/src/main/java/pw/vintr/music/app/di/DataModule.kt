@@ -2,6 +2,7 @@ package pw.vintr.music.app.di
 
 import android.util.Log
 import androidx.preference.PreferenceManager
+import com.google.gson.GsonBuilder
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.android.Android
 import io.ktor.client.plugins.DefaultRequest
@@ -25,7 +26,8 @@ import pw.vintr.music.data.equalizer.cache.BandCacheObject
 import pw.vintr.music.data.equalizer.cache.EqualizerCacheObject
 import pw.vintr.music.data.equalizer.cache.PresetCacheObject
 import pw.vintr.music.data.equalizer.repository.EqualizerRepository
-import pw.vintr.music.data.equalizer.source.EqualizerCacheDataStore
+import pw.vintr.music.data.equalizer.source.EqualizerCacheDataSource
+import pw.vintr.music.data.equalizer.source.EqualizerPreferencesDataSource
 import pw.vintr.music.data.library.cache.album.AlbumCacheObject
 import pw.vintr.music.data.library.cache.track.TrackCacheObject
 import pw.vintr.music.data.library.repository.AlbumRepository
@@ -64,12 +66,23 @@ const val HEADER_MEDIA_SERVER_ID = "x-media-server-id"
 private const val REALM_SCHEMA_VERSION = 1L
 
 val dataModule = module {
+    // Gson
+    single {
+        GsonBuilder()
+            .registerTypeAdapter(
+                EqualizerCacheObject::class.java,
+                EqualizerCacheObject.Deserializer()
+            )
+            .create()
+    }
+
     // Preferences
     single { PreferenceManager.getDefaultSharedPreferences(get()) }
 
     single { UserPreferencesDataSource(get()) }
     single { ServerPreferencesDataSource(get()) }
 
+    // Realm
     single {
         val config = RealmConfiguration.Builder(
             schema = setOf(
@@ -197,8 +210,9 @@ val dataModule = module {
     single { SettingsRepository(get()) }
 
     // Equalizer
-    single { EqualizerCacheDataStore(get()) }
-    single { EqualizerRepository(get()) }
+    single { EqualizerCacheDataSource(get()) }
+    single { EqualizerPreferencesDataSource(get(), get()) }
+    single { EqualizerRepository(get(), get()) }
 
     // Search history
     single { SearchHistoryCacheDataSource(get()) }
