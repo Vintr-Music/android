@@ -25,8 +25,15 @@ class ManageSessionViewModel(
     private fun listenPlayerState() {
         launch {
             playerState.collectLatest { state ->
-                screenState.value = screenState.value.copy(
-                    tracks = state.session.tracks.map { TrackWrapper(it) },
+                val currentState = screenState.value
+                val listsEquals = state.session.tracks == currentState.tracks.map { it.track }
+
+                screenState.value = currentState.copy(
+                    tracks = if (listsEquals) {
+                        currentState.tracks
+                    } else {
+                        state.session.tracks.map { TrackWrapper(it) }
+                    },
                     currentTrack = state.currentTrack,
                 )
             }
