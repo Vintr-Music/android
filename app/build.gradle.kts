@@ -78,7 +78,7 @@ dependencies {
     val paletteVersion = "1.0.0"
     val cameraxVersion = "1.3.1"
     val zxingVersion = "3.5.2"
-    val reordableVersion = "0.9.6"
+    val reordableVersion = "1.3.2"
 
     // Common Android
     implementation("androidx.core:core-ktx:1.12.0")
@@ -95,7 +95,7 @@ dependencies {
     implementation("androidx.compose.runtime:runtime-livedata:1.6.2")
 
     // Compose external
-    implementation("org.burnoutcrew.composereorderable:reorderable:$reordableVersion")
+    implementation("sh.calvin.reorderable:reorderable:$reordableVersion")
 
     // Tests
     testImplementation("junit:junit:4.13.2")

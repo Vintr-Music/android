@@ -1,5 +1,6 @@
 package pw.vintr.music.ui.feature.nowPlaying.manageSession
 
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
@@ -7,6 +8,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
@@ -17,10 +19,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import org.burnoutcrew.reorderable.ReorderableItem
-import org.burnoutcrew.reorderable.detectReorder
-import org.burnoutcrew.reorderable.rememberReorderableLazyListState
-import org.burnoutcrew.reorderable.reorderable
 import org.koin.androidx.compose.getViewModel
 import pw.vintr.music.R
 import pw.vintr.music.ui.kit.button.ButtonSimpleIcon
@@ -28,7 +26,10 @@ import pw.vintr.music.ui.kit.library.TrackView
 import pw.vintr.music.ui.kit.toolbar.ToolbarRegular
 import pw.vintr.music.ui.navigation.NavigatorType
 import pw.vintr.music.ui.theme.VintrMusicExtendedTheme
+import sh.calvin.reorderable.ReorderableItem
+import sh.calvin.reorderable.rememberReorderableLazyColumnState
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun ManageSessionScreen(
     viewModel: ManageSessionViewModel = getViewModel(),
@@ -53,15 +54,10 @@ fun ManageSessionScreen(
         val screenData = viewModel.screenState.collectAsState()
         val sessionIsEmpty = screenData.value.uiTracks.isEmpty()
 
-        val reorderState = rememberReorderableLazyListState(
-            onMove = { from, to ->
-                viewModel.reorder(from.index, to.index)
-            },
-            onDragEnd = { _, _ ->
-                viewModel.saveReorder()
-            }
-        )
-        val listState = reorderState.listState
+        val lazyListState = rememberLazyListState()
+        val reorderableLazyColumnState = rememberReorderableLazyColumnState(
+            lazyListState
+        ) { from, to -> viewModel.reorder(from.index, to.index) }
 
         LaunchedEffect(key1 = sessionIsEmpty) {
             if (!sessionIsEmpty) {
@@ -69,26 +65,25 @@ fun ManageSessionScreen(
                     .indexOfFirst { wrapper -> screenData.value.currentTrack == wrapper.track }
 
                 if (currentTrackIndex != -1) {
-                    listState.scrollToItem(currentTrackIndex)
+                    lazyListState.scrollToItem(currentTrackIndex)
                 }
             }
         }
 
         LazyColumn(
             modifier = Modifier
-                .padding(it)
                 .fillMaxSize()
-                .reorderable(reorderState),
+                .padding(it),
             contentPadding = PaddingValues(vertical = 20.dp),
             verticalArrangement = Arrangement.spacedBy(16.dp),
-            state = listState,
+            state = lazyListState,
         ) {
             itemsIndexed(
                 items = screenData.value.uiTracks,
                 key = { _, wrapper -> wrapper.listUUID }
             ) { index, wrapper ->
                 ReorderableItem(
-                    reorderableState = reorderState,
+                    reorderableLazyColumnState,
                     key = wrapper.listUUID,
                 ) {
                     TrackView(
@@ -96,8 +91,11 @@ fun ManageSessionScreen(
                         isPlaying = screenData.value.currentTrack == wrapper.track,
                         trailingAction = {
                             Icon(
-                                modifier = Modifier
-                                    .detectReorder(reorderState),
+                                modifier = Modifier.draggableHandle(
+                                    onDragStopped = {
+                                        viewModel.saveReorder()
+                                    },
+                                ),
                                 painter = painterResource(id = R.drawable.ic_drag),
                                 tint = VintrMusicExtendedTheme.colors.textRegular,
                                 contentDescription = null

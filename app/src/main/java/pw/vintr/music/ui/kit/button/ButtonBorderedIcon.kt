@@ -32,6 +32,7 @@ fun ButtonBorderedIcon(
     Box(
         modifier = modifier
             .size(size)
+            .clip(RoundedCornerShape(10.dp))
             .background(
                 VintrMusicExtendedTheme.colors.borderedIconButtonBackground,
                 shape = RoundedCornerShape(10.dp)
@@ -43,8 +44,7 @@ fun ButtonBorderedIcon(
                 ),
                 shape = RoundedCornerShape(10.dp)
             )
-            .clickable { onClick() }
-            .clip(RoundedCornerShape(10.dp)),
+            .clickable { onClick() },
         contentAlignment = Alignment.Center
     ) {
         Icon(
