@@ -81,7 +81,10 @@ fun ToolbarRegular(
                 overflow = TextOverflow.Ellipsis,
             )
         }
-        Box(modifier = Modifier.size(24.dp)) {
+        Box(
+            modifier = Modifier.size(24.dp),
+            contentAlignment = Alignment.Center,
+        ) {
             trailing()
         }
     }

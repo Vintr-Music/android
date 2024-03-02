@@ -10,12 +10,13 @@ import pw.vintr.music.domain.library.useCase.GetAlbumTracksUseCase
 import pw.vintr.music.domain.player.interactor.PlayerInteractor
 import pw.vintr.music.domain.player.model.session.PlayerSessionModel
 import pw.vintr.music.domain.player.model.state.PlayerStatusModel
-import pw.vintr.music.tools.extension.Comma
-import pw.vintr.music.tools.extension.Space
 import pw.vintr.music.tools.extension.withLoaded
 import pw.vintr.music.ui.base.BaseScreenState
 import pw.vintr.music.ui.base.BaseViewModel
-import pw.vintr.music.ui.feature.trackDetails.entity.TrackDetailsOption
+import pw.vintr.music.ui.feature.actionSheet.album.entity.AlbumAction
+import pw.vintr.music.ui.feature.actionSheet.album.entity.AlbumActionResult
+import pw.vintr.music.ui.feature.actionSheet.album.entity.AlbumActionSheetInfo
+import pw.vintr.music.ui.feature.actionSheet.track.entity.TrackAction
 import pw.vintr.music.ui.navigation.NavigatorType
 import pw.vintr.music.ui.navigation.Screen
 
@@ -81,14 +82,51 @@ class AlbumDetailsViewModel(
         playerInteractor.resume()
     }
 
-    fun openTrackDetails(track: TrackModel) {
+    fun openTrackAction(track: TrackModel) {
         navigator.forward(
-            Screen.TrackDetails(
+            Screen.TrackActionSheet(
                 trackModel = track,
-                allowedOptions = TrackDetailsOption.optionsExceptAlbumNavigate
+                allowedActions = TrackAction.actionsExceptAlbumNavigate
             ),
             NavigatorType.Root
         )
+    }
+
+    fun openAlbumAction() {
+        _screenState.withLoaded { screenData ->
+            val screen = Screen.AlbumActionSheet(
+                albumActionSheetInfo = AlbumActionSheetInfo(
+                    album = screenData.album,
+                    tracksCount = screenData.tracks.size,
+                    playDurationMillis = screenData.tracks
+                        .sumOf { it.format.duration }
+                        .toLong()
+                )
+            )
+
+            handleResult(AlbumActionResult.KEY) {
+                navigator.forwardWithResult<AlbumActionResult>(
+                    screen,
+                    NavigatorType.Root,
+                    AlbumActionResult.KEY
+                ) { handleAlbumAction(it.action, screenData.tracks) }
+            }
+        }
+    }
+
+    private fun handleAlbumAction(action: AlbumAction, tracks: List<TrackModel>) {
+        when (action) {
+            AlbumAction.PLAY_NEXT -> {
+                launch {
+                    playerInteractor.setPlayNext(tracks)
+                }
+            }
+            AlbumAction.ADD_TO_QUEUE -> {
+                launch {
+                    playerInteractor.addToQueue(tracks)
+                }
+            }
+        }
     }
 }
 
@@ -98,9 +136,7 @@ data class AlbumDetailsScreenData(
 ) {
     val title = album.name
 
-    val subtitle = listOf(album.artist.name, album.year?.toString().orEmpty())
-        .filter { it.isNotEmpty() }
-        .joinToString(separator = String.Comma + String.Space)
+    val subtitle = album.artistAndYear
 }
 
 sealed interface AlbumPlayingState {

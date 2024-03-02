@@ -185,7 +185,7 @@ fun SearchScreen(viewModel: SearchViewModel = getViewModel()) {
                                 showArtwork = true,
                                 contentPadding = PaddingValues(horizontal = 20.dp),
                                 onMoreClick = {
-                                    viewModel.openTrackDetails(track)
+                                    viewModel.openTrackAction(track)
                                 },
                                 onClick = {
                                     viewModel.onTrackClicked(

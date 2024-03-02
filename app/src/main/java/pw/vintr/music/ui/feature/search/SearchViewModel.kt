@@ -101,9 +101,9 @@ class SearchViewModel(
         }
     }
 
-    fun openTrackDetails(track: TrackModel) {
+    fun openTrackAction(track: TrackModel) {
         navigator.forward(
-            Screen.TrackDetails(track),
+            Screen.TrackActionSheet(track),
             NavigatorType.Root
         )
     }

@@ -94,4 +94,7 @@
     <string name="now_playing">Now playing</string>
     <string name="play_next">Play next</string>
     <string name="add_to_queue">Add to queue</string>
+
+    <string name="playing_time">Playing time</string>
+    <string name="tracks_count">Tracks count</string>
 </resources>

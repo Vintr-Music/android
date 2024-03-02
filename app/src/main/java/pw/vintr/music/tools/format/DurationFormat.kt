@@ -4,7 +4,7 @@ import java.text.DecimalFormat
 
 object DurationFormat {
 
-    private val secondsFormat = DecimalFormat("00")
+    private val zeroSuffixFormat = DecimalFormat("00")
 
     fun formatSeconds(seconds: Long) = formatMillis(millis = seconds * 1000)
 
@@ -21,16 +21,23 @@ object DurationFormat {
 
         return when {
             days > 0 -> {
-                "$days:$hours:$minutes:${secondsFormat.format(seconds)}"
+                val formatHours = zeroSuffixFormat.format(hours)
+                val formatMinutes = zeroSuffixFormat.format(minutes)
+                val formatSeconds = zeroSuffixFormat.format(minutes)
+
+                "$days:$formatHours:$formatMinutes:$formatSeconds"
             }
             hours > 0 -> {
-                "$hours:$minutes:${secondsFormat.format(seconds)}"
+                val formatMinutes = zeroSuffixFormat.format(minutes)
+                val formatSeconds = zeroSuffixFormat.format(minutes)
+
+                "$hours:$formatMinutes:$formatSeconds"
             }
             minutes > 0 -> {
-                "$minutes:${secondsFormat.format(seconds)}"
+                "$minutes:${zeroSuffixFormat.format(seconds)}"
             }
             else -> {
-                "0:${secondsFormat.format(seconds)}"
+                "0:${zeroSuffixFormat.format(seconds)}"
             }
         }
     }

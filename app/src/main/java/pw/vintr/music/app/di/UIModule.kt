@@ -3,6 +3,7 @@ package pw.vintr.music.app.di
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 import pw.vintr.music.app.main.MainViewModel
+import pw.vintr.music.ui.feature.actionSheet.album.AlbumActionViewModel
 import pw.vintr.music.ui.feature.albumDetails.AlbumDetailsViewModel
 import pw.vintr.music.ui.feature.artistDetails.ArtistDetailsViewModel
 import pw.vintr.music.ui.feature.dialog.ConfirmViewModel
@@ -24,7 +25,7 @@ import pw.vintr.music.ui.feature.server.accessControl.members.ServerMemberListVi
 import pw.vintr.music.ui.feature.server.selection.ServerSelectionViewModel
 import pw.vintr.music.ui.feature.server.selection.connectNew.ConnectNewServerViewModel
 import pw.vintr.music.ui.feature.settings.SettingsViewModel
-import pw.vintr.music.ui.feature.trackDetails.TrackDetailsViewModel
+import pw.vintr.music.ui.feature.actionSheet.track.TrackActionViewModel
 import pw.vintr.music.ui.navigation.Navigator
 
 val uiModule = module {
@@ -71,7 +72,9 @@ val uiModule = module {
     }
     viewModel { NowPlayingViewModel(get()) }
     viewModel { EqualizerViewModel(get()) }
-    viewModel { TrackDetailsViewModel(get()) }
     viewModel { ConfirmViewModel() }
     viewModel { ManageSessionViewModel(get()) }
+
+    viewModel { TrackActionViewModel(get()) }
+    viewModel { AlbumActionViewModel() }
 }

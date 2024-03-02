@@ -1,4 +1,4 @@
-package pw.vintr.music.ui.feature.trackDetails
+package pw.vintr.music.ui.feature.actionSheet.track
 
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -8,7 +8,7 @@ import pw.vintr.music.ui.base.BaseViewModel
 import pw.vintr.music.ui.navigation.NavigatorType
 import pw.vintr.music.ui.navigation.Screen
 
-class TrackDetailsViewModel(
+class TrackActionViewModel(
     private val playerInteractor: PlayerInteractor
 ) : BaseViewModel() {
 

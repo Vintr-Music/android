@@ -85,4 +85,7 @@
     <string name="now_playing">Сейчас играет</string>
     <string name="play_next">Играть следующим</string>
     <string name="add_to_queue">Добавить в очередь</string>
+
+    <string name="playing_time">Время воспроизведения</string>
+    <string name="tracks_count">Количество треков</string>
 </resources>

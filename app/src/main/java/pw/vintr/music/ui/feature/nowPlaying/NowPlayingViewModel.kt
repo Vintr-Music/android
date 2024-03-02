@@ -12,7 +12,7 @@ import pw.vintr.music.domain.player.model.config.PlayerShuffleMode
 import pw.vintr.music.domain.player.model.state.PlayerProgressModel
 import pw.vintr.music.domain.player.model.state.PlayerStateHolderModel
 import pw.vintr.music.ui.base.BaseViewModel
-import pw.vintr.music.ui.feature.trackDetails.entity.TrackDetailsOption
+import pw.vintr.music.ui.feature.actionSheet.track.entity.TrackAction
 import pw.vintr.music.ui.navigation.NavigatorType
 import pw.vintr.music.ui.navigation.Screen
 
@@ -107,13 +107,13 @@ class NowPlayingViewModel(
         }
     }
 
-    fun openTrackDetails(trackModel: TrackModel) {
+    fun openTrackAction(trackModel: TrackModel) {
         navigator.forward(
-            screen = Screen.TrackDetails(
+            screen = Screen.TrackActionSheet(
                 trackModel = trackModel,
-                allowedOptions = listOf(
-                    TrackDetailsOption.GO_TO_ALBUM,
-                    TrackDetailsOption.GO_TO_ARTIST,
+                allowedActions = listOf(
+                    TrackAction.GO_TO_ALBUM,
+                    TrackAction.GO_TO_ARTIST,
                 ),
             ),
             type = NavigatorType.Root

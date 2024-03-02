@@ -2,6 +2,7 @@ package pw.vintr.music.ui.kit.toolbar
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.aspectRatio
@@ -33,6 +34,7 @@ fun CollapsingToolbarScope.ToolbarWithArtwork(
     artworkUrl: String,
     mediaName: String,
     onBackPressed: () -> Unit,
+    trailingSlot: @Composable BoxScope.() -> Unit = {},
     titleSlot: @Composable CollapsingToolbarScope.() -> Unit = {},
 ) {
     val configuration = LocalConfiguration.current
@@ -88,6 +90,7 @@ fun CollapsingToolbarScope.ToolbarWithArtwork(
             title = mediaName,
             titleOpacity = 1 - state.toolbarState.progress,
             backButtonColor = VintrMusicExtendedTheme.colors.textRegular,
+            trailing = trailingSlot,
             onBackPressed = { onBackPressed() },
         )
     } else {
@@ -95,7 +98,7 @@ fun CollapsingToolbarScope.ToolbarWithArtwork(
             56.dp + WindowInsets.statusBars.getTop(density = this).toDp()
         }
 
-        BoxWithConstraints(
+        Box(
             modifier = Modifier
                 .fillMaxWidth()
                 .height(height),
@@ -131,6 +134,7 @@ fun CollapsingToolbarScope.ToolbarWithArtwork(
         ToolbarRegular(
             title = mediaName,
             backButtonColor = VintrMusicExtendedTheme.colors.textRegular,
+            trailing = trailingSlot,
             onBackPressed = { onBackPressed() },
         )
     }

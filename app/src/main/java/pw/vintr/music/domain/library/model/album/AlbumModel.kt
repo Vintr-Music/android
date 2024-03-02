@@ -7,6 +7,8 @@ import kotlinx.parcelize.Parcelize
 import pw.vintr.music.data.library.dto.album.AlbumDto
 import pw.vintr.music.data.library.cache.album.AlbumCacheObject
 import pw.vintr.music.domain.library.model.artist.ArtistModel
+import pw.vintr.music.tools.extension.Comma
+import pw.vintr.music.tools.extension.Space
 import pw.vintr.music.tools.http.MediaUrlBuilder
 
 @Parcelize
@@ -25,6 +27,11 @@ data class AlbumModel(
         artist = artist.name,
         album = name
     )
+
+    @IgnoredOnParcel
+    val artistAndYear: String = listOf(artist.name, year?.toString().orEmpty())
+        .filter { it.isNotEmpty() }
+        .joinToString(separator = String.Comma + String.Space)
 
     fun toCacheObject() = AlbumCacheObject(
         artist = artist.name,

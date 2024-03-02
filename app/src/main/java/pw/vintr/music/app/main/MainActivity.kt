@@ -45,6 +45,8 @@ import pw.vintr.music.domain.server.model.ServerInviteModel
 import pw.vintr.music.tools.extension.Empty
 import pw.vintr.music.tools.extension.getRequiredArg
 import pw.vintr.music.tools.extension.getRequiredArgList
+import pw.vintr.music.ui.feature.actionSheet.album.AlbumActionSheet
+import pw.vintr.music.ui.feature.actionSheet.album.entity.AlbumActionSheetInfo
 import pw.vintr.music.ui.feature.dialog.ConfirmDialog
 import pw.vintr.music.ui.feature.dialog.entity.ConfirmDialogData
 import pw.vintr.music.ui.feature.nowPlaying.manageSession.ManageSessionScreen
@@ -54,8 +56,8 @@ import pw.vintr.music.ui.feature.server.accessControl.ServerAccessControlScreen
 import pw.vintr.music.ui.feature.server.accessControl.invite.details.ServerInviteDetailsBottomSheet
 import pw.vintr.music.ui.feature.server.selection.ServerSelectionScreen
 import pw.vintr.music.ui.feature.server.selection.connectNew.ConnectNewServerScreen
-import pw.vintr.music.ui.feature.trackDetails.TrackDetailsBottomSheet
-import pw.vintr.music.ui.feature.trackDetails.entity.TrackDetailsOption
+import pw.vintr.music.ui.feature.actionSheet.track.TrackActionSheet
+import pw.vintr.music.ui.feature.actionSheet.track.entity.TrackAction
 import pw.vintr.music.ui.kit.sliding.AnchoredDraggableDefaults
 import pw.vintr.music.ui.navigation.Navigator
 import pw.vintr.music.ui.navigation.NavigatorEffect
@@ -192,29 +194,46 @@ fun Navigation(
         // Root, bottom sheets, dialogs
         composable(Screen.Root.route) { RootScreen() }
         bottomSheet(
-            Screen.TrackDetails.routeTemplate,
+            Screen.TrackActionSheet.routeTemplate,
             arguments = listOf(
-                navArgument(Screen.TrackDetails.ARG_KEY_TRACK) {
+                navArgument(Screen.TrackActionSheet.ARG_KEY_TRACK) {
                     type = ParcelableNavType(TrackModel::class.java)
                 },
-                navArgument(Screen.TrackDetails.ARG_KEY_OPTIONS) {
-                    type = ParcelableListNavType<TrackDetailsOption>()
+                navArgument(Screen.TrackActionSheet.ARG_KEY_ACTIONS) {
+                    type = ParcelableListNavType<TrackAction>()
                 }
             )
         ) {
             BackHandler { navController.navigateUp() }
 
             val trackModel = it.arguments.getRequiredArg<TrackModel>(
-                Screen.TrackDetails.ARG_KEY_TRACK
+                Screen.TrackActionSheet.ARG_KEY_TRACK
             )
-            val allowedOptions = it.arguments.getRequiredArgList<TrackDetailsOption>(
-                Screen.TrackDetails.ARG_KEY_OPTIONS
+            val allowedOptions = it.arguments.getRequiredArgList<TrackAction>(
+                Screen.TrackActionSheet.ARG_KEY_ACTIONS
             )
-            TrackDetailsBottomSheet(
+            TrackActionSheet(
                 trackModel = trackModel,
-                allowedOptions = allowedOptions
+                allowedActions = allowedOptions
             )
         }
+
+        bottomSheet(
+            Screen.AlbumActionSheet.routeTemplate,
+            arguments = listOf(
+                navArgument(Screen.AlbumActionSheet.ARG_KEY_SHEET_INFO) {
+                    type = ParcelableNavType(AlbumActionSheetInfo::class.java)
+                },
+            )
+        ) {
+            BackHandler { navController.navigateUp() }
+
+            val actionSheetInfo = it.arguments.getRequiredArg<AlbumActionSheetInfo>(
+                Screen.AlbumActionSheet.ARG_KEY_SHEET_INFO
+            )
+            AlbumActionSheet(actionSheetInfo)
+        }
+
         extendedDialog(
             route = Screen.ConfirmDialog.routeTemplate,
             arguments = listOf(

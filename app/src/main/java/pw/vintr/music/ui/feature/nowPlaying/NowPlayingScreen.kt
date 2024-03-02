@@ -118,7 +118,7 @@ fun NowPlayingScreen(viewModel: NowPlayingViewModel = getViewModel()) {
                 )
                 .clickable {
                     playerState.value.currentTrack
-                        ?.let { viewModel.openTrackDetails(it) }
+                        ?.let { viewModel.openTrackAction(it) }
                 }
         ) {
             val title = playerState.value.currentTrack?.let { track ->
@@ -167,7 +167,7 @@ fun NowPlayingScreen(viewModel: NowPlayingViewModel = getViewModel()) {
                 iconRes = R.drawable.ic_more_horizontal,
                 onClick = {
                     playerState.value.currentTrack
-                        ?.let { viewModel.openTrackDetails(it) }
+                        ?.let { viewModel.openTrackAction(it) }
                 }
             )
         }

@@ -1,4 +1,4 @@
-package pw.vintr.music.ui.feature.trackDetails.entity
+package pw.vintr.music.ui.feature.actionSheet.track.entity
 
 import android.os.Parcelable
 import androidx.annotation.DrawableRes
@@ -7,7 +7,7 @@ import kotlinx.parcelize.Parcelize
 import pw.vintr.music.R
 
 @Parcelize
-enum class TrackDetailsOption(
+enum class TrackAction(
     @DrawableRes
     val iconRes: Int,
     @StringRes
@@ -31,12 +31,12 @@ enum class TrackDetailsOption(
     );
 
     companion object {
-        val optionsExceptAlbumNavigate = listOf(
+        val actionsExceptAlbumNavigate = listOf(
             GO_TO_ARTIST,
             PLAY_NEXT,
             ADD_TO_QUEUE
         )
-        val optionsExceptArtistNavigate = listOf(
+        val actionsExceptArtistNavigate = listOf(
             GO_TO_ALBUM,
             PLAY_NEXT,
             ADD_TO_QUEUE

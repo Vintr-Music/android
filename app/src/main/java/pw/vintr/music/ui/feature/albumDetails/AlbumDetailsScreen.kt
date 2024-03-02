@@ -23,9 +23,11 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import org.koin.androidx.compose.getViewModel
 import org.koin.core.parameter.parametersOf
+import pw.vintr.music.R
 import pw.vintr.music.domain.library.model.album.AlbumModel
 import pw.vintr.music.tools.extension.Empty
 import pw.vintr.music.ui.kit.button.ButtonPlayerState
+import pw.vintr.music.ui.kit.button.ButtonSimpleIcon
 import pw.vintr.music.ui.kit.library.TrackView
 import pw.vintr.music.ui.kit.layout.ScreenStateLayout
 import pw.vintr.music.ui.kit.toolbar.ToolbarWithArtwork
@@ -101,6 +103,13 @@ fun AlbumDetailsScreen(
                                 )
                             }
                         },
+                        trailingSlot = {
+                            ButtonSimpleIcon(
+                                iconRes = R.drawable.ic_more,
+                                onClick = { viewModel.openAlbumAction() },
+                                tint = VintrMusicExtendedTheme.colors.textRegular,
+                            )
+                        },
                         onBackPressed = { viewModel.navigateBack() }
                     )
                 },
@@ -159,7 +168,7 @@ fun AlbumDetailsScreen(
                         TrackView(
                             trackModel = track,
                             isPlaying = albumState.playingTrack == track,
-                            onMoreClick = { viewModel.openTrackDetails(track) },
+                            onMoreClick = { viewModel.openTrackAction(track) },
                             onClick = { viewModel.playAlbum(index) }
                         )
                     }
