@@ -4,7 +4,9 @@ import android.content.ComponentName
 import android.content.Context
 import android.media.AudioDeviceInfo
 import android.media.AudioManager
+import android.net.Uri
 import androidx.media3.common.MediaItem
+import androidx.media3.common.MediaMetadata
 import androidx.media3.common.Player
 import androidx.media3.common.util.UnstableApi
 import androidx.media3.session.MediaController
@@ -343,6 +345,17 @@ class PlayerInteractor(
     private fun TrackModel.toMediaItem() = MediaItem.Builder()
         .setUri(playerUrl)
         .setMediaId(md5)
+        .setMediaMetadata(
+            MediaMetadata.Builder()
+                .setArtist(metadata.artist)
+                .setTitle(metadata.title)
+                .setAlbumTitle(metadata.album)
+                .setArtworkUri(
+                    runCatching { Uri.parse(artworkUrl) }
+                        .getOrNull()
+                )
+                .build()
+        )
         .build()
 
     private suspend fun withAskPlaySpeakers(action: suspend () -> Unit) {
