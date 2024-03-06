@@ -66,6 +66,7 @@ class FavoriteArtistsInteractor(
         favoriteRepository.addArtistToFavorites(FavoriteArtistDto(artistModel.name))
         _dataFlow.updateLoaded { favorites ->
             listOf(artistModel, *favorites.toTypedArray())
+                .sortedBy { it.name }
         }
         _events.send(Event.Added(artistModel))
     }

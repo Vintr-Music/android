@@ -101,4 +101,5 @@
 
     <string name="all_artists">All artists</string>
     <string name="favorite_artists">Favorite artists</string>
+    <string name="favorite_albums">Favorite albums</string>
 </resources>

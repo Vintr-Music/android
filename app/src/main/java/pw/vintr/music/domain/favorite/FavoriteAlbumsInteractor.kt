@@ -43,12 +43,16 @@ class FavoriteAlbumsInteractor(
     }
 
     suspend fun loadData() {
-        _dataFlow.loadWithStateHandling {
-            favoriteRepository
-                .getFavoriteAlbums()
-                .map { it.toModel() }
-        }
+        _dataFlow.loadWithStateHandling { getFavoriteAlbums() }
     }
+
+    suspend fun refreshData() {
+        _dataFlow.refreshWithStateHandling { getFavoriteAlbums() }
+    }
+
+    private suspend fun getFavoriteAlbums() = favoriteRepository
+        .getFavoriteAlbums()
+        .map { it.toModel() }
 
     suspend fun isInFavorites(albumModel: AlbumModel): Boolean {
         return runCatching {
@@ -67,6 +71,7 @@ class FavoriteAlbumsInteractor(
         favoriteRepository.addAlbumToFavorites(FavoriteAlbumDto(albumModel.toDto()))
         _dataFlow.updateLoaded { favorites ->
             listOf(albumModel, *favorites.toTypedArray())
+                .sortedBy { it.name }
         }
         _events.send(Event.Added(albumModel))
     }

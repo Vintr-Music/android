@@ -127,6 +127,8 @@ sealed class Screen(val route: String) {
 
     object ArtistFavoriteList : Screen(route = "favorite_artists")
 
+    object AlbumFavoriteList : Screen(route = "favorite_albums")
+
     data class AlbumDetails(val album: AlbumModel) : ScreenWithArgs(
         destination = ROUTE_DESTINATION,
         args = mapOf(ARG_KEY_ALBUM to album)

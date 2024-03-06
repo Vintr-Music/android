@@ -28,22 +28,26 @@ class LibraryViewModel(
     }
 
     fun loadData() {
-        _screenState.loadWithStateHandling {
-            LibraryScreenData(
-                artists = getArtistListUseCase
-                    .invoke()
-                    .shuffled()
-                    .take(MAX_ARTISTS_DISPLAY)
-            )
-        }
+        _screenState.loadWithStateHandling { loadScreenData() }
     }
+
+    fun refreshData() {
+        _screenState.refreshWithStateHandling { loadScreenData() }
+    }
+
+    private suspend fun loadScreenData() = LibraryScreenData(
+        artists = getArtistListUseCase
+            .invoke()
+            .shuffled()
+            .take(MAX_ARTISTS_DISPLAY)
+    )
 
     fun openFavoriteArtists() {
         navigator.forward(Screen.ArtistFavoriteList)
     }
 
     fun openFavoriteAlbums() {
-
+        navigator.forward(Screen.AlbumFavoriteList)
     }
 
     fun openPlaylists() {

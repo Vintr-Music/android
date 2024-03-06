@@ -26,6 +26,7 @@ import pw.vintr.music.ui.feature.server.selection.ServerSelectionViewModel
 import pw.vintr.music.ui.feature.server.selection.connectNew.ConnectNewServerViewModel
 import pw.vintr.music.ui.feature.settings.SettingsViewModel
 import pw.vintr.music.ui.feature.actionSheet.track.TrackActionViewModel
+import pw.vintr.music.ui.feature.library.albumFavoriteList.AlbumFavoriteListViewModel
 import pw.vintr.music.ui.feature.library.artistFavoriteList.ArtistFavoriteListViewModel
 import pw.vintr.music.ui.navigation.Navigator
 
@@ -64,6 +65,7 @@ val uiModule = module {
     viewModel { LibraryViewModel(get()) }
     viewModel { ArtistListViewModel(get()) }
     viewModel { ArtistFavoriteListViewModel(get()) }
+    viewModel { AlbumFavoriteListViewModel(get()) }
     viewModel { MenuViewModel(get(), get(), get(), get()) }
     viewModel { SettingsViewModel(get()) }
     viewModel { params ->
