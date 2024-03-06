@@ -26,6 +26,22 @@ abstract class BaseInteractor : CoroutineScope, Closeable {
         }
     }
 
+    protected suspend fun <T> MutableStateFlow<BaseDomainState<T>>.refreshWithStateHandling(
+        block: suspend () -> T
+    ) {
+        val lockedValue = value
+
+        runCatching {
+            if (lockedValue is BaseDomainState.Loaded) {
+                value = BaseDomainState.Loaded(lockedValue.data, isRefreshing = true)
+                value = BaseDomainState.Loaded(block())
+            }
+        }.onFailure {
+            it.printStackTrace()
+            value = BaseDomainState.Error()
+        }
+    }
+
     override fun close() {
         if (isActive) cancel()
     }

@@ -13,12 +13,13 @@ import androidx.compose.ui.Modifier
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun PullRefreshLayout(
+    modifier: Modifier = Modifier,
     state: PullRefreshState,
     refreshing: Boolean = false,
     content: @Composable () -> Unit
 ) {
     Box(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxSize()
             .pullRefresh(state)
     ) {

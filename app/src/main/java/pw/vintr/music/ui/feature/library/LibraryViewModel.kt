@@ -1,31 +1,75 @@
 package pw.vintr.music.ui.feature.library
 
-import androidx.annotation.StringRes
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.update
 import pw.vintr.music.R
+import pw.vintr.music.domain.library.model.artist.ArtistModel
+import pw.vintr.music.domain.library.useCase.GetArtistListUseCase
+import pw.vintr.music.ui.base.BaseScreenState
 import pw.vintr.music.ui.base.BaseViewModel
+import pw.vintr.music.ui.navigation.Screen
 
-class LibraryViewModel : BaseViewModel() {
+class LibraryViewModel(
+    private val getArtistListUseCase: GetArtistListUseCase,
+) : BaseViewModel() {
 
-    private val _screenState = MutableStateFlow(value = LibraryScreenState())
+    companion object {
+        private const val MAX_ARTISTS_DISPLAY = 9
+    }
+
+    private val _screenState = MutableStateFlow<BaseScreenState<LibraryScreenData>>(
+        value = BaseScreenState.Loading()
+    )
 
     val screenState = _screenState.asStateFlow()
 
-    fun selectTab(tab: LibraryTab) {
-        _screenState.update { it.copy(selectedTab = tab) }
+    init {
+        loadData()
+    }
+
+    fun loadData() {
+        _screenState.loadWithStateHandling {
+            LibraryScreenData(
+                artists = getArtistListUseCase
+                    .invoke()
+                    .shuffled()
+                    .take(MAX_ARTISTS_DISPLAY)
+            )
+        }
+    }
+
+    fun openFavoriteArtists() {
+        navigator.forward(Screen.ArtistFavoriteList)
+    }
+
+    fun openFavoriteAlbums() {
+
+    }
+
+    fun openPlaylists() {
+
+    }
+
+    fun openAllArtists() {
+        navigator.forward(Screen.ArtistList)
+    }
+
+    fun openArtist(artist: ArtistModel) {
+        navigator.forward(Screen.ArtistDetails(artist))
     }
 }
 
-enum class LibraryTab(@StringRes val titleRes: Int) {
-    ARTISTS(titleRes = R.string.library_artists),
-    PLAYLISTS(titleRes = R.string.library_playlists)
-}
+data class LibraryScreenData(
+    val personalLibraryItems: List<PersonalLibraryItem> = listOf(
+        PersonalLibraryItem.ARTISTS,
+        PersonalLibraryItem.ALBUMS,
+        PersonalLibraryItem.PLAYLISTS,
+    ),
+    val artists: List<ArtistModel>,
+)
 
-data class LibraryScreenState(
-    val tabs: List<LibraryTab> = listOf(LibraryTab.ARTISTS, LibraryTab.PLAYLISTS),
-    val selectedTab: LibraryTab = LibraryTab.ARTISTS
-) {
-    val selectedIndex = tabs.indexOf(selectedTab)
+enum class PersonalLibraryItem(val iconRes: Int, val titleRes: Int) {
+    ARTISTS(iconRes = R.drawable.ic_artist, R.string.library_artists),
+    ALBUMS(iconRes = R.drawable.ic_album, R.string.library_albums),
+    PLAYLISTS(iconRes = R.drawable.ic_playlist, R.string.library_playlists)
 }

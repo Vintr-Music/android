@@ -39,7 +39,7 @@ sealed class Tab(
     )
     object Library : Tab(
         route = "library",
-        iconRes = R.drawable.ic_library,
+        iconRes = R.drawable.ic_library_tab,
         navigatorType = TabNavigator.Library,
         rootScreen = Screen.Library
     )

@@ -123,6 +123,10 @@ sealed class Screen(val route: String) {
 
     object Equalizer : Screen(route = "equalizer")
 
+    object ArtistList : Screen(route = "all_artists")
+
+    object ArtistFavoriteList : Screen(route = "favorite_artists")
+
     data class AlbumDetails(val album: AlbumModel) : ScreenWithArgs(
         destination = ROUTE_DESTINATION,
         args = mapOf(ARG_KEY_ALBUM to album)

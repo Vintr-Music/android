@@ -14,6 +14,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
@@ -27,6 +28,7 @@ import pw.vintr.music.ui.theme.VintrMusicExtendedTheme
 fun ArtistView(
     modifier: Modifier = Modifier,
     artist: ArtistModel,
+    textStyle: TextStyle = Gilroy16,
     onClick: () -> Unit = {},
 ) {
     Column(
@@ -52,7 +54,7 @@ fun ArtistView(
         Text(
             modifier = Modifier.fillMaxWidth(),
             text = artist.name,
-            style = Gilroy16,
+            style = textStyle,
             color = VintrMusicExtendedTheme.colors.textRegular,
             textAlign = TextAlign.Center
         )

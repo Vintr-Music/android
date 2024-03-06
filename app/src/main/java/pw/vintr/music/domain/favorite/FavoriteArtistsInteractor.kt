@@ -38,12 +38,16 @@ class FavoriteArtistsInteractor(
     val events by lazy { _events.receiveAsFlow() }
 
     suspend fun loadData() {
-        _dataFlow.loadWithStateHandling {
-            favoriteRepository
-                .getFavoriteArtists()
-                .map { ArtistModel(it) }
-        }
+        _dataFlow.loadWithStateHandling { getFavoriteArtists() }
     }
+
+    suspend fun refreshData() {
+        _dataFlow.refreshWithStateHandling { getFavoriteArtists() }
+    }
+
+    private suspend fun getFavoriteArtists() = favoriteRepository
+        .getFavoriteArtists()
+        .map { ArtistModel(it) }
 
     suspend fun isInFavorites(artistModel: ArtistModel): Boolean {
         return runCatching {

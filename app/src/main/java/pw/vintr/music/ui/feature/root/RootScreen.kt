@@ -38,6 +38,8 @@ import pw.vintr.music.ui.feature.artistDetails.ArtistDetailsScreen
 import pw.vintr.music.ui.feature.equalizer.EqualizerScreen
 import pw.vintr.music.ui.feature.home.HomeScreen
 import pw.vintr.music.ui.feature.library.LibraryScreen
+import pw.vintr.music.ui.feature.library.artistFavoriteList.ArtistFavoriteListScreen
+import pw.vintr.music.ui.feature.library.artistList.ArtistListScreen
 import pw.vintr.music.ui.feature.menu.MenuScreen
 import pw.vintr.music.ui.feature.search.SearchScreen
 import pw.vintr.music.ui.feature.settings.SettingsScreen
@@ -206,6 +208,8 @@ fun TabNavigation(
 
             ArtistDetailsScreen(artist = artist)
         }
+        composable(Screen.ArtistList.route) { ArtistListScreen() }
+        composable(Screen.ArtistFavoriteList.route) { ArtistFavoriteListScreen() }
     }
 
     // Scaffold bottom sheet back handler

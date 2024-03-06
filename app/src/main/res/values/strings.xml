@@ -54,8 +54,9 @@
     <string name="welcome_title_day">Good afternoon</string>
     <string name="welcome_title_evening">Good evening</string>
 
-    <string name="library">Library</string>
+    <string name="library_personal">Your library</string>
     <string name="library_artists">Artists</string>
+    <string name="library_albums">Albums</string>
     <string name="library_playlists">Playlists</string>
 
     <string name="search_title">Search</string>
@@ -97,4 +98,7 @@
 
     <string name="playing_time">Playing time</string>
     <string name="tracks_count">Tracks count</string>
+
+    <string name="all_artists">All artists</string>
+    <string name="favorite_artists">Favorite artists</string>
 </resources>

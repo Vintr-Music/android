@@ -50,8 +50,9 @@
     <string name="welcome_title_day">Добрый день</string>
     <string name="welcome_title_evening">Добрый вечер</string>
 
-    <string name="library">Медиатека</string>
+    <string name="library_personal">Ваша Медиатека</string>
     <string name="library_artists">Исполнители</string>
+    <string name="library_albums">Альбомы</string>
     <string name="library_playlists">Плейлисты</string>
 
     <string name="search_title">Поиск</string>
@@ -88,4 +89,7 @@
 
     <string name="playing_time">Время воспроизведения</string>
     <string name="tracks_count">Количество треков</string>
+
+    <string name="all_artists">Все исполнители</string>
+    <string name="favorite_artists">Избранные исполнители</string>
 </resources>
