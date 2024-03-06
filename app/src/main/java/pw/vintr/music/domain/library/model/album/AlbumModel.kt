@@ -38,6 +38,12 @@ data class AlbumModel(
         name = name,
         year = year,
     )
+
+    fun toDto() = AlbumDto(
+        artist = artist.name,
+        name = name,
+        year = year,
+    )
 }
 
 fun AlbumDto.toModel() = AlbumModel(

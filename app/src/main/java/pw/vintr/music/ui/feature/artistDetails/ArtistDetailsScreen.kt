@@ -3,9 +3,12 @@ package pw.vintr.music.ui.feature.artistDetails
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material3.Text
@@ -17,8 +20,10 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import org.koin.androidx.compose.getViewModel
 import org.koin.core.parameter.parametersOf
+import pw.vintr.music.R
 import pw.vintr.music.domain.library.model.artist.ArtistModel
 import pw.vintr.music.tools.extension.Empty
+import pw.vintr.music.ui.kit.button.ButtonBorderedIcon
 import pw.vintr.music.ui.kit.library.AlbumView
 import pw.vintr.music.ui.kit.library.tools.rememberLibraryGridCells
 import pw.vintr.music.ui.kit.layout.ScreenStateLayout
@@ -67,18 +72,42 @@ fun ArtistDetailsScreen(
                         artworkUrl = screenData.artist.artworkUrl,
                         mediaName = screenData.title,
                         titleSlot = {
-                            Text(
+                            Row(
                                 modifier = Modifier
                                     .align(Alignment.BottomStart)
                                     .fillMaxWidth()
                                     .padding(horizontal = 20.dp)
                                     .pin(),
-                                text = screenData.title,
-                                style = Gilroy36,
-                                color = VintrMusicExtendedTheme.colors.textRegular,
-                                maxLines = 2,
-                                overflow = TextOverflow.Ellipsis,
-                            )
+                                verticalAlignment = Alignment.CenterVertically,
+                            ) {
+                                // Title
+                                Text(
+                                    modifier = Modifier
+                                        .weight(1f),
+                                    text = screenData.title,
+                                    style = Gilroy36,
+                                    color = VintrMusicExtendedTheme.colors.textRegular,
+                                    maxLines = 2,
+                                    overflow = TextOverflow.Ellipsis,
+                                )
+                                Spacer(modifier = Modifier.width(12.dp))
+
+                                // Favorites button
+                                ButtonBorderedIcon(
+                                    iconRes = if (screenData.isFavorite) {
+                                        R.drawable.ic_star_filled
+                                    } else {
+                                        R.drawable.ic_star_outline
+                                    },
+                                    onClick = {
+                                        if (screenData.isFavorite) {
+                                            viewModel.removeFromFavorites()
+                                        } else {
+                                            viewModel.addToFavorites()
+                                        }
+                                    }
+                                )
+                            }
                         },
                         onBackPressed = { viewModel.navigateBack() }
                     )

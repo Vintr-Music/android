@@ -300,13 +300,6 @@ class PlayerInteractor(
         }
     }
 
-    suspend fun destroySession() {
-        controller?.stop()
-        controller?.clearMediaItems()
-
-        playerSessionRepository.removePlayerSession()
-    }
-
     fun setRepeatMode(repeatMode: PlayerRepeatMode) {
         playerConfigRepository.setRepeatMode(repeatMode.ordinal)
         controller?.repeatMode = repeatMode.toSystemRepeatMode()
@@ -317,6 +310,13 @@ class PlayerInteractor(
         playerConfigRepository.setShuffleMode(shuffleMode.ordinal)
         controller?.shuffleModeEnabled = shuffleMode.toSystemShuffleMode()
         playerSnapshotFlow.update { snapshot -> snapshot.copy(shuffleMode = shuffleMode) }
+    }
+
+    suspend fun destroySession() {
+        controller?.stop()
+        controller?.clearMediaItems()
+
+        playerSessionRepository.removePlayerSession()
     }
 
     override fun close() {

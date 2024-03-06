@@ -1,15 +1,21 @@
 package pw.vintr.music.ui.feature.albumDetails
 
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
+import pw.vintr.music.domain.favorite.FavoriteAlbumsInteractor
 import pw.vintr.music.domain.library.model.album.AlbumModel
 import pw.vintr.music.domain.library.model.track.TrackModel
 import pw.vintr.music.domain.library.useCase.GetAlbumTracksUseCase
 import pw.vintr.music.domain.player.interactor.PlayerInteractor
 import pw.vintr.music.domain.player.model.session.PlayerSessionModel
 import pw.vintr.music.domain.player.model.state.PlayerStatusModel
+import pw.vintr.music.tools.extension.updateLoaded
 import pw.vintr.music.tools.extension.withLoaded
 import pw.vintr.music.ui.base.BaseScreenState
 import pw.vintr.music.ui.base.BaseViewModel
@@ -24,6 +30,7 @@ class AlbumDetailsViewModel(
     private val album: AlbumModel,
     private val playerInteractor: PlayerInteractor,
     private val getAlbumTracksUseCase: GetAlbumTracksUseCase,
+    private val favoriteAlbumsInteractor: FavoriteAlbumsInteractor,
 ) : BaseViewModel() {
 
     private val _screenState = MutableStateFlow<BaseScreenState<AlbumDetailsScreenData>>(
@@ -50,19 +57,48 @@ class AlbumDetailsViewModel(
 
     val screenState = _screenState.asStateFlow()
 
+    private var favoritesInteractionJob: Job? = null
+
     init {
         loadData()
+        subscribeFavoriteEvents()
     }
 
     fun loadData() {
         _screenState.loadWithStateHandling {
-            AlbumDetailsScreenData(
-                album = album,
-                tracks = getAlbumTracksUseCase.invoke(
+            val tracks = async {
+                getAlbumTracksUseCase.invoke(
                     artist = album.artist.name,
                     album = album.name
                 )
+            }
+            val isFavorite = async {
+                favoriteAlbumsInteractor.isInFavorites(album)
+            }
+
+            AlbumDetailsScreenData(
+                album = album,
+                tracks = tracks.await(),
+                isFavorite = isFavorite.await()
             )
+        }
+    }
+
+    private fun subscribeFavoriteEvents() {
+        launch {
+            favoriteAlbumsInteractor.events
+                .filter { it.album == album }
+                .collectLatest { event ->
+                    when (event) {
+                        is FavoriteAlbumsInteractor.Event.Added -> {
+                            _screenState.updateLoaded { it.copy(isFavorite = true) }
+                        }
+
+                        is FavoriteAlbumsInteractor.Event.Removed -> {
+                            _screenState.updateLoaded { it.copy(isFavorite = false) }
+                        }
+                    }
+            }
         }
     }
 
@@ -80,6 +116,22 @@ class AlbumDetailsViewModel(
 
     fun resumeAlbum() {
         playerInteractor.resume()
+    }
+
+    fun addToFavorites() {
+        if (favoritesInteractionJob?.isActive != true) {
+            favoritesInteractionJob = launch(createExceptionHandler()) {
+                favoriteAlbumsInteractor.addToFavorites(album)
+            }
+        }
+    }
+
+    fun removeFromFavorites() {
+        if (favoritesInteractionJob?.isActive != true) {
+            favoritesInteractionJob = launch(createExceptionHandler()) {
+                favoriteAlbumsInteractor.removeFromFavorites(album)
+            }
+        }
     }
 
     fun openTrackAction(track: TrackModel) {
@@ -133,6 +185,7 @@ class AlbumDetailsViewModel(
 data class AlbumDetailsScreenData(
     val album: AlbumModel,
     val tracks: List<TrackModel>,
+    val isFavorite: Boolean,
 ) {
     val title = album.name
 

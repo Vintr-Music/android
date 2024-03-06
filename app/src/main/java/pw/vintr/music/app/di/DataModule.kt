@@ -28,6 +28,8 @@ import pw.vintr.music.data.equalizer.cache.PresetCacheObject
 import pw.vintr.music.data.equalizer.repository.EqualizerRepository
 import pw.vintr.music.data.equalizer.source.EqualizerCacheDataSource
 import pw.vintr.music.data.equalizer.source.EqualizerPreferencesDataSource
+import pw.vintr.music.data.favorite.repository.FavoriteRepository
+import pw.vintr.music.data.favorite.source.FavoriteRemoteDataSource
 import pw.vintr.music.data.library.cache.album.AlbumCacheObject
 import pw.vintr.music.data.library.cache.track.TrackCacheObject
 import pw.vintr.music.data.library.repository.AlbumRepository
@@ -114,6 +116,9 @@ val dataModule = module {
         }
 
         HttpClient(Android) {
+            // Validation
+            expectSuccess = true
+
             // Serialization
             install(ContentNegotiation) { gson() }
 
@@ -217,4 +222,8 @@ val dataModule = module {
     // Search history
     single { SearchHistoryCacheDataSource(get()) }
     single { SearchHistoryRepository(get()) }
+
+    // Favorite
+    single { FavoriteRemoteDataSource(get()) }
+    single { FavoriteRepository(get()) }
 }

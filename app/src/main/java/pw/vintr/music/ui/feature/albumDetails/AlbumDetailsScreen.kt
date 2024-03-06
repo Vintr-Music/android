@@ -19,6 +19,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.BiasAlignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import org.koin.androidx.compose.getViewModel
@@ -26,6 +27,7 @@ import org.koin.core.parameter.parametersOf
 import pw.vintr.music.R
 import pw.vintr.music.domain.library.model.album.AlbumModel
 import pw.vintr.music.tools.extension.Empty
+import pw.vintr.music.ui.kit.button.ButtonBorderedIcon
 import pw.vintr.music.ui.kit.button.ButtonPlayerState
 import pw.vintr.music.ui.kit.button.ButtonSimpleIcon
 import pw.vintr.music.ui.kit.library.TrackView
@@ -129,7 +131,29 @@ fun AlbumDetailsScreen(
                                 .background(MaterialTheme.colorScheme.background)
                                 .padding(horizontal = 20.dp)
                                 .padding(top = 20.dp, bottom = 4.dp),
+
                         ) {
+                            // Favorites button
+                            ButtonBorderedIcon(
+                                modifier = Modifier
+                                    .padding(start = 76.dp)
+                                    .align(Alignment.CenterStart)
+                                    .alpha(collapsingLayoutState.toolbarState.progress),
+                                iconRes = if (screenData.isFavorite) {
+                                    R.drawable.ic_star_filled
+                                } else {
+                                    R.drawable.ic_star_outline
+                                },
+                                onClick = {
+                                    if (screenData.isFavorite) {
+                                        viewModel.removeFromFavorites()
+                                    } else {
+                                        viewModel.addToFavorites()
+                                    }
+                                }
+                            )
+
+                            // Play-pause button
                             val horizontalBias = -collapsingLayoutState.toolbarState.progress
                             val isPlaying = albumState is AlbumPlayingState.Playing
                             val isLoading = albumState is AlbumPlayingState.Loading
@@ -138,7 +162,7 @@ fun AlbumDetailsScreen(
                                 modifier = Modifier.align(
                                     BiasAlignment(
                                         horizontalBias = horizontalBias,
-                                        verticalBias = 0f
+                                        verticalBias = 1f
                                     )
                                 ),
                                 isPlaying = isPlaying,

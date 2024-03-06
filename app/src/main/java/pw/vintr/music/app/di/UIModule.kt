@@ -65,10 +65,10 @@ val uiModule = module {
     viewModel { MenuViewModel(get(), get(), get(), get()) }
     viewModel { SettingsViewModel(get()) }
     viewModel { params ->
-        AlbumDetailsViewModel(params.get(), get(), get())
+        AlbumDetailsViewModel(params.get(), get(), get(), get())
     }
     viewModel { params ->
-        ArtistDetailsViewModel(params.get(), get())
+        ArtistDetailsViewModel(params.get(), get(), get())
     }
     viewModel { NowPlayingViewModel(get()) }
     viewModel { EqualizerViewModel(get()) }

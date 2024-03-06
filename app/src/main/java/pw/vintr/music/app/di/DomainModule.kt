@@ -4,6 +4,8 @@ import org.koin.android.ext.koin.androidContext
 import org.koin.dsl.module
 import pw.vintr.music.app.extension.interactor
 import pw.vintr.music.domain.equalizer.interactor.EqualizerInteractor
+import pw.vintr.music.domain.favorite.FavoriteAlbumsInteractor
+import pw.vintr.music.domain.favorite.FavoriteArtistsInteractor
 import pw.vintr.music.domain.library.useCase.GetAlbumTracksUseCase
 import pw.vintr.music.domain.library.useCase.GetArtistAlbumsUseCase
 import pw.vintr.music.domain.library.useCase.GetArtistListUseCase
@@ -54,4 +56,6 @@ val domainModule = module {
     interactor { EqualizerInteractor(get(), get()) }
     interactor { VisualizerInteractor(get(), get()) }
     interactor { SearchHistoryInteractor(get()) }
+    interactor { FavoriteAlbumsInteractor(get()) }
+    interactor { FavoriteArtistsInteractor(get()) }
 }
