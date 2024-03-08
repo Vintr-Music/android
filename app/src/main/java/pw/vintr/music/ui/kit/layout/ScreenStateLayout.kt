@@ -12,8 +12,8 @@ import pw.vintr.music.ui.kit.state.ErrorState
 fun <T> ScreenStateLayout(
     modifier: Modifier = Modifier,
     state: BaseScreenState<T>,
-    errorRetryAction: () -> Unit = { },
-    toolbar: @Composable () -> Unit = { },
+    errorRetryAction: () -> Unit = {},
+    toolbar: @Composable () -> Unit = {},
     loading: @Composable () -> Unit = {
         Column(
             modifier = modifier
@@ -35,7 +35,8 @@ fun <T> ScreenStateLayout(
             )
         }
     },
-    other: @Composable (BaseScreenState<T>) -> Unit = { },
+    empty: @Composable () -> Unit = {},
+    other: @Composable (BaseScreenState<T>) -> Unit = {},
     loaded: @Composable (BaseScreenState.Loaded<T>) -> Unit,
 ) {
     when (state) {
@@ -47,6 +48,9 @@ fun <T> ScreenStateLayout(
         }
         is BaseScreenState.Loaded -> {
             loaded(state)
+        }
+        is BaseScreenState.Empty -> {
+            empty()
         }
         else -> {
             other(state)

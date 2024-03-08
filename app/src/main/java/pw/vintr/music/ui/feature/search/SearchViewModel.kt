@@ -16,6 +16,7 @@ import pw.vintr.music.domain.search.SearchHistoryInteractor
 import pw.vintr.music.tools.extension.Empty
 import pw.vintr.music.ui.base.BaseScreenState
 import pw.vintr.music.ui.base.BaseViewModel
+import pw.vintr.music.ui.feature.actionSheet.track.entity.TrackAction
 import pw.vintr.music.ui.navigation.NavigatorType
 import pw.vintr.music.ui.navigation.Screen
 
@@ -27,7 +28,7 @@ class SearchViewModel(
 
     private val _queryState = MutableStateFlow(String.Empty)
     private val _contentState = MutableStateFlow<BaseScreenState<SearchContent>>(
-        value = SearchContentState.Empty
+        value = BaseScreenState.Empty()
     )
 
     val queryState = _queryState.asStateFlow()
@@ -43,7 +44,7 @@ class SearchViewModel(
             is BaseScreenState.Loading<SearchContent> -> {
                 content
             }
-            is SearchContentState.Empty -> {
+            is BaseScreenState.Empty -> {
                 if (history.isNotEmpty()) {
                     SearchContentState.QueryHistory(history)
                 } else {
@@ -73,7 +74,7 @@ class SearchViewModel(
                 searchLibraryUseCase.invoke(query)
             }
         } else {
-            _contentState.value = SearchContentState.Empty
+            _contentState.value = BaseScreenState.Empty()
         }
     }
 
@@ -81,7 +82,7 @@ class SearchViewModel(
         searchJob?.cancel()
 
         _queryState.value = String.Empty
-        _contentState.value = SearchContentState.Empty
+        _contentState.value = BaseScreenState.Empty()
     }
 
     fun onArtistClick(artist: ArtistModel) {
@@ -103,14 +104,20 @@ class SearchViewModel(
 
     fun openTrackAction(track: TrackModel) {
         navigator.forward(
-            Screen.TrackActionSheet(track),
+            Screen.TrackActionSheet(
+                trackModel = track,
+                allowedActions = listOf(
+                    TrackAction.GO_TO_ALBUM,
+                    TrackAction.GO_TO_ARTIST,
+                    TrackAction.PLAY_NEXT,
+                    TrackAction.ADD_TO_QUEUE,
+                ),
+            ),
             NavigatorType.Root
         )
     }
 }
 
 sealed interface SearchContentState : BaseScreenState<SearchContent> {
-    object Empty : SearchContentState
-
     data class QueryHistory(val queries: List<String>) : SearchContentState
 }

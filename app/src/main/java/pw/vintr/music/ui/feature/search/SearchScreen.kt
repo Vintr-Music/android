@@ -198,66 +198,62 @@ fun SearchScreen(viewModel: SearchViewModel = getViewModel()) {
                     }
                 }
             },
+            empty = {
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .weight(1f)
+                        .padding(horizontal = 40.dp),
+                    verticalArrangement = Arrangement.Center,
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                ) {
+                    Image(
+                        modifier = Modifier.size(124.dp),
+                        painter = painterResource(id = R.drawable.ic_search_large),
+                        contentDescription = null,
+                    )
+                    Spacer(modifier = Modifier.height(20.dp))
+                    Text(
+                        text = stringResource(id = R.string.search_no_history_hint),
+                        color = VintrMusicExtendedTheme.colors.textRegular,
+                        style = Gilroy18
+                    )
+                }
+            },
             other = { state ->
-                when (state) {
-                    // Search queries history state
-                    is SearchContentState.QueryHistory -> {
-                        LazyColumn(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .weight(1f),
-                            contentPadding = PaddingValues(vertical = SPACING_DP.dp)
-                        ) {
-                            itemsSeparated(
-                                items = state.queries,
-                                itemSeparator = { _, _ ->
-                                    LineSeparator(
-                                        modifier = Modifier
-                                            .padding(start = 20.dp)
-                                    )
-                                },
-                                itemContent = { _, query ->
-                                    Text(
-                                        modifier = Modifier
-                                            .fillMaxWidth()
-                                            .clickable {
-                                                viewModel.changeQuery(query)
-                                                viewModel.performSearch()
-                                            }
-                                            .padding(
-                                                vertical = 10.dp,
-                                                horizontal = 20.dp
-                                            ),
-                                        text = query,
-                                        color = VintrMusicExtendedTheme.colors.textRegular,
-                                        style = RubikMedium16
-                                    )
-                                }
-                            )
-                        }
-                    }
-                    // Empty state
-                    else -> {
-                        Column(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .weight(1f)
-                                .padding(horizontal = 40.dp),
-                            verticalArrangement = Arrangement.Center,
-                            horizontalAlignment = Alignment.CenterHorizontally,
-                        ) {
-                            Image(
-                                modifier = Modifier.size(124.dp),
-                                painter = painterResource(id = R.drawable.ic_search_large),
-                                contentDescription = null,
-                            )
-                            Spacer(modifier = Modifier.height(20.dp))
-                            Text(
-                                text = stringResource(id = R.string.search_no_history_hint),
-                                color = VintrMusicExtendedTheme.colors.textRegular,
-                                style = Gilroy18
-                            )
-                        }
+                if (state is SearchContentState.QueryHistory) {
+                    LazyColumn(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .weight(1f),
+                        contentPadding = PaddingValues(vertical = SPACING_DP.dp)
+                    ) {
+                        itemsSeparated(
+                            items = state.queries,
+                            itemSeparator = { _, _ ->
+                                LineSeparator(
+                                    modifier = Modifier
+                                        .padding(start = 20.dp)
+                                )
+                            },
+                            itemContent = { _, query ->
+                                Text(
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .clickable {
+                                            viewModel.changeQuery(query)
+                                            viewModel.performSearch()
+                                        }
+                                        .padding(
+                                            vertical = 10.dp,
+                                            horizontal = 20.dp
+                                        ),
+                                    text = query,
+                                    color = VintrMusicExtendedTheme.colors.textRegular,
+                                    style = RubikMedium16
+                                )
+                            }
+                        )
                     }
                 }
             }

@@ -24,10 +24,14 @@ class ArtistFavoriteListViewModel(
                 BaseScreenState.Loading()
             }
             is BaseDomainState.Loaded -> {
-                BaseScreenState.Loaded(
-                    data = domainState.data,
-                    isRefreshing = domainState.isRefreshing
-                )
+                if (domainState.data.isNotEmpty()) {
+                    BaseScreenState.Loaded(
+                        data = domainState.data,
+                        isRefreshing = domainState.isRefreshing
+                    )
+                } else {
+                    BaseScreenState.Empty()
+                }
             }
         }
     }.stateInThis(initialValue = BaseScreenState.Loading())

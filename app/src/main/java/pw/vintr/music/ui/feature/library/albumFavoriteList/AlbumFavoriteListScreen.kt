@@ -23,6 +23,7 @@ import pw.vintr.music.ui.kit.layout.PullRefreshLayout
 import pw.vintr.music.ui.kit.library.tools.rememberLibraryGridCells
 import pw.vintr.music.ui.kit.layout.ScreenStateLayout
 import pw.vintr.music.ui.kit.library.AlbumView
+import pw.vintr.music.ui.kit.state.EmptyState
 import pw.vintr.music.ui.kit.toolbar.ToolbarRegular
 
 @OptIn(ExperimentalMaterialApi::class)
@@ -46,39 +47,49 @@ fun AlbumFavoriteListScreen(
         ScreenStateLayout(
             modifier = Modifier.padding(scaffoldPadding),
             state = screenState.value,
-            errorRetryAction = { viewModel.loadData() }
-        ) { state ->
-            val albumList = state.data
-            val pullRefreshState = rememberPullRefreshState(
-                refreshing = state.isRefreshing,
-                onRefresh = { viewModel.refreshData() }
-            )
-
-            PullRefreshLayout(
-                modifier = Modifier
-                    .scaffoldPadding(scaffoldPadding),
-                state = pullRefreshState,
-                refreshing = state.isRefreshing
-            ) {
-                LazyVerticalGrid(
+            errorRetryAction = { viewModel.loadData() },
+            empty = {
+                EmptyState(
                     modifier = Modifier
-                        .fillMaxSize(),
-                    columns = rememberLibraryGridCells(),
-                    verticalArrangement = Arrangement.spacedBy(20.dp),
-                    horizontalArrangement = Arrangement.spacedBy(20.dp),
-                    contentPadding = PaddingValues(20.dp)
+                        .fillMaxSize()
+                        .scaffoldPadding(scaffoldPadding),
+                    iconRes = R.drawable.ic_empty_favorite,
+                    text = stringResource(id = R.string.favorite_albums_empty),
+                )
+            },
+            loaded = { state ->
+                val albumList = state.data
+                val pullRefreshState = rememberPullRefreshState(
+                    refreshing = state.isRefreshing,
+                    onRefresh = { viewModel.refreshData() }
+                )
+
+                PullRefreshLayout(
+                    modifier = Modifier
+                        .scaffoldPadding(scaffoldPadding),
+                    state = pullRefreshState,
+                    refreshing = state.isRefreshing
                 ) {
-                    items(
-                        items = albumList,
-                        key = { album -> album.id }
-                    ) { album ->
-                        AlbumView(
-                            album = album,
-                            onClick = { viewModel.onAlbumClick(album) }
-                        )
+                    LazyVerticalGrid(
+                        modifier = Modifier
+                            .fillMaxSize(),
+                        columns = rememberLibraryGridCells(),
+                        verticalArrangement = Arrangement.spacedBy(20.dp),
+                        horizontalArrangement = Arrangement.spacedBy(20.dp),
+                        contentPadding = PaddingValues(20.dp)
+                    ) {
+                        items(
+                            items = albumList,
+                            key = { album -> album.id }
+                        ) { album ->
+                            AlbumView(
+                                album = album,
+                                onClick = { viewModel.onAlbumClick(album) }
+                            )
+                        }
                     }
                 }
             }
-        }
+        )
     }
 }

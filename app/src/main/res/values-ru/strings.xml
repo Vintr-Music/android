@@ -93,4 +93,6 @@
     <string name="all_artists">Все исполнители</string>
     <string name="favorite_artists">Избранные исполнители</string>
     <string name="favorite_albums">Избранные альбомы</string>
+    <string name="favorite_artists_empty">Здесь появятся избранные исполнители</string>
+    <string name="favorite_albums_empty">Здесь появятся избранные альбомы</string>
 </resources>
