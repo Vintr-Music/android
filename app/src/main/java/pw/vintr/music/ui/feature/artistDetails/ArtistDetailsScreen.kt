@@ -33,6 +33,7 @@ import pw.vintr.music.ui.kit.toolbar.collapsing.CollapsingLayout
 import pw.vintr.music.ui.kit.toolbar.collapsing.ScrollStrategy
 import pw.vintr.music.ui.kit.toolbar.collapsing.rememberCollapsingLayoutState
 import pw.vintr.music.ui.theme.Gilroy36
+import pw.vintr.music.ui.theme.Red2
 import pw.vintr.music.ui.theme.VintrMusicExtendedTheme
 
 @Composable
@@ -95,9 +96,14 @@ fun ArtistDetailsScreen(
                                 // Favorites button
                                 ButtonBorderedIcon(
                                     iconRes = if (screenData.isFavorite) {
-                                        R.drawable.ic_star_filled
+                                        R.drawable.ic_favorite_filled
                                     } else {
-                                        R.drawable.ic_star_outline
+                                        R.drawable.ic_favorite_outline
+                                    },
+                                    tint = if (screenData.isFavorite) {
+                                        Red2
+                                    } else {
+                                        VintrMusicExtendedTheme.colors.textRegular
                                     },
                                     onClick = {
                                         if (screenData.isFavorite) {
