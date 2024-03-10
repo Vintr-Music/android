@@ -47,6 +47,8 @@ import pw.vintr.music.data.player.repository.PlayerConfigRepository
 import pw.vintr.music.data.player.repository.PlayerSessionRepository
 import pw.vintr.music.data.player.source.PlayerPreferencesDataStore
 import pw.vintr.music.data.player.source.PlayerSessionCacheDataStore
+import pw.vintr.music.data.playlist.repository.PlaylistRepository
+import pw.vintr.music.data.playlist.source.PlaylistRemoteDataSource
 import pw.vintr.music.data.search.cache.SearchHistoryCacheObject
 import pw.vintr.music.data.search.repository.SearchHistoryRepository
 import pw.vintr.music.data.search.source.SearchHistoryCacheDataSource
@@ -226,4 +228,8 @@ val dataModule = module {
     // Favorite
     single { FavoriteRemoteDataSource(get()) }
     single { FavoriteRepository(get()) }
+
+    // Playlist
+    single { PlaylistRemoteDataSource(get()) }
+    single { PlaylistRepository(get()) }
 }
