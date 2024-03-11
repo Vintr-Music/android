@@ -1,4 +1,4 @@
-package pw.vintr.music.data.playlist.dto
+package pw.vintr.music.data.playlist.dto.record
 
 import com.google.gson.annotations.SerializedName
 import pw.vintr.music.data.library.dto.track.TrackDto

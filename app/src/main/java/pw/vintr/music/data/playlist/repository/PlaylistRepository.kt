@@ -1,7 +1,8 @@
 package pw.vintr.music.data.playlist.repository
 
 import pw.vintr.music.data.playlist.dto.PlaylistCreateDto
-import pw.vintr.music.data.playlist.dto.PlaylistRecordCreateDto
+import pw.vintr.music.data.playlist.dto.record.PlaylistRecordCreateDto
+import pw.vintr.music.data.playlist.dto.PlaylistUpdateDto
 import pw.vintr.music.data.playlist.source.PlaylistRemoteDataSource
 
 class PlaylistRepository(private val remoteDataSource: PlaylistRemoteDataSource) {
@@ -22,4 +23,7 @@ class PlaylistRepository(private val remoteDataSource: PlaylistRemoteDataSource)
 
     suspend fun removePlaylistTrack(playlistId: String, recordId: String) = remoteDataSource
         .removePlaylistTrack(playlistId, recordId)
+
+    suspend fun updatePlaylistTracks(dto: PlaylistUpdateDto) = remoteDataSource
+        .updatePlaylistTracks(dto)
 }
