@@ -1,13 +1,13 @@
-package pw.vintr.music.ui.feature.library.albumFavoriteList
+package pw.vintr.music.ui.feature.library.favorite.albumFavoriteList
 
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.mapLatest
 import kotlinx.coroutines.launch
-import pw.vintr.music.domain.base.BaseDomainState
 import pw.vintr.music.domain.favorite.FavoriteAlbumsInteractor
 import pw.vintr.music.domain.library.model.album.AlbumModel
 import pw.vintr.music.ui.base.BaseScreenState
 import pw.vintr.music.ui.base.BaseViewModel
+import pw.vintr.music.ui.base.mapToScreenState
 import pw.vintr.music.ui.navigation.Screen
 
 class AlbumFavoriteListViewModel(
@@ -15,26 +15,9 @@ class AlbumFavoriteListViewModel(
 ) : BaseViewModel() {
 
     @OptIn(ExperimentalCoroutinesApi::class)
-    val screenState = favoriteAlbumsInteractor.dataFlow.mapLatest { domainState ->
-        when (domainState) {
-            is BaseDomainState.Error -> {
-                BaseScreenState.Error()
-            }
-            is BaseDomainState.Loading -> {
-                BaseScreenState.Loading()
-            }
-            is BaseDomainState.Loaded -> {
-                if (domainState.data.isNotEmpty()) {
-                    BaseScreenState.Loaded(
-                        data = domainState.data,
-                        isRefreshing = domainState.isRefreshing
-                    )
-                } else {
-                    BaseScreenState.Empty()
-                }
-            }
-        }
-    }.stateInThis(initialValue = BaseScreenState.Loading())
+    val screenState = favoriteAlbumsInteractor.dataFlow
+        .mapLatest(::mapToScreenState)
+        .stateInThis(BaseScreenState.Loading())
 
     init {
         loadData()

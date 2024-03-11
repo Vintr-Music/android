@@ -1,4 +1,4 @@
-package pw.vintr.music.ui.feature.library.artistList
+package pw.vintr.music.ui.feature.library.artist
 
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow

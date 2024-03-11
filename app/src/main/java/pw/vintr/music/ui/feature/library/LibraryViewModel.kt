@@ -51,7 +51,7 @@ class LibraryViewModel(
     }
 
     fun openPlaylists() {
-
+        navigator.forward(Screen.PlaylistList)
     }
 
     fun openAllArtists() {

@@ -10,7 +10,7 @@ import pw.vintr.music.ui.feature.dialog.ConfirmViewModel
 import pw.vintr.music.ui.feature.equalizer.EqualizerViewModel
 import pw.vintr.music.ui.feature.home.HomeViewModel
 import pw.vintr.music.ui.feature.library.LibraryViewModel
-import pw.vintr.music.ui.feature.library.artistList.ArtistListViewModel
+import pw.vintr.music.ui.feature.library.artist.ArtistListViewModel
 import pw.vintr.music.ui.feature.login.LoginViewModel
 import pw.vintr.music.ui.feature.menu.MenuViewModel
 import pw.vintr.music.ui.feature.nowPlaying.NowPlayingViewModel
@@ -26,8 +26,9 @@ import pw.vintr.music.ui.feature.server.selection.ServerSelectionViewModel
 import pw.vintr.music.ui.feature.server.selection.connectNew.ConnectNewServerViewModel
 import pw.vintr.music.ui.feature.settings.SettingsViewModel
 import pw.vintr.music.ui.feature.actionSheet.track.TrackActionViewModel
-import pw.vintr.music.ui.feature.library.albumFavoriteList.AlbumFavoriteListViewModel
-import pw.vintr.music.ui.feature.library.artistFavoriteList.ArtistFavoriteListViewModel
+import pw.vintr.music.ui.feature.library.favorite.albumFavoriteList.AlbumFavoriteListViewModel
+import pw.vintr.music.ui.feature.library.favorite.artistFavoriteList.ArtistFavoriteListViewModel
+import pw.vintr.music.ui.feature.library.playlist.PlaylistListViewModel
 import pw.vintr.music.ui.navigation.Navigator
 
 val uiModule = module {
@@ -64,6 +65,7 @@ val uiModule = module {
     viewModel { SearchViewModel(get(), get(), get()) }
     viewModel { LibraryViewModel(get()) }
     viewModel { ArtistListViewModel(get()) }
+    viewModel { PlaylistListViewModel(get()) }
     viewModel { ArtistFavoriteListViewModel(get()) }
     viewModel { AlbumFavoriteListViewModel(get()) }
     viewModel { MenuViewModel(get(), get(), get(), get()) }

@@ -1,6 +1,7 @@
 package pw.vintr.music.domain.playlist.model
 
 import pw.vintr.music.data.playlist.dto.PlaylistDto
+import pw.vintr.music.tools.http.MediaUrlBuilder
 import java.util.Calendar
 
 data class PlaylistModel(
@@ -9,6 +10,7 @@ data class PlaylistModel(
     val name: String,
     val description: String,
     val createdAt: Calendar,
+    val artworkUrl: String = MediaUrlBuilder.artworkForPlaylist(id)
 )
 
 fun PlaylistDto.toModel() = PlaylistModel(

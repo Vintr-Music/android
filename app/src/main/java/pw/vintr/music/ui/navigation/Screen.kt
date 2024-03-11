@@ -125,6 +125,8 @@ sealed class Screen(val route: String) {
 
     object ArtistList : Screen(route = "all_artists")
 
+    object PlaylistList : Screen(route = "all_playlists")
+
     object ArtistFavoriteList : Screen(route = "favorite_artists")
 
     object AlbumFavoriteList : Screen(route = "favorite_albums")

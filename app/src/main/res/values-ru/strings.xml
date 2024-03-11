@@ -95,4 +95,7 @@
     <string name="favorite_albums">Избранные альбомы</string>
     <string name="favorite_artists_empty">Здесь появятся избранные исполнители</string>
     <string name="favorite_albums_empty">Здесь появятся избранные альбомы</string>
+
+    <string name="playlist_create">Создать плейлист</string>
+    <string name="playlist_empty">Здесь появятся Ваши плейлисты</string>
 </resources>

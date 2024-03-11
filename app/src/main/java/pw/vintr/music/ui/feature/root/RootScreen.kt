@@ -38,9 +38,10 @@ import pw.vintr.music.ui.feature.artistDetails.ArtistDetailsScreen
 import pw.vintr.music.ui.feature.equalizer.EqualizerScreen
 import pw.vintr.music.ui.feature.home.HomeScreen
 import pw.vintr.music.ui.feature.library.LibraryScreen
-import pw.vintr.music.ui.feature.library.albumFavoriteList.AlbumFavoriteListScreen
-import pw.vintr.music.ui.feature.library.artistFavoriteList.ArtistFavoriteListScreen
-import pw.vintr.music.ui.feature.library.artistList.ArtistListScreen
+import pw.vintr.music.ui.feature.library.favorite.albumFavoriteList.AlbumFavoriteListScreen
+import pw.vintr.music.ui.feature.library.favorite.artistFavoriteList.ArtistFavoriteListScreen
+import pw.vintr.music.ui.feature.library.artist.ArtistListScreen
+import pw.vintr.music.ui.feature.library.playlist.PlaylistListScreen
 import pw.vintr.music.ui.feature.menu.MenuScreen
 import pw.vintr.music.ui.feature.search.SearchScreen
 import pw.vintr.music.ui.feature.settings.SettingsScreen
@@ -210,6 +211,7 @@ fun TabNavigation(
             ArtistDetailsScreen(artist = artist)
         }
         composable(Screen.ArtistList.route) { ArtistListScreen() }
+        composable(Screen.PlaylistList.route) { PlaylistListScreen() }
         composable(Screen.ArtistFavoriteList.route) { ArtistFavoriteListScreen() }
         composable(Screen.AlbumFavoriteList.route) { AlbumFavoriteListScreen() }
     }

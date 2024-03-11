@@ -1,4 +1,4 @@
-package pw.vintr.music.ui.feature.library.artistList
+package pw.vintr.music.ui.feature.library.artist
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement

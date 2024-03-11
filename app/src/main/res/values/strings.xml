@@ -104,4 +104,7 @@
     <string name="favorite_albums">Favorite albums</string>
     <string name="favorite_artists_empty">Favorite artists will appear here</string>
     <string name="favorite_albums_empty">Favorite albums will appear here</string>
+
+    <string name="playlist_create">Create playlist</string>
+    <string name="playlist_empty">Your playlists will appear here</string>
 </resources>

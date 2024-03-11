@@ -1,4 +1,4 @@
-package pw.vintr.music.ui.feature.library.albumFavoriteList
+package pw.vintr.music.ui.feature.library.favorite.albumFavoriteList
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -7,6 +7,8 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.pullrefresh.rememberPullRefreshState
 import androidx.compose.material3.MaterialTheme
@@ -52,7 +54,8 @@ fun AlbumFavoriteListScreen(
                 EmptyState(
                     modifier = Modifier
                         .fillMaxSize()
-                        .scaffoldPadding(scaffoldPadding),
+                        .scaffoldPadding(scaffoldPadding)
+                        .verticalScroll(rememberScrollState()),
                     iconRes = R.drawable.ic_empty_favorite,
                     text = stringResource(id = R.string.favorite_albums_empty),
                 )

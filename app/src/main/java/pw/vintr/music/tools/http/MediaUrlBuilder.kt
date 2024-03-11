@@ -21,4 +21,7 @@ object MediaUrlBuilder {
 
     fun artworkForArtist(artist: String) = BuildConfig.BASE_URL +
             "api/library/artworks/artist?artist=$artist"
+
+    fun artworkForPlaylist(id: String) = BuildConfig.BASE_URL +
+            "api/library/artworks/playlist?id=$id"
 }
