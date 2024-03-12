@@ -21,6 +21,7 @@ import androidx.compose.ui.BiasAlignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import coil.request.CachePolicy
 import org.koin.androidx.compose.getViewModel
 import org.koin.core.parameter.parametersOf
 import pw.vintr.music.R
@@ -77,6 +78,7 @@ fun PlaylistDetailsScreen(
                         state = collapsingLayoutState,
                         artworkUrl = screenData.playlist.artworkUrl,
                         mediaName = screenData.title,
+                        cachePolicy = CachePolicy.DISABLED,
                         titleSlot = {
                             Column(
                                 modifier = Modifier
@@ -172,7 +174,7 @@ fun PlaylistDetailsScreen(
                         TrackView(
                             trackModel = record.track,
                             isPlaying = playingState.playingTrack == record.track,
-                            onMoreClick = { viewModel.openTrackAction(record.track) },
+                            onMoreClick = { viewModel.openTrackAction(record) },
                             onClick = { viewModel.playPlaylist(index) }
                         )
                     }

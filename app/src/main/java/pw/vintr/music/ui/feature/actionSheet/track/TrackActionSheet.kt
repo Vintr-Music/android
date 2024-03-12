@@ -142,6 +142,9 @@ fun TrackActionSheet(
                             TrackAction.ADD_TO_PLAYLIST -> {
                                 viewModel.addToPlaylist(trackModel)
                             }
+                            TrackAction.DELETE_FROM_PLAYLIST -> {
+                                viewModel.deleteFromPlaylist()
+                            }
                         }
                     }
                     .padding(vertical = 8.dp),

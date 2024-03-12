@@ -41,4 +41,21 @@ object ConfirmDialogTemplate {
             if (it == ConfirmResult.ACCEPT) { onPlay() }
         }
     }
+
+    fun Navigator.openDeleteTrackConfirmDialog(onDelete: () -> Unit): ResultListenerHandler {
+        return forwardWithResult<ConfirmResult>(
+            screen = Screen.ConfirmDialog(
+                data = ConfirmDialogData.Resource(
+                    titleRes = R.string.common_confirmation,
+                    messageRes = R.string.playlist_delete_text,
+                    acceptTextRes = R.string.common_delete,
+                    declineTextRes = R.string.common_cancel
+                )
+            ),
+            type = NavigatorType.Root,
+            resultKey = ConfirmResult.KEY,
+        ) {
+            if (it == ConfirmResult.ACCEPT) { onDelete() }
+        }
+    }
 }

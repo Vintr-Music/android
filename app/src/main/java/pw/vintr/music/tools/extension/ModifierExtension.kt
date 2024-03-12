@@ -2,6 +2,8 @@ package pw.vintr.music.tools.extension
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.WindowInsets
@@ -89,4 +91,11 @@ fun Modifier.dialogContainer() = composed {
             shape = RoundedCornerShape(20.dp)
         )
         .padding(24.dp)
+}
+
+fun Modifier.noRippleClickable(onClick: () -> Unit = { }): Modifier = composed {
+    clickable(indication = null,
+        interactionSource = remember { MutableInteractionSource() }) {
+        onClick()
+    }
 }

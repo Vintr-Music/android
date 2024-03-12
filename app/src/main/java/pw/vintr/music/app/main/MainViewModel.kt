@@ -5,6 +5,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import pw.vintr.music.domain.loader.PrimaryLoaderInteractor
 import pw.vintr.music.domain.player.interactor.PlayerInteractor
 import pw.vintr.music.domain.server.useCase.selection.GetIsServerSelectedUseCase
 import pw.vintr.music.domain.user.useCase.GetAuthorizeStateUseCase
@@ -17,9 +18,13 @@ class MainViewModel(
     private val getSelectedServerIdUseCase: GetIsServerSelectedUseCase,
     private val visualizerInteractor: VisualizerInteractor,
     private val playerInteractor: PlayerInteractor,
+    primaryLoaderInteractor: PrimaryLoaderInteractor,
 ) : BaseViewModel() {
 
     val initialState = MutableStateFlow(value = getInitialState()).asStateFlow()
+
+    val primaryLoaderState = primaryLoaderInteractor.primaryLoaderState
+        .stateInThis(initialValue = false)
 
     init {
         collectAskPlaySpeakersEvent()

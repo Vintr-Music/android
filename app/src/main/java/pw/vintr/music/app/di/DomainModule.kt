@@ -10,6 +10,7 @@ import pw.vintr.music.domain.library.useCase.GetAlbumTracksUseCase
 import pw.vintr.music.domain.library.useCase.GetArtistAlbumsUseCase
 import pw.vintr.music.domain.library.useCase.GetArtistListUseCase
 import pw.vintr.music.domain.library.useCase.SearchLibraryUseCase
+import pw.vintr.music.domain.loader.PrimaryLoaderInteractor
 import pw.vintr.music.domain.mainPage.useCase.GetMainPageContentUseCase
 import pw.vintr.music.domain.player.interactor.PlayerInteractor
 import pw.vintr.music.domain.playlist.interactor.PlaylistInteractor
@@ -52,6 +53,7 @@ val domainModule = module {
     single { GetArtistAlbumsUseCase(get()) }
     single { SearchLibraryUseCase(get()) }
 
+    interactor { PrimaryLoaderInteractor() }
     interactor { PlayerInteractor(androidContext(), get(), get(), get()) }
     interactor { PlaybackSettingsInteractor(get()) }
     interactor { EqualizerInteractor(get(), get()) }

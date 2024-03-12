@@ -6,6 +6,8 @@
     <string name="common_cancel">Отмена</string>
     <string name="common_ok">Ок</string>
     <string name="common_attention">Внимание!</string>
+    <string name="common_confirmation">Подтверждение</string>
+    <string name="common_delete">Удалить</string>
 
     <string name="login_field">Логин</string>
     <string name="password">Пароль</string>
@@ -104,4 +106,6 @@
     <string name="playlist_description_hint">Необязательно</string>
     <string name="playlist_new">Новый плейлист</string>
     <string name="playlist_add">Добавить в плейлист</string>
+    <string name="playlist_delete">Удалить из плейлиста</string>
+    <string name="playlist_delete_text">Вы действительно хотите удалить трек? Отменить это будет невозможно</string>
 </resources>

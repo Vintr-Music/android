@@ -9,6 +9,8 @@
     <string name="common_cancel">Cancel</string>
     <string name="common_ok">OK</string>
     <string name="common_attention">Attention!</string>
+    <string name="common_confirmation">Confirmation</string>
+    <string name="common_delete">Delete</string>
 
     <string name="login_field">Login</string>
     <string name="password">Password</string>
@@ -113,4 +115,6 @@
     <string name="playlist_description_hint">Not necessary</string>
     <string name="playlist_new">New playlist</string>
     <string name="playlist_add">Add to playlist</string>
+    <string name="playlist_delete">Delete from playlist</string>
+    <string name="playlist_delete_text">Are you sure you want to delete the track? It will be impossible to undo this</string>
 </resources>

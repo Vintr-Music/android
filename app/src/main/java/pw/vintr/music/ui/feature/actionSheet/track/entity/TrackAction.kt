@@ -32,6 +32,10 @@ enum class TrackAction(
     ADD_TO_PLAYLIST(
         iconRes = R.drawable.ic_add_to_playlist,
         titleRes = R.string.playlist_add
+    ),
+    DELETE_FROM_PLAYLIST(
+        iconRes = R.drawable.ic_delete,
+        titleRes = R.string.playlist_delete
     );
 
     companion object {

@@ -114,6 +114,7 @@ class NowPlayingViewModel(
                 allowedActions = listOf(
                     TrackAction.GO_TO_ALBUM,
                     TrackAction.GO_TO_ARTIST,
+                    TrackAction.ADD_TO_PLAYLIST,
                 ),
             ),
             type = NavigatorType.Root

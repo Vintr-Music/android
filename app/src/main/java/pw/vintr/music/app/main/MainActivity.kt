@@ -4,11 +4,15 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.BackHandler
 import androidx.activity.compose.setContent
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.AnimationSpec
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.size
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
@@ -22,9 +26,11 @@ import pw.vintr.music.ui.theme.VintrMusicTheme
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.ModalBottomSheetValue
 import androidx.compose.material.rememberModalBottomSheetState
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
@@ -45,6 +51,7 @@ import pw.vintr.music.domain.server.model.ServerInviteModel
 import pw.vintr.music.tools.extension.Empty
 import pw.vintr.music.tools.extension.getRequiredArg
 import pw.vintr.music.tools.extension.getRequiredArgList
+import pw.vintr.music.tools.extension.noRippleClickable
 import pw.vintr.music.ui.feature.actionSheet.album.AlbumActionSheet
 import pw.vintr.music.ui.feature.actionSheet.album.entity.AlbumActionSheetInfo
 import pw.vintr.music.ui.feature.dialog.ConfirmDialog
@@ -68,6 +75,7 @@ import pw.vintr.music.ui.navigation.Screen
 import pw.vintr.music.ui.navigation.navArgs.parcelable.ParcelableNavType
 import pw.vintr.music.ui.navigation.navArgs.parcelableList.ParcelableListNavType
 import pw.vintr.music.ui.navigation.navGraph.extendedDialog
+import pw.vintr.music.ui.theme.Bee1
 
 private const val TRANSITION_DURATION = 300
 
@@ -82,6 +90,7 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             val initialState = viewModel.initialState.collectAsState()
+
             val bottomSheetNavigator = rememberBottomSheetNavigator(skipHalfExpanded = true)
             val navController = rememberNavController(bottomSheetNavigator)
 
@@ -120,9 +129,36 @@ class MainActivity : ComponentActivity() {
                                     }
                                 )
                             }
+                            PrimaryLoader()
                         }
                     }
                 }
+            }
+        }
+    }
+
+    @Composable
+    private fun PrimaryLoader() {
+        val primaryLoaderState = viewModel.primaryLoaderState.collectAsState()
+
+        AnimatedVisibility(
+            modifier = Modifier
+                .fillMaxSize(),
+            visible = primaryLoaderState.value,
+            enter = fadeIn(),
+            exit = fadeOut()
+        ) {
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .background(MaterialTheme.colorScheme.background.copy(alpha = 0.9f))
+                    .noRippleClickable(),
+                contentAlignment = Alignment.Center,
+            ) {
+                CircularProgressIndicator(
+                    modifier = Modifier.size(36.dp),
+                    color = Bee1,
+                )
             }
         }
     }

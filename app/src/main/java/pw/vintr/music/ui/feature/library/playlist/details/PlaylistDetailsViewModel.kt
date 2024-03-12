@@ -8,6 +8,7 @@ import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import pw.vintr.music.domain.library.model.track.TrackModel
+import pw.vintr.music.domain.loader.PrimaryLoaderInteractor
 import pw.vintr.music.domain.player.interactor.PlayerInteractor
 import pw.vintr.music.domain.player.model.session.PlayerSessionModel
 import pw.vintr.music.domain.player.model.state.PlayerStatusModel
@@ -19,6 +20,8 @@ import pw.vintr.music.tools.extension.withLoaded
 import pw.vintr.music.ui.base.BaseScreenState
 import pw.vintr.music.ui.base.BaseViewModel
 import pw.vintr.music.ui.feature.actionSheet.track.entity.TrackAction
+import pw.vintr.music.ui.feature.actionSheet.track.entity.TrackActionResult
+import pw.vintr.music.ui.feature.dialog.entity.ConfirmDialogTemplate.openDeleteTrackConfirmDialog
 import pw.vintr.music.ui.navigation.NavigatorType
 import pw.vintr.music.ui.navigation.Screen
 
@@ -26,6 +29,7 @@ class PlaylistDetailsViewModel(
     private val playlistId: String,
     private val playerInteractor: PlayerInteractor,
     private val playlistInteractor: PlaylistInteractor,
+    private val primaryLoaderInteractor: PrimaryLoaderInteractor,
 ) : BaseViewModel() {
 
     private val _screenState = MutableStateFlow<BaseScreenState<PlaylistDetailsScreenData>>(
@@ -117,19 +121,42 @@ class PlaylistDetailsViewModel(
         playerInteractor.resume()
     }
 
-    fun openTrackAction(track: TrackModel) {
-        navigator.forward(
-            Screen.TrackActionSheet(
-                trackModel = track,
-                allowedActions = listOf(
-                    TrackAction.GO_TO_ALBUM,
-                    TrackAction.GO_TO_ARTIST,
-                    TrackAction.PLAY_NEXT,
-                    TrackAction.ADD_TO_QUEUE,
-                )
-            ),
-            NavigatorType.Root
-        )
+    fun openTrackAction(record: PlaylistRecordModel) {
+        handleResult(TrackActionResult.KEY) {
+            navigator.forwardWithResult<TrackActionResult>(
+                screen = Screen.TrackActionSheet(
+                    trackModel = record.track,
+                    allowedActions = listOf(
+                        TrackAction.GO_TO_ALBUM,
+                        TrackAction.GO_TO_ARTIST,
+                        TrackAction.PLAY_NEXT,
+                        TrackAction.ADD_TO_QUEUE,
+                        TrackAction.DELETE_FROM_PLAYLIST,
+                    )
+                ),
+                type = NavigatorType.Root,
+                resultKey = TrackActionResult.KEY
+            ) { result ->
+                if (result.action == TrackAction.DELETE_FROM_PLAYLIST) {
+                    navigator.openDeleteTrackConfirmDialog {
+                        deleteTrackFromPlaylist(record)
+                    }
+                }
+            }
+        }
+    }
+
+    private fun deleteTrackFromPlaylist(record: PlaylistRecordModel) {
+        launch(createExceptionHandler()) {
+            withLoading(
+                setLoadingCallback = { isLoading ->
+                    primaryLoaderInteractor.setLoaderState(isLoading)
+                },
+                action = {
+                    playlistInteractor.removeTrackFromPlaylist(record)
+                }
+            )
+        }
     }
 
     fun openPlaylistAction() {

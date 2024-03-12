@@ -34,6 +34,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
+import coil.request.CachePolicy
 import coil.request.ImageRequest
 import org.koin.androidx.compose.getViewModel
 import org.koin.core.parameter.parametersOf
@@ -146,6 +147,8 @@ fun PlaylistAddTrackScreen(
                                                 width = constraints.maxWidth,
                                                 height = constraints.maxHeight
                                             )
+                                            .memoryCachePolicy(CachePolicy.DISABLED)
+                                            .diskCachePolicy(CachePolicy.DISABLED)
                                             .crossfade(enable = true)
                                             .build(),
                                         contentScale = ContentScale.Crop,

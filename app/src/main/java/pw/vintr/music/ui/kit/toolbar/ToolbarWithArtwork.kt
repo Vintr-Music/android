@@ -21,6 +21,7 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.coerceIn
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
+import coil.request.CachePolicy
 import coil.request.ImageRequest
 import coil.size.Size
 import pw.vintr.music.tools.extension.pxToDpFloat
@@ -34,6 +35,7 @@ fun CollapsingToolbarScope.ToolbarWithArtwork(
     artworkUrl: String,
     mediaName: String,
     onBackPressed: () -> Unit,
+    cachePolicy: CachePolicy? = null,
     trailingSlot: @Composable BoxScope.() -> Unit = {},
     titleSlot: @Composable CollapsingToolbarScope.() -> Unit = {},
 ) {
@@ -54,6 +56,13 @@ fun CollapsingToolbarScope.ToolbarWithArtwork(
                 model = ImageRequest.Builder(LocalContext.current)
                     .data(artworkUrl)
                     .size(Size.ORIGINAL)
+                    .let { builder ->
+                        cachePolicy?.let {
+                            builder
+                                .memoryCachePolicy(it)
+                                .diskCachePolicy(it)
+                        } ?: builder
+                    }
                     .crossfade(enable = true)
                     .build(),
                 contentDescription = null,
