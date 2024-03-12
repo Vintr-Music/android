@@ -98,4 +98,9 @@
 
     <string name="playlist_create">Создать плейлист</string>
     <string name="playlist_empty">Здесь появятся Ваши плейлисты</string>
+    <string name="playlist_name">Название</string>
+    <string name="playlist_name_hint">Максимум 30 символов</string>
+    <string name="playlist_description">Описание</string>
+    <string name="playlist_description_hint">Необязательно</string>
+    <string name="playlist_new">Новый плейлист</string>
 </resources>

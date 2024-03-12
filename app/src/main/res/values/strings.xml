@@ -107,4 +107,9 @@
 
     <string name="playlist_create">Create playlist</string>
     <string name="playlist_empty">Your playlists will appear here</string>
+    <string name="playlist_name">Name</string>
+    <string name="playlist_name_hint">Maximum 30 characters</string>
+    <string name="playlist_description">Description</string>
+    <string name="playlist_description_hint">Not necessary</string>
+    <string name="playlist_new">New playlist</string>
 </resources>

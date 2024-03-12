@@ -58,6 +58,7 @@ import pw.vintr.music.ui.feature.server.selection.ServerSelectionScreen
 import pw.vintr.music.ui.feature.server.selection.connectNew.ConnectNewServerScreen
 import pw.vintr.music.ui.feature.actionSheet.track.TrackActionSheet
 import pw.vintr.music.ui.feature.actionSheet.track.entity.TrackAction
+import pw.vintr.music.ui.feature.library.playlist.create.PlaylistCreateScreen
 import pw.vintr.music.ui.kit.sliding.AnchoredDraggableDefaults
 import pw.vintr.music.ui.navigation.Navigator
 import pw.vintr.music.ui.navigation.NavigatorEffect
@@ -252,6 +253,12 @@ fun Navigation(
         bottomSheet(Screen.ManageSession.route) {
             BackHandler { navController.navigateUp() }
             ManageSessionScreen()
+        }
+
+        // Playlist actions
+        bottomSheet(Screen.PlaylistCreate.route) {
+            BackHandler { navController.navigateUp() }
+            PlaylistCreateScreen()
         }
     }
 }

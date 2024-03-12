@@ -25,19 +25,24 @@ import androidx.compose.ui.unit.dp
 import org.koin.androidx.compose.getViewModel
 import pw.vintr.music.R
 import pw.vintr.music.tools.extension.scaffoldPadding
+import pw.vintr.music.ui.base.BaseScreenState
 import pw.vintr.music.ui.kit.button.ButtonRegular
+import pw.vintr.music.ui.kit.button.ButtonSimpleIcon
 import pw.vintr.music.ui.kit.layout.PullRefreshLayout
 import pw.vintr.music.ui.kit.layout.ScreenStateLayout
 import pw.vintr.music.ui.kit.library.PlaylistView
 import pw.vintr.music.ui.kit.library.tools.rememberLibraryGridCells
 import pw.vintr.music.ui.kit.state.EmptyState
 import pw.vintr.music.ui.kit.toolbar.ToolbarRegular
+import pw.vintr.music.ui.theme.Bee1
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun PlaylistListScreen(
     viewModel: PlaylistListViewModel = getViewModel()
 ) {
+    val screenState = viewModel.screenState.collectAsState()
+
     Scaffold(
         modifier = Modifier
             .background(MaterialTheme.colorScheme.background)
@@ -45,12 +50,19 @@ fun PlaylistListScreen(
         topBar = {
             ToolbarRegular(
                 title = stringResource(id = R.string.library_playlists),
-                onBackPressed = { viewModel.navigateBack() }
+                onBackPressed = { viewModel.navigateBack() },
+                trailing = {
+                    if (screenState.value is BaseScreenState.Loaded) {
+                        ButtonSimpleIcon(
+                            iconRes = R.drawable.ic_add,
+                            tint = Bee1,
+                            onClick = { viewModel.openCreatePlaylist() },
+                        )
+                    }
+                }
             )
         },
     ) { scaffoldPadding ->
-        val screenState = viewModel.screenState.collectAsState()
-
         ScreenStateLayout(
             modifier = Modifier.padding(scaffoldPadding),
             state = screenState.value,
@@ -75,7 +87,7 @@ fun PlaylistListScreen(
                         modifier = Modifier
                             .padding(horizontal = 20.dp),
                         text = stringResource(id = R.string.playlist_create),
-                        onClick = { viewModel.onCreatePlaylistClick() }
+                        onClick = { viewModel.openCreatePlaylist() }
                     )
                     Spacer(modifier = Modifier.height(32.dp))
                 }
@@ -107,7 +119,7 @@ fun PlaylistListScreen(
                         ) { playlist ->
                             PlaylistView(
                                 playlist = playlist,
-                                onClick = { viewModel.onPlaylistClick(playlist) }
+                                onClick = { viewModel.openPlaylist(playlist) }
                             )
                         }
                     }

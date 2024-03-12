@@ -8,6 +8,8 @@ import pw.vintr.music.domain.playlist.model.PlaylistModel
 import pw.vintr.music.ui.base.BaseScreenState
 import pw.vintr.music.ui.base.BaseViewModel
 import pw.vintr.music.ui.base.mapToScreenState
+import pw.vintr.music.ui.navigation.NavigatorType
+import pw.vintr.music.ui.navigation.Screen
 
 class PlaylistListViewModel(
     private val playlistInteractor: PlaylistInteractor,
@@ -30,11 +32,14 @@ class PlaylistListViewModel(
         launch { playlistInteractor.refreshPlaylists() }
     }
 
-    fun onCreatePlaylistClick() {
-        // TODO: navigate
+    fun openCreatePlaylist() {
+        navigator.forward(
+            screen = Screen.PlaylistCreate,
+            type = NavigatorType.Root
+        )
     }
 
-    fun onPlaylistClick(playlist: PlaylistModel) {
+    fun openPlaylist(playlist: PlaylistModel) {
         // TODO: navigate
     }
 }
