@@ -123,15 +123,30 @@ sealed class Screen(val route: String) {
 
     object Equalizer : Screen(route = "equalizer")
 
-    object ArtistList : Screen(route = "all_artists")
+    object ArtistList : Screen(route = "all-artists")
 
-    object PlaylistList : Screen(route = "all_playlists")
+    object PlaylistList : Screen(route = "all-playlists")
 
-    object ArtistFavoriteList : Screen(route = "favorite_artists")
+    object ArtistFavoriteList : Screen(route = "favorite-artists")
 
-    object AlbumFavoriteList : Screen(route = "favorite_albums")
+    object AlbumFavoriteList : Screen(route = "favorite-albums")
 
-    object PlaylistCreate : Screen(route = "playlist_create")
+    object PlaylistCreate : Screen(route = "playlist-create")
+
+    data class PlaylistAddTrack(val trackId: String) : ScreenWithArgs(
+        destination = ROUTE_DESTINATION,
+        args = mapOf(ARG_KEY_TRACK_ID to trackId)
+    ) {
+        companion object {
+            const val ARG_KEY_TRACK_ID = "arg-key-track-id"
+            private const val ROUTE_DESTINATION = "playlist-add-track"
+
+            val routeTemplate = buildRouteTemplate(
+                ROUTE_DESTINATION,
+                listOf(ARG_KEY_TRACK_ID)
+            )
+        }
+    }
 
     data class AlbumDetails(val album: AlbumModel) : ScreenWithArgs(
         destination = ROUTE_DESTINATION,

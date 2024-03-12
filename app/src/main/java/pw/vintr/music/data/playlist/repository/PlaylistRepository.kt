@@ -7,7 +7,8 @@ import pw.vintr.music.data.playlist.source.PlaylistRemoteDataSource
 
 class PlaylistRepository(private val remoteDataSource: PlaylistRemoteDataSource) {
 
-    suspend fun getPlaylists() = remoteDataSource.getPlaylists()
+    suspend fun getPlaylists(containsTrackId: String? = null) = remoteDataSource
+        .getPlaylists(containsTrackId)
 
     suspend fun createPlaylist(dto: PlaylistCreateDto) = remoteDataSource
         .createPlaylist(dto)

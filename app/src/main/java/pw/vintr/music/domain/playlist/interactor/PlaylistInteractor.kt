@@ -68,6 +68,10 @@ class PlaylistInteractor(
         .getPlaylists()
         .map { it.toModel() }
 
+    suspend fun getPlaylistsWithTrack(trackId: String) = playlistRepository
+        .getPlaylists(containsTrackId = trackId)
+        .map { it.toModel() }
+
     suspend fun createPlaylist(
         name: String,
         description: String,
@@ -107,7 +111,7 @@ class PlaylistInteractor(
             )
         ).toModel()
 
-        _events.send(Event.AddedTrack(playlistId, newTrack))
+        _events.trySend(Event.AddedTrack(playlistId, newTrack))
     }
 
     suspend fun removeTrackFromPlaylist(record: PlaylistRecordModel) {
@@ -116,7 +120,7 @@ class PlaylistInteractor(
             recordId = record.id,
         )
 
-        _events.send(Event.RemovedTrack(record.playlistId, record))
+        _events.trySend(Event.RemovedTrack(record.playlistId, record))
     }
 
     suspend fun updateTracks(
@@ -135,6 +139,6 @@ class PlaylistInteractor(
             )
         ).map { it.toModel() }
 
-        _events.send(Event.UpdatedTracks(playlistId, updatedRecords))
+        _events.trySend(Event.UpdatedTracks(playlistId, updatedRecords))
     }
 }

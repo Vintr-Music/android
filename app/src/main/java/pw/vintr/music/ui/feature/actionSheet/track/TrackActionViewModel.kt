@@ -37,4 +37,12 @@ class TrackActionViewModel(
             navigator.back(NavigatorType.Root)
         }
     }
+
+    fun addToPlaylist(trackModel: TrackModel) {
+        navigator.back(NavigatorType.Root)
+        navigator.forward(
+            screen = Screen.PlaylistAddTrack(trackModel.md5),
+            type = NavigatorType.Root
+        )
+    }
 }

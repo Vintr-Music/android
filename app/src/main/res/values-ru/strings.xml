@@ -103,4 +103,5 @@
     <string name="playlist_description">Описание</string>
     <string name="playlist_description_hint">Необязательно</string>
     <string name="playlist_new">Новый плейлист</string>
+    <string name="playlist_add">Добавить в плейлист</string>
 </resources>

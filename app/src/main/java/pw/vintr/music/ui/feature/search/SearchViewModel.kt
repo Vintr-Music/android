@@ -111,6 +111,7 @@ class SearchViewModel(
                     TrackAction.GO_TO_ARTIST,
                     TrackAction.PLAY_NEXT,
                     TrackAction.ADD_TO_QUEUE,
+                    TrackAction.ADD_TO_PLAYLIST,
                 ),
             ),
             NavigatorType.Root

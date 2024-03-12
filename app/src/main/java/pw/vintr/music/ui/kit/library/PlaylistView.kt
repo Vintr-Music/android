@@ -15,6 +15,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
+import coil.request.CachePolicy
 import coil.request.ImageRequest
 import pw.vintr.music.R
 import pw.vintr.music.domain.playlist.model.PlaylistModel
@@ -44,6 +45,8 @@ fun PlaylistView(
                     .size(300)
                     .crossfade(enable = true)
                     .error(drawableResId = R.drawable.ic_playlist_no_artwork)
+                    .memoryCachePolicy(CachePolicy.DISABLED)
+                    .diskCachePolicy(CachePolicy.DISABLED)
                     .build(),
                 contentScale = ContentScale.Crop,
                 contentDescription = null

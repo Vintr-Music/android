@@ -89,10 +89,10 @@ dependencies {
     implementation("androidx.compose.ui:ui-graphics")
     implementation("androidx.compose.ui:ui-tooling-preview")
     implementation("androidx.compose.material3:material3")
-    implementation("androidx.compose.material:material:1.6.2")
+    implementation("androidx.compose.material:material:1.6.3")
     implementation("androidx.preference:preference-ktx:$preferenceVersion")
     implementation("androidx.palette:palette-ktx:$paletteVersion")
-    implementation("androidx.compose.runtime:runtime-livedata:1.6.2")
+    implementation("androidx.compose.runtime:runtime-livedata:1.6.3")
 
     // Compose external
     implementation("sh.calvin.reorderable:reorderable:$reordableVersion")

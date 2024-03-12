@@ -26,6 +26,7 @@ val Card1 = Color(0xFFF9F9FB)
 val Card2 = Color(0xFF121214)
 
 val Red2 = Color(0xFFFC4D4D)
+val Green0 = Color(0xFF1ABE49)
 
 val Gradient0 = Color(0xFFA451DA)
 val Gradient1 = Color(0xFFD77650)

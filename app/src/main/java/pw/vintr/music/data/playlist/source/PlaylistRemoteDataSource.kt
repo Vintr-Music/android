@@ -17,8 +17,9 @@ import pw.vintr.music.data.playlist.dto.PlaylistUpdateDto
 
 class PlaylistRemoteDataSource(private val client: HttpClient) {
 
-    suspend fun getPlaylists(): List<PlaylistDto> = client.get {
+    suspend fun getPlaylists(containsTrackId: String? = null): List<PlaylistDto> = client.get {
         url("api/playlist/list")
+        containsTrackId?.let { parameter("withTrack", it) }
     }.body()
 
     suspend fun createPlaylist(dto: PlaylistCreateDto): PlaylistDto = client.post {

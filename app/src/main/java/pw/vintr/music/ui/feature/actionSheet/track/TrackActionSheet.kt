@@ -139,6 +139,9 @@ fun TrackActionSheet(
                             TrackAction.ADD_TO_QUEUE -> {
                                 viewModel.addToQueue(trackModel)
                             }
+                            TrackAction.ADD_TO_PLAYLIST -> {
+                                viewModel.addToPlaylist(trackModel)
+                            }
                         }
                     }
                     .padding(vertical = 8.dp),

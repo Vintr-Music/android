@@ -28,18 +28,24 @@ enum class TrackAction(
     ADD_TO_QUEUE(
         iconRes = R.drawable.ic_add_to_queue,
         titleRes = R.string.add_to_queue
+    ),
+    ADD_TO_PLAYLIST(
+        iconRes = R.drawable.ic_add_to_playlist,
+        titleRes = R.string.playlist_add
     );
 
     companion object {
         val actionsExceptAlbumNavigate = listOf(
             GO_TO_ARTIST,
             PLAY_NEXT,
-            ADD_TO_QUEUE
+            ADD_TO_QUEUE,
+            ADD_TO_PLAYLIST
         )
         val actionsExceptArtistNavigate = listOf(
             GO_TO_ALBUM,
             PLAY_NEXT,
-            ADD_TO_QUEUE
+            ADD_TO_QUEUE,
+            ADD_TO_PLAYLIST
         )
     }
 }

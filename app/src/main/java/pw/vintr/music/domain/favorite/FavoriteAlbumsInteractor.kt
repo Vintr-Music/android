@@ -73,7 +73,7 @@ class FavoriteAlbumsInteractor(
             listOf(albumModel, *favorites.toTypedArray())
                 .sortedBy { it.name }
         }
-        _events.send(Event.Added(albumModel))
+        _events.trySend(Event.Added(albumModel))
     }
 
     suspend fun removeFromFavorites(albumModel: AlbumModel) {
@@ -81,6 +81,6 @@ class FavoriteAlbumsInteractor(
         _dataFlow.updateLoaded { favorites ->
             favorites.filter { it != albumModel }
         }
-        _events.send(Event.Removed(albumModel))
+        _events.trySend(Event.Removed(albumModel))
     }
 }

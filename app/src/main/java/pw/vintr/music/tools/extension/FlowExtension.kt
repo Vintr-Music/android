@@ -38,3 +38,15 @@ inline fun <T> MutableStateFlow<BaseDomainState<T>>.updateLoaded(mutation: (T) -
         loaded.copy(data = mutation(loaded.data))
     }
 }
+
+inline fun <reified R> MutableStateFlow<List<R>>.addItem(item: R) {
+    value = value
+        .toMutableList()
+        .apply { add(item) }
+}
+
+inline fun <reified R> MutableStateFlow<List<R>>.removeItem(item: R) {
+    value = value
+        .toMutableList()
+        .apply { remove(item) }
+}
