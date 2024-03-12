@@ -14,15 +14,19 @@ class PlayerSessionCacheObject() : RealmObject {
 
     var artist: String? = null
 
+    var playlistId: String? = null
+
     var tracks: RealmList<TrackCacheObject> = realmListOf()
 
     constructor(
         album: AlbumCacheObject? = null,
         artist: String? = null,
+        playlistId: String? = null,
         tracks: RealmList<TrackCacheObject> = realmListOf()
     ) : this() {
         this.album = album
         this.artist = artist
+        this.playlistId = playlistId
         this.tracks = tracks
     }
 }

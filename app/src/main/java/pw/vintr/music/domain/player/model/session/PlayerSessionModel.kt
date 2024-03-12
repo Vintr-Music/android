@@ -61,6 +61,21 @@ sealed class PlayerSessionModel {
         override fun toCustomSession() = Custom(tracks)
     }
 
+    data class Playlist(
+        val playlistId: String,
+        override val tracks: List<TrackModel>,
+    ) : PlayerSessionModel() {
+
+        override fun toCacheObject() = PlayerSessionCacheObject(
+            playlistId = playlistId,
+            tracks = tracks
+                .map { it.toCacheObject() }
+                .toRealmList()
+        )
+
+        override fun toCustomSession() = Custom(tracks)
+    }
+
     data class Custom(override val tracks: List<TrackModel>) : PlayerSessionModel() {
 
         override fun toCacheObject() = PlayerSessionCacheObject(
@@ -77,6 +92,7 @@ fun PlayerSessionCacheObject.toModel(): PlayerSessionModel {
     val tracks = tracks.map { it.toModel() }
     val album = album
     val artist = artist
+    val playlistId = playlistId
 
     return when {
         album != null -> {
@@ -88,6 +104,12 @@ fun PlayerSessionCacheObject.toModel(): PlayerSessionModel {
         artist != null -> {
             PlayerSessionModel.Artist(
                 artist = ArtistModel(artist),
+                tracks = tracks
+            )
+        }
+        playlistId != null -> {
+            PlayerSessionModel.Playlist(
+                playlistId = playlistId,
                 tracks = tracks
             )
         }

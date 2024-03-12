@@ -1,4 +1,4 @@
-package pw.vintr.music.ui.feature.albumDetails
+package pw.vintr.music.ui.feature.library.playlist.details
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
@@ -19,38 +19,34 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.BiasAlignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import org.koin.androidx.compose.getViewModel
 import org.koin.core.parameter.parametersOf
 import pw.vintr.music.R
-import pw.vintr.music.domain.library.model.album.AlbumModel
 import pw.vintr.music.domain.player.model.state.PlayerStatusModel
 import pw.vintr.music.tools.extension.Empty
-import pw.vintr.music.ui.kit.button.ButtonBorderedIcon
 import pw.vintr.music.ui.kit.button.ButtonPlayerState
 import pw.vintr.music.ui.kit.button.ButtonSimpleIcon
-import pw.vintr.music.ui.kit.library.TrackView
 import pw.vintr.music.ui.kit.layout.ScreenStateLayout
-import pw.vintr.music.ui.kit.toolbar.ToolbarWithArtwork
+import pw.vintr.music.ui.kit.library.TrackView
 import pw.vintr.music.ui.kit.toolbar.ToolbarRegular
+import pw.vintr.music.ui.kit.toolbar.ToolbarWithArtwork
 import pw.vintr.music.ui.kit.toolbar.collapsing.CollapsingLayout
 import pw.vintr.music.ui.kit.toolbar.collapsing.ScrollStrategy
 import pw.vintr.music.ui.kit.toolbar.collapsing.rememberCollapsingLayoutState
 import pw.vintr.music.ui.theme.Gilroy16
 import pw.vintr.music.ui.theme.Gilroy36
-import pw.vintr.music.ui.theme.Red2
 import pw.vintr.music.ui.theme.VintrMusicExtendedTheme
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun AlbumDetailsScreen(
-    album: AlbumModel,
-    viewModel: AlbumDetailsViewModel = getViewModel { parametersOf(album) }
+fun PlaylistDetailsScreen(
+    playlistId: String,
+    viewModel: PlaylistDetailsViewModel = getViewModel { parametersOf(playlistId) }
 ) {
     val screenState = viewModel.screenState.collectAsState()
-    val albumPlayingState = viewModel.albumPlayingState.collectAsState()
+    val playlistPlayingState = viewModel.playlistPlayingState.collectAsState()
 
     val collapsingLayoutState = rememberCollapsingLayoutState()
     val listState = rememberLazyListState()
@@ -79,7 +75,7 @@ fun AlbumDetailsScreen(
                 toolbar = {
                     ToolbarWithArtwork(
                         state = collapsingLayoutState,
-                        artworkUrl = screenData.album.artworkUrl,
+                        artworkUrl = screenData.playlist.artworkUrl,
                         mediaName = screenData.title,
                         titleSlot = {
                             Column(
@@ -97,20 +93,22 @@ fun AlbumDetailsScreen(
                                     maxLines = 2,
                                     overflow = TextOverflow.Ellipsis,
                                 )
-                                Text(
-                                    modifier = Modifier.fillMaxWidth(),
-                                    text = screenData.subtitle,
-                                    style = Gilroy16,
-                                    color = VintrMusicExtendedTheme.colors.textRegular,
-                                    maxLines = 1,
-                                    overflow = TextOverflow.Ellipsis,
-                                )
+                                if (screenData.subtitle.isNotEmpty()) {
+                                    Text(
+                                        modifier = Modifier.fillMaxWidth(),
+                                        text = screenData.subtitle,
+                                        style = Gilroy16,
+                                        color = VintrMusicExtendedTheme.colors.textRegular,
+                                        maxLines = 1,
+                                        overflow = TextOverflow.Ellipsis,
+                                    )
+                                }
                             }
                         },
                         trailingSlot = {
                             ButtonSimpleIcon(
                                 iconRes = R.drawable.ic_more,
-                                onClick = { viewModel.openAlbumAction() },
+                                onClick = { viewModel.openPlaylistAction() },
                                 tint = VintrMusicExtendedTheme.colors.textRegular,
                             )
                         },
@@ -118,7 +116,7 @@ fun AlbumDetailsScreen(
                     )
                 },
             ) {
-                val albumState = albumPlayingState.value
+                val playingState = playlistPlayingState.value
 
                 LazyColumn(
                     modifier = Modifier.fillMaxSize(),
@@ -126,7 +124,7 @@ fun AlbumDetailsScreen(
                     verticalArrangement = Arrangement.spacedBy(16.dp),
                     state = listState,
                 ) {
-                    stickyHeader { 
+                    stickyHeader {
                         Box(
                             modifier = Modifier
                                 .fillMaxWidth()
@@ -134,36 +132,11 @@ fun AlbumDetailsScreen(
                                 .padding(horizontal = 20.dp)
                                 .padding(top = 20.dp, bottom = 4.dp),
 
-                        ) {
-                            // Favorites button
-                            ButtonBorderedIcon(
-                                modifier = Modifier
-                                    .padding(start = 76.dp)
-                                    .align(Alignment.CenterStart)
-                                    .alpha(collapsingLayoutState.toolbarState.progress),
-                                iconRes = if (screenData.isFavorite) {
-                                    R.drawable.ic_favorite_filled
-                                } else {
-                                    R.drawable.ic_favorite_outline
-                                },
-                                tint = if (screenData.isFavorite) {
-                                    Red2
-                                } else {
-                                    VintrMusicExtendedTheme.colors.textRegular
-                                },
-                                onClick = {
-                                    if (screenData.isFavorite) {
-                                        viewModel.removeFromFavorites()
-                                    } else {
-                                        viewModel.addToFavorites()
-                                    }
-                                }
-                            )
-
+                            ) {
                             // Play-pause button
                             val horizontalBias = -collapsingLayoutState.toolbarState.progress
-                            val isPlaying = albumState.playerStatus == PlayerStatusModel.PLAYING
-                            val isLoading = albumState.playerStatus == PlayerStatusModel.LOADING
+                            val isPlaying = playingState.playerStatus == PlayerStatusModel.PLAYING
+                            val isLoading = playingState.playerStatus == PlayerStatusModel.LOADING
 
                             ButtonPlayerState(
                                 modifier = Modifier.align(
@@ -175,15 +148,15 @@ fun AlbumDetailsScreen(
                                 isPlaying = isPlaying,
                                 isLoading = isLoading,
                                 onClick = {
-                                    when (albumState.playerStatus) {
+                                    when (playingState.playerStatus) {
                                         PlayerStatusModel.IDLE -> {
-                                            viewModel.playAlbum()
+                                            viewModel.playPlaylist()
                                         }
                                         PlayerStatusModel.PAUSED -> {
-                                            viewModel.resumeAlbum()
+                                            viewModel.resumePlaylist()
                                         }
                                         PlayerStatusModel.PLAYING -> {
-                                            viewModel.pauseAlbum()
+                                            viewModel.pausePlaylist()
                                         }
                                         else -> Unit
                                     }
@@ -194,13 +167,13 @@ fun AlbumDetailsScreen(
 
                     itemsIndexed(
                         items = screenData.tracks,
-                        key = { _, track -> track.md5 }
-                    ) { index, track ->
+                        key = { _, record -> record.id }
+                    ) { index, record ->
                         TrackView(
-                            trackModel = track,
-                            isPlaying = albumState.playingTrack == track,
-                            onMoreClick = { viewModel.openTrackAction(track) },
-                            onClick = { viewModel.playAlbum(index) }
+                            trackModel = record.track,
+                            isPlaying = playingState.playingTrack == record.track,
+                            onMoreClick = { viewModel.openTrackAction(record.track) },
+                            onClick = { viewModel.playPlaylist(index) }
                         )
                     }
                 }

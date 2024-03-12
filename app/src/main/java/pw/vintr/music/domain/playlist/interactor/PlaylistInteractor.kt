@@ -68,6 +68,10 @@ class PlaylistInteractor(
         .getPlaylists()
         .map { it.toModel() }
 
+    suspend fun getPlaylistById(playlistId: String) = playlistRepository
+        .getPlaylistById(playlistId = playlistId)
+        .toModel()
+
     suspend fun getPlaylistsWithTrack(trackId: String) = playlistRepository
         .getPlaylists(containsTrackId = trackId)
         .map { it.toModel() }

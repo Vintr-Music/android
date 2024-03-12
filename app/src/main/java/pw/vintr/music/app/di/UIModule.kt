@@ -31,6 +31,7 @@ import pw.vintr.music.ui.feature.library.favorite.artistFavoriteList.ArtistFavor
 import pw.vintr.music.ui.feature.library.playlist.PlaylistListViewModel
 import pw.vintr.music.ui.feature.library.playlist.addTrack.PlaylistAddTrackViewModel
 import pw.vintr.music.ui.feature.library.playlist.create.PlaylistCreateViewModel
+import pw.vintr.music.ui.feature.library.playlist.details.PlaylistDetailsViewModel
 import pw.vintr.music.ui.navigation.Navigator
 
 val uiModule = module {
@@ -80,10 +81,26 @@ val uiModule = module {
     viewModel { MenuViewModel(get(), get(), get(), get()) }
     viewModel { SettingsViewModel(get()) }
     viewModel { params ->
-        AlbumDetailsViewModel(params.get(), get(), get(), get())
+        PlaylistDetailsViewModel(
+            playlistId = params.get(),
+            playerInteractor = get(),
+            playlistInteractor = get()
+        )
     }
     viewModel { params ->
-        ArtistDetailsViewModel(params.get(), get(), get())
+        AlbumDetailsViewModel(
+            album = params.get(),
+            playerInteractor = get(),
+            getAlbumTracksUseCase = get(),
+            favoriteAlbumsInteractor = get()
+        )
+    }
+    viewModel { params ->
+        ArtistDetailsViewModel(
+            artist = params.get(),
+            getArtistAlbumsUseCase = get(),
+            favoriteArtistsInteractor = get()
+        )
     }
     viewModel { NowPlayingViewModel(get()) }
     viewModel { EqualizerViewModel(get()) }

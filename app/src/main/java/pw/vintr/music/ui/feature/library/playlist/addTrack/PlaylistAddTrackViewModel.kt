@@ -18,7 +18,7 @@ import pw.vintr.music.ui.navigation.Screen
 
 class PlaylistAddTrackViewModel(
     private val trackId: String,
-    private val playlistInteractor: PlaylistInteractor
+    private val playlistInteractor: PlaylistInteractor,
 ) : BaseViewModel() {
 
     @OptIn(ExperimentalCoroutinesApi::class)

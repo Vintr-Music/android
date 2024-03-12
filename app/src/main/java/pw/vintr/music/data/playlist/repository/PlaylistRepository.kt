@@ -10,6 +10,9 @@ class PlaylistRepository(private val remoteDataSource: PlaylistRemoteDataSource)
     suspend fun getPlaylists(containsTrackId: String? = null) = remoteDataSource
         .getPlaylists(containsTrackId)
 
+    suspend fun getPlaylistById(playlistId: String) = remoteDataSource
+        .getPlaylistById(playlistId)
+
     suspend fun createPlaylist(dto: PlaylistCreateDto) = remoteDataSource
         .createPlaylist(dto)
 

@@ -40,6 +40,6 @@ class PlaylistListViewModel(
     }
 
     fun openPlaylist(playlist: PlaylistModel) {
-        // TODO: navigate
+        navigator.forward(Screen.PlaylistDetails(playlist.id))
     }
 }

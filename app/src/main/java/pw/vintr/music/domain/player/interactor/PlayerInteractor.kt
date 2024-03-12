@@ -37,6 +37,8 @@ import pw.vintr.music.domain.player.model.session.PlayerSessionModel
 import pw.vintr.music.domain.player.model.state.PlayerStateHolderModel
 import pw.vintr.music.domain.player.model.state.PlayerStatusModel
 import pw.vintr.music.domain.player.model.session.toModel
+import pw.vintr.music.domain.playlist.model.PlaylistModel
+import pw.vintr.music.tools.extension.hasNoItems
 import pw.vintr.music.tools.extension.reorder
 
 class PlayerInteractor(
@@ -158,35 +160,46 @@ class PlayerInteractor(
         album: AlbumModel,
         startIndex: Int = 0
     ) {
-        withAskPlaySpeakers {
-            controller?.stop()
+        playSession(
+            session = PlayerSessionModel.Album(
+                album = album,
+                tracks = tracks
+            ),
+            startIndex = startIndex
+        )
+    }
 
-            playerSessionRepository.savePlayerSession(
-                session = PlayerSessionModel.Album(
-                    album = album,
-                    tracks = tracks
-                ).toCacheObject()
-            )
-
-            controller?.setMediaItems(
-                tracks.map { it.toMediaItem() },
-                startIndex,
-                0
-            )
-            controller?.play()
-        }
+    suspend fun playPlaylist(
+        tracks: List<TrackModel>,
+        playlist: PlaylistModel,
+        startIndex: Int = 0,
+    ) {
+        playSession(
+            session = PlayerSessionModel.Playlist(
+                playlistId = playlist.id,
+                tracks = tracks
+            ),
+            startIndex = startIndex
+        )
     }
 
     suspend fun playQueue(tracks: List<TrackModel>, startIndex: Int = 0) {
+        playSession(
+            session = PlayerSessionModel.Custom(tracks),
+            startIndex = startIndex
+        )
+    }
+
+    private suspend fun playSession(
+        session: PlayerSessionModel,
+        startIndex: Int
+    ) {
         withAskPlaySpeakers {
             controller?.stop()
-
-            playerSessionRepository.savePlayerSession(
-                session = PlayerSessionModel.Custom(tracks).toCacheObject()
-            )
+            playerSessionRepository.savePlayerSession(session.toCacheObject())
 
             controller?.setMediaItems(
-                tracks.map { it.toMediaItem() },
+                session.tracks.map { it.toMediaItem() },
                 startIndex,
                 0
             )
@@ -196,8 +209,9 @@ class PlayerInteractor(
 
     suspend fun setPlayNext(tracks: List<TrackModel>) {
         playerSessionRepository.getPlayerSession()?.let { session ->
-            val hasNoMediaItems = controller?.mediaItemCount == 0
+            val hasNoMediaItems = controller.hasNoItems()
             val currentSessionModel = session.toModel()
+
             val currentPlayingIndex = session.tracks
                 .indexOfFirst { it.md5 == controller?.currentMediaItem?.mediaId }
                 .takeIf { it != -1 } ?: 0
@@ -226,7 +240,7 @@ class PlayerInteractor(
 
     suspend fun addToQueue(tracks: List<TrackModel>) {
         playerSessionRepository.getPlayerSession()?.let { session ->
-            val hasNoMediaItems = controller?.mediaItemCount == 0
+            val hasNoMediaItems = controller.hasNoItems()
             val currentSessionModel = session.toModel()
             val modifiedSession = currentSessionModel
                 .toCustomSession()
@@ -249,7 +263,7 @@ class PlayerInteractor(
 
     suspend fun reorder(fromIndex: Int, toIndex: Int) {
         playerSessionRepository.getPlayerSession()?.let { session ->
-            val hasNoMediaItems = controller?.mediaItemCount == 0
+            val hasNoMediaItems = controller.hasNoItems()
             val currentSessionModel = session.toModel()
             val modifiedSession = currentSessionModel
                 .toCustomSession()

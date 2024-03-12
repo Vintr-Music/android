@@ -32,6 +32,7 @@ import org.koin.compose.rememberKoinInject
 import pw.vintr.music.domain.library.model.album.AlbumModel
 import pw.vintr.music.domain.library.model.artist.ArtistModel
 import pw.vintr.music.tools.composable.StatusBarEffect
+import pw.vintr.music.tools.extension.Empty
 import pw.vintr.music.tools.extension.getRequiredArg
 import pw.vintr.music.ui.feature.albumDetails.AlbumDetailsScreen
 import pw.vintr.music.ui.feature.artistDetails.ArtistDetailsScreen
@@ -42,6 +43,7 @@ import pw.vintr.music.ui.feature.library.favorite.albumFavoriteList.AlbumFavorit
 import pw.vintr.music.ui.feature.library.favorite.artistFavoriteList.ArtistFavoriteListScreen
 import pw.vintr.music.ui.feature.library.artist.ArtistListScreen
 import pw.vintr.music.ui.feature.library.playlist.PlaylistListScreen
+import pw.vintr.music.ui.feature.library.playlist.details.PlaylistDetailsScreen
 import pw.vintr.music.ui.feature.menu.MenuScreen
 import pw.vintr.music.ui.feature.search.SearchScreen
 import pw.vintr.music.ui.feature.settings.SettingsScreen
@@ -209,6 +211,19 @@ fun TabNavigation(
             )
 
             ArtistDetailsScreen(artist = artist)
+        }
+        composable(
+            route = Screen.PlaylistDetails.routeTemplate,
+            arguments = listOf(
+                navArgument(Screen.PlaylistDetails.ARG_KEY_PLAYLIST_ID) {
+                    defaultValue = String.Empty
+                }
+            )
+        ) {
+            val playlistId = it.arguments
+                ?.getString(Screen.PlaylistDetails.ARG_KEY_PLAYLIST_ID) ?: String.Empty
+
+            PlaylistDetailsScreen(playlistId = playlistId)
         }
         composable(Screen.ArtistList.route) { ArtistListScreen() }
         composable(Screen.PlaylistList.route) { PlaylistListScreen() }

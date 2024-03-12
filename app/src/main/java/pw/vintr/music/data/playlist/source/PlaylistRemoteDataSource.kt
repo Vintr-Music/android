@@ -22,6 +22,11 @@ class PlaylistRemoteDataSource(private val client: HttpClient) {
         containsTrackId?.let { parameter("withTrack", it) }
     }.body()
 
+    suspend fun getPlaylistById(playlistId: String): PlaylistDto = client.get {
+        url("api/playlist/by-id")
+        parameter("id", playlistId)
+    }.body()
+
     suspend fun createPlaylist(dto: PlaylistCreateDto): PlaylistDto = client.post {
         url("api/playlist")
         setBody(dto)
@@ -33,7 +38,7 @@ class PlaylistRemoteDataSource(private val client: HttpClient) {
     }
 
     suspend fun getPlaylistTracks(playlistId: String): List<PlaylistRecordDto> = client.get {
-        url("api/playlist/tracks")
+        url("api/playlist/tracks/list")
         parameter("id", playlistId)
     }.body()
 
