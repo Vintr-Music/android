@@ -1,6 +1,5 @@
 package pw.vintr.music.ui.base
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.CoroutineScope
@@ -67,11 +66,9 @@ abstract class BaseViewModel : ViewModel(), CoroutineScope, KoinComponent {
             }
             action()
             if (showLoading) {
-                Log.e("TEST", "EMITTING FALSE ACTION")
                 setLoadingCallback(false)
             }
         } catch (e: Throwable) {
-            Log.e("TEST", "EMITTING FALSE ACTION")
             setLoadingCallback(false)
             throw e
         }

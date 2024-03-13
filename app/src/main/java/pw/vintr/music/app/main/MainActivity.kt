@@ -54,6 +54,8 @@ import pw.vintr.music.tools.extension.getRequiredArgList
 import pw.vintr.music.tools.extension.noRippleClickable
 import pw.vintr.music.ui.feature.actionSheet.album.AlbumActionSheet
 import pw.vintr.music.ui.feature.actionSheet.album.entity.AlbumActionSheetInfo
+import pw.vintr.music.ui.feature.actionSheet.playlist.PlaylistActionSheet
+import pw.vintr.music.ui.feature.actionSheet.playlist.entity.PlaylistActionSheetInfo
 import pw.vintr.music.ui.feature.dialog.ConfirmDialog
 import pw.vintr.music.ui.feature.dialog.entity.ConfirmDialogData
 import pw.vintr.music.ui.feature.nowPlaying.manageSession.ManageSessionScreen
@@ -272,6 +274,22 @@ fun Navigation(
             AlbumActionSheet(actionSheetInfo)
         }
 
+        bottomSheet(
+            Screen.PlaylistActionSheet.routeTemplate,
+            arguments = listOf(
+                navArgument(Screen.PlaylistActionSheet.ARG_KEY_SHEET_INFO) {
+                    type = ParcelableNavType(PlaylistActionSheetInfo::class.java)
+                },
+            )
+        ) {
+            BackHandler { navController.navigateUp() }
+
+            val actionSheetInfo = it.arguments.getRequiredArg<PlaylistActionSheetInfo>(
+                Screen.PlaylistActionSheet.ARG_KEY_SHEET_INFO
+            )
+            PlaylistActionSheet(actionSheetInfo)
+        }
+
         extendedDialog(
             route = Screen.ConfirmDialog.routeTemplate,
             arguments = listOf(
@@ -297,6 +315,7 @@ fun Navigation(
             BackHandler { navController.navigateUp() }
             PlaylistCreateScreen()
         }
+
         bottomSheet(
             Screen.PlaylistAddTrack.routeTemplate,
             arguments = listOf(

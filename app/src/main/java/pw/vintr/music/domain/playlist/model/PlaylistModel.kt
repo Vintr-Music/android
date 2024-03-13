@@ -1,9 +1,12 @@
 package pw.vintr.music.domain.playlist.model
 
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
 import pw.vintr.music.data.playlist.dto.PlaylistDto
 import pw.vintr.music.tools.http.MediaUrlBuilder
 import java.util.Calendar
 
+@Parcelize
 data class PlaylistModel(
     val id: String,
     val owner: String,
@@ -11,7 +14,7 @@ data class PlaylistModel(
     val description: String,
     val createdAt: Calendar,
     val artworkUrl: String = MediaUrlBuilder.artworkForPlaylist(id)
-)
+) : Parcelable
 
 fun PlaylistDto.toModel() = PlaylistModel(
     id = id,

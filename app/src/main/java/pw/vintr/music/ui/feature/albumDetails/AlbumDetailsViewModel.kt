@@ -165,14 +165,10 @@ class AlbumDetailsViewModel(
     private fun handleAlbumAction(action: AlbumAction, tracks: List<TrackModel>) {
         when (action) {
             AlbumAction.PLAY_NEXT -> {
-                launch {
-                    playerInteractor.setPlayNext(tracks)
-                }
+                launch { playerInteractor.setPlayNext(tracks) }
             }
             AlbumAction.ADD_TO_QUEUE -> {
-                launch {
-                    playerInteractor.addToQueue(tracks)
-                }
+                launch { playerInteractor.addToQueue(tracks) }
             }
         }
     }

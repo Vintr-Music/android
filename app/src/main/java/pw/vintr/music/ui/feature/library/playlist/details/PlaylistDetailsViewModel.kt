@@ -1,5 +1,6 @@
 package pw.vintr.music.ui.feature.library.playlist.details
 
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -19,8 +20,12 @@ import pw.vintr.music.tools.extension.updateLoaded
 import pw.vintr.music.tools.extension.withLoaded
 import pw.vintr.music.ui.base.BaseScreenState
 import pw.vintr.music.ui.base.BaseViewModel
+import pw.vintr.music.ui.feature.actionSheet.playlist.entity.PlaylistAction
+import pw.vintr.music.ui.feature.actionSheet.playlist.entity.PlaylistActionResult
+import pw.vintr.music.ui.feature.actionSheet.playlist.entity.PlaylistActionSheetInfo
 import pw.vintr.music.ui.feature.actionSheet.track.entity.TrackAction
 import pw.vintr.music.ui.feature.actionSheet.track.entity.TrackActionResult
+import pw.vintr.music.ui.feature.dialog.entity.ConfirmDialogTemplate.openDeletePlaylistConfirmDialog
 import pw.vintr.music.ui.feature.dialog.entity.ConfirmDialogTemplate.openDeleteTrackConfirmDialog
 import pw.vintr.music.ui.navigation.NavigatorType
 import pw.vintr.music.ui.navigation.Screen
@@ -68,7 +73,7 @@ class PlaylistDetailsViewModel(
 
             PlaylistDetailsScreenData(
                 playlist = playlist.await(),
-                tracks = tracks.await(),
+                records = tracks.await(),
             )
         }
     }
@@ -86,16 +91,16 @@ class PlaylistDetailsViewModel(
             when (event) {
                 is PlaylistInteractor.Event.AddedTrack -> {
                     freezeState.copy(
-                        tracks = listOf(event.record, *freezeState.tracks.toTypedArray())
+                        records = listOf(event.record, *freezeState.records.toTypedArray())
                     )
                 }
                 is PlaylistInteractor.Event.RemovedTrack -> {
                     freezeState.copy(
-                        tracks = freezeState.tracks.filter { it != event.record }
+                        records = freezeState.records.filter { it != event.record }
                     )
                 }
                 is PlaylistInteractor.Event.UpdatedTracks -> {
-                    freezeState.copy(tracks = event.records)
+                    freezeState.copy(records = event.records)
                 }
             }
         }
@@ -105,7 +110,7 @@ class PlaylistDetailsViewModel(
         launch {
             _screenState.withLoaded { data ->
                 playerInteractor.playPlaylist(
-                    tracks = data.tracks.map { it.track },
+                    tracks = data.records.map { it.track },
                     playlist = data.playlist,
                     startIndex = startIndex
                 )
@@ -160,13 +165,70 @@ class PlaylistDetailsViewModel(
     }
 
     fun openPlaylistAction() {
-        // TODO: open
+        _screenState.withLoaded { screenData ->
+            val screen = Screen.PlaylistActionSheet(
+                playlistActionSheetInfo = PlaylistActionSheetInfo(
+                    playlist = screenData.playlist,
+                    tracksCount = screenData.records.size,
+                    playDurationMillis = screenData.records
+                        .sumOf { it.track.format.duration }
+                        .toLong()
+                )
+            )
+
+            handleResult(PlaylistActionResult.KEY) {
+                navigator.forwardWithResult<PlaylistActionResult>(
+                    screen,
+                    NavigatorType.Root,
+                    PlaylistActionResult.KEY
+                ) {
+                    handlePlaylistAction(
+                        action = it.action,
+                        tracks = screenData.records.map { record -> record.track }
+                    )
+                }
+            }
+        }
+    }
+
+    private fun handlePlaylistAction(
+        action: PlaylistAction,
+        tracks: List<TrackModel>
+    ) {
+        when (action) {
+            PlaylistAction.PLAY_NEXT -> {
+                launch { playerInteractor.setPlayNext(tracks) }
+            }
+            PlaylistAction.ADD_TO_QUEUE -> {
+                launch { playerInteractor.addToQueue(tracks) }
+            }
+            PlaylistAction.EDIT_PLAYLIST -> {
+                // TODO: open edit
+            }
+            PlaylistAction.DELETE_PLAYLIST -> {
+                navigator.openDeletePlaylistConfirmDialog { deletePlaylist() }
+            }
+        }
+    }
+
+    private fun deletePlaylist() {
+        launch(context = Dispatchers.Main + createExceptionHandler()) {
+            withLoading(
+                setLoadingCallback = { isLoading ->
+                    primaryLoaderInteractor.setLoaderState(isLoading)
+                },
+                action = {
+                    playlistInteractor.removePlaylist(playlistId)
+                }
+            )
+            navigator.back()
+        }
     }
 }
 
 data class PlaylistDetailsScreenData(
     val playlist: PlaylistModel,
-    val tracks: List<PlaylistRecordModel>,
+    val records: List<PlaylistRecordModel>,
 ) {
     val title = playlist.name
 

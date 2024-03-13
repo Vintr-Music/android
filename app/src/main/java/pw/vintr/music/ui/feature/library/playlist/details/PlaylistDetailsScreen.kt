@@ -168,7 +168,7 @@ fun PlaylistDetailsScreen(
                     }
 
                     itemsIndexed(
-                        items = screenData.tracks,
+                        items = screenData.records,
                         key = { _, record -> record.id }
                     ) { index, record ->
                         TrackView(

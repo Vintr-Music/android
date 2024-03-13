@@ -35,7 +35,7 @@ enum class TrackAction(
     ),
     DELETE_FROM_PLAYLIST(
         iconRes = R.drawable.ic_delete,
-        titleRes = R.string.playlist_delete
+        titleRes = R.string.playlist_delete_track
     );
 
     companion object {

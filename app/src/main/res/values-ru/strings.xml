@@ -106,6 +106,9 @@
     <string name="playlist_description_hint">Необязательно</string>
     <string name="playlist_new">Новый плейлист</string>
     <string name="playlist_add">Добавить в плейлист</string>
-    <string name="playlist_delete">Удалить из плейлиста</string>
-    <string name="playlist_delete_text">Вы действительно хотите удалить трек? Отменить это будет невозможно</string>
+    <string name="playlist_delete_track">Удалить из плейлиста</string>
+    <string name="playlist_delete_track_text">Вы действительно хотите удалить трек? Отменить это будет невозможно</string>
+    <string name="playlist_delete">Удалить плейлист</string>
+    <string name="playlist_delete_text">Вы действительно хотите удалить плейлист? Отменить это будет невозможно</string>
+    <string name="playlist_edit">Редактировать плейлист</string>
 </resources>

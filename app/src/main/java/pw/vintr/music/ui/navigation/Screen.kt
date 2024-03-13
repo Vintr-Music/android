@@ -6,6 +6,7 @@ import pw.vintr.music.domain.library.model.artist.ArtistModel
 import pw.vintr.music.domain.library.model.track.TrackModel
 import pw.vintr.music.domain.server.model.ServerInviteModel
 import pw.vintr.music.ui.feature.actionSheet.album.entity.AlbumActionSheetInfo
+import pw.vintr.music.ui.feature.actionSheet.playlist.entity.PlaylistActionSheetInfo
 import pw.vintr.music.ui.feature.dialog.entity.ConfirmDialogData
 import pw.vintr.music.ui.feature.actionSheet.track.entity.TrackAction
 import pw.vintr.music.ui.navigation.navArgs.parcelable.ParcelableNavTypeSerializer
@@ -197,7 +198,7 @@ sealed class Screen(val route: String) {
         val trackModel: TrackModel,
         val allowedActions: List<TrackAction> = listOf(
             TrackAction.GO_TO_ALBUM,
-            TrackAction.GO_TO_ARTIST
+            TrackAction.GO_TO_ARTIST,
         ),
     ) : ScreenWithArgs(
         destination = ROUTE_DESTINATION,
@@ -224,6 +225,23 @@ sealed class Screen(val route: String) {
         companion object {
             const val ARG_KEY_SHEET_INFO = "arg-sheet-info"
             private const val ROUTE_DESTINATION = "album-actions"
+
+            val routeTemplate = buildRouteTemplate(
+                ROUTE_DESTINATION,
+                listOf(ARG_KEY_SHEET_INFO)
+            )
+        }
+    }
+
+    data class PlaylistActionSheet(
+        val playlistActionSheetInfo: PlaylistActionSheetInfo,
+    ) : ScreenWithArgs(
+        destination = ROUTE_DESTINATION,
+        args = mapOf(ARG_KEY_SHEET_INFO to playlistActionSheetInfo)
+    ) {
+        companion object {
+            const val ARG_KEY_SHEET_INFO = "arg-sheet-info"
+            private const val ROUTE_DESTINATION = "playlist-actions"
 
             val routeTemplate = buildRouteTemplate(
                 ROUTE_DESTINATION,
