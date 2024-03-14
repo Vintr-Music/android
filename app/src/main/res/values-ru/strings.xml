@@ -111,4 +111,5 @@
     <string name="playlist_delete">Удалить плейлист</string>
     <string name="playlist_delete_text">Вы действительно хотите удалить плейлист? Отменить это будет невозможно</string>
     <string name="playlist_edit">Редактировать плейлист</string>
+    <string name="playlist_tracks_empty">Добавьте треки в плейлист, и они появятся здесь</string>
 </resources>

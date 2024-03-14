@@ -38,10 +38,17 @@ abstract class BaseViewModel : ViewModel(), CoroutineScope, KoinComponent {
     }
 
     protected fun <T> MutableStateFlow<BaseScreenState<T>>.loadWithStateHandling(
-        block: suspend () -> T
+        emptyCheckAction: (T) -> Boolean = { _ -> false },
+        block: suspend () -> T,
     ) = launch(createExceptionHandler { value = BaseScreenState.Error() }) {
         value = BaseScreenState.Loading()
-        value = BaseScreenState.Loaded(block())
+        val data = block()
+
+        value = if (emptyCheckAction(data)) {
+            BaseScreenState.Empty()
+        } else {
+            BaseScreenState.Loaded(data)
+        }
     }
 
     protected fun <T> MutableStateFlow<BaseScreenState<T>>.refreshWithStateHandling(

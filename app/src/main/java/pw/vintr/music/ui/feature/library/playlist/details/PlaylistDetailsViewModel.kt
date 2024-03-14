@@ -63,7 +63,9 @@ class PlaylistDetailsViewModel(
     }
 
     fun loadData() {
-        _screenState.loadWithStateHandling {
+        _screenState.loadWithStateHandling(
+            emptyCheckAction = { it.records.isEmpty() }
+        ) {
             val tracks = async {
                 playlistInteractor.getPlaylistTracks(playlistId)
             }
@@ -87,20 +89,20 @@ class PlaylistDetailsViewModel(
     }
 
     private fun processPlaylistEvent(event: PlaylistInteractor.Event) {
-        _screenState.updateLoaded { freezeState ->
+        _screenState.updateLoaded(fallback = { loadData() }) { freezeData ->
             when (event) {
                 is PlaylistInteractor.Event.AddedTrack -> {
-                    freezeState.copy(
-                        records = listOf(event.record, *freezeState.records.toTypedArray())
+                    freezeData.copy(
+                        records = listOf(event.record, *freezeData.records.toTypedArray())
                     )
                 }
                 is PlaylistInteractor.Event.RemovedTrack -> {
-                    freezeState.copy(
-                        records = freezeState.records.filter { it != event.record }
+                    freezeData.copy(
+                        records = freezeData.records.filter { it != event.record }
                     )
                 }
                 is PlaylistInteractor.Event.UpdatedTracks -> {
-                    freezeState.copy(records = event.records)
+                    freezeData.copy(records = event.records)
                 }
             }
         }

@@ -149,6 +149,7 @@ fun PlaylistAddTrackScreen(
                                             )
                                             .memoryCachePolicy(CachePolicy.DISABLED)
                                             .diskCachePolicy(CachePolicy.DISABLED)
+                                            .error(R.drawable.ic_playlist_no_artwork)
                                             .crossfade(enable = true)
                                             .build(),
                                         contentScale = ContentScale.Crop,

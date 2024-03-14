@@ -120,4 +120,5 @@
     <string name="playlist_delete">Delete playlist</string>
     <string name="playlist_delete_text">Are you sure you want to delete playlist? It will be impossible to undo this</string>
     <string name="playlist_edit">Edit playlist</string>
+    <string name="playlist_tracks_empty">Add tracks to your playlist and they will appear here</string>
 </resources>

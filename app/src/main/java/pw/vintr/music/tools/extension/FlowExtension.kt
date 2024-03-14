@@ -17,17 +17,25 @@ inline fun <T> StateFlow<BaseScreenState<T>>.withLoaded(block: (T) -> Unit) {
     withTyped<BaseScreenState.Loaded<T>> { block(it.data) }
 }
 
-inline fun <reified R> MutableStateFlow<in R>.updateTyped(mutation: (R) -> R) {
+inline fun <reified R> MutableStateFlow<in R>.updateTyped(
+    fallback: () -> Unit = {},
+    mutation: (R) -> R
+) {
     val lockedValue = value
 
     if (lockedValue is R) {
         value = mutation(lockedValue)
+    } else {
+        fallback()
     }
 }
 
 @JvmName("updateLoadedScreen")
-inline fun <T> MutableStateFlow<BaseScreenState<T>>.updateLoaded(mutation: (T) -> T) {
-    updateTyped<BaseScreenState.Loaded<T>> { loaded ->
+inline fun <T> MutableStateFlow<BaseScreenState<T>>.updateLoaded(
+    fallback: () -> Unit = {},
+    mutation: (T) -> T,
+) {
+    updateTyped<BaseScreenState.Loaded<T>>(fallback) { loaded ->
         loaded.copy(data = mutation(loaded.data))
     }
 }
