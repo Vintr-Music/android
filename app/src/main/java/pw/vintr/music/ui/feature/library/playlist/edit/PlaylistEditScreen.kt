@@ -54,7 +54,7 @@ fun PlaylistEditScreen(
             .fillMaxSize(),
         topBar = {
             ToolbarRegular(
-                title = stringResource(id = R.string.playlist_add),
+                title = stringResource(id = R.string.playlist_edit),
                 showBackButton = false,
                 trailing = {
                     ButtonSimpleIcon(
@@ -98,7 +98,8 @@ fun PlaylistEditScreen(
                         // Name field
                         item(key = KEY_NAME) {
                             AppTextField(
-                                modifier = Modifier.padding(horizontal = 20.dp),
+                                modifier = Modifier
+                                    .padding(horizontal = 20.dp),
                                 label = stringResource(id = R.string.playlist_name),
                                 hint = stringResource(id = R.string.playlist_name_hint),
                                 value = screenData.name,
@@ -114,13 +115,16 @@ fun PlaylistEditScreen(
                         // Description field
                         item(key = KEY_DESCRIPTION) {
                             AppTextField(
-                                modifier = Modifier.padding(horizontal = 20.dp),
+                                modifier = Modifier
+                                    .padding(horizontal = 20.dp)
+                                    .padding(bottom = 12.dp),
                                 label = stringResource(id = R.string.playlist_description),
                                 hint = stringResource(id = R.string.playlist_description_hint),
                                 value = screenData.description,
                                 onValueChange = { viewModel.changeDescription(it) },
                                 keyboardOptions = KeyboardOptions(
-                                    keyboardType = KeyboardType.Number,
+                                    keyboardType = KeyboardType.Text,
+                                    capitalization = KeyboardCapitalization.Sentences,
                                     imeAction = ImeAction.Done,
                                 )
                             )

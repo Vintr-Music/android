@@ -85,7 +85,8 @@ fun PlaylistCreateScreen(
                     value = screenState.value.description,
                     onValueChange = { viewModel.changeDescription(it) },
                     keyboardOptions = KeyboardOptions(
-                        keyboardType = KeyboardType.Number,
+                        keyboardType = KeyboardType.Text,
+                        capitalization = KeyboardCapitalization.Sentences,
                         imeAction = ImeAction.Done,
                     )
                 )

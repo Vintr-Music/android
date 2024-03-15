@@ -89,6 +89,9 @@ class PlaylistDetailsViewModel(
 
     private fun processPlaylistEvent(event: PlaylistInteractor.Event) {
         when (event) {
+            is PlaylistInteractor.Event.UpdatedPlaylistInfo -> {
+                onPlaylistInfoUpdated(event.playlist)
+            }
             is PlaylistInteractor.Event.AddedTrack -> {
                 onTrackAdded(event.record)
             }
@@ -98,6 +101,12 @@ class PlaylistDetailsViewModel(
             is PlaylistInteractor.Event.UpdatedTracks -> {
                 onTracksUpdated(event.records)
             }
+        }
+    }
+
+    private fun onPlaylistInfoUpdated(updatedPlaylist: PlaylistModel) {
+        _screenState.updateLoaded { freezeData ->
+            freezeData.copy(playlist = updatedPlaylist)
         }
     }
 

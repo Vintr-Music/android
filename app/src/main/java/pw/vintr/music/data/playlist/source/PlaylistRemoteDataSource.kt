@@ -11,9 +11,10 @@ import io.ktor.client.request.setBody
 import io.ktor.client.request.url
 import pw.vintr.music.data.playlist.dto.PlaylistCreateDto
 import pw.vintr.music.data.playlist.dto.PlaylistDto
+import pw.vintr.music.data.playlist.dto.PlaylistUpdateDto
 import pw.vintr.music.data.playlist.dto.record.PlaylistRecordCreateDto
 import pw.vintr.music.data.playlist.dto.record.PlaylistRecordDto
-import pw.vintr.music.data.playlist.dto.PlaylistUpdateDto
+import pw.vintr.music.data.playlist.dto.PlaylistUpdateRecordsDto
 
 class PlaylistRemoteDataSource(private val client: HttpClient) {
 
@@ -28,6 +29,11 @@ class PlaylistRemoteDataSource(private val client: HttpClient) {
     }.body()
 
     suspend fun createPlaylist(dto: PlaylistCreateDto): PlaylistDto = client.post {
+        url("api/playlist")
+        setBody(dto)
+    }.body()
+
+    suspend fun updatePlaylist(dto: PlaylistUpdateDto): PlaylistDto = client.patch {
         url("api/playlist")
         setBody(dto)
     }.body()
@@ -54,7 +60,7 @@ class PlaylistRemoteDataSource(private val client: HttpClient) {
     }
 
     suspend fun updatePlaylistTracks(
-        dto: PlaylistUpdateDto
+        dto: PlaylistUpdateRecordsDto
     ): List<PlaylistRecordDto> = client.patch {
         url("api/playlist/tracks")
         setBody(dto)

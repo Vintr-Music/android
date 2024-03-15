@@ -79,17 +79,38 @@ class PlaylistEditViewModel(
         _screenState.withLoaded { freezeData ->
             launch(context = Dispatchers.Main + createExceptionHandler()) {
                 withPrimaryLoader {
-                    playlistInteractor.updateTracks(
-                        playlistId = playlistId,
-                        newRecords = freezeData.records.mapIndexed { index, record ->
-                            record.copy(ordinal = index)
-                        }
-                    )
+                    val updateInfoRequest = if (freezeData.canSaveInfo) {
+                        async { updatePlaylistInfo(freezeData) }
+                    } else { null }
+
+                    val updateTracksRequest = if (freezeData.isRecordsModified) {
+                        async { updatePlaylistTracks(freezeData) }
+                    } else { null }
+
+                    updateInfoRequest?.await()
+                    updateTracksRequest?.await()
                 }
 
                 navigator.back(NavigatorType.Root)
             }
         }
+    }
+
+    private suspend fun updatePlaylistInfo(freezeData: PlaylistEditScreenData) {
+        playlistInteractor.updatePlaylist(
+            playlistId = playlistId,
+            name = freezeData.name,
+            description = freezeData.description
+        )
+    }
+
+    private suspend fun updatePlaylistTracks(freezeData: PlaylistEditScreenData) {
+        playlistInteractor.updateTracks(
+            playlistId = playlistId,
+            newRecords = freezeData.records
+                .reversed()
+                .mapIndexed { index, record -> record.copy(ordinal = index) }
+        )
     }
 }
 
@@ -100,8 +121,7 @@ data class PlaylistEditScreenData(
     val records: List<PlaylistRecordModel>,
     val isRecordsModified: Boolean = false,
 ) {
-    private val canSaveInfo = name != savedPlaylist.name ||
-            description != savedPlaylist.description
+    val canSaveInfo = name != savedPlaylist.name || description != savedPlaylist.description
 
     val canBeSaved: Boolean = canSaveInfo || isRecordsModified
 }

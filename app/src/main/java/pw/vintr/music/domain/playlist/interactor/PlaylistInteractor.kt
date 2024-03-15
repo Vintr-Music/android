@@ -6,9 +6,10 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.shareIn
 import pw.vintr.music.data.playlist.dto.PlaylistCreateDto
+import pw.vintr.music.data.playlist.dto.PlaylistUpdateDto
 import pw.vintr.music.data.playlist.dto.record.PlaylistRecordCreateDto
 import pw.vintr.music.data.playlist.dto.record.PlaylistRecordUpdateDto
-import pw.vintr.music.data.playlist.dto.PlaylistUpdateDto
+import pw.vintr.music.data.playlist.dto.PlaylistUpdateRecordsDto
 import pw.vintr.music.data.playlist.repository.PlaylistRepository
 import pw.vintr.music.domain.base.BaseDomainState
 import pw.vintr.music.domain.base.BaseInteractor
@@ -24,6 +25,12 @@ class PlaylistInteractor(
     sealed class Event {
 
         abstract val playlistId: String
+
+        data class UpdatedPlaylistInfo(
+            val playlist: PlaylistModel
+        ) : Event() {
+            override val playlistId: String = playlist.id
+        }
 
         data class AddedTrack(
             override val playlistId: String,
@@ -92,6 +99,31 @@ class PlaylistInteractor(
         }
     }
 
+    suspend fun updatePlaylist(
+        playlistId: String,
+        name: String,
+        description: String,
+    ) {
+        val updatedPlaylist = playlistRepository.updatePlaylist(
+            PlaylistUpdateDto(
+                id = playlistId,
+                name = name,
+                description = description,
+            )
+        ).toModel()
+
+        _dataFlow.updateLoaded { playlists ->
+            playlists.map { playlist ->
+                if (playlist.id == playlistId) {
+                    updatedPlaylist
+                } else {
+                    playlist
+                }
+            }
+        }
+        _events.trySend(Event.UpdatedPlaylistInfo(updatedPlaylist))
+    }
+
     suspend fun removePlaylist(playlistId: String) {
         playlistRepository.removePlaylist(playlistId)
 
@@ -132,7 +164,7 @@ class PlaylistInteractor(
         newRecords: List<PlaylistRecordModel>
     ) {
         val updatedRecords = playlistRepository.updatePlaylistTracks(
-            PlaylistUpdateDto(
+            PlaylistUpdateRecordsDto(
                 playlistId = playlistId,
                 updateData = newRecords.map { model ->
                     PlaylistRecordUpdateDto(
