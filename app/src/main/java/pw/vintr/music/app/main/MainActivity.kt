@@ -69,6 +69,7 @@ import pw.vintr.music.ui.feature.actionSheet.track.TrackActionSheet
 import pw.vintr.music.ui.feature.actionSheet.track.entity.TrackAction
 import pw.vintr.music.ui.feature.library.playlist.addTrack.PlaylistAddTrackScreen
 import pw.vintr.music.ui.feature.library.playlist.create.PlaylistCreateScreen
+import pw.vintr.music.ui.feature.library.playlist.edit.PlaylistEditScreen
 import pw.vintr.music.ui.kit.sliding.AnchoredDraggableDefaults
 import pw.vintr.music.ui.navigation.Navigator
 import pw.vintr.music.ui.navigation.NavigatorEffect
@@ -329,6 +330,21 @@ fun Navigation(
                 ?.getString(Screen.PlaylistAddTrack.ARG_KEY_TRACK_ID) ?: String.Empty
 
             PlaylistAddTrackScreen(trackId)
+        }
+
+        bottomSheet(
+            Screen.PlaylistEdit.routeTemplate,
+            arguments = listOf(
+                navArgument(Screen.PlaylistEdit.ARG_KEY_PLAYLIST_ID) {
+                    defaultValue = String.Empty
+                }
+            )
+        ) {
+            BackHandler { navController.navigateUp() }
+            val playlistId = it.arguments
+                ?.getString(Screen.PlaylistEdit.ARG_KEY_PLAYLIST_ID) ?: String.Empty
+
+            PlaylistEditScreen(playlistId)
         }
     }
 }

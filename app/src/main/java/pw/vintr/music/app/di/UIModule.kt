@@ -33,6 +33,7 @@ import pw.vintr.music.ui.feature.library.playlist.PlaylistListViewModel
 import pw.vintr.music.ui.feature.library.playlist.addTrack.PlaylistAddTrackViewModel
 import pw.vintr.music.ui.feature.library.playlist.create.PlaylistCreateViewModel
 import pw.vintr.music.ui.feature.library.playlist.details.PlaylistDetailsViewModel
+import pw.vintr.music.ui.feature.library.playlist.edit.PlaylistEditViewModel
 import pw.vintr.music.ui.navigation.Navigator
 
 val uiModule = module {
@@ -86,7 +87,12 @@ val uiModule = module {
             playlistId = params.get(),
             playerInteractor = get(),
             playlistInteractor = get(),
-            primaryLoaderInteractor = get(),
+        )
+    }
+    viewModel {params ->
+        PlaylistEditViewModel(
+            playlistId = params.get(),
+            playlistInteractor = get(),
         )
     }
     viewModel { params ->

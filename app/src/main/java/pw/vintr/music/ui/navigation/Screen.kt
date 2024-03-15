@@ -164,6 +164,21 @@ sealed class Screen(val route: String) {
         }
     }
 
+    data class PlaylistEdit(val playlistId: String) : ScreenWithArgs(
+        destination = ROUTE_DESTINATION,
+        args = mapOf(ARG_KEY_PLAYLIST_ID to playlistId)
+    ) {
+        companion object {
+            const val ARG_KEY_PLAYLIST_ID = "arg-key-playlist-id"
+            private const val ROUTE_DESTINATION = "playlist-edit"
+
+            val routeTemplate = buildRouteTemplate(
+                ROUTE_DESTINATION,
+                listOf(ARG_KEY_PLAYLIST_ID)
+            )
+        }
+    }
+
     data class AlbumDetails(val album: AlbumModel) : ScreenWithArgs(
         destination = ROUTE_DESTINATION,
         args = mapOf(ARG_KEY_ALBUM to album)

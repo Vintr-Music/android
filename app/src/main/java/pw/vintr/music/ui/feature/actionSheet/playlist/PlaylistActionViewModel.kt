@@ -27,7 +27,7 @@ class PlaylistActionViewModel : BaseViewModel() {
         navigator.back(
             type = NavigatorType.Root,
             resultKey = PlaylistActionResult.KEY,
-            result = PlaylistActionResult(PlaylistAction.ADD_TO_QUEUE)
+            result = PlaylistActionResult(PlaylistAction.EDIT_PLAYLIST)
         )
     }
 

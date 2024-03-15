@@ -18,7 +18,7 @@ inline fun <T> StateFlow<BaseScreenState<T>>.withLoaded(block: (T) -> Unit) {
 }
 
 inline fun <reified R> MutableStateFlow<in R>.updateTyped(
-    fallback: () -> Unit = {},
+    onDifferentType: () -> Unit = {},
     mutation: (R) -> R
 ) {
     val lockedValue = value
@@ -26,23 +26,40 @@ inline fun <reified R> MutableStateFlow<in R>.updateTyped(
     if (lockedValue is R) {
         value = mutation(lockedValue)
     } else {
-        fallback()
+        onDifferentType()
     }
 }
 
 @JvmName("updateLoadedScreen")
 inline fun <T> MutableStateFlow<BaseScreenState<T>>.updateLoaded(
-    fallback: () -> Unit = {},
+    onDifferentType: () -> Unit = {},
     mutation: (T) -> T,
 ) {
-    updateTyped<BaseScreenState.Loaded<T>>(fallback) { loaded ->
+    updateTyped<BaseScreenState.Loaded<T>>(onDifferentType) { loaded ->
         loaded.copy(data = mutation(loaded.data))
     }
 }
 
+@JvmName("updateWithLoadedScreen")
+inline fun <T> MutableStateFlow<BaseScreenState<T>>.updateWithLoaded(
+    onDifferentType: () -> Unit = {},
+    mutation: (T) -> BaseScreenState<T>,
+) {
+    val lockedValue = value
+
+    if (lockedValue is BaseScreenState.Loaded<T>) {
+        value = mutation(lockedValue.data)
+    } else {
+        onDifferentType()
+    }
+}
+
 @JvmName("updateLoadedDomain")
-inline fun <T> MutableStateFlow<BaseDomainState<T>>.updateLoaded(mutation: (T) -> T) {
-    updateTyped<BaseDomainState.Loaded<T>> { loaded ->
+inline fun <T> MutableStateFlow<BaseDomainState<T>>.updateLoaded(
+    onDifferentType: () -> Unit = {},
+    mutation: (T) -> T
+) {
+    updateTyped<BaseDomainState.Loaded<T>>(onDifferentType) { loaded ->
         loaded.copy(data = mutation(loaded.data))
     }
 }

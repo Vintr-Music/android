@@ -11,6 +11,7 @@
     <string name="common_attention">Attention!</string>
     <string name="common_confirmation">Confirmation</string>
     <string name="common_delete">Delete</string>
+    <string name="common_save">Save</string>
 
     <string name="login_field">Login</string>
     <string name="password">Password</string>

@@ -9,7 +9,6 @@ import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import pw.vintr.music.domain.library.model.track.TrackModel
-import pw.vintr.music.domain.loader.PrimaryLoaderInteractor
 import pw.vintr.music.domain.player.interactor.PlayerInteractor
 import pw.vintr.music.domain.player.model.session.PlayerSessionModel
 import pw.vintr.music.domain.player.model.state.PlayerStatusModel
@@ -17,6 +16,7 @@ import pw.vintr.music.domain.playlist.interactor.PlaylistInteractor
 import pw.vintr.music.domain.playlist.model.PlaylistModel
 import pw.vintr.music.domain.playlist.model.PlaylistRecordModel
 import pw.vintr.music.tools.extension.updateLoaded
+import pw.vintr.music.tools.extension.updateWithLoaded
 import pw.vintr.music.tools.extension.withLoaded
 import pw.vintr.music.ui.base.BaseScreenState
 import pw.vintr.music.ui.base.BaseViewModel
@@ -34,7 +34,6 @@ class PlaylistDetailsViewModel(
     private val playlistId: String,
     private val playerInteractor: PlayerInteractor,
     private val playlistInteractor: PlaylistInteractor,
-    private val primaryLoaderInteractor: PrimaryLoaderInteractor,
 ) : BaseViewModel() {
 
     private val _screenState = MutableStateFlow<BaseScreenState<PlaylistDetailsScreenData>>(
@@ -89,22 +88,41 @@ class PlaylistDetailsViewModel(
     }
 
     private fun processPlaylistEvent(event: PlaylistInteractor.Event) {
-        _screenState.updateLoaded(fallback = { loadData() }) { freezeData ->
-            when (event) {
-                is PlaylistInteractor.Event.AddedTrack -> {
-                    freezeData.copy(
-                        records = listOf(event.record, *freezeData.records.toTypedArray())
-                    )
-                }
-                is PlaylistInteractor.Event.RemovedTrack -> {
-                    freezeData.copy(
-                        records = freezeData.records.filter { it != event.record }
-                    )
-                }
-                is PlaylistInteractor.Event.UpdatedTracks -> {
-                    freezeData.copy(records = event.records)
-                }
+        when (event) {
+            is PlaylistInteractor.Event.AddedTrack -> {
+                onTrackAdded(event.record)
             }
+            is PlaylistInteractor.Event.RemovedTrack -> {
+                onTrackRemoved(event.record)
+            }
+            is PlaylistInteractor.Event.UpdatedTracks -> {
+                onTracksUpdated(event.records)
+            }
+        }
+    }
+
+    private fun onTrackAdded(record: PlaylistRecordModel) {
+        _screenState.updateLoaded(onDifferentType = { loadData() }) { freezeData ->
+            freezeData.copy(records = listOf(record, *freezeData.records.toTypedArray()))
+        }
+    }
+
+    private fun onTrackRemoved(record: PlaylistRecordModel) {
+        _screenState.updateWithLoaded(onDifferentType = { loadData() }) { freezeData ->
+            val newRecords = freezeData.records
+                .filter { it != record }
+
+            if (newRecords.isNotEmpty()) {
+                BaseScreenState.Loaded(freezeData.copy(records = newRecords))
+            } else {
+                BaseScreenState.Empty()
+            }
+        }
+    }
+
+    private fun onTracksUpdated(records: List<PlaylistRecordModel>) {
+        _screenState.updateLoaded(onDifferentType = { loadData() }) { freezeData ->
+            freezeData.copy(records = records)
         }
     }
 
@@ -155,14 +173,7 @@ class PlaylistDetailsViewModel(
 
     private fun deleteTrackFromPlaylist(record: PlaylistRecordModel) {
         launch(createExceptionHandler()) {
-            withLoading(
-                setLoadingCallback = { isLoading ->
-                    primaryLoaderInteractor.setLoaderState(isLoading)
-                },
-                action = {
-                    playlistInteractor.removeTrackFromPlaylist(record)
-                }
-            )
+            withPrimaryLoader { playlistInteractor.removeTrackFromPlaylist(record) }
         }
     }
 
@@ -205,7 +216,10 @@ class PlaylistDetailsViewModel(
                 launch { playerInteractor.addToQueue(tracks) }
             }
             PlaylistAction.EDIT_PLAYLIST -> {
-                // TODO: open edit
+                navigator.forward(
+                    screen = Screen.PlaylistEdit(playlistId),
+                    type = NavigatorType.Root
+                )
             }
             PlaylistAction.DELETE_PLAYLIST -> {
                 navigator.openDeletePlaylistConfirmDialog { deletePlaylist() }
@@ -215,14 +229,7 @@ class PlaylistDetailsViewModel(
 
     private fun deletePlaylist() {
         launch(context = Dispatchers.Main + createExceptionHandler()) {
-            withLoading(
-                setLoadingCallback = { isLoading ->
-                    primaryLoaderInteractor.setLoaderState(isLoading)
-                },
-                action = {
-                    playlistInteractor.removePlaylist(playlistId)
-                }
-            )
+            withPrimaryLoader { playlistInteractor.removePlaylist(playlistId) }
             navigator.back()
         }
     }

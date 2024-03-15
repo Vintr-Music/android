@@ -8,6 +8,7 @@
     <string name="common_attention">Внимание!</string>
     <string name="common_confirmation">Подтверждение</string>
     <string name="common_delete">Удалить</string>
+    <string name="common_save">Сохранить</string>
 
     <string name="login_field">Логин</string>
     <string name="password">Пароль</string>

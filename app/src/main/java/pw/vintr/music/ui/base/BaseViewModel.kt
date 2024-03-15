@@ -15,6 +15,7 @@ import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent
 import pw.vintr.music.ui.navigation.Navigator
 import org.koin.core.component.inject
+import pw.vintr.music.domain.loader.PrimaryLoaderInteractor
 import pw.vintr.music.ui.navigation.NavigatorType
 import pw.vintr.music.ui.navigation.navResult.ResultListenerHandler
 
@@ -25,6 +26,8 @@ abstract class BaseViewModel : ViewModel(), CoroutineScope, KoinComponent {
     override val coroutineContext = Dispatchers.Main + job
 
     protected val navigator: Navigator by inject()
+
+    private val primaryLoaderInteractor: PrimaryLoaderInteractor by inject()
 
     private val resultHandlerListeners: MutableMap<String, ResultListenerHandler> = mutableMapOf()
 
@@ -79,6 +82,15 @@ abstract class BaseViewModel : ViewModel(), CoroutineScope, KoinComponent {
             setLoadingCallback(false)
             throw e
         }
+    }
+
+    suspend fun withPrimaryLoader(action: suspend () -> Unit) {
+        withLoading(
+            setLoadingCallback = { isLoading ->
+                primaryLoaderInteractor.setLoaderState(isLoading)
+            },
+            action = action
+        )
     }
 
     protected fun <T> Flow<T>.stateInThis(initialValue: T) = stateIn(
