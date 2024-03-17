@@ -6,6 +6,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import pw.vintr.music.domain.playlist.interactor.PlaylistInteractor
 import pw.vintr.music.tools.extension.Empty
+import pw.vintr.music.tools.validation.TextFieldValidator
 import pw.vintr.music.ui.base.BaseViewModel
 import pw.vintr.music.ui.navigation.NavigatorType
 
@@ -13,24 +14,19 @@ class PlaylistCreateViewModel(
     private val playlistInteractor: PlaylistInteractor,
 ) : BaseViewModel() {
 
-    companion object {
-        const val NAME_MAX_LENGTH = 30
-        const val DESCRIPTION_MAX_LENGTH = 500
-    }
-
     private val _screenState = MutableStateFlow(PlaylistCreateScreenState())
 
     val screenState = _screenState.asStateFlow()
 
     fun changeName(value: String) {
-        if (value.length <= NAME_MAX_LENGTH) {
-            _screenState.update { it.copy(name = value) }
+        TextFieldValidator.validatePlaylistNameInput(value) { name ->
+            _screenState.update { it.copy(name = name) }
         }
     }
 
     fun changeDescription(value: String) {
-        if (value.length <= DESCRIPTION_MAX_LENGTH) {
-            _screenState.update { it.copy(description = value) }
+        TextFieldValidator.validatePlaylistDescriptionInput(value) { description ->
+            _screenState.update { it.copy(description = description) }
         }
     }
 

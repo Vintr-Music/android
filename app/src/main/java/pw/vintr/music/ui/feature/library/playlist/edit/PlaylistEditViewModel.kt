@@ -11,6 +11,7 @@ import pw.vintr.music.domain.playlist.model.PlaylistRecordModel
 import pw.vintr.music.tools.extension.reorder
 import pw.vintr.music.tools.extension.updateLoaded
 import pw.vintr.music.tools.extension.withLoaded
+import pw.vintr.music.tools.validation.TextFieldValidator
 import pw.vintr.music.ui.base.BaseScreenState
 import pw.vintr.music.ui.base.BaseViewModel
 import pw.vintr.music.ui.navigation.NavigatorType
@@ -19,11 +20,6 @@ class PlaylistEditViewModel(
     private val playlistId: String,
     private val playlistInteractor: PlaylistInteractor,
 ) : BaseViewModel() {
-
-    companion object {
-        const val NAME_MAX_LENGTH = 30
-        const val DESCRIPTION_MAX_LENGTH = 500
-    }
 
     private val _screenState = MutableStateFlow<BaseScreenState<PlaylistEditScreenData>>(
         value = BaseScreenState.Loading()
@@ -55,14 +51,14 @@ class PlaylistEditViewModel(
     }
 
     fun changeName(value: String) {
-        if (value.length <= NAME_MAX_LENGTH) {
-            _screenState.updateLoaded { it.copy(name = value) }
+        TextFieldValidator.validatePlaylistNameInput(value) { name ->
+            _screenState.updateLoaded { it.copy(name = name) }
         }
     }
 
     fun changeDescription(value: String) {
-        if (value.length <= DESCRIPTION_MAX_LENGTH) {
-            _screenState.updateLoaded { it.copy(description = value) }
+        TextFieldValidator.validatePlaylistDescriptionInput(value) { description ->
+            _screenState.updateLoaded { it.copy(description = description) }
         }
     }
 
@@ -121,7 +117,8 @@ data class PlaylistEditScreenData(
     val records: List<PlaylistRecordModel>,
     val isRecordsModified: Boolean = false,
 ) {
-    val canSaveInfo = name != savedPlaylist.name || description != savedPlaylist.description
+    val canSaveInfo = name.isNotEmpty() &&
+            (name != savedPlaylist.name || description != savedPlaylist.description)
 
     val canBeSaved: Boolean = canSaveInfo || isRecordsModified
 }

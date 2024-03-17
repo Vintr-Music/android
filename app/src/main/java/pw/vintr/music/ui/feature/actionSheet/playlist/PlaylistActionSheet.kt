@@ -22,6 +22,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
+import coil.request.CachePolicy
 import coil.request.ImageRequest
 import org.koin.androidx.compose.getViewModel
 import pw.vintr.music.R
@@ -73,6 +74,9 @@ fun PlaylistActionSheet(
                             height = constraints.maxHeight
                         )
                         .crossfade(enable = true)
+                        .error(drawableResId = R.drawable.ic_playlist_no_artwork)
+                        .memoryCachePolicy(CachePolicy.DISABLED)
+                        .diskCachePolicy(CachePolicy.DISABLED)
                         .build(),
                     contentScale = ContentScale.Crop,
                     contentDescription = null
