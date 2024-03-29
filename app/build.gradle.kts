@@ -3,6 +3,12 @@ plugins {
     id("org.jetbrains.kotlin.android")
     id("kotlin-parcelize")
     id("io.realm.kotlin")
+    id("appmetrica-plugin")
+}
+
+appmetrica {
+    postApiKey = { "5a659821-03aa-4fca-8812-c61df4750f68" }
+    setMappingBuildTypes(listOf("release"))
 }
 
 android {
