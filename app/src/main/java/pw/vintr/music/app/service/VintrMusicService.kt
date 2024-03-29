@@ -9,6 +9,8 @@ import android.media.AudioManager
 import androidx.media3.common.AudioAttributes
 import androidx.media3.common.C
 import androidx.media3.common.util.UnstableApi
+import androidx.media3.datasource.DataSourceBitmapLoader
+import androidx.media3.datasource.DataSourceBitmapLoader.DEFAULT_EXECUTOR_SERVICE
 import androidx.media3.datasource.okhttp.OkHttpDataSource
 import androidx.media3.exoplayer.ExoPlayer
 import androidx.media3.exoplayer.source.DefaultMediaSourceFactory
@@ -61,6 +63,7 @@ class VintrMusicService : MediaSessionService(), KoinComponent {
 
         // Player init
         val dataSource = OkHttpDataSource.Factory(okHttpClient)
+
         val player = ExoPlayer.Builder(this)
             .setMediaSourceFactory(DefaultMediaSourceFactory(dataSource))
             .setAudioAttributes(
@@ -80,6 +83,12 @@ class VintrMusicService : MediaSessionService(), KoinComponent {
                     OPEN_APP_REQUEST_CODE,
                     Intent(this, MainActivity::class.java),
                     PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+                )
+            )
+            .setBitmapLoader(
+                DataSourceBitmapLoader(
+                    DEFAULT_EXECUTOR_SERVICE.get(),
+                    dataSource
                 )
             )
             .build()
