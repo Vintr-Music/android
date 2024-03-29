@@ -9,6 +9,7 @@ plugins {
 appmetrica {
     postApiKey = { "5a659821-03aa-4fca-8812-c61df4750f68" }
     setMappingBuildTypes(listOf("release"))
+    setOffline(true)
 }
 
 android {
@@ -27,7 +28,7 @@ android {
         applicationId = "pw.vintr.music"
         minSdk = 28
         targetSdk = 34
-        versionCode = 3
+        versionCode = 4
         versionName = "0.3 Preview"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
