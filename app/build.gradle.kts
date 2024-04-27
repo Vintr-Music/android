@@ -81,28 +81,28 @@ dependencies {
     val koinVersion = "3.5.0"
     val preferenceVersion = "1.2.1"
     val coilVersion = "2.4.0"
-    val media3Version = "1.3.0"
+    val media3Version = "1.3.1"
     val realmVersion = "1.11.0"
     val realmCoroutinesVersion = "1.7.3"
     val paletteVersion = "1.0.0"
-    val cameraxVersion = "1.3.2"
+    val cameraxVersion = "1.3.3"
     val zxingVersion = "3.5.2"
     val reordableVersion = "1.3.2"
     val metricaVersion = "6.3.0"
 
     // Common Android
-    implementation("androidx.core:core-ktx:1.12.0")
+    implementation("androidx.core:core-ktx:1.13.0")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.7.0")
-    implementation("androidx.activity:activity-compose:1.8.2")
+    implementation("androidx.activity:activity-compose:1.9.0")
     implementation(platform("androidx.compose:compose-bom:2023.10.01"))
     implementation("androidx.compose.ui:ui")
     implementation("androidx.compose.ui:ui-graphics")
     implementation("androidx.compose.ui:ui-tooling-preview")
     implementation("androidx.compose.material3:material3")
-    implementation("androidx.compose.material:material:1.6.4")
+    implementation("androidx.compose.material:material:1.6.6")
     implementation("androidx.preference:preference-ktx:$preferenceVersion")
     implementation("androidx.palette:palette-ktx:$paletteVersion")
-    implementation("androidx.compose.runtime:runtime-livedata:1.6.4")
+    implementation("androidx.compose.runtime:runtime-livedata:1.6.6")
 
     // Compose external
     implementation("sh.calvin.reorderable:reorderable:$reordableVersion")
