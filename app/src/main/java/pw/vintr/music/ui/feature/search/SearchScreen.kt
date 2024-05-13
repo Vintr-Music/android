@@ -1,5 +1,6 @@
 package pw.vintr.music.ui.feature.search
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -71,6 +72,10 @@ fun SearchScreen(viewModel: SearchViewModel = getViewModel()) {
         val playerState = viewModel.playerState.collectAsState()
 
         val focusRequester = remember { FocusRequester() }
+
+        BackHandler(enabled = contentState.value.isLoaded) {
+            viewModel.clearSearch()
+        }
 
         Spacer(modifier = Modifier.height(20.dp))
         AppTextField(

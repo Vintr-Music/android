@@ -4,6 +4,9 @@ import pw.vintr.music.domain.base.BaseDomainState
 
 interface BaseScreenState<T> {
 
+    val isLoaded: Boolean
+        get() = this is Loaded
+
     class Loading<T> : BaseScreenState<T>
 
     class Error<T> : BaseScreenState<T>

@@ -48,7 +48,7 @@ class VintrMusicService : MediaSessionService(), KoinComponent {
         controllerInfo: MediaSession.ControllerInfo
     ): MediaSession? = mediaSession
 
-    // Create your player and media session in the onCreate lifecycle event
+    // Create player and media session in the onCreate lifecycle event
     @UnstableApi
     override fun onCreate() {
         super.onCreate()
