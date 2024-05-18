@@ -20,6 +20,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
@@ -29,6 +30,7 @@ import androidx.compose.ui.unit.dp
 import org.koin.androidx.compose.getViewModel
 import org.koin.core.parameter.parametersOf
 import pw.vintr.music.R
+import pw.vintr.music.tools.composable.rememberBottomSheetNestedScrollInterceptor
 import pw.vintr.music.ui.kit.button.ButtonSecondary
 import pw.vintr.music.ui.kit.button.ButtonSimpleIcon
 import pw.vintr.music.ui.kit.input.AppTextField
@@ -38,7 +40,7 @@ import pw.vintr.music.ui.kit.toolbar.ToolbarRegular
 import pw.vintr.music.ui.navigation.NavigatorType
 import pw.vintr.music.ui.theme.VintrMusicExtendedTheme
 import sh.calvin.reorderable.ReorderableItem
-import sh.calvin.reorderable.rememberReorderableLazyColumnState
+import sh.calvin.reorderable.rememberReorderableLazyListState
 
 private const val KEY_NAME = "name"
 private const val KEY_DESCRIPTION = "description"
@@ -75,21 +77,22 @@ fun PlaylistEditScreen(
             loaded = { state ->
                 val screenData = state.data
 
+                fun Int.toPosition() = (this - 2).coerceAtLeast(minimumValue = 0)
+
+                val lazyListState = rememberLazyListState()
+                val reorderableLazyColumnState = rememberReorderableLazyListState(
+                    lazyListState
+                ) { from, to ->
+                    viewModel.reorder(from.index.toPosition(), to.index.toPosition())
+                }
+
                 Column(
                     modifier = Modifier
+                        .nestedScroll(rememberBottomSheetNestedScrollInterceptor(lazyListState))
                         .fillMaxSize()
                         .imePadding()
                         .padding(scaffoldPadding)
                 ) {
-                    fun Int.toPosition() = (this - 2).coerceAtLeast(minimumValue = 0)
-
-                    val lazyListState = rememberLazyListState()
-                    val reorderableLazyColumnState = rememberReorderableLazyColumnState(
-                        lazyListState
-                    ) { from, to ->
-                        viewModel.reorder(from.index.toPosition(), to.index.toPosition())
-                    }
-
                     LazyColumn(
                         modifier = Modifier
                             .weight(1f),

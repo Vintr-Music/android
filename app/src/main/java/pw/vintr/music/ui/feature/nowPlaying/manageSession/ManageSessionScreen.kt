@@ -16,26 +16,34 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import org.koin.androidx.compose.getViewModel
 import pw.vintr.music.R
+import pw.vintr.music.tools.composable.rememberBottomSheetNestedScrollInterceptor
 import pw.vintr.music.ui.kit.button.ButtonSimpleIcon
 import pw.vintr.music.ui.kit.library.TrackView
 import pw.vintr.music.ui.kit.toolbar.ToolbarRegular
 import pw.vintr.music.ui.navigation.NavigatorType
 import pw.vintr.music.ui.theme.VintrMusicExtendedTheme
 import sh.calvin.reorderable.ReorderableItem
-import sh.calvin.reorderable.rememberReorderableLazyColumnState
+import sh.calvin.reorderable.rememberReorderableLazyListState
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun ManageSessionScreen(
     viewModel: ManageSessionViewModel = getViewModel(),
 ) {
+    val lazyListState = rememberLazyListState()
+    val reorderableLazyListState = rememberReorderableLazyListState(
+        lazyListState
+    ) { from, to -> viewModel.reorder(from.index, to.index) }
+
     Scaffold(
         modifier = Modifier
+            .nestedScroll(rememberBottomSheetNestedScrollInterceptor(lazyListState))
             .background(MaterialTheme.colorScheme.background)
             .fillMaxSize(),
         topBar = {
@@ -53,11 +61,6 @@ fun ManageSessionScreen(
     ) {
         val screenData = viewModel.screenState.collectAsState()
         val sessionIsEmpty = screenData.value.uiTracks.isEmpty()
-
-        val lazyListState = rememberLazyListState()
-        val reorderableLazyColumnState = rememberReorderableLazyColumnState(
-            lazyListState
-        ) { from, to -> viewModel.reorder(from.index, to.index) }
 
         LaunchedEffect(key1 = sessionIsEmpty) {
             if (!sessionIsEmpty) {
@@ -83,7 +86,7 @@ fun ManageSessionScreen(
                 key = { _, wrapper -> wrapper.listUUID }
             ) { index, wrapper ->
                 ReorderableItem(
-                    reorderableLazyColumnState,
+                    reorderableLazyListState,
                     key = wrapper.listUUID,
                 ) {
                     TrackView(

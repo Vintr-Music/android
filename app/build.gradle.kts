@@ -75,6 +75,7 @@ android {
 }
 
 dependencies {
+    val materialVersion = "1.6.7"
     val navigationVersion = "2.7.7"
     val accompanistVersion = "0.32.0"
     val ktorVersion = "2.3.7"
@@ -87,22 +88,24 @@ dependencies {
     val paletteVersion = "1.0.0"
     val cameraxVersion = "1.3.3"
     val zxingVersion = "3.5.2"
-    val reordableVersion = "1.3.2"
+    val reordableVersion = "2.1.1"
     val metricaVersion = "6.3.0"
 
     // Common Android
-    implementation("androidx.core:core-ktx:1.13.0")
-    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.7.0")
+    implementation("androidx.core:core-ktx:1.13.1")
+    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.8.0")
     implementation("androidx.activity:activity-compose:1.9.0")
     implementation(platform("androidx.compose:compose-bom:2023.10.01"))
     implementation("androidx.compose.ui:ui")
     implementation("androidx.compose.ui:ui-graphics")
     implementation("androidx.compose.ui:ui-tooling-preview")
-    implementation("androidx.compose.material3:material3")
-    implementation("androidx.compose.material:material:1.6.6")
     implementation("androidx.preference:preference-ktx:$preferenceVersion")
     implementation("androidx.palette:palette-ktx:$paletteVersion")
-    implementation("androidx.compose.runtime:runtime-livedata:1.6.6")
+    implementation("androidx.compose.runtime:runtime-livedata:1.6.7")
+
+    // Material
+    implementation("androidx.compose.material3:material3")
+    implementation("androidx.compose.material:material:$materialVersion")
 
     // Compose external
     implementation("sh.calvin.reorderable:reorderable:$reordableVersion")

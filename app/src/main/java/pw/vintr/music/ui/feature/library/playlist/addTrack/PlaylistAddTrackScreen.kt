@@ -16,6 +16,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
@@ -28,6 +29,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
@@ -39,6 +41,7 @@ import coil.request.ImageRequest
 import org.koin.androidx.compose.getViewModel
 import org.koin.core.parameter.parametersOf
 import pw.vintr.music.R
+import pw.vintr.music.tools.composable.rememberBottomSheetNestedScrollInterceptor
 import pw.vintr.music.ui.kit.button.ButtonRegular
 import pw.vintr.music.ui.kit.button.ButtonSecondary
 import pw.vintr.music.ui.kit.button.ButtonSimpleIcon
@@ -108,10 +111,16 @@ fun PlaylistAddTrackScreen(
                 }
             },
             loaded = { state ->
+                val lazyListState = rememberLazyListState()
                 val items = state.data
 
                 Column(
                     modifier = Modifier
+                        .nestedScroll(
+                            rememberBottomSheetNestedScrollInterceptor(
+                                lazyListState = lazyListState
+                            )
+                        )
                         .fillMaxSize()
                         .padding(scaffoldPadding)
                 ) {
