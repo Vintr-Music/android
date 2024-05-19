@@ -125,7 +125,7 @@ fun RegisterScreen(
             Spacer(modifier = Modifier.height(20.dp))
             ButtonRegular(
                 modifier = Modifier.padding(horizontal = 20.dp),
-                text = stringResource(id = R.string.login),
+                text = stringResource(id = R.string.make_register),
                 enabled = screenState.value.formIsValid,
                 isLoading = screenState.value.isRegistering,
                 onClick = { viewModel.register() },

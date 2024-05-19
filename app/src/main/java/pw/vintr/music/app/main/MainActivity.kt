@@ -7,8 +7,10 @@ import androidx.activity.compose.setContent
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.AnimationSpec
 import androidx.compose.animation.core.tween
+import androidx.compose.animation.expandVertically
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
+import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -32,6 +34,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
@@ -43,6 +46,7 @@ import com.google.accompanist.navigation.material.bottomSheet
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.isGranted
 import com.google.accompanist.permissions.rememberPermissionState
+import kotlinx.coroutines.delay
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.compose.KoinContext
 import org.koin.compose.rememberKoinInject
@@ -70,6 +74,7 @@ import pw.vintr.music.ui.feature.actionSheet.track.entity.TrackAction
 import pw.vintr.music.ui.feature.library.playlist.addTrack.PlaylistAddTrackScreen
 import pw.vintr.music.ui.feature.library.playlist.create.PlaylistCreateScreen
 import pw.vintr.music.ui.feature.library.playlist.edit.PlaylistEditScreen
+import pw.vintr.music.ui.kit.alert.Alert
 import pw.vintr.music.ui.kit.sliding.AnchoredDraggableDefaults
 import pw.vintr.music.ui.navigation.Navigator
 import pw.vintr.music.ui.navigation.NavigatorEffect
@@ -81,6 +86,8 @@ import pw.vintr.music.ui.navigation.navGraph.extendedDialog
 import pw.vintr.music.ui.theme.Bee1
 
 private const val TRANSITION_DURATION = 300
+
+private const val ALERT_SHOW_DURATION = 2500L
 
 class MainActivity : ComponentActivity() {
 
@@ -133,6 +140,7 @@ class MainActivity : ComponentActivity() {
                                 )
                             }
                             PrimaryLoader()
+                            AlertHolder()
                         }
                     }
                 }
@@ -161,6 +169,40 @@ class MainActivity : ComponentActivity() {
                 CircularProgressIndicator(
                     modifier = Modifier.size(36.dp),
                     color = Bee1,
+                )
+            }
+        }
+    }
+
+    @Composable
+    private fun AlertHolder() {
+        val alertState = viewModel.alertState.collectAsState()
+
+        LaunchedEffect(key1 = alertState.value) {
+            if (alertState.value.alertVisible) {
+                delay(ALERT_SHOW_DURATION)
+                viewModel.hideAlert()
+            }
+        }
+
+        Box(
+            modifier = Modifier
+                .fillMaxSize(),
+            contentAlignment = Alignment.TopCenter,
+        ) {
+            AnimatedVisibility(
+                visible = alertState.value.alert != null && alertState.value.show,
+                enter = expandVertically(expandFrom = Alignment.Top) + fadeIn(),
+                exit =  shrinkVertically(shrinkTowards = Alignment.Top) + fadeOut()
+            ) {
+                Alert(
+                    title = alertState.value.alert?.titleRes
+                        ?.let { stringResource(id = it) }
+                        .orEmpty(),
+                    message = alertState.value.alert?.messageRes
+                        ?.let { stringResource(id = it) }
+                        .orEmpty(),
+                    onCloseAction = { viewModel.hideAlert() }
                 )
             }
         }

@@ -4,13 +4,16 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import pw.vintr.music.domain.alert.interactor.AlertInteractor
+import pw.vintr.music.domain.alert.model.AlertModel
 import pw.vintr.music.domain.user.useCase.AuthorizeUseCase
 import pw.vintr.music.tools.extension.Empty
 import pw.vintr.music.ui.base.BaseViewModel
 import pw.vintr.music.ui.navigation.Screen
 
 class LoginViewModel(
-    private val authorizeUseCase: AuthorizeUseCase
+    private val authorizeUseCase: AuthorizeUseCase,
+    private val alertInteractor: AlertInteractor,
 ) : BaseViewModel() {
 
     private val _screenState = MutableStateFlow(LoginScreenState())
@@ -34,6 +37,7 @@ class LoginViewModel(
     fun authorize() {
         launch(createExceptionHandler {
             _screenState.update { it.copy(isAuthorizing = false) }
+            alertInteractor.showAlert(AlertModel.LoginError())
         }) {
             _screenState.update { it.copy(isAuthorizing = true) }
 

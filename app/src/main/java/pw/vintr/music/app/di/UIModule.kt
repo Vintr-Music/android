@@ -39,8 +39,8 @@ import pw.vintr.music.ui.navigation.Navigator
 val uiModule = module {
     single { Navigator() }
 
-    viewModel { MainViewModel(get(), get(), get(), get(), get()) }
-    viewModel { LoginViewModel(get()) }
+    viewModel { MainViewModel(get(), get(), get(), get(), get(), get()) }
+    viewModel { LoginViewModel(get(), get()) }
     viewModel { RegisterViewModel(get()) }
 
     viewModel { ServerSelectionViewModel(get(), get(), get(), get()) }
@@ -75,7 +75,8 @@ val uiModule = module {
     viewModel { params ->
         PlaylistAddTrackViewModel(
             trackId = params.get(),
-            playlistInteractor = get()
+            playlistInteractor = get(),
+            alertInteractor = get(),
         )
     }
     viewModel { ArtistFavoriteListViewModel(get()) }

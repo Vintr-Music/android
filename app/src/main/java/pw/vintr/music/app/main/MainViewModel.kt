@@ -5,6 +5,8 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import pw.vintr.music.domain.alert.interactor.AlertInteractor
+import pw.vintr.music.domain.alert.model.AlertState
 import pw.vintr.music.domain.loader.PrimaryLoaderInteractor
 import pw.vintr.music.domain.player.interactor.PlayerInteractor
 import pw.vintr.music.domain.server.useCase.selection.GetIsServerSelectedUseCase
@@ -18,6 +20,7 @@ class MainViewModel(
     private val getSelectedServerIdUseCase: GetIsServerSelectedUseCase,
     private val visualizerInteractor: VisualizerInteractor,
     private val playerInteractor: PlayerInteractor,
+    private val alertInteractor: AlertInteractor,
     primaryLoaderInteractor: PrimaryLoaderInteractor,
 ) : BaseViewModel() {
 
@@ -25,6 +28,9 @@ class MainViewModel(
 
     val primaryLoaderState = primaryLoaderInteractor.primaryLoaderState
         .stateInThis(initialValue = false)
+
+    val alertState = alertInteractor.alertState
+        .stateInThis(initialValue = AlertState())
 
     init {
         collectAskPlaySpeakersEvent()
@@ -49,6 +55,10 @@ class MainViewModel(
 
     fun setAudioPermissionGranted(isGranted: Boolean) {
         visualizerInteractor.setPermissionGranted(isGranted)
+    }
+
+    fun hideAlert() {
+        alertInteractor.hideAlert()
     }
 
     private fun collectAskPlaySpeakersEvent() {

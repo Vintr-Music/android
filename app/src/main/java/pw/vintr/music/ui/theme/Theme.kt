@@ -84,6 +84,8 @@ data class VintrMusicColors(
     val segmentBackground: Color = Color.Unspecified,
     val segmentIndicatorStroke: Color = Color.Unspecified,
     val segmentIndicatorBackground: Color = Color.Unspecified,
+    // Alert
+    val negative: Color = Color.Unspecified,
 )
 
 val LocalVintrColors = staticCompositionLocalOf { VintrMusicColors() }
@@ -150,6 +152,8 @@ val darkVintrColors = VintrMusicColors(
     segmentBackground = Gray1,
     segmentIndicatorStroke = Bee0,
     segmentIndicatorBackground = BeeDark0,
+    // Alert
+    negative = Red3,
 )
 
 val lightVintrColors = VintrMusicColors(
@@ -214,6 +218,8 @@ val lightVintrColors = VintrMusicColors(
     segmentBackground = Gray6,
     segmentIndicatorStroke = Bee3,
     segmentIndicatorBackground = Bee4,
+    // Alert
+    negative = Red3,
 )
 
 private val darkColorScheme = darkColorScheme(

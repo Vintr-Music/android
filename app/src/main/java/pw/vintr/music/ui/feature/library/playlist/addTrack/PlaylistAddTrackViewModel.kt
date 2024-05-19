@@ -5,6 +5,8 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.mapLatest
 import kotlinx.coroutines.launch
+import pw.vintr.music.domain.alert.interactor.AlertInteractor
+import pw.vintr.music.domain.alert.model.AlertModel
 import pw.vintr.music.domain.playlist.interactor.PlaylistInteractor
 import pw.vintr.music.domain.playlist.model.PlaylistModel
 import pw.vintr.music.tools.extension.addItem
@@ -19,6 +21,7 @@ import pw.vintr.music.ui.navigation.Screen
 class PlaylistAddTrackViewModel(
     private val trackId: String,
     private val playlistInteractor: PlaylistInteractor,
+    private val alertInteractor: AlertInteractor,
 ) : BaseViewModel() {
 
     @OptIn(ExperimentalCoroutinesApi::class)
@@ -80,7 +83,9 @@ class PlaylistAddTrackViewModel(
             return
         }
 
-        launch(createExceptionHandler()) {
+        launch(createExceptionHandler {
+            alertInteractor.showAlert(AlertModel.CommonError())
+        }) {
             withLoading(
                 setLoadingCallback = { isLoading ->
                     if (isLoading) {
