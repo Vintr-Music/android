@@ -6,6 +6,8 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import pw.vintr.music.R
+import pw.vintr.music.domain.alert.interactor.AlertInteractor
+import pw.vintr.music.domain.alert.model.AlertModel
 import pw.vintr.music.domain.server.model.ServerModel
 import pw.vintr.music.domain.server.useCase.connectNew.ConnectNewServerUseCase
 import pw.vintr.music.tools.extension.Empty
@@ -13,7 +15,8 @@ import pw.vintr.music.ui.base.BaseViewModel
 import pw.vintr.music.ui.navigation.NavigatorType
 
 class ConnectNewServerViewModel(
-    private val connectNewServerUseCase: ConnectNewServerUseCase
+    private val connectNewServerUseCase: ConnectNewServerUseCase,
+    private val alertInteractor: AlertInteractor,
 ) : BaseViewModel() {
 
     private val _screenState = MutableStateFlow(ConnectNewServerScreenState())
@@ -55,7 +58,9 @@ class ConnectNewServerViewModel(
     }
 
     private fun connectServer(connectAction: suspend () -> ServerModel) {
-        launch(createExceptionHandler {  }) {
+        launch(createExceptionHandler {
+            alertInteractor.showAlert(AlertModel.CommonError())
+        }) {
             withLoading(
                 setLoadingCallback = { isLoading ->
                     _screenState.update { it.copy(isConnectingServer = isLoading) }

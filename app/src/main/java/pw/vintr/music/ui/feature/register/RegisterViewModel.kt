@@ -4,13 +4,16 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import pw.vintr.music.domain.alert.interactor.AlertInteractor
+import pw.vintr.music.domain.alert.model.AlertModel
 import pw.vintr.music.domain.user.useCase.RegisterUseCase
 import pw.vintr.music.tools.extension.Empty
 import pw.vintr.music.ui.base.BaseViewModel
 import pw.vintr.music.ui.navigation.Screen
 
 class RegisterViewModel(
-    private val registerUseCase: RegisterUseCase
+    private val registerUseCase: RegisterUseCase,
+    private val alertInteractor: AlertInteractor,
 ) : BaseViewModel() {
 
     private val _screenState = MutableStateFlow(RegisterScreenState())
@@ -40,6 +43,7 @@ class RegisterViewModel(
     fun register() {
         launch(createExceptionHandler {
             _screenState.update { it.copy(isRegistering = false) }
+            alertInteractor.showAlert(AlertModel.CommonError())
         }) {
             _screenState.update { it.copy(isRegistering = true) }
 

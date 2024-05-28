@@ -41,10 +41,10 @@ val uiModule = module {
 
     viewModel { MainViewModel(get(), get(), get(), get(), get(), get()) }
     viewModel { LoginViewModel(get(), get()) }
-    viewModel { RegisterViewModel(get()) }
+    viewModel { RegisterViewModel(get(), get()) }
 
     viewModel { ServerSelectionViewModel(get(), get(), get(), get()) }
-    viewModel { ConnectNewServerViewModel(get()) }
+    viewModel { ConnectNewServerViewModel(get(), get()) }
     viewModel { ServerAccessControlViewModel() }
     viewModel { params ->
         ServerInviteListViewModel(
