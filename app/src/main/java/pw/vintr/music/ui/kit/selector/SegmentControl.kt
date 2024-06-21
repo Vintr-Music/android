@@ -100,12 +100,13 @@ private fun SegmentItem(
     modifier: Modifier,
     onClick: () -> Unit,
     title: String,
+    interactionSource: MutableInteractionSource = MutableInteractionSource(),
 ) {
     Box(
         modifier = modifier
             .clip(RoundedCornerShape(10.dp))
             .clickable(
-                interactionSource = MutableInteractionSource(),
+                interactionSource = interactionSource,
                 indication = null
             ) { onClick() },
         contentAlignment = Alignment.Center

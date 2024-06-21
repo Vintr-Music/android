@@ -75,7 +75,7 @@ fun RegisterScreen(
                 )
                 AppTextField(
                     modifier = Modifier.padding(horizontal = 20.dp),
-                    label = stringResource(id = R.string.enter_password),
+                    label = stringResource(id = R.string.password),
                     hint = stringResource(id = R.string.enter_password),
                     value = screenState.value.password,
                     visualTransformation = PasswordVisualTransformation(),
