@@ -1,6 +1,5 @@
 package pw.vintr.music.ui.feature.albumDetails
 
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -22,7 +21,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import org.koin.androidx.compose.getViewModel
+import org.koin.androidx.compose.koinViewModel
 import org.koin.core.parameter.parametersOf
 import pw.vintr.music.R
 import pw.vintr.music.domain.library.model.album.AlbumModel
@@ -43,11 +42,10 @@ import pw.vintr.music.ui.theme.Gilroy36
 import pw.vintr.music.ui.theme.Red2
 import pw.vintr.music.ui.theme.VintrMusicExtendedTheme
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun AlbumDetailsScreen(
     album: AlbumModel,
-    viewModel: AlbumDetailsViewModel = getViewModel { parametersOf(album) }
+    viewModel: AlbumDetailsViewModel = koinViewModel { parametersOf(album) }
 ) {
     val screenState = viewModel.screenState.collectAsState()
     val albumPlayingState = viewModel.albumPlayingState.collectAsState()

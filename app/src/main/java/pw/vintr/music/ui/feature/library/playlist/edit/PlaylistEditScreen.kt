@@ -1,6 +1,5 @@
 package pw.vintr.music.ui.feature.library.playlist.edit
 
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -27,7 +26,7 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
-import org.koin.androidx.compose.getViewModel
+import org.koin.androidx.compose.koinViewModel
 import org.koin.core.parameter.parametersOf
 import pw.vintr.music.R
 import pw.vintr.music.tools.composable.rememberBottomSheetNestedScrollInterceptor
@@ -45,11 +44,10 @@ import sh.calvin.reorderable.rememberReorderableLazyListState
 private const val KEY_NAME = "name"
 private const val KEY_DESCRIPTION = "description"
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun PlaylistEditScreen(
     playlistId: String,
-    viewModel: PlaylistEditViewModel = getViewModel { parametersOf(playlistId) }
+    viewModel: PlaylistEditViewModel = koinViewModel { parametersOf(playlistId) }
 ) {
     Scaffold(
         modifier = Modifier

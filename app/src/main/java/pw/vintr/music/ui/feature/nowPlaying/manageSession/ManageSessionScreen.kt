@@ -1,6 +1,5 @@
 package pw.vintr.music.ui.feature.nowPlaying.manageSession
 
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
@@ -20,7 +19,7 @@ import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import org.koin.androidx.compose.getViewModel
+import org.koin.androidx.compose.koinViewModel
 import pw.vintr.music.R
 import pw.vintr.music.tools.composable.rememberBottomSheetNestedScrollInterceptor
 import pw.vintr.music.ui.kit.button.ButtonSimpleIcon
@@ -31,10 +30,9 @@ import pw.vintr.music.ui.theme.VintrMusicExtendedTheme
 import sh.calvin.reorderable.ReorderableItem
 import sh.calvin.reorderable.rememberReorderableLazyListState
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun ManageSessionScreen(
-    viewModel: ManageSessionViewModel = getViewModel(),
+    viewModel: ManageSessionViewModel = koinViewModel(),
 ) {
     val lazyListState = rememberLazyListState()
     val reorderableLazyListState = rememberReorderableLazyListState(

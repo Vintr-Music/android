@@ -12,7 +12,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import org.koin.androidx.compose.getViewModel
+import org.koin.androidx.compose.koinViewModel
 import pw.vintr.music.R
 import pw.vintr.music.ui.feature.dialog.entity.ConfirmDialogData
 import pw.vintr.music.ui.kit.button.ButtonText
@@ -23,7 +23,7 @@ import pw.vintr.music.ui.theme.VintrMusicExtendedTheme
 @Composable
 fun ConfirmDialog(
     data: ConfirmDialogData,
-    viewModel: ConfirmViewModel = getViewModel()
+    viewModel: ConfirmViewModel = koinViewModel()
 ) {
     Column(
         modifier = Modifier

@@ -1,7 +1,7 @@
 package pw.vintr.music.ui.feature.root
 
-import android.app.Activity
 import androidx.activity.compose.BackHandler
+import androidx.activity.compose.LocalActivity
 import androidx.compose.animation.EnterTransition
 import androidx.compose.animation.ExitTransition
 import androidx.compose.animation.core.tween
@@ -17,7 +17,6 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph.Companion.findStartDestination
@@ -27,8 +26,8 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import kotlinx.coroutines.launch
-import org.koin.androidx.compose.getViewModel
-import org.koin.compose.rememberKoinInject
+import org.koin.androidx.compose.koinViewModel
+import org.koin.compose.koinInject
 import pw.vintr.music.domain.library.model.album.AlbumModel
 import pw.vintr.music.domain.library.model.artist.ArtistModel
 import pw.vintr.music.tools.composable.StatusBarEffect
@@ -64,7 +63,7 @@ private const val TRANSITION_DURATION = 300
 @Composable
 @OptIn(ExperimentalMaterialApi::class)
 fun RootScreen(
-    viewModel: RootViewModel = getViewModel()
+    viewModel: RootViewModel = koinViewModel()
 ) {
     StatusBarEffect()
 
@@ -141,12 +140,12 @@ fun TabNavigation(
     modifier: Modifier = Modifier,
     rootScreen: Screen,
     navigatorType: NavigatorType,
-    navigator: Navigator = rememberKoinInject(),
+    navigator: Navigator = koinInject(),
     scaffoldState: BottomSheetScaffoldState,
 ) {
     val navController = rememberNavController()
     val navBackStackEntry by navController.currentBackStackEntryAsState()
-    val activity = (LocalContext.current as? Activity)
+    val activity = LocalActivity.current
     val coroutineScope = rememberCoroutineScope()
 
     fun closeNowPlaying() {

@@ -19,7 +19,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import org.koin.androidx.compose.getViewModel
+import org.koin.androidx.compose.koinViewModel
 import pw.vintr.music.R
 import pw.vintr.music.tools.extension.scaffoldPadding
 import pw.vintr.music.ui.kit.equalizer.EqualizerBandSlider
@@ -29,7 +29,7 @@ import pw.vintr.music.ui.kit.menu.MenuSectionTitle
 import pw.vintr.music.ui.kit.toolbar.ToolbarRegular
 
 @Composable
-fun EqualizerScreen(viewModel: EqualizerViewModel = getViewModel()) {
+fun EqualizerScreen(viewModel: EqualizerViewModel = koinViewModel()) {
     val screenState = viewModel.screenState.collectAsState()
 
     Scaffold(

@@ -11,7 +11,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Slider
-import androidx.compose.material3.SliderPositions
+import androidx.compose.material3.SliderState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -42,9 +42,9 @@ fun PlayerProgressBar(
             onValueChange = { onSeek(it) },
             onValueChangeFinished = { onSeekEnd() },
             valueRange = 0f..trackDuration,
-            track = { sliderPositions ->
+            track = { sliderState ->
                 SliderTrack(
-                    sliderPositions = sliderPositions,
+                    sliderState = sliderState,
                     shape = shape
                 )
             },
@@ -71,9 +71,10 @@ fun PlayerProgressBar(
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun SliderTrack(
-    sliderPositions: SliderPositions,
+    sliderState: SliderState,
     shape: Shape = RoundedCornerShape(10.dp),
 ) {
     val inactiveTrackColor = VintrMusicExtendedTheme.colors
@@ -107,13 +108,17 @@ private fun SliderTrack(
             trackStrokeWidth,
         )
 
+        // Access activeRange through sliderState
+        val normalizedValue = (sliderState.value - sliderState.valueRange.start) /
+                (sliderState.valueRange.endInclusive - sliderState.valueRange.start)
+
         val activeSliderValueStart = Offset(
-            x = sliderStart.x + (sliderEnd.x - sliderStart.x) * sliderPositions.activeRange.start,
+            x = sliderStart.x,
             y = center.y
         )
 
         val activeSliderValueEnd = Offset(
-            x = sliderStart.x + (sliderEnd.x - sliderStart.x) * sliderPositions.activeRange.endInclusive,
+            x = sliderStart.x + (sliderEnd.x - sliderStart.x) * normalizedValue,
             y = center.y
         )
 

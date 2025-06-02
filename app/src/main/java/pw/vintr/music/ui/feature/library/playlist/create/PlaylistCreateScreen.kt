@@ -21,7 +21,7 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
-import org.koin.androidx.compose.getViewModel
+import org.koin.androidx.compose.koinViewModel
 import pw.vintr.music.R
 import pw.vintr.music.ui.kit.button.ButtonRegular
 import pw.vintr.music.ui.kit.button.ButtonSimpleIcon
@@ -31,7 +31,7 @@ import pw.vintr.music.ui.navigation.NavigatorType
 
 @Composable
 fun PlaylistCreateScreen(
-    viewModel: PlaylistCreateViewModel = getViewModel()
+    viewModel: PlaylistCreateViewModel = koinViewModel()
 ) {
     Scaffold(
         modifier = Modifier

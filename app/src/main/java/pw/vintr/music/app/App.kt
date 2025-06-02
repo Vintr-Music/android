@@ -1,10 +1,13 @@
 package pw.vintr.music.app
 
 import android.app.Application
-import coil.ImageLoader
-import coil.ImageLoaderFactory
-import coil.request.CachePolicy
-import coil.util.DebugLogger
+import coil3.ImageLoader
+import coil3.PlatformContext
+import coil3.SingletonImageLoader
+import coil3.network.okhttp.OkHttpNetworkFetcherFactory
+import coil3.request.CachePolicy
+import coil3.request.crossfade
+import coil3.util.DebugLogger
 import io.appmetrica.analytics.AppMetrica
 import io.appmetrica.analytics.AppMetricaConfig
 import okhttp3.OkHttpClient
@@ -18,7 +21,7 @@ import pw.vintr.music.app.di.dataModule
 import pw.vintr.music.app.di.domainModule
 import pw.vintr.music.app.di.uiModule
 
-class App : Application(), ImageLoaderFactory, KoinComponent {
+class App : Application(), SingletonImageLoader.Factory, KoinComponent {
 
     override fun onCreate() {
         super.onCreate()
@@ -41,14 +44,13 @@ class App : Application(), ImageLoaderFactory, KoinComponent {
         }
     }
 
-    override fun newImageLoader(): ImageLoader {
+    override fun newImageLoader(context: PlatformContext): ImageLoader {
         val okHttpClient: OkHttpClient = get()
 
         return ImageLoader.Builder(applicationContext)
             .logger(DebugLogger())
-            .okHttpClient(okHttpClient)
+            .components { add(OkHttpNetworkFetcherFactory(callFactory = { okHttpClient })) }
             .crossfade(enable = true)
-            .networkObserverEnabled(enable = true)
             .networkCachePolicy(CachePolicy.ENABLED)
             .build()
     }

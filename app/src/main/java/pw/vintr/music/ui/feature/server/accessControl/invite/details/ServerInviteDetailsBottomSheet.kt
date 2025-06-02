@@ -28,7 +28,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
-import org.koin.androidx.compose.getViewModel
+import org.koin.androidx.compose.koinViewModel
 import org.koin.core.parameter.parametersOf
 import pw.vintr.music.domain.server.model.ServerInviteModel
 import pw.vintr.music.tools.extension.dialogContainer
@@ -38,7 +38,7 @@ import pw.vintr.music.ui.kit.server.invite.ServerInviteData
 @Composable
 fun ServerInviteDetailsBottomSheet(
     invite: ServerInviteModel,
-    viewModel: ServerInviteDetailsViewModel = getViewModel { parametersOf(invite) }
+    viewModel: ServerInviteDetailsViewModel = koinViewModel { parametersOf(invite) }
 ) {
     Column(
         modifier = Modifier

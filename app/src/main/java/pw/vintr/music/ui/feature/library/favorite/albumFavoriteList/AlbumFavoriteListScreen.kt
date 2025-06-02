@@ -18,7 +18,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import org.koin.androidx.compose.getViewModel
+import org.koin.androidx.compose.koinViewModel
 import pw.vintr.music.R
 import pw.vintr.music.tools.extension.scaffoldPadding
 import pw.vintr.music.ui.kit.layout.PullRefreshLayout
@@ -31,7 +31,7 @@ import pw.vintr.music.ui.kit.toolbar.ToolbarRegular
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun AlbumFavoriteListScreen(
-    viewModel: AlbumFavoriteListViewModel = getViewModel()
+    viewModel: AlbumFavoriteListViewModel = koinViewModel()
 ) {
     Scaffold(
         modifier = Modifier

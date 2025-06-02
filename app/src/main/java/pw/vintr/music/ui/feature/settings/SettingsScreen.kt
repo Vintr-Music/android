@@ -17,7 +17,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import org.koin.androidx.compose.getViewModel
+import org.koin.androidx.compose.koinViewModel
 import pw.vintr.music.R
 import pw.vintr.music.ui.kit.menu.MenuItem
 import pw.vintr.music.ui.kit.menu.MenuItemSwitchable
@@ -26,7 +26,7 @@ import pw.vintr.music.ui.kit.toolbar.ToolbarRegular
 
 @Composable
 fun SettingsScreen(
-    viewModel: SettingsViewModel = getViewModel()
+    viewModel: SettingsViewModel = koinViewModel()
 ) {
     Scaffold(
         modifier = Modifier

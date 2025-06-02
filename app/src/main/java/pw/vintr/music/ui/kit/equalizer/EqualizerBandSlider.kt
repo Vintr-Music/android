@@ -8,9 +8,9 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.LocalMinimumInteractiveComponentEnforcement
+import androidx.compose.material3.LocalMinimumInteractiveComponentSize
 import androidx.compose.material3.Slider
-import androidx.compose.material3.SliderPositions
+import androidx.compose.material3.SliderState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
@@ -26,6 +26,7 @@ import androidx.compose.ui.layout.layout
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Constraints
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import pw.vintr.music.R
@@ -48,7 +49,7 @@ fun EqualizerBandSlider(
     onValueChange: (Float) -> Unit = {},
     onValueChangeFinished: () -> Unit = {},
 ) {
-    CompositionLocalProvider(LocalMinimumInteractiveComponentEnforcement provides false) {
+    CompositionLocalProvider(LocalMinimumInteractiveComponentSize provides Dp.Unspecified) {
         Column(
             modifier = modifier,
             horizontalAlignment = Alignment.CenterHorizontally
@@ -78,9 +79,9 @@ fun EqualizerBandSlider(
                 onValueChange = { onValueChange(it) },
                 onValueChangeFinished = { onValueChangeFinished() },
                 valueRange = lowerLevel..upperLevel,
-                track = { sliderPositions ->
+                track = { sliderState ->
                     SliderTrack(
-                        sliderPositions = sliderPositions,
+                        sliderState = sliderState,
                         activeTrackBrush = if (isActive) {
                             Brush.horizontalGradient(listOf(Gradient0, Gradient1))
                         } else {
@@ -110,8 +111,9 @@ fun EqualizerBandSlider(
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-private fun SliderTrack(sliderPositions: SliderPositions, activeTrackBrush: Brush) {
+private fun SliderTrack(sliderState: SliderState, activeTrackBrush: Brush) {
     val inactiveTrackColor = VintrMusicExtendedTheme.colors
         .equalizerSliderBackground
         .copy(alpha = 0.5f)
@@ -137,13 +139,16 @@ private fun SliderTrack(sliderPositions: SliderPositions, activeTrackBrush: Brus
             trackStrokeWidth,
         )
 
+        val normalizedValue = (sliderState.value - sliderState.valueRange.start) /
+                (sliderState.valueRange.endInclusive - sliderState.valueRange.start)
+
         val activeSliderValueStart = Offset(
-            x = sliderStart.x + (sliderEnd.x - sliderStart.x) * sliderPositions.activeRange.start,
+            x = sliderStart.x,
             y = center.y
         )
 
         val activeSliderValueEnd = Offset(
-            x = sliderStart.x + (sliderEnd.x - sliderStart.x) * sliderPositions.activeRange.endInclusive,
+            x = sliderStart.x + (sliderEnd.x - sliderStart.x) * normalizedValue,
             y = center.y
         )
 

@@ -34,7 +34,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.unit.dp
-import org.koin.androidx.compose.getViewModel
+import org.koin.androidx.compose.koinViewModel
 import pw.vintr.music.R
 import pw.vintr.music.tools.extension.escapePadding
 import pw.vintr.music.tools.extension.itemsSeparated
@@ -60,7 +60,7 @@ private const val COLUMN_COUNT = 3
 private const val SPACING_DP = 20
 
 @Composable
-fun SearchScreen(viewModel: SearchViewModel = getViewModel()) {
+fun SearchScreen(viewModel: SearchViewModel = koinViewModel()) {
     Column(
         modifier = Modifier
             .background(MaterialTheme.colorScheme.background)

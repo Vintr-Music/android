@@ -1,9 +1,13 @@
+import java.io.FileInputStream
+import java.util.Properties
+
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
     id("kotlin-parcelize")
     id("io.realm.kotlin")
     id("appmetrica-plugin")
+    id("org.jetbrains.kotlin.plugin.compose")
 }
 
 appmetrica {
@@ -12,22 +16,29 @@ appmetrica {
     setOffline(true)
 }
 
+val keystorePropertiesFile = rootProject.file("keystore.properties")
+val keystoreProperties = Properties()
+
+if (keystorePropertiesFile.exists()) {
+    keystoreProperties.load(FileInputStream(keystorePropertiesFile))
+}
+
 android {
     signingConfigs {
         create("release") {
-            storeFile = file("D:\\Android KEYS\\VintrMusic\\VMKey.jks")
-            storePassword = "Ruslan99"
-            keyAlias = "vmusic"
-            keyPassword = "Ruslan99"
+            storeFile = file(keystoreProperties.getProperty("storeFile"))
+            storePassword = keystoreProperties.getProperty("storePassword")
+            keyAlias = keystoreProperties.getProperty("keyAlias")
+            keyPassword = keystoreProperties.getProperty("keyPassword")
         }
     }
     namespace = "pw.vintr.music"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "pw.vintr.music"
         minSdk = 28
-        targetSdk = 34
+        targetSdk = 35
         versionCode = 5
         versionName = "0.4 Preview"
 
@@ -64,9 +75,6 @@ android {
         compose = true
         buildConfig = true
     }
-    composeOptions {
-        kotlinCompilerExtensionVersion = "1.4.3"
-    }
     packaging {
         resources {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
@@ -75,46 +83,47 @@ android {
 }
 
 dependencies {
-    val materialVersion = "1.6.7"
-    val navigationVersion = "2.7.7"
-    val accompanistVersion = "0.32.0"
-    val ktorVersion = "2.3.7"
-    val koinVersion = "3.5.0"
+    val materialVersion = "1.8.2"
+    val navigationVersion = "2.9.0"
+    val accompanistVersion = "0.36.0"
+    val ktorVersion = "3.1.3"
+    val koinVersion = "4.0.4"
     val preferenceVersion = "1.2.1"
-    val coilVersion = "2.4.0"
-    val media3Version = "1.3.1"
-    val realmVersion = "1.11.0"
-    val realmCoroutinesVersion = "1.7.3"
+    val coilVersion = "3.2.0"
+    val media3Version = "1.7.1"
+    val realmVersion = "2.3.0"
+    val realmCoroutinesVersion = "1.10.2"
     val paletteVersion = "1.0.0"
-    val cameraxVersion = "1.3.3"
-    val zxingVersion = "3.5.2"
-    val reordableVersion = "2.1.1"
-    val metricaVersion = "6.3.0"
+    val cameraxVersion = "1.4.2"
+    val zxingVersion = "3.5.3"
+    val reordableVersion = "2.4.3"
+    val metricaVersion = "7.2.0"
 
     // Common Android
-    implementation("androidx.core:core-ktx:1.13.1")
-    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.8.0")
-    implementation("androidx.activity:activity-compose:1.9.0")
-    implementation(platform("androidx.compose:compose-bom:2023.10.01"))
+    implementation("androidx.core:core-ktx:1.16.0")
+    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.9.0")
+    implementation("androidx.activity:activity-compose:1.10.1")
+    implementation(platform("androidx.compose:compose-bom:2025.05.01"))
     implementation("androidx.compose.ui:ui")
     implementation("androidx.compose.ui:ui-graphics")
     implementation("androidx.compose.ui:ui-tooling-preview")
     implementation("androidx.preference:preference-ktx:$preferenceVersion")
     implementation("androidx.palette:palette-ktx:$paletteVersion")
-    implementation("androidx.compose.runtime:runtime-livedata:1.6.7")
+    implementation("androidx.compose.runtime:runtime-livedata:1.8.2")
 
     // Material
     implementation("androidx.compose.material3:material3")
     implementation("androidx.compose.material:material:$materialVersion")
+    implementation("androidx.compose.material:material-navigation:$materialVersion")
 
     // Compose external
     implementation("sh.calvin.reorderable:reorderable:$reordableVersion")
 
     // Tests
     testImplementation("junit:junit:4.13.2")
-    androidTestImplementation("androidx.test.ext:junit:1.1.5")
-    androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
-    androidTestImplementation(platform("androidx.compose:compose-bom:2023.10.01"))
+    androidTestImplementation("androidx.test.ext:junit:1.2.1")
+    androidTestImplementation("androidx.test.espresso:espresso-core:3.6.1")
+    androidTestImplementation(platform("androidx.compose:compose-bom:2025.05.01"))
     androidTestImplementation("androidx.compose.ui:ui-test-junit4")
     debugImplementation("androidx.compose.ui:ui-tooling")
     debugImplementation("androidx.compose.ui:ui-test-manifest")
@@ -136,7 +145,8 @@ dependencies {
     implementation("io.insert-koin:koin-androidx-compose:$koinVersion")
 
     // Coil
-    implementation("io.coil-kt:coil-compose:$coilVersion")
+    implementation("io.coil-kt.coil3:coil-compose:$coilVersion")
+    implementation("io.coil-kt.coil3:coil-network-okhttp:$coilVersion")
 
     // Media 3
     implementation("androidx.media3:media3-session:$media3Version")

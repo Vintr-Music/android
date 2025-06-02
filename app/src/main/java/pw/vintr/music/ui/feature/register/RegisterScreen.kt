@@ -23,7 +23,7 @@ import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
-import org.koin.androidx.compose.getViewModel
+import org.koin.androidx.compose.koinViewModel
 import pw.vintr.music.R
 import pw.vintr.music.tools.composable.StatusBarEffect
 import pw.vintr.music.ui.kit.button.ButtonRegular
@@ -32,7 +32,7 @@ import pw.vintr.music.ui.kit.toolbar.ToolbarRegular
 
 @Composable
 fun RegisterScreen(
-    viewModel: RegisterViewModel = getViewModel()
+    viewModel: RegisterViewModel = koinViewModel()
 ) {
     StatusBarEffect()
 

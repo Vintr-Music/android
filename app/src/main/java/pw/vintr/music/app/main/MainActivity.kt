@@ -21,12 +21,18 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.core.view.WindowCompat
-import com.google.accompanist.navigation.material.BottomSheetNavigator
-import com.google.accompanist.navigation.material.ExperimentalMaterialNavigationApi
 import pw.vintr.music.ui.feature.login.LoginScreen
 import pw.vintr.music.ui.theme.VintrMusicTheme
 import androidx.compose.material.ExperimentalMaterialApi
+//noinspection UsingMaterialAndMaterial3Libraries
 import androidx.compose.material.ModalBottomSheetValue
+//noinspection UsingMaterialAndMaterial3Libraries
+import androidx.compose.material.navigation.BottomSheetNavigator
+//noinspection UsingMaterialAndMaterial3Libraries
+import androidx.compose.material.navigation.ModalBottomSheetLayout
+//noinspection UsingMaterialAndMaterial3Libraries
+import androidx.compose.material.navigation.bottomSheet
+//noinspection UsingMaterialAndMaterial3Libraries
 import androidx.compose.material.rememberModalBottomSheetState
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.runtime.CompositionLocalProvider
@@ -41,15 +47,13 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
-import com.google.accompanist.navigation.material.ModalBottomSheetLayout
-import com.google.accompanist.navigation.material.bottomSheet
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.isGranted
 import com.google.accompanist.permissions.rememberPermissionState
 import kotlinx.coroutines.delay
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.compose.KoinContext
-import org.koin.compose.rememberKoinInject
+import org.koin.compose.koinInject
 import pw.vintr.music.domain.library.model.track.TrackModel
 import pw.vintr.music.domain.server.model.ServerInviteModel
 import pw.vintr.music.tools.extension.Empty
@@ -93,7 +97,7 @@ class MainActivity : ComponentActivity() {
 
     private val viewModel: MainViewModel by viewModel()
 
-    @OptIn(ExperimentalMaterialNavigationApi::class, ExperimentalPermissionsApi::class)
+    @OptIn(ExperimentalPermissionsApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         WindowCompat.setDecorFitsSystemWindows(window, false)
@@ -209,10 +213,9 @@ class MainActivity : ComponentActivity() {
     }
 }
 
-@OptIn(ExperimentalMaterialNavigationApi::class)
 @Composable
 fun Navigation(
-    navigator: Navigator = rememberKoinInject(),
+    navigator: Navigator = koinInject(),
     navController: NavHostController,
     rootScreen: Screen
 ) {
@@ -392,7 +395,6 @@ fun Navigation(
 }
 
 @OptIn(ExperimentalMaterialApi::class)
-@ExperimentalMaterialNavigationApi
 @Composable
 fun rememberBottomSheetNavigator(
     animationSpec: AnimationSpec<Float> = AnchoredDraggableDefaults.AnimationSpec,

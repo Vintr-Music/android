@@ -17,7 +17,7 @@ import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Text
+import androidx.compose.material3.Text
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -32,11 +32,13 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.coerceAtMost
 import androidx.compose.ui.unit.dp
-import androidx.core.graphics.drawable.toBitmap
 import androidx.palette.graphics.Palette
-import coil.compose.AsyncImage
-import coil.request.ImageRequest
-import org.koin.androidx.compose.getViewModel
+import coil3.compose.AsyncImage
+import coil3.request.ImageRequest
+import coil3.request.allowHardware
+import coil3.request.crossfade
+import coil3.toBitmap
+import org.koin.androidx.compose.koinViewModel
 import pw.vintr.music.R
 import pw.vintr.music.domain.player.model.state.PlayerStatusModel
 import pw.vintr.music.tools.composable.rememberDisplayRoundness
@@ -52,7 +54,7 @@ import pw.vintr.music.ui.theme.VintrMusicExtendedTheme
 private val MAX_CONTROLS_ROUNDNESS = 20.dp
 
 @Composable
-fun NowPlayingScreen(viewModel: NowPlayingViewModel = getViewModel()) {
+fun NowPlayingScreen(viewModel: NowPlayingViewModel = koinViewModel()) {
     val playerState = viewModel.playerStateFlow.collectAsState()
     val progressState = viewModel.playerProgressFlow.collectAsState()
 
@@ -87,7 +89,7 @@ fun NowPlayingScreen(viewModel: NowPlayingViewModel = getViewModel()) {
                     .allowHardware(enable = false)
                     .build(),
                 contentScale = ContentScale.Crop,
-                onSuccess = { bitmap = it.result.drawable.toBitmap() },
+                onSuccess = { bitmap = it.result.image.toBitmap() },
                 contentDescription = null
             )
         }

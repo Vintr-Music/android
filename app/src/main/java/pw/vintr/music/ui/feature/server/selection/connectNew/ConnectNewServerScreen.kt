@@ -38,7 +38,7 @@ import androidx.compose.ui.unit.dp
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.isGranted
 import com.google.accompanist.permissions.rememberPermissionState
-import org.koin.androidx.compose.getViewModel
+import org.koin.androidx.compose.koinViewModel
 import pw.vintr.music.R
 import pw.vintr.music.ui.kit.button.ButtonRegular
 import pw.vintr.music.ui.kit.input.AppTextField
@@ -51,7 +51,7 @@ import pw.vintr.music.ui.theme.VintrMusicExtendedTheme
 @OptIn(ExperimentalPermissionsApi::class)
 @Composable
 fun ConnectNewServerScreen(
-    viewModel: ConnectNewServerViewModel = getViewModel()
+    viewModel: ConnectNewServerViewModel = koinViewModel()
 ) {
     Scaffold(
         modifier = Modifier

@@ -21,7 +21,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material.Text
+import androidx.compose.material3.Text
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
@@ -35,10 +35,12 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import coil.compose.AsyncImage
-import coil.request.CachePolicy
-import coil.request.ImageRequest
-import org.koin.androidx.compose.getViewModel
+import coil3.compose.AsyncImage
+import coil3.request.CachePolicy
+import coil3.request.ImageRequest
+import coil3.request.crossfade
+import coil3.request.error
+import org.koin.androidx.compose.koinViewModel
 import org.koin.core.parameter.parametersOf
 import pw.vintr.music.R
 import pw.vintr.music.tools.composable.rememberBottomSheetNestedScrollInterceptor
@@ -58,7 +60,7 @@ import pw.vintr.music.ui.theme.VintrMusicExtendedTheme
 @Composable
 fun PlaylistAddTrackScreen(
     trackId: String,
-    viewModel: PlaylistAddTrackViewModel = getViewModel {
+    viewModel: PlaylistAddTrackViewModel = koinViewModel {
         parametersOf(trackId)
     },
 ) {

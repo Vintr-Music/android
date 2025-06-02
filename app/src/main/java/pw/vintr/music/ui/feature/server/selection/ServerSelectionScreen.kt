@@ -15,7 +15,7 @@ import androidx.compose.foundation.layout.statusBars
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material.Text
+import androidx.compose.material3.Text
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -24,7 +24,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import org.koin.androidx.compose.getViewModel
+import org.koin.androidx.compose.koinViewModel
 import pw.vintr.music.R
 import pw.vintr.music.tools.composable.StatusBarEffect
 import pw.vintr.music.ui.kit.button.ButtonRegular
@@ -39,7 +39,7 @@ import pw.vintr.music.ui.theme.Gilroy32
 @Composable
 fun ServerSelectionScreen(
     isInitializeMode: Boolean = true,
-    viewModel: ServerSelectionViewModel = getViewModel()
+    viewModel: ServerSelectionViewModel = koinViewModel()
 ) {
     val statusBarHeight = with (LocalDensity.current) {
         WindowInsets.statusBars.getTop(density = this).toDp()

@@ -22,7 +22,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import org.koin.androidx.compose.getViewModel
+import org.koin.androidx.compose.koinViewModel
 import pw.vintr.music.R
 import pw.vintr.music.tools.extension.scaffoldPadding
 import pw.vintr.music.ui.base.BaseScreenState
@@ -39,7 +39,7 @@ import pw.vintr.music.ui.theme.Bee1
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun PlaylistListScreen(
-    viewModel: PlaylistListViewModel = getViewModel()
+    viewModel: PlaylistListViewModel = koinViewModel()
 ) {
     val screenState = viewModel.screenState.collectAsState()
 

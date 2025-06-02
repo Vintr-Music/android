@@ -2,10 +2,10 @@ package pw.vintr.music.ui.theme
 
 import android.app.Activity
 import androidx.compose.foundation.isSystemInDarkTheme
-import androidx.compose.material.ripple.LocalRippleTheme
-import androidx.compose.material.ripple.RippleAlpha
-import androidx.compose.material.ripple.RippleTheme
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.LocalRippleConfiguration
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.RippleConfiguration
 import androidx.compose.material3.SwitchDefaults
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.lightColorScheme
@@ -236,18 +236,13 @@ private val lightColorScheme = lightColorScheme(
     background = White0,
 )
 
-object VintrMusicRippleTheme : RippleTheme {
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+private fun vintrMusicRippleConfiguration() = RippleConfiguration(
+    color = LocalVintrColors.current.ripple,
+)
 
-    @Composable
-    override fun defaultColor(): Color = LocalVintrColors.current.ripple
-
-    @Composable
-    override fun rippleAlpha(): RippleAlpha = RippleTheme.defaultRippleAlpha(
-        LocalVintrColors.current.ripple,
-        lightTheme = false,
-    )
-}
-
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun VintrMusicTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
@@ -284,7 +279,7 @@ fun VintrMusicTheme(
             typography = Typography,
         ) {
             CompositionLocalProvider(
-                LocalRippleTheme provides VintrMusicRippleTheme,
+                LocalRippleConfiguration provides vintrMusicRippleConfiguration(),
                 content = content
             )
         }

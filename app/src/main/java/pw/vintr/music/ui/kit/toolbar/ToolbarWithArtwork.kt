@@ -15,15 +15,16 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.platform.LocalWindowInfo
 import androidx.compose.ui.unit.coerceIn
 import androidx.compose.ui.unit.dp
-import coil.compose.AsyncImage
-import coil.request.CachePolicy
-import coil.request.ImageRequest
-import coil.size.Size
+import coil3.compose.AsyncImage
+import coil3.request.CachePolicy
+import coil3.request.ImageRequest
+import coil3.request.crossfade
+import coil3.size.Size
 import pw.vintr.music.tools.extension.pxToDpFloat
 import pw.vintr.music.ui.kit.toolbar.collapsing.CollapsingLayoutState
 import pw.vintr.music.ui.kit.toolbar.collapsing.CollapsingToolbarScope
@@ -39,10 +40,8 @@ fun CollapsingToolbarScope.ToolbarWithArtwork(
     trailingSlot: @Composable BoxScope.() -> Unit = {},
     titleSlot: @Composable CollapsingToolbarScope.() -> Unit = {},
 ) {
-    val configuration = LocalConfiguration.current
-
-    val screenHeight = configuration.screenHeightDp.dp
-    val screenWidth = configuration.screenWidthDp.dp
+    val screenHeight = LocalWindowInfo.current.containerSize.height.dp
+    val screenWidth = LocalWindowInfo.current.containerSize.width.dp
 
     if (screenHeight > screenWidth) {
         BoxWithConstraints(

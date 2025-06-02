@@ -16,11 +16,11 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.selection.selectable
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.ripple.rememberRipple
 import androidx.compose.material3.BottomAppBarDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
+import androidx.compose.material3.ripple
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -69,7 +69,7 @@ fun AppNavBarItem(
     selectedContentColor: Color = VintrMusicExtendedTheme.colors.navBarSelected,
     unselectedContentColor: Color = VintrMusicExtendedTheme.colors.navBarUnselected,
 ) {
-    val ripple = rememberRipple(bounded = true, color = selectedContentColor)
+    val ripple = ripple(bounded = true, color = selectedContentColor)
 
     Box(
         modifier

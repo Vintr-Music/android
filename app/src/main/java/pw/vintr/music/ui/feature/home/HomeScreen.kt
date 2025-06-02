@@ -25,7 +25,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import org.koin.androidx.compose.getViewModel
+import org.koin.androidx.compose.koinViewModel
 import pw.vintr.music.ui.kit.layout.PullRefreshLayout
 import pw.vintr.music.ui.kit.library.AlbumView
 import pw.vintr.music.ui.kit.library.tools.rememberLibraryGridCellsCount
@@ -40,7 +40,7 @@ private const val KEY_WELCOME_TEXT = "welcome-text"
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun HomeScreen(
-    viewModel: HomeViewModel = getViewModel()
+    viewModel: HomeViewModel = koinViewModel()
 ) {
     val screenState = viewModel.screenState.collectAsState()
     val cellsCount = rememberLibraryGridCellsCount()

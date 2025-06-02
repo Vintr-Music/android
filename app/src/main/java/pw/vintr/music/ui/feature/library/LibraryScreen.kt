@@ -16,7 +16,7 @@ import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.material.Icon
+import androidx.compose.material3.Icon
 import androidx.compose.material.pullrefresh.rememberPullRefreshState
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -28,7 +28,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import org.koin.androidx.compose.getViewModel
+import org.koin.androidx.compose.koinViewModel
 import pw.vintr.music.R
 import pw.vintr.music.ui.kit.layout.PullRefreshLayout
 import pw.vintr.music.ui.kit.layout.ScreenStateLayout
@@ -45,7 +45,7 @@ private const val MENU_ITEM_ALL_ARTISTS = "item-artists"
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun LibraryScreen(
-    viewModel: LibraryViewModel = getViewModel()
+    viewModel: LibraryViewModel = koinViewModel()
 ) {
     Box(
         modifier = Modifier
