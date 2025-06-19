@@ -72,6 +72,10 @@ class NowPlayingViewModel(
         playerInteractor.forward()
     }
 
+    fun seekToTrack(index: Int) {
+        playerInteractor.seekToTrack(index, autoPlay = false)
+    }
+
     fun setNextRepeatMode(currentRepeatMode: PlayerRepeatMode) {
         val nextMode = when (currentRepeatMode) {
             PlayerRepeatMode.OFF -> PlayerRepeatMode.ON_SESSION

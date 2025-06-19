@@ -11,4 +11,6 @@ data class PlayerStateHolderModel(
     val status: PlayerStatusModel = PlayerStatusModel.IDLE,
     val repeatMode: PlayerRepeatMode = PlayerRepeatMode.OFF,
     val shuffleMode: PlayerShuffleMode = PlayerShuffleMode.OFF
-)
+) {
+    val currentTrackIndex = session.tracks.indexOf(currentTrack)
+}
