@@ -19,7 +19,7 @@ sealed class PlayerSessionModel {
 
     fun isEmpty() = tracks.isEmpty()
 
-    object Empty : PlayerSessionModel() {
+    data object Empty : PlayerSessionModel() {
         override val tracks: List<TrackModel> = listOf()
 
         override fun toCacheObject() = PlayerSessionCacheObject(

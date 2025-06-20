@@ -86,7 +86,12 @@ fun RootScreen(
             .fillMaxSize(),
         state = playerState.value,
         scaffoldState = scaffoldState,
-        onControlClick = { viewModel.onNowPlayingControlClick(playerState.value) },
+        onControlClick = {
+            viewModel.onNowPlayingControlClick(playerState.value)
+        },
+        onSeekToTrack = { index ->
+            viewModel.seekToTrack(index)
+        },
         content = { modifier ->
             NavHost(
                 modifier = modifier.fillMaxSize(),

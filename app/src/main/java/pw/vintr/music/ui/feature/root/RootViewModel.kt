@@ -12,10 +12,10 @@ import pw.vintr.music.ui.navigation.NavigatorType
 import pw.vintr.music.ui.navigation.Screen
 
 sealed interface TabNavigator : NavigatorType {
-    object Home : TabNavigator
-    object Search : TabNavigator
-    object Library : TabNavigator
-    object Menu : TabNavigator
+    data object Home : TabNavigator
+    data object Search : TabNavigator
+    data object Library : TabNavigator
+    data object Menu : TabNavigator
 }
 
 sealed class Tab(
@@ -25,25 +25,25 @@ sealed class Tab(
     val navigatorType: NavigatorType,
     val rootScreen: Screen,
 ) {
-    object Home : Tab(
+    data object Home : Tab(
         route = "home",
         iconRes = R.drawable.ic_home,
         navigatorType = TabNavigator.Home,
         rootScreen = Screen.Home
     )
-    object Search : Tab(
+    data object Search : Tab(
         route = "search",
         iconRes = R.drawable.ic_search,
         navigatorType = TabNavigator.Search,
         rootScreen = Screen.Search
     )
-    object Library : Tab(
+    data object Library : Tab(
         route = "library",
         iconRes = R.drawable.ic_library_tab,
         navigatorType = TabNavigator.Library,
         rootScreen = Screen.Library
     )
-    object Menu : Tab(
+    data object Menu : Tab(
         route = "menu",
         iconRes = R.drawable.ic_profile,
         navigatorType = TabNavigator.Menu,
@@ -96,5 +96,9 @@ class RootViewModel(
                 playerInteractor.pause()
             }
         }
+    }
+
+    fun seekToTrack(index: Int) {
+        playerInteractor.seekToTrack(index, autoPlay = false)
     }
 }

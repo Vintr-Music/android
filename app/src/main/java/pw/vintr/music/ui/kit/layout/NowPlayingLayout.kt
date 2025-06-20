@@ -36,6 +36,7 @@ fun NowPlayingLayout(
     modifier: Modifier = Modifier,
     state: PlayerStateHolderModel,
     onControlClick: () -> Unit,
+    onSeekToTrack: (Int) -> Unit,
     scaffoldState: BottomSheetScaffoldState = rememberBottomSheetScaffoldState(),
     bottomNavigation: @Composable (Modifier) -> Unit = {},
     content: @Composable (Modifier) -> Unit,
@@ -91,14 +92,14 @@ fun NowPlayingLayout(
                     BottomNowPlaying(
                         modifier = Modifier
                             .alpha(collapseProgress),
-                        track = state.currentTrack,
-                        playerStatus = state.status,
+                        state = state,
                         onClick = {
                             coroutineScope.launch {
                                 scaffoldState.bottomSheetState.expand()
                             }
                         },
-                        onControlClick = onControlClick
+                        onControlClick = onControlClick,
+                        onSeekToTrack = onSeekToTrack,
                     )
                 }
             },
