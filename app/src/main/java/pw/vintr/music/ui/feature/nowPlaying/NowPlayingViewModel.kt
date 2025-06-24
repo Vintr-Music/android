@@ -73,7 +73,9 @@ class NowPlayingViewModel(
     }
 
     fun seekToTrack(index: Int) {
-        playerInteractor.seekToTrack(index, autoPlay = false)
+        if (playerStateFlow.value.currentTrackIndex != index) {
+            playerInteractor.seekToTrack(index, autoPlay = false)
+        }
     }
 
     fun setNextRepeatMode(currentRepeatMode: PlayerRepeatMode) {

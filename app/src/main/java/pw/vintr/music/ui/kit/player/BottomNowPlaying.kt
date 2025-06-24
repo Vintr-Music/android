@@ -55,7 +55,7 @@ fun BottomNowPlaying(
                     modifier = Modifier.weight(1f),
                     state = state,
                     onSeekToTrack = onSeekToTrack,
-                ) { track ->
+                ) { track, _ ->
                     Column(
                         modifier = Modifier
                             .fillMaxSize()

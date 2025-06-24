@@ -26,6 +26,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.blur
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
@@ -53,6 +54,7 @@ import pw.vintr.music.ui.theme.Gilroy24
 import pw.vintr.music.ui.theme.VintrMusicExtendedTheme
 
 private val MAX_CONTROLS_ROUNDNESS = 20.dp
+private const val BLUR_BASE_RADIUS_DP = 20
 
 @Composable
 fun NowPlayingScreen(
@@ -72,7 +74,7 @@ fun NowPlayingScreen(
                 .fillMaxSize(),
             state = playerState,
             onSeekToTrack = { viewModel.seekToTrack(it) },
-        ) { track ->
+        ) { track, openPercentage ->
             var bitmap by remember { mutableStateOf<Bitmap?>(value = null) }
             val accentColor = remember(bitmap) {
                 bitmap?.let { lockedBitmap ->
@@ -87,8 +89,12 @@ fun NowPlayingScreen(
             BoxWithConstraints(
                 modifier = Modifier.fillMaxSize()
             ) {
+                val blurAmount = ((1 - openPercentage) * BLUR_BASE_RADIUS_DP).dp
+
                 AsyncImage(
-                    modifier = Modifier.fillMaxSize(),
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .blur(blurAmount),
                     model = ImageRequest.Builder(LocalContext.current)
                         .data(track.artworkUrl)
                         .size(
