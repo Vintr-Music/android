@@ -4,6 +4,10 @@ import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.Dp
@@ -25,9 +29,21 @@ fun PlayerStatePager(
         pageCount = { state.session.tracks.size }
     )
 
-    // Sync pager state with viewModel state when track changes programmatically
+    var isUserScroll by remember { mutableStateOf(false) }
+
+    LaunchedEffect(pagerState.isScrollInProgress) {
+        if (pagerState.isScrollInProgress) {
+            isUserScroll = true
+        }
+    }
+
+    // Sync pager state with player state when track changes
     LaunchedEffect(state.currentTrackIndex) {
-        if (pagerState.currentPage != state.currentTrackIndex) {
+        val currentTrackIndex = state.currentTrackIndex
+        val currentPage = pagerState.settledPage
+
+        if (currentPage != currentTrackIndex) {
+            isUserScroll = false
             pagerState.animateScrollToPage(state.currentTrackIndex)
         }
     }
@@ -35,7 +51,9 @@ fun PlayerStatePager(
     // Handle user-initiated page changes
     LaunchedEffect(pagerState) {
         snapshotFlow { pagerState.settledPage }.collect { page ->
-            onSeekToTrack(page)
+            if (isUserScroll) {
+                onSeekToTrack(page)
+            }
         }
     }
 
