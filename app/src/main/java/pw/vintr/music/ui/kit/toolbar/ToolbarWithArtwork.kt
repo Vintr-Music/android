@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.statusBars
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.blur
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
@@ -30,6 +31,8 @@ import pw.vintr.music.ui.kit.toolbar.collapsing.CollapsingLayoutState
 import pw.vintr.music.ui.kit.toolbar.collapsing.CollapsingToolbarScope
 import pw.vintr.music.ui.theme.VintrMusicExtendedTheme
 
+private const val BLUR_BASE_RADIUS_DP = 10
+
 @Composable
 fun CollapsingToolbarScope.ToolbarWithArtwork(
     state: CollapsingLayoutState,
@@ -44,6 +47,9 @@ fun CollapsingToolbarScope.ToolbarWithArtwork(
     val screenWidth = LocalWindowInfo.current.containerSize.width.dp
 
     if (screenHeight > screenWidth) {
+        val collapsePercentage = 1 - state.toolbarState.progress
+        val blurAmount = (collapsePercentage * BLUR_BASE_RADIUS_DP).dp
+
         BoxWithConstraints(
             modifier = Modifier
                 .fillMaxWidth()
@@ -51,7 +57,8 @@ fun CollapsingToolbarScope.ToolbarWithArtwork(
         ) {
             AsyncImage(
                 modifier = Modifier
-                    .fillMaxSize(),
+                    .fillMaxSize()
+                    .blur(blurAmount),
                 model = ImageRequest.Builder(LocalContext.current)
                     .data(artworkUrl)
                     .size(Size.ORIGINAL)
@@ -96,7 +103,7 @@ fun CollapsingToolbarScope.ToolbarWithArtwork(
 
         ToolbarRegular(
             title = mediaName,
-            titleOpacity = 1 - state.toolbarState.progress,
+            titleOpacity = collapsePercentage,
             backButtonColor = VintrMusicExtendedTheme.colors.textRegular,
             trailing = trailingSlot,
             onBackPressed = { onBackPressed() },
@@ -113,7 +120,8 @@ fun CollapsingToolbarScope.ToolbarWithArtwork(
         ) {
             AsyncImage(
                 modifier = Modifier
-                    .fillMaxSize(),
+                    .fillMaxSize()
+                    .blur(BLUR_BASE_RADIUS_DP.dp),
                 model = ImageRequest.Builder(LocalContext.current)
                     .data(artworkUrl)
                     .size(Size.ORIGINAL)
