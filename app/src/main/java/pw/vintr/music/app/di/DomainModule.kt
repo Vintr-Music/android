@@ -10,6 +10,7 @@ import pw.vintr.music.domain.favorite.FavoriteArtistsInteractor
 import pw.vintr.music.domain.library.useCase.GetAlbumTracksUseCase
 import pw.vintr.music.domain.library.useCase.GetArtistAlbumsUseCase
 import pw.vintr.music.domain.library.useCase.GetArtistListUseCase
+import pw.vintr.music.domain.library.useCase.GetShuffledTracksPageUseCase
 import pw.vintr.music.domain.library.useCase.SearchLibraryUseCase
 import pw.vintr.music.domain.loader.PrimaryLoaderInteractor
 import pw.vintr.music.domain.mainPage.useCase.GetMainPageContentUseCase
@@ -53,6 +54,7 @@ val domainModule = module {
     single { GetArtistListUseCase(get()) }
     single { GetArtistAlbumsUseCase(get()) }
     single { SearchLibraryUseCase(get()) }
+    single { GetShuffledTracksPageUseCase(get()) }
 
     interactor { PrimaryLoaderInteractor() }
     interactor { AlertInteractor() }
