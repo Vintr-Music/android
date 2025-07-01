@@ -126,4 +126,7 @@
     <string name="error_alert_title">An error has occurred :(</string>
     <string name="error_alert_server_message">This is a server error - please try again later</string>
     <string name="error_alert_login_message">It looks like your login or password was entered incorrectly</string>
+
+    <string name="music_flow_title">Music flow</string>
+    <string name="music_flow_shuffle">Shuffle</string>
 </resources>

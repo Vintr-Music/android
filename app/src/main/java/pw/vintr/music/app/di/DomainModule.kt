@@ -58,7 +58,7 @@ val domainModule = module {
 
     interactor { PrimaryLoaderInteractor() }
     interactor { AlertInteractor() }
-    interactor { PlayerInteractor(androidContext(), get(), get(), get()) }
+    interactor { PlayerInteractor(androidContext(), get(), get(), get(), get()) }
     interactor { PlaybackSettingsInteractor(get()) }
     interactor { EqualizerInteractor(get(), get()) }
     interactor { VisualizerInteractor(get(), get()) }

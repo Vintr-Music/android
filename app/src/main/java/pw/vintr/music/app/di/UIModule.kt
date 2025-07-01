@@ -1,6 +1,6 @@
 package pw.vintr.music.app.di
 
-import org.koin.androidx.viewmodel.dsl.viewModel
+import org.koin.core.module.dsl.viewModel
 import org.koin.dsl.module
 import pw.vintr.music.app.main.MainViewModel
 import pw.vintr.music.ui.feature.actionSheet.album.AlbumActionViewModel
@@ -66,7 +66,7 @@ val uiModule = module {
     }
 
     viewModel { RootViewModel(get()) }
-    viewModel { HomeViewModel(get(), get()) }
+    viewModel { HomeViewModel(get(), get(), get()) }
     viewModel { SearchViewModel(get(), get(), get()) }
     viewModel { LibraryViewModel(get()) }
     viewModel { ArtistListViewModel(get()) }

@@ -150,12 +150,12 @@ class VintrMusicService : MediaSessionService(), KoinComponent {
         // Don't load if already loading or if there's no current media item
         if (isLoadingNextPage || player.currentMediaItem == null) return
 
-        loadNextPageJob?.cancel()
-        loadNextPageJob = CoroutineScope(Dispatchers.IO).launch {
-            isLoadingNextPage = true
+        val remainingTracks = calculateRemainingTracks(player)
+        if (remainingTracks <= TRACKS_LOAD_THRESHOLD) {
+            loadNextPageJob?.cancel()
+            loadNextPageJob = CoroutineScope(Dispatchers.IO).launch {
+                isLoadingNextPage = true
 
-            val remainingTracks = calculateRemainingTracks(player)
-            if (remainingTracks <= TRACKS_LOAD_THRESHOLD) {
                 try {
                     loadNextPage()
                 } catch (e: Exception) {

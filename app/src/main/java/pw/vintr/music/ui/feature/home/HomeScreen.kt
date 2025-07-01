@@ -26,16 +26,18 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import org.koin.androidx.compose.koinViewModel
+import pw.vintr.music.domain.player.model.state.PlayerStatusModel
 import pw.vintr.music.ui.kit.layout.PullRefreshLayout
 import pw.vintr.music.ui.kit.library.AlbumView
 import pw.vintr.music.ui.kit.library.tools.rememberLibraryGridCellsCount
 import pw.vintr.music.ui.kit.layout.ScreenStateLayout
+import pw.vintr.music.ui.kit.player.FlowPlayer
 import pw.vintr.music.ui.kit.visualizer.Visualizer
 import pw.vintr.music.ui.theme.Gilroy18
 import pw.vintr.music.ui.theme.Gilroy24
 import pw.vintr.music.ui.theme.VintrMusicExtendedTheme
 
-private const val KEY_WELCOME_TEXT = "welcome-text"
+private const val KEY_HEADER = "home-header"
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
@@ -43,6 +45,9 @@ fun HomeScreen(
     viewModel: HomeViewModel = koinViewModel()
 ) {
     val screenState = viewModel.screenState.collectAsState()
+    val visualizerData = viewModel.visualizerState.collectAsState()
+    val flowPlayingState = viewModel.flowPlayingState.collectAsState()
+
     val cellsCount = rememberLibraryGridCellsCount()
 
     Box(
@@ -73,8 +78,9 @@ fun HomeScreen(
                     horizontalArrangement = Arrangement.spacedBy(20.dp),
                     contentPadding = PaddingValues(20.dp)
                 ) {
+                    // Header
                     item(
-                        key = KEY_WELCOME_TEXT,
+                        key = KEY_HEADER,
                         span = { GridItemSpan(currentLineSpan = cellsCount) },
                     ) {
                         Column(
@@ -82,18 +88,38 @@ fun HomeScreen(
                                 .fillMaxWidth()
                                 .animateContentSize()
                         ) {
+                            // Welcome text
                             Text(
                                 modifier = Modifier.padding(bottom = 20.dp),
                                 text = stringResource(id = screenData.welcome.textRes),
                                 style = Gilroy24,
                                 color = VintrMusicExtendedTheme.colors.textRegular,
                             )
+                            // Music flow controls
+                            FlowPlayer(
+                                modifier = Modifier
+                                    .padding(top = 20.dp, bottom = 16.dp),
+                                playerStatus = flowPlayingState.value.playerStatus,
+                                currentSessionIsFlow = flowPlayingState.value.currentIsFlow,
+                                onChangePlayerState = {
+                                    when (flowPlayingState.value.playerStatus) {
+                                        PlayerStatusModel.IDLE,
+                                        PlayerStatusModel.PAUSED -> {
+                                            viewModel.playFlow()
+                                        }
+                                        PlayerStatusModel.PLAYING -> {
+                                            viewModel.pauseFlow()
+                                        }
+                                        else -> Unit
+                                    }
+                                },
+                                onShuffleClick = {
+                                    viewModel.playNewFlow()
+                                }
+                            )
 
                             // Visualizer
-                            val visualizerData = viewModel.visualizerData.collectAsState()
-
                             if (visualizerData.value.enabled) {
-                                Spacer(modifier = Modifier.height(28.dp))
                                 Visualizer(
                                     modifier = Modifier
                                         .fillMaxWidth()
@@ -105,6 +131,7 @@ fun HomeScreen(
                         }
                     }
 
+                    // Artists compilation
                     screenData.items.forEach { item ->
                         item(
                             key = item.artist,
