@@ -1,6 +1,9 @@
 package pw.vintr.music.domain.library.model.track
 
+import android.net.Uri
 import android.os.Parcelable
+import androidx.media3.common.MediaItem
+import androidx.media3.common.MediaMetadata
 import io.realm.kotlin.ext.toRealmList
 import kotlinx.parcelize.IgnoredOnParcel
 import kotlinx.parcelize.Parcelize
@@ -78,3 +81,19 @@ fun TrackCacheObject.toModel() = TrackModel(
         year = year,
     ),
 )
+
+fun TrackModel.toMediaItem() = MediaItem.Builder()
+    .setUri(playerUrl)
+    .setMediaId(md5)
+    .setMediaMetadata(
+        MediaMetadata.Builder()
+            .setArtist(metadata.artist)
+            .setTitle(metadata.title)
+            .setAlbumTitle(metadata.album)
+            .setArtworkUri(
+                runCatching { Uri.parse(artworkUrl) }
+                    .getOrNull()
+            )
+            .build()
+    )
+    .build()

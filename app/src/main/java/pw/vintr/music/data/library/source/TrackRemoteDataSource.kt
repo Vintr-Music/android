@@ -11,6 +11,14 @@ import pw.vintr.music.tools.extension.urlEncode
 
 class TrackRemoteDataSource(private val client: HttpClient) {
 
+    suspend fun getTracksPage(
+        urlString: String,
+        params: Map<String, Any>,
+    ): PageDto<TrackDto> = client.get {
+        url(urlString = urlString)
+        params.forEach { url.encodedParameters.append(it.key, it.value.toString()) }
+    }.body()
+
     suspend fun getShuffledTracksPage(
         flowSessionId: String,
         offset: Int,
