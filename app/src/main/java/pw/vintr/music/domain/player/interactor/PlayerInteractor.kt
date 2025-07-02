@@ -4,9 +4,6 @@ import android.content.ComponentName
 import android.content.Context
 import android.media.AudioDeviceInfo
 import android.media.AudioManager
-import android.net.Uri
-import androidx.media3.common.MediaItem
-import androidx.media3.common.MediaMetadata
 import androidx.media3.common.Player
 import androidx.media3.common.util.UnstableApi
 import androidx.media3.session.MediaController
@@ -30,6 +27,8 @@ import pw.vintr.music.data.settings.repository.SettingsRepository
 import pw.vintr.music.domain.base.BaseInteractor
 import pw.vintr.music.domain.library.model.album.AlbumModel
 import pw.vintr.music.domain.library.model.track.TrackModel
+import pw.vintr.music.domain.library.model.track.toMediaItem
+import pw.vintr.music.domain.library.useCase.GetShuffledTracksPageUseCase
 import pw.vintr.music.domain.player.model.config.PlayerRepeatMode
 import pw.vintr.music.domain.player.model.config.PlayerShuffleMode
 import pw.vintr.music.domain.player.model.state.PlayerProgressModel
@@ -40,9 +39,11 @@ import pw.vintr.music.domain.player.model.session.toModel
 import pw.vintr.music.domain.playlist.model.PlaylistModel
 import pw.vintr.music.tools.extension.hasNoItems
 import pw.vintr.music.tools.extension.reorder
+import java.util.UUID
 
 class PlayerInteractor(
     applicationContext: Context,
+    private val getShuffledTracksPageUseCase: GetShuffledTracksPageUseCase,
     private val playerSessionRepository: PlayerSessionRepository,
     private val playerConfigRepository: PlayerConfigRepository,
     private val settingsRepository: SettingsRepository,
@@ -153,6 +154,20 @@ class PlayerInteractor(
                 status = status
             )
         }
+    }
+
+    suspend fun startNewFlowSession() {
+        val flowSessionId = UUID.randomUUID().toString()
+        val firstPage = getShuffledTracksPageUseCase.invoke(flowSessionId)
+
+        playSession(
+            session = PlayerSessionModel.Flow(
+                flowSessionId = flowSessionId,
+                totalCount = firstPage.count,
+                tracks = firstPage.data,
+            ),
+            startIndex = 0
+        )
     }
 
     suspend fun playAlbum(
@@ -355,22 +370,6 @@ class PlayerInteractor(
         PlayerShuffleMode.OFF -> false
         PlayerShuffleMode.ON -> true
     }
-
-    private fun TrackModel.toMediaItem() = MediaItem.Builder()
-        .setUri(playerUrl)
-        .setMediaId(md5)
-        .setMediaMetadata(
-            MediaMetadata.Builder()
-                .setArtist(metadata.artist)
-                .setTitle(metadata.title)
-                .setAlbumTitle(metadata.album)
-                .setArtworkUri(
-                    runCatching { Uri.parse(artworkUrl) }
-                        .getOrNull()
-                )
-                .build()
-        )
-        .build()
 
     private suspend fun withAskPlaySpeakers(action: suspend () -> Unit) {
         if (controller?.isPlaying != true && needSpeakersWarning()) {

@@ -2,6 +2,7 @@ package pw.vintr.music.domain.player.model.session
 
 import io.realm.kotlin.ext.realmListOf
 import io.realm.kotlin.ext.toRealmList
+import pw.vintr.music.app.constants.ConfigConstants
 import pw.vintr.music.data.player.cache.PlayerSessionCacheObject
 import pw.vintr.music.domain.library.model.album.AlbumModel
 import pw.vintr.music.domain.library.model.album.toModel
@@ -10,6 +11,29 @@ import pw.vintr.music.domain.library.model.track.TrackModel
 import pw.vintr.music.domain.library.model.track.toModel
 
 sealed class PlayerSessionModel {
+
+    companion object {
+        protected const val QUEUE_TRACKS_LIMIT = 8000
+    }
+
+    abstract class Paged : PlayerSessionModel() {
+
+        abstract val sessionStateKey: String
+
+        abstract val totalCount: Int
+
+        abstract val nextPageUrl: String
+
+        abstract val nextPageParams: Map<String, Any>
+
+        val canLoadNext: Boolean
+            get() = tracks.size < QUEUE_TRACKS_LIMIT && tracks.size < totalCount
+
+        val nextOffset: Int
+            get() = tracks.size
+
+        abstract fun insertNextPage(newPageTracks: List<TrackModel>): Paged
+    }
 
     abstract val tracks: List<TrackModel>
 
@@ -76,6 +100,37 @@ sealed class PlayerSessionModel {
         override fun toCustomSession() = Custom(tracks)
     }
 
+    data class Flow(
+        val flowSessionId: String,
+        override val totalCount: Int,
+        override val tracks: List<TrackModel>,
+    ) : Paged() {
+
+        override val sessionStateKey: String = flowSessionId + nextOffset.toString()
+
+        override val nextPageUrl: String = "api/library/tracks/shuffled"
+
+        override val nextPageParams: Map<String, Any> = mapOf(
+            "seed" to flowSessionId,
+            "offset" to nextOffset,
+            "limit" to ConfigConstants.TRACKS_PAGE_SIZE
+        )
+
+        override fun toCacheObject() = PlayerSessionCacheObject(
+            flowSessionId = flowSessionId,
+            totalCount = totalCount,
+            tracks = tracks
+                .map { it.toCacheObject() }
+                .toRealmList()
+        )
+
+        override fun toCustomSession() = Custom(tracks)
+
+        override fun insertNextPage(newPageTracks: List<TrackModel>): Paged = copy(
+            tracks = tracks + newPageTracks,
+        )
+    }
+
     data class Custom(override val tracks: List<TrackModel>) : PlayerSessionModel() {
 
         override fun toCacheObject() = PlayerSessionCacheObject(
@@ -93,6 +148,8 @@ fun PlayerSessionCacheObject.toModel(): PlayerSessionModel {
     val album = album
     val artist = artist
     val playlistId = playlistId
+    val flowSessionId = flowSessionId
+    val totalCount = totalCount
 
     return when {
         album != null -> {
@@ -110,6 +167,13 @@ fun PlayerSessionCacheObject.toModel(): PlayerSessionModel {
         playlistId != null -> {
             PlayerSessionModel.Playlist(
                 playlistId = playlistId,
+                tracks = tracks
+            )
+        }
+        flowSessionId != null && totalCount != null -> {
+            PlayerSessionModel.Flow(
+                flowSessionId = flowSessionId,
+                totalCount = totalCount,
                 tracks = tracks
             )
         }

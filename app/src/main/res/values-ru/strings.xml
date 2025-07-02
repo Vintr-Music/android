@@ -117,4 +117,7 @@
     <string name="error_alert_title">Произошла ошибка :(</string>
     <string name="error_alert_server_message">Это ошибка сервера - попробуйте, пожалуйста, позже</string>
     <string name="error_alert_login_message">Похоже, логин или пароль были введены неверно</string>
+
+    <string name="music_flow_title">Поток музыки</string>
+    <string name="music_flow_shuffle">Перемешать</string>
 </resources>

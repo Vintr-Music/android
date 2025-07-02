@@ -7,7 +7,7 @@ data class PageModel<T>(
     val count: Int,
 )
 
-fun <T, U> PageDto<T>.tModel(mapper: (T) -> U) = PageModel(
+fun <T, U> PageDto<T>.toModel(mapper: (T) -> U) = PageModel(
     data = data.map(mapper),
     count = count,
 )

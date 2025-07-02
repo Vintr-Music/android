@@ -20,7 +20,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import pw.vintr.music.domain.player.model.state.PlayerStateHolderModel
 import pw.vintr.music.domain.player.model.state.PlayerStatusModel
-import pw.vintr.music.ui.kit.button.ButtonPlayerStateMini
+import pw.vintr.music.ui.kit.button.ButtonPlayerStateIcon
 import pw.vintr.music.ui.kit.separator.LineSeparator
 import pw.vintr.music.ui.theme.RubikMedium16
 import pw.vintr.music.ui.theme.RubikRegular14
@@ -81,7 +81,7 @@ fun BottomNowPlaying(
                 Box(modifier = Modifier.weight(1f))
             }
             Spacer(modifier = Modifier.width(8.dp))
-            ButtonPlayerStateMini(
+            ButtonPlayerStateIcon(
                 isPlaying = playerStatus == PlayerStatusModel.PLAYING,
                 isLoading = playerStatus == PlayerStatusModel.LOADING,
                 onClick = { onControlClick() }

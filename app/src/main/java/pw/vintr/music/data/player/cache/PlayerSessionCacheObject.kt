@@ -16,17 +16,25 @@ class PlayerSessionCacheObject() : RealmObject {
 
     var playlistId: String? = null
 
+    var flowSessionId: String? = null
+
+    var totalCount: Int? = null
+
     var tracks: RealmList<TrackCacheObject> = realmListOf()
 
     constructor(
         album: AlbumCacheObject? = null,
         artist: String? = null,
         playlistId: String? = null,
+        flowSessionId: String? = null,
+        totalCount: Int? = null,
         tracks: RealmList<TrackCacheObject> = realmListOf()
     ) : this() {
         this.album = album
         this.artist = artist
         this.playlistId = playlistId
+        this.flowSessionId = flowSessionId
+        this.totalCount = totalCount
         this.tracks = tracks
     }
 }

@@ -87,9 +87,10 @@ fun ButtonPlayerState(
 }
 
 @Composable
-fun ButtonPlayerStateMini(
+fun ButtonPlayerStateIcon(
     isPlaying: Boolean = false,
     isLoading: Boolean = false,
+    size: Dp = 24.dp,
     onClick: () -> Unit = {},
 ) {
     val state = remember(isPlaying, isLoading) {
@@ -102,7 +103,7 @@ fun ButtonPlayerStateMini(
 
     Box(
         modifier = Modifier
-            .size(24.dp),
+            .size(size),
         contentAlignment = Alignment.Center
     ) {
         Crossfade(
@@ -113,12 +114,14 @@ fun ButtonPlayerStateMini(
                 ButtonState.LOADING -> {
                     CircularProgressIndicator(
                         modifier = Modifier
-                            .size(24.dp),
+                            .size(size),
                         color = VintrMusicExtendedTheme.colors.textRegular,
                     )
                 }
                 ButtonState.IDLE -> {
                     ButtonSimpleIcon(
+                        size = size,
+                        iconModifier = Modifier.size(size),
                         iconRes = R.drawable.ic_play,
                         tint = VintrMusicExtendedTheme.colors.textRegular,
                         onClick = onClick
@@ -126,6 +129,8 @@ fun ButtonPlayerStateMini(
                 }
                 ButtonState.PLAYING -> {
                     ButtonSimpleIcon(
+                        size = size,
+                        iconModifier = Modifier.size(size),
                         iconRes = R.drawable.ic_pause,
                         tint = VintrMusicExtendedTheme.colors.textRegular,
                         onClick = onClick
