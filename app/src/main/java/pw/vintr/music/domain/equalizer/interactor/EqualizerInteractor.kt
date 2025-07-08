@@ -51,13 +51,11 @@ class EqualizerInteractor(
 
     private suspend fun instantiateEqualizer(sessionId: Int) {
         if (sessionId != -1) {
-            lastSessionId = sessionId
+            createNewSystemEqualizer(sessionId)
 
             val cachedEqualizer = equalizerRepository
                 .getEqualizer()
                 ?.toModel()
-
-            mEqualizer = Equalizer(1000, sessionId)
 
             if (cachedEqualizer != null) {
                 mEqualizerModel = cachedEqualizer
@@ -68,7 +66,25 @@ class EqualizerInteractor(
         }
     }
 
+    private fun createNewSystemEqualizer(sessionId: Int) {
+        // Clean up old one
+        mEqualizer?.release()
+        mEqualizer = null
+
+        // Save last session id
+        lastSessionId = sessionId
+
+        // Create new system equalizer
+        mEqualizer = Equalizer(0, sessionId)
+    }
+
     suspend fun applyEqualizer(equalizerModel: EqualizerModel) {
+        // Re-create system equalizer before apply settings
+        val actualSessionId = audioSessionRepository.getSessionId()
+        if (mEqualizer == null && actualSessionId != -1) {
+            createNewSystemEqualizer(actualSessionId)
+        }
+
         mEqualizer?.let { equalizer ->
             // Set enabled
             equalizer.setEnabled(equalizerModel.enabled)
