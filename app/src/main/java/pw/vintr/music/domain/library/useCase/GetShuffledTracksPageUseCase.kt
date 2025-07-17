@@ -11,13 +11,15 @@ class GetShuffledTracksPageUseCase(
     private val trackRepository: TrackRepository
 ) {
     suspend operator fun invoke(
-        flowSessionId: String,
+        sessionId: String,
         offset: Int = 0,
+        artist: String? = null,
     ): PageModel<TrackModel> = trackRepository
         .getShuffledTracksPage(
-            flowSessionId = flowSessionId,
+            sessionId = sessionId,
             offset = offset,
-            limit = TRACKS_PAGE_SIZE
+            limit = TRACKS_PAGE_SIZE,
+            artist = artist,
         )
         .toModel { it.toModel() }
 }

@@ -20,14 +20,22 @@ class TrackRemoteDataSource(private val client: HttpClient) {
     }.body()
 
     suspend fun getShuffledTracksPage(
-        flowSessionId: String,
+        sessionId: String,
         offset: Int,
         limit: Int,
+        artist: String? = null,
     ): PageDto<TrackDto> = client.get {
         url(urlString = "api/library/tracks/shuffled")
-        encodedParameter("seed", flowSessionId.urlEncode())
+
+        // Required params
+        encodedParameter("seed", sessionId.urlEncode())
         encodedParameter("offset", offset)
         encodedParameter("limit", limit)
+
+        // Optional params
+        if (!artist.isNullOrEmpty())  {
+            encodedParameter("artist", artist.urlEncode())
+        }
     }.body()
 
     suspend fun getTracksByAlbum(

@@ -101,14 +101,16 @@ val uiModule = module {
             album = params.get(),
             playerInteractor = get(),
             getAlbumTracksUseCase = get(),
-            favoriteAlbumsInteractor = get()
+            favoriteAlbumsInteractor = get(),
         )
     }
     viewModel { params ->
         ArtistDetailsViewModel(
             artist = params.get(),
             getArtistAlbumsUseCase = get(),
-            favoriteArtistsInteractor = get()
+            getShuffledTracksPageUseCase = get(),
+            favoriteArtistsInteractor = get(),
+            playerInteractor = get(),
         )
     }
     viewModel { NowPlayingViewModel(get()) }
