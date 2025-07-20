@@ -22,6 +22,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
 import coil3.request.ImageRequest
@@ -34,6 +35,8 @@ import pw.vintr.music.ui.theme.RubikMedium16
 import pw.vintr.music.ui.theme.RubikRegular14
 import pw.vintr.music.ui.theme.VintrMusicExtendedTheme
 
+const val FIXED_TRACK_VIEW_HEIGHT = 56
+
 @Composable
 fun TrackView(
     modifier: Modifier = Modifier,
@@ -41,6 +44,7 @@ fun TrackView(
     isPlaying: Boolean = false,
     showArtwork: Boolean = false,
     showTrailingAction: Boolean = true,
+    fixedHeight: Boolean = false,
     contentPadding: PaddingValues = PaddingValues(
         vertical = 4.dp,
         horizontal = 20.dp
@@ -100,20 +104,26 @@ fun TrackView(
             Text(
                 text = trackModel.metadata.title,
                 style = RubikMedium16,
-                color = VintrMusicExtendedTheme.colors.textRegular
+                color = VintrMusicExtendedTheme.colors.textRegular,
+                maxLines = if (fixedHeight) 1 else Int.MAX_VALUE,
+                overflow = TextOverflow.Ellipsis,
             )
             Spacer(modifier = Modifier.height(4.dp))
             Text(
                 text = trackModel.metadata.artist,
                 style = RubikRegular14,
-                color = VintrMusicExtendedTheme.colors.textSecondary
+                color = VintrMusicExtendedTheme.colors.textSecondary,
+                maxLines = if (fixedHeight) 1 else Int.MAX_VALUE,
+                overflow = TextOverflow.Ellipsis,
             )
         }
         Spacer(modifier = Modifier.width(8.dp))
         Text(
             text = trackModel.format.durationFormat,
             style = RubikRegular14,
-            color = VintrMusicExtendedTheme.colors.textRegular
+            color = VintrMusicExtendedTheme.colors.textRegular,
+            maxLines = if (fixedHeight) 1 else Int.MAX_VALUE,
+            overflow = TextOverflow.Ellipsis,
         )
         if (showTrailingAction) {
             Spacer(modifier = Modifier.width(8.dp))

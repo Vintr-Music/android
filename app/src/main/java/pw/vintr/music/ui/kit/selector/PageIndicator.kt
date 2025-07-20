@@ -21,7 +21,8 @@ fun PageIndicator(
     selectedPageIndex: Int = 0
 ) {
     Row(
-        modifier = modifier,
+        modifier = modifier
+            .height(8.dp),
         horizontalArrangement = Arrangement.spacedBy(
             space = 4.dp,
             alignment = Alignment.CenterHorizontally
