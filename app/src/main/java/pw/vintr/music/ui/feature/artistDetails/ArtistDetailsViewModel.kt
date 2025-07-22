@@ -169,7 +169,9 @@ class ArtistDetailsViewModel(
     }
 
     fun openAllTracks() {
-
+        _screenState.withLoaded {
+            navigator.forward(Screen.ArtistTracks(artist, it.sessionId))
+        }
     }
 }
 

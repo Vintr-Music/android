@@ -209,6 +209,28 @@ sealed class Screen(val route: String) {
         }
     }
 
+    data class ArtistTracks(
+        val artist: ArtistModel,
+        val playingSessionId: String
+    ) : ScreenWithArgs(
+        destination = ROUTE_DESTINATION,
+        args = mapOf(
+            ARG_KEY_ARTIST to artist,
+            ARG_KEY_PLAYING_SESSION_ID to playingSessionId,
+        )
+    ) {
+        companion object {
+            const val ARG_KEY_ARTIST = "arg-key-artist"
+            const val ARG_KEY_PLAYING_SESSION_ID = "arg-key-playing-session-id"
+            private const val ROUTE_DESTINATION = "artist-tracks"
+
+            val routeTemplate = buildRouteTemplate(
+                ROUTE_DESTINATION,
+                listOf(ARG_KEY_ARTIST, ARG_KEY_PLAYING_SESSION_ID)
+            )
+        }
+    }
+
     data class TrackActionSheet(
         val trackModel: TrackModel,
         val allowedActions: List<TrackAction> = listOf(

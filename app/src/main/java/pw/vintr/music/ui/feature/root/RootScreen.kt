@@ -35,6 +35,7 @@ import pw.vintr.music.tools.extension.Empty
 import pw.vintr.music.tools.extension.getRequiredArg
 import pw.vintr.music.ui.feature.albumDetails.AlbumDetailsScreen
 import pw.vintr.music.ui.feature.artistDetails.ArtistDetailsScreen
+import pw.vintr.music.ui.feature.artistTracks.ArtistTracksScreen
 import pw.vintr.music.ui.feature.equalizer.EqualizerScreen
 import pw.vintr.music.ui.feature.home.HomeScreen
 import pw.vintr.music.ui.feature.library.LibraryScreen
@@ -193,7 +194,7 @@ fun TabNavigation(
                     type = ParcelableNavType(AlbumModel::class.java)
                 }
             )
-        ) {entry ->
+        ) { entry ->
             val album = entry.arguments.getRequiredArg(
                 Screen.AlbumDetails.ARG_KEY_ALBUM,
                 AlbumModel::class.java
@@ -208,13 +209,36 @@ fun TabNavigation(
                     type = ParcelableNavType(ArtistModel::class.java)
                 }
             )
-        ) {entry ->
+        ) { entry ->
             val artist = entry.arguments.getRequiredArg(
                 Screen.ArtistDetails.ARG_KEY_ARTIST,
                 ArtistModel::class.java
             )
 
             ArtistDetailsScreen(artist = artist)
+        }
+        composable(
+            route = Screen.ArtistTracks.routeTemplate,
+            arguments = listOf(
+                navArgument(Screen.ArtistDetails.ARG_KEY_ARTIST) {
+                    type = ParcelableNavType(ArtistModel::class.java)
+                },
+                navArgument(Screen.ArtistTracks.ARG_KEY_PLAYING_SESSION_ID) {
+                    defaultValue = String.Empty
+                }
+            )
+        ) { entry ->
+            val artist = entry.arguments.getRequiredArg(
+                Screen.ArtistDetails.ARG_KEY_ARTIST,
+                ArtistModel::class.java
+            )
+            val playingSessionId = entry.arguments
+                ?.getString(Screen.ArtistTracks.ARG_KEY_PLAYING_SESSION_ID).orEmpty()
+
+            ArtistTracksScreen(
+                artist = artist,
+                playingSessionId = playingSessionId,
+            )
         }
         composable(
             route = Screen.PlaylistDetails.routeTemplate,
@@ -225,7 +249,7 @@ fun TabNavigation(
             )
         ) {
             val playlistId = it.arguments
-                ?.getString(Screen.PlaylistDetails.ARG_KEY_PLAYLIST_ID) ?: String.Empty
+                ?.getString(Screen.PlaylistDetails.ARG_KEY_PLAYLIST_ID).orEmpty()
 
             PlaylistDetailsScreen(playlistId = playlistId)
         }

@@ -120,4 +120,6 @@
 
     <string name="music_flow_title">Поток музыки</string>
     <string name="music_flow_shuffle">Перемешать</string>
+
+    <string name="all_tracks">Все треки</string>
 </resources>

@@ -27,6 +27,7 @@ import pw.vintr.music.ui.feature.server.selection.ServerSelectionViewModel
 import pw.vintr.music.ui.feature.server.selection.connectNew.ConnectNewServerViewModel
 import pw.vintr.music.ui.feature.settings.SettingsViewModel
 import pw.vintr.music.ui.feature.actionSheet.track.TrackActionViewModel
+import pw.vintr.music.ui.feature.artistTracks.ArtistTracksViewModel
 import pw.vintr.music.ui.feature.library.favorite.albumFavoriteList.AlbumFavoriteListViewModel
 import pw.vintr.music.ui.feature.library.favorite.artistFavoriteList.ArtistFavoriteListViewModel
 import pw.vintr.music.ui.feature.library.playlist.PlaylistListViewModel
@@ -110,6 +111,14 @@ val uiModule = module {
             getArtistAlbumsUseCase = get(),
             getShuffledTracksPageUseCase = get(),
             favoriteArtistsInteractor = get(),
+            playerInteractor = get(),
+        )
+    }
+    viewModel { params ->
+        ArtistTracksViewModel(
+            artist = params.get(),
+            playingSessionId = params.get(),
+            getShuffledTracksPageUseCase = get(),
             playerInteractor = get(),
         )
     }
