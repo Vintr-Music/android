@@ -83,6 +83,7 @@ sealed class PlayerSessionModel {
         override fun toCacheObject() = PlayerSessionCacheObject(
             artist = artist.name,
             sessionId = sessionId,
+            totalCount = totalCount,
             tracks = tracks
                 .map { it.toCacheObject() }
                 .toRealmList()
@@ -167,7 +168,7 @@ fun PlayerSessionCacheObject.toModel(): PlayerSessionModel {
     val album = album
     val artist = artist
     val playlistId = playlistId
-    val flowSessionId = sessionId
+    val sessionId = sessionId
     val totalCount = totalCount
 
     return when {
@@ -178,11 +179,11 @@ fun PlayerSessionCacheObject.toModel(): PlayerSessionModel {
             )
         }
         artist != null &&
-        flowSessionId != null &&
+        sessionId != null &&
         totalCount != null -> {
             PlayerSessionModel.Artist(
                 artist = ArtistModel(artist),
-                sessionId = flowSessionId,
+                sessionId = sessionId,
                 totalCount = totalCount,
                 tracks = tracks,
             )
@@ -193,9 +194,9 @@ fun PlayerSessionCacheObject.toModel(): PlayerSessionModel {
                 tracks = tracks
             )
         }
-        flowSessionId != null && totalCount != null -> {
+        sessionId != null && totalCount != null -> {
             PlayerSessionModel.Flow(
-                sessionId = flowSessionId,
+                sessionId = sessionId,
                 totalCount = totalCount,
                 tracks = tracks
             )

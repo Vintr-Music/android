@@ -22,6 +22,8 @@ import pw.vintr.music.tools.extension.updateLoaded
 import pw.vintr.music.tools.extension.withLoaded
 import pw.vintr.music.ui.base.BaseScreenState
 import pw.vintr.music.ui.base.BaseViewModel
+import pw.vintr.music.ui.feature.actionSheet.track.entity.TrackAction
+import pw.vintr.music.ui.navigation.NavigatorType
 import pw.vintr.music.ui.navigation.Screen
 import java.util.UUID
 
@@ -40,7 +42,7 @@ class ArtistDetailsViewModel(
     val artistPlayingState = playerInteractor.playerState.map {
         if (
             it.session is PlayerSessionModel.Artist &&
-            it.session.artist == artist
+            it.session.artist.name == artist.name
         ) {
             ArtistPlayingState(
                 playingTrack = it.currentTrack,
@@ -74,7 +76,7 @@ class ArtistDetailsViewModel(
                 }
             }
             val tracksPage = async {
-                getShuffledTracksPageUseCase.invoke(
+                getShuffledTracksPageUseCase(
                     artist = artist.name,
                     sessionId = artistSessionId.await(),
                 )
@@ -154,6 +156,20 @@ class ArtistDetailsViewModel(
                 favoriteArtistsInteractor.removeFromFavorites(artist)
             }
         }
+    }
+
+    fun openTrackAction(track: TrackModel) {
+        navigator.forward(
+            Screen.TrackActionSheet(
+                trackModel = track,
+                allowedActions = TrackAction.actionsExceptAlbumNavigate
+            ),
+            NavigatorType.Root
+        )
+    }
+
+    fun openAllTracks() {
+
     }
 }
 

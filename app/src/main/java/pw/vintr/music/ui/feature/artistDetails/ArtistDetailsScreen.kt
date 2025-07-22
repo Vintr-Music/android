@@ -1,6 +1,7 @@
 package pw.vintr.music.ui.feature.artistDetails
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -11,11 +12,13 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -24,6 +27,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.BiasAlignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
@@ -128,7 +132,7 @@ fun ArtistDetailsScreen(
                     )
                 },
             ) {
-                val artistState = artistPlayingState.value
+                val playingState = artistPlayingState.value
 
                 LazyVerticalGrid(
                     modifier = Modifier
@@ -162,8 +166,8 @@ fun ArtistDetailsScreen(
 
                             // Play-pause button
                             val horizontalBias = -collapsingLayoutState.toolbarState.progress
-                            val isPlaying = artistState.playerStatus == PlayerStatusModel.PLAYING
-                            val isLoading = artistState.playerStatus == PlayerStatusModel.LOADING
+                            val isPlaying = playingState.playerStatus == PlayerStatusModel.PLAYING
+                            val isLoading = playingState.playerStatus == PlayerStatusModel.LOADING
 
                             ButtonPlayerState(
                                 modifier = Modifier.align(
@@ -175,7 +179,7 @@ fun ArtistDetailsScreen(
                                 isPlaying = isPlaying,
                                 isLoading = isLoading,
                                 onClick = {
-                                    when (artistState.playerStatus) {
+                                    when (playingState.playerStatus) {
                                         PlayerStatusModel.IDLE -> {
                                             viewModel.playArtist()
                                         }
@@ -199,11 +203,20 @@ fun ArtistDetailsScreen(
                     ) {
                         MenuItemIconified(
                             modifier = Modifier
+                                .clickable { viewModel.openAllTracks() }
                                 .padding(vertical = 8.dp),
                             title = stringResource(id = R.string.search_tracks_title),
                             iconRes = R.drawable.ic_track,
                             iconSize = 20.dp,
-                            iconTint = VintrMusicExtendedTheme.colors.textRegular
+                            iconTint = VintrMusicExtendedTheme.colors.textRegular,
+                            trailing = {
+                                Icon(
+                                    modifier = Modifier.size(20.dp),
+                                    painter = painterResource(id = R.drawable.ic_forward),
+                                    tint = VintrMusicExtendedTheme.colors.textRegular,
+                                    contentDescription = null
+                                )
+                            }
                         )
                     }
                     item(
@@ -233,6 +246,8 @@ fun ArtistDetailsScreen(
                                                 .height(FIXED_TRACK_VIEW_HEIGHT.dp),
                                             trackModel = track,
                                             fixedHeight = true,
+                                            isPlaying = playingState.playingTrack == track,
+                                            onMoreClick = { viewModel.openTrackAction(track) },
                                             onClick = {
                                                 val trackIndex = (page + 1) * index
                                                 viewModel.playArtist(trackIndex)
