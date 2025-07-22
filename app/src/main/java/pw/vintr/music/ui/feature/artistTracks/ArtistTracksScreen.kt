@@ -20,6 +20,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clipToBounds
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import org.koin.androidx.compose.koinViewModel
@@ -34,6 +35,9 @@ import pw.vintr.music.ui.kit.layout.ScreenStateLayout
 import pw.vintr.music.ui.kit.library.TrackView
 import pw.vintr.music.ui.kit.pagination.paginationControls
 import pw.vintr.music.ui.kit.toolbar.ToolbarRegular
+import pw.vintr.music.ui.kit.toolbar.collapsing.CollapsingLayout
+import pw.vintr.music.ui.kit.toolbar.collapsing.ScrollStrategy
+import pw.vintr.music.ui.kit.toolbar.collapsing.rememberCollapsingLayoutState
 
 @Composable
 fun ArtistTracksScreen(
@@ -45,6 +49,7 @@ fun ArtistTracksScreen(
 ) {
     val screenState = viewModel.screenState.collectAsState()
     val lazyListState = rememberLazyListState()
+    val collapsingLayoutState = rememberCollapsingLayoutState()
 
     Scaffold(
         modifier = Modifier.fillMaxSize(),
@@ -78,16 +83,15 @@ fun ArtistTracksScreen(
                 }
             }
 
-            LazyColumn(
+            CollapsingLayout(
                 modifier = Modifier
                     .fillMaxSize()
-                    .scaffoldPadding(scaffoldPadding),
-                contentPadding = PaddingValues(bottom = 28.dp),
-                verticalArrangement = Arrangement.spacedBy(16.dp),
-                state = lazyListState,
-            ) {
-                // Header
-                stickyHeader {
+                    .scaffoldPadding(scaffoldPadding)
+                    .clipToBounds(),
+                state = collapsingLayoutState,
+                scrollStrategy = ScrollStrategy.EnterAlways,
+                toolbarClipToBounds = true,
+                toolbar = {
                     Box(
                         modifier = Modifier
                             .fillMaxWidth()
@@ -120,27 +124,35 @@ fun ArtistTracksScreen(
                             }
                         )
                     }
-                }
+                },
+            ) {
+                LazyColumn(
+                    modifier = Modifier
+                        .fillMaxSize(),
+                    contentPadding = PaddingValues(bottom = 28.dp),
+                    verticalArrangement = Arrangement.spacedBy(16.dp),
+                    state = lazyListState,
+                ) {
+                    // Tracks
+                    itemsIndexed(
+                        items = state.data.tracks,
+                        key = { _, track -> track.md5 }
+                    ) { index, track ->
+                        TrackView(
+                            trackModel = track,
+                            isPlaying = playingState.playingTrack == track,
+                            onMoreClick = { viewModel.openTrackAction(track) },
+                            onClick = { viewModel.playArtist(index) }
+                        )
+                    }
 
-                // Tracks
-                itemsIndexed(
-                    items = state.data.tracks,
-                    key = { _, track -> track.md5 }
-                ) { index, track ->
-                    TrackView(
-                        trackModel = track,
-                        isPlaying = playingState.playingTrack == track,
-                        onMoreClick = { viewModel.openTrackAction(track) },
-                        onClick = { viewModel.playArtist(index) }
+                    // Pagination-related controls
+                    paginationControls(
+                        hasNextPage = state.data.hasNextPage,
+                        hasFailedPage = state.data.hasFailedPage,
+                        retryAction = { viewModel.loadNextPage() }
                     )
                 }
-
-                // Pagination-related controls
-                paginationControls(
-                    hasNextPage = state.data.hasNextPage,
-                    hasFailedPage = state.data.hasFailedPage,
-                    retryAction = { viewModel.loadNextPage() }
-                )
             }
         }
     }
