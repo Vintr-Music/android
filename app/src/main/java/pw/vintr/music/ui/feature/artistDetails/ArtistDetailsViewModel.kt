@@ -68,7 +68,7 @@ class ArtistDetailsViewModel(
                 val currentSession = playerInteractor.getCurrentSession()
                 if (
                     currentSession is PlayerSessionModel.Artist &&
-                    currentSession.artist == artist
+                    currentSession.artist.name == artist.name
                 ) {
                     currentSession.sessionId
                 } else {
