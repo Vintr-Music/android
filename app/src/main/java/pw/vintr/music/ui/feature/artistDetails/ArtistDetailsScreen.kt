@@ -18,6 +18,7 @@ import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -27,6 +28,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.BiasAlignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
@@ -62,6 +64,7 @@ private const val KEY_ALBUMS_HEADER = "albums-header"
 
 private const val TRACKS_ON_PAGE_COUNT = 3
 private const val TRACKS_PAGE_COUNT = 4
+private const val PREVIEW_TRACKS_COUNT = TRACKS_PAGE_COUNT * TRACKS_ON_PAGE_COUNT
 
 @Composable
 fun ArtistDetailsScreen(
@@ -91,7 +94,7 @@ fun ArtistDetailsScreen(
         ) { state ->
             val screenData = state.data
             val tracksChunks = screenData.tracksPage.data
-                .take(TRACKS_PAGE_COUNT * TRACKS_ON_PAGE_COUNT)
+                .take(PREVIEW_TRACKS_COUNT)
                 .chunked(TRACKS_ON_PAGE_COUNT)
             val pagerState = rememberPagerState(
                 pageCount = { TRACKS_PAGE_COUNT }
@@ -203,6 +206,7 @@ fun ArtistDetailsScreen(
                     ) {
                         MenuItemIconified(
                             modifier = Modifier
+                                .clip(RoundedCornerShape(8.dp))
                                 .clickable { viewModel.openAllTracks() }
                                 .padding(vertical = 8.dp),
                             title = stringResource(id = R.string.search_tracks_title),
