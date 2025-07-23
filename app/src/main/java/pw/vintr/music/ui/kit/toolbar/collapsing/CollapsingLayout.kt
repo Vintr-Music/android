@@ -68,6 +68,7 @@ fun CollapsingLayout(
     modifier: Modifier,
     state: CollapsingLayoutState,
     scrollStrategy: ScrollStrategy,
+    snap: Boolean = true,
     enabled: Boolean = true,
     toolbarModifier: Modifier = Modifier,
     toolbarClipToBounds: Boolean = true,
@@ -77,8 +78,8 @@ fun CollapsingLayout(
     val flingBehavior = ScrollableDefaults.flingBehavior()
     val layoutDirection = LocalLayoutDirection.current
 
-    val nestedScrollConnection = remember(scrollStrategy, state) {
-        scrollStrategy.create(state.offsetYState, state.toolbarState, flingBehavior)
+    val nestedScrollConnection = remember(scrollStrategy, state, snap) {
+        scrollStrategy.create(state.offsetYState, state.toolbarState, flingBehavior, snap)
     }
 
     val toolbarState = state.toolbarState
