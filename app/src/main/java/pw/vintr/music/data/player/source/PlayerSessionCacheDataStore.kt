@@ -23,6 +23,9 @@ class PlayerSessionCacheDataStore(private val realm: Realm) {
                 // Update existing session
                 it.album = session.album
                 it.artist = session.artist
+                it.playlistId = session.playlistId
+                it.sessionId = session.sessionId
+                it.totalCount = session.totalCount
                 it.tracks = session.tracks
             } ?: run {
                 // Save new session
