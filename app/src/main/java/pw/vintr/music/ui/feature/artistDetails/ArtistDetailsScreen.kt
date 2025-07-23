@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
@@ -43,10 +44,10 @@ import pw.vintr.music.tools.extension.escapePadding
 import pw.vintr.music.ui.kit.button.ButtonFavorite
 import pw.vintr.music.ui.kit.button.ButtonPlayerState
 import pw.vintr.music.ui.kit.library.AlbumView
-import pw.vintr.music.ui.kit.library.tools.rememberLibraryGridCells
 import pw.vintr.music.ui.kit.layout.ScreenStateLayout
 import pw.vintr.music.ui.kit.library.FIXED_TRACK_VIEW_HEIGHT
 import pw.vintr.music.ui.kit.library.TrackView
+import pw.vintr.music.ui.kit.library.tools.rememberLibraryGridCellsCount
 import pw.vintr.music.ui.kit.menu.MenuItemIconified
 import pw.vintr.music.ui.kit.selector.PageIndicator
 import pw.vintr.music.ui.kit.toolbar.ToolbarWithArtwork
@@ -77,6 +78,7 @@ fun ArtistDetailsScreen(
     val artistPlayingState = viewModel.artistPlayingState.collectAsState()
 
     val collapsingLayoutState = rememberCollapsingLayoutState()
+    val cellsCount = rememberLibraryGridCellsCount()
 
     Box(
         modifier = Modifier.fillMaxSize(),
@@ -140,7 +142,7 @@ fun ArtistDetailsScreen(
                 LazyVerticalGrid(
                     modifier = Modifier
                         .fillMaxSize(),
-                    columns = rememberLibraryGridCells(),
+                    columns = GridCells.Fixed(cellsCount),
                     verticalArrangement = Arrangement.spacedBy(20.dp),
                     horizontalArrangement = Arrangement.spacedBy(20.dp),
                     contentPadding = PaddingValues(20.dp)
@@ -202,7 +204,7 @@ fun ArtistDetailsScreen(
                     // Tracks
                     item(
                         key = KEY_TRACKS_HEADER,
-                        span = { GridItemSpan(currentLineSpan = 2) }
+                        span = { GridItemSpan(cellsCount) }
                     ) {
                         MenuItemIconified(
                             modifier = Modifier
@@ -225,7 +227,7 @@ fun ArtistDetailsScreen(
                     }
                     item(
                         key = KEY_TRACKS,
-                        span = { GridItemSpan(currentLineSpan = 2)
+                        span = { GridItemSpan(cellsCount)
                     }) {
                         Column(
                             modifier = Modifier
@@ -273,7 +275,7 @@ fun ArtistDetailsScreen(
                     // Albums
                     item(
                         key = KEY_ALBUMS_HEADER,
-                        span = { GridItemSpan(currentLineSpan = 2) }
+                        span = { GridItemSpan(cellsCount) }
                     ) {
                         MenuItemIconified(
                             modifier = Modifier
