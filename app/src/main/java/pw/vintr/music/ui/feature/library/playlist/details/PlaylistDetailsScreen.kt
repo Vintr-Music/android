@@ -34,6 +34,7 @@ import pw.vintr.music.ui.kit.button.ButtonPlayerState
 import pw.vintr.music.ui.kit.button.ButtonSimpleIcon
 import pw.vintr.music.ui.kit.layout.ScreenStateLayout
 import pw.vintr.music.ui.kit.library.TrackView
+import pw.vintr.music.ui.kit.modifier.actionHeaderBackground
 import pw.vintr.music.ui.kit.state.EmptyState
 import pw.vintr.music.ui.kit.toolbar.ToolbarRegular
 import pw.vintr.music.ui.kit.toolbar.ToolbarWithArtwork
@@ -160,7 +161,7 @@ fun PlaylistDetailsScreen(
                         Box(
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .background(MaterialTheme.colorScheme.background)
+                                .actionHeaderBackground()
                                 .padding(horizontal = 20.dp)
                                 .padding(top = 20.dp, bottom = 4.dp),
 

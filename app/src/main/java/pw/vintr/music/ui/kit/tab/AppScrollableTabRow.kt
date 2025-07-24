@@ -1,8 +1,12 @@
 package pw.vintr.music.ui.kit.tab
 
+//noinspection UsingMaterialAndMaterial3Libraries
 import androidx.compose.material.ScrollableTabRow
+//noinspection UsingMaterialAndMaterial3Libraries
 import androidx.compose.material.Tab
+//noinspection UsingMaterialAndMaterial3Libraries
 import androidx.compose.material.TabRowDefaults
+//noinspection UsingMaterialAndMaterial3Libraries
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateListOf

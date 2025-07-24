@@ -1,6 +1,5 @@
 package pw.vintr.music.ui.feature.artistDetails
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -21,7 +20,6 @@ import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -49,6 +47,7 @@ import pw.vintr.music.ui.kit.library.FIXED_TRACK_VIEW_HEIGHT
 import pw.vintr.music.ui.kit.library.TrackView
 import pw.vintr.music.ui.kit.library.tools.rememberLibraryGridCellsCount
 import pw.vintr.music.ui.kit.menu.MenuItemIconified
+import pw.vintr.music.ui.kit.modifier.actionHeaderBackground
 import pw.vintr.music.ui.kit.selector.PageIndicator
 import pw.vintr.music.ui.kit.toolbar.ToolbarWithArtwork
 import pw.vintr.music.ui.kit.toolbar.ToolbarRegular
@@ -151,8 +150,9 @@ fun ArtistDetailsScreen(
                         Box(
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .background(MaterialTheme.colorScheme.background)
-                                .padding(top = 8.dp, bottom = 4.dp),
+                                .escapePadding(horizontal = 20.dp)
+                                .actionHeaderBackground()
+                                .padding(top = 8.dp, bottom = 4.dp, start = 20.dp, end = 20.dp),
                         ) {
                             // Favorites button
                             ButtonFavorite(
