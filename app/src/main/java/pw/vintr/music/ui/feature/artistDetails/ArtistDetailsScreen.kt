@@ -144,7 +144,11 @@ fun ArtistDetailsScreen(
                     columns = GridCells.Fixed(cellsCount),
                     verticalArrangement = Arrangement.spacedBy(20.dp),
                     horizontalArrangement = Arrangement.spacedBy(20.dp),
-                    contentPadding = PaddingValues(20.dp)
+                    contentPadding = PaddingValues(
+                        start = 20.dp,
+                        end = 20.dp,
+                        bottom = 20.dp,
+                    )
                 ) {
                     stickyHeader {
                         Box(
@@ -152,7 +156,12 @@ fun ArtistDetailsScreen(
                                 .fillMaxWidth()
                                 .escapePadding(horizontal = 20.dp)
                                 .actionHeaderBackground()
-                                .padding(top = 8.dp, bottom = 4.dp, start = 20.dp, end = 20.dp),
+                                .padding(
+                                    top = 20.dp,
+                                    bottom = 4.dp,
+                                    start = 20.dp,
+                                    end = 20.dp
+                                ),
                         ) {
                             // Favorites button
                             ButtonFavorite(
