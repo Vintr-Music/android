@@ -264,7 +264,8 @@ fun ArtistDetailsScreen(
                                             isPlaying = playingState.playingTrack == track,
                                             onMoreClick = { viewModel.openTrackAction(track) },
                                             onClick = {
-                                                val trackIndex = (page + 1) * index
+                                                val trackIndex =
+                                                    (page * TRACKS_ON_PAGE_COUNT) + index
                                                 viewModel.playArtist(trackIndex)
                                             }
                                         )
