@@ -60,6 +60,7 @@ class PaginationController<T>(
                     items = data.data,
                     currentPage = page,
                     hasNext = data.data.size < data.count,
+                    totalCount = data.count
                 )
             } else {
                 val mergedItems = _pagingState.value.items + data.data
@@ -68,6 +69,7 @@ class PaginationController<T>(
                     items = mergedItems,
                     currentPage = page,
                     hasNext = mergedItems.size < data.count,
+                    totalCount = data.count
                 )
             }
 

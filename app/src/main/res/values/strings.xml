@@ -129,4 +129,6 @@
 
     <string name="music_flow_title">Music flow</string>
     <string name="music_flow_shuffle">Shuffle</string>
+
+    <string name="all_tracks">All tracks</string>
 </resources>

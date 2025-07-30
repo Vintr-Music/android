@@ -13,13 +13,15 @@ class TrackRepository(
     ): PageDto<TrackDto> = remoteDataSource.getTracksPage(urlString, params)
 
     suspend fun getShuffledTracksPage(
-        flowSessionId: String,
+        sessionId: String,
         offset: Int,
         limit: Int,
+        artist: String? = null,
     ) = remoteDataSource.getShuffledTracksPage(
-        flowSessionId = flowSessionId,
+        sessionId = sessionId,
         offset = offset,
-        limit = limit
+        limit = limit,
+        artist = artist,
     )
 
     suspend fun getTracksByAlbum(

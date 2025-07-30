@@ -26,6 +26,7 @@ import pw.vintr.music.data.player.repository.PlayerSessionRepository
 import pw.vintr.music.data.settings.repository.SettingsRepository
 import pw.vintr.music.domain.base.BaseInteractor
 import pw.vintr.music.domain.library.model.album.AlbumModel
+import pw.vintr.music.domain.library.model.artist.ArtistModel
 import pw.vintr.music.domain.library.model.track.TrackModel
 import pw.vintr.music.domain.library.model.track.toMediaItem
 import pw.vintr.music.domain.library.useCase.GetShuffledTracksPageUseCase
@@ -156,13 +157,17 @@ class PlayerInteractor(
         }
     }
 
+    suspend fun getCurrentSession(): PlayerSessionModel? {
+        return playerSessionRepository.getPlayerSession()?.toModel()
+    }
+
     suspend fun startNewFlowSession() {
         val flowSessionId = UUID.randomUUID().toString()
         val firstPage = getShuffledTracksPageUseCase.invoke(flowSessionId)
 
         playSession(
             session = PlayerSessionModel.Flow(
-                flowSessionId = flowSessionId,
+                sessionId = flowSessionId,
                 totalCount = firstPage.count,
                 tracks = firstPage.data,
             ),
@@ -178,6 +183,24 @@ class PlayerInteractor(
         playSession(
             session = PlayerSessionModel.Album(
                 album = album,
+                tracks = tracks
+            ),
+            startIndex = startIndex
+        )
+    }
+
+    suspend fun playArtist(
+        tracks: List<TrackModel>,
+        artist: ArtistModel,
+        sessionId: String,
+        totalCount: Int,
+        startIndex: Int = 0,
+    ) {
+        playSession(
+            session = PlayerSessionModel.Artist(
+                artist = artist,
+                sessionId = sessionId,
+                totalCount = totalCount,
                 tracks = tracks
             ),
             startIndex = startIndex

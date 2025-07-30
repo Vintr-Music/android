@@ -69,7 +69,7 @@ class CollapsingToolbarState(
         internal set(value) {
             maxHeightState = value
 
-            if(value < height) {
+            if (value < height) {
                 height = value
             }
         }
@@ -79,12 +79,11 @@ class CollapsingToolbarState(
 
     val progress: Float
         @FloatRange(from = 0.0, to = 1.0)
-        get() =
-            if (minHeight == maxHeight) {
-                0f
-            } else {
-                ((height - minHeight).toFloat() / (maxHeight - minHeight)).coerceIn(0f, 1f)
-            }
+        get() = if (minHeight == maxHeight) {
+            0f
+        } else {
+            ((height - minHeight).toFloat() / (maxHeight - minHeight)).coerceIn(0f, 1f)
+        }
 
     private val scrollableState = ScrollableState { value ->
         val consume = if (value < 0) {

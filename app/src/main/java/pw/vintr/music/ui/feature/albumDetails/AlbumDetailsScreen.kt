@@ -1,6 +1,5 @@
 package pw.vintr.music.ui.feature.albumDetails
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -11,7 +10,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -27,11 +25,12 @@ import pw.vintr.music.R
 import pw.vintr.music.domain.library.model.album.AlbumModel
 import pw.vintr.music.domain.player.model.state.PlayerStatusModel
 import pw.vintr.music.tools.extension.Empty
-import pw.vintr.music.ui.kit.button.ButtonBorderedIcon
+import pw.vintr.music.ui.kit.button.ButtonFavorite
 import pw.vintr.music.ui.kit.button.ButtonPlayerState
 import pw.vintr.music.ui.kit.button.ButtonSimpleIcon
 import pw.vintr.music.ui.kit.library.TrackView
 import pw.vintr.music.ui.kit.layout.ScreenStateLayout
+import pw.vintr.music.ui.kit.modifier.actionHeaderBackground
 import pw.vintr.music.ui.kit.toolbar.ToolbarWithArtwork
 import pw.vintr.music.ui.kit.toolbar.ToolbarRegular
 import pw.vintr.music.ui.kit.toolbar.collapsing.CollapsingLayout
@@ -39,7 +38,6 @@ import pw.vintr.music.ui.kit.toolbar.collapsing.ScrollStrategy
 import pw.vintr.music.ui.kit.toolbar.collapsing.rememberCollapsingLayoutState
 import pw.vintr.music.ui.theme.Gilroy16
 import pw.vintr.music.ui.theme.Gilroy36
-import pw.vintr.music.ui.theme.Red2
 import pw.vintr.music.ui.theme.VintrMusicExtendedTheme
 
 @Composable
@@ -128,35 +126,24 @@ fun AlbumDetailsScreen(
                         Box(
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .background(MaterialTheme.colorScheme.background)
+                                .actionHeaderBackground()
                                 .padding(horizontal = 20.dp)
                                 .padding(top = 20.dp, bottom = 4.dp),
-
                         ) {
                             // Favorites button
-                            ButtonBorderedIcon(
+                            ButtonFavorite(
                                 modifier = Modifier
                                     .padding(start = 76.dp)
                                     .align(Alignment.CenterStart)
                                     .alpha(collapsingLayoutState.toolbarState.progress),
-                                iconRes = if (screenData.isFavorite) {
-                                    R.drawable.ic_favorite_filled
+                                isFavorite = screenData.isFavorite,
+                            ) {
+                                if (screenData.isFavorite) {
+                                    viewModel.removeFromFavorites()
                                 } else {
-                                    R.drawable.ic_favorite_outline
-                                },
-                                tint = if (screenData.isFavorite) {
-                                    Red2
-                                } else {
-                                    VintrMusicExtendedTheme.colors.textRegular
-                                },
-                                onClick = {
-                                    if (screenData.isFavorite) {
-                                        viewModel.removeFromFavorites()
-                                    } else {
-                                        viewModel.addToFavorites()
-                                    }
+                                    viewModel.addToFavorites()
                                 }
-                            )
+                            }
 
                             // Play-pause button
                             val horizontalBias = -collapsingLayoutState.toolbarState.progress

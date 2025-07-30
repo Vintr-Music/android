@@ -57,9 +57,9 @@ sealed class Screen(val route: String) {
         )
     )
 
-    object Login : Screen(route = "login")
+    data object Login : Screen(route = "login")
 
-    object Register : Screen(route = "register")
+    data object Register : Screen(route = "register")
 
     data class SelectServer(
         val usePrimaryMountToolbar: Boolean = true,
@@ -78,7 +78,7 @@ sealed class Screen(val route: String) {
         }
     }
 
-    object ConnectNewServer : Screen(route = "new-server")
+    data object ConnectNewServer : Screen(route = "new-server")
 
     data class ServerAccessControl(val serverId: String) : ScreenWithArgs(
         destination = ROUTE_DESTINATION,
@@ -110,29 +110,29 @@ sealed class Screen(val route: String) {
         }
     }
 
-    object Root : Screen(route = "root")
+    data object Root : Screen(route = "root")
 
-    object Home : Screen(route = "home")
+    data object Home : Screen(route = "home")
 
-    object Search : Screen(route = "search")
+    data object Search : Screen(route = "search")
 
-    object Library : Screen(route = "library")
+    data object Library : Screen(route = "library")
 
-    object Menu : Screen(route = "menu")
+    data object Menu : Screen(route = "menu")
 
-    object Settings : Screen(route = "settings")
+    data object Settings : Screen(route = "settings")
 
-    object Equalizer : Screen(route = "equalizer")
+    data object Equalizer : Screen(route = "equalizer")
 
-    object ArtistList : Screen(route = "all-artists")
+    data object ArtistList : Screen(route = "all-artists")
 
-    object PlaylistList : Screen(route = "all-playlists")
+    data object PlaylistList : Screen(route = "all-playlists")
 
-    object ArtistFavoriteList : Screen(route = "favorite-artists")
+    data object ArtistFavoriteList : Screen(route = "favorite-artists")
 
-    object AlbumFavoriteList : Screen(route = "favorite-albums")
+    data object AlbumFavoriteList : Screen(route = "favorite-albums")
 
-    object PlaylistCreate : Screen(route = "playlist-create")
+    data object PlaylistCreate : Screen(route = "playlist-create")
 
     data class PlaylistAddTrack(val trackId: String) : ScreenWithArgs(
         destination = ROUTE_DESTINATION,
@@ -209,6 +209,28 @@ sealed class Screen(val route: String) {
         }
     }
 
+    data class ArtistTracks(
+        val artist: ArtistModel,
+        val playingSessionId: String
+    ) : ScreenWithArgs(
+        destination = ROUTE_DESTINATION,
+        args = mapOf(
+            ARG_KEY_ARTIST to artist,
+            ARG_KEY_PLAYING_SESSION_ID to playingSessionId,
+        )
+    ) {
+        companion object {
+            const val ARG_KEY_ARTIST = "arg-key-artist"
+            const val ARG_KEY_PLAYING_SESSION_ID = "arg-key-playing-session-id"
+            private const val ROUTE_DESTINATION = "artist-tracks"
+
+            val routeTemplate = buildRouteTemplate(
+                ROUTE_DESTINATION,
+                listOf(ARG_KEY_ARTIST, ARG_KEY_PLAYING_SESSION_ID)
+            )
+        }
+    }
+
     data class TrackActionSheet(
         val trackModel: TrackModel,
         val allowedActions: List<TrackAction> = listOf(
@@ -280,5 +302,5 @@ sealed class Screen(val route: String) {
         }
     }
 
-    object ManageSession : Screen(route = "manage-session")
+    data object ManageSession : Screen(route = "manage-session")
 }

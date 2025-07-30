@@ -67,7 +67,7 @@ private const val BEARER_PREFIX = "Bearer "
 
 const val HEADER_MEDIA_SERVER_ID = "x-media-server-id"
 
-private const val REALM_SCHEMA_VERSION = 1L
+private const val REALM_SCHEMA_VERSION = 2L
 
 val dataModule = module {
     // Gson
