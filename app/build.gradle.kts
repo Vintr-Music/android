@@ -39,7 +39,7 @@ android {
         applicationId = "pw.vintr.music"
         minSdk = 28
         targetSdk = 35
-        versionCode = 7
+        versionCode = 8
         versionName = "0.6.0 Preview"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
