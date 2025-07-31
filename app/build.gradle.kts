@@ -39,8 +39,8 @@ android {
         applicationId = "pw.vintr.music"
         minSdk = 28
         targetSdk = 35
-        versionCode = 8
-        versionName = "0.6.0 Preview"
+        versionCode = 9
+        versionName = "0.6.1 Preview"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
@@ -84,7 +84,7 @@ android {
 
 dependencies {
     val materialVersion = "1.8.3"
-    val navigationVersion = "2.9.2"
+    val navigationVersion = "2.9.3"
     val accompanistVersion = "0.36.0"
     val ktorVersion = "3.1.3"
     val koinVersion = "4.0.4"
