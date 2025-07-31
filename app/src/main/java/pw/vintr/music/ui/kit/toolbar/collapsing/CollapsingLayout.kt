@@ -3,14 +3,17 @@ package pw.vintr.music.ui.kit.toolbar.collapsing
 import android.os.Bundle
 import androidx.compose.foundation.gestures.ScrollableDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.Saver
 import androidx.compose.runtime.saveable.SaverScope
 import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.input.nestedscroll.NestedScrollConnection
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.layout.Layout
 import androidx.compose.ui.layout.ParentDataModifier
@@ -18,6 +21,10 @@ import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.IntSize
 import kotlin.math.max
+
+val LocalCollapsingScrollConnection = staticCompositionLocalOf<CollapsingNestedScrollConnection> {
+    error("No CollapsingScrollConnection provided")
+}
 
 @Stable
 class CollapsingLayoutState(
@@ -84,85 +91,89 @@ fun CollapsingLayout(
 
     val toolbarState = state.toolbarState
 
-    Layout(
-        content = {
-            CollapsingToolbar(
-                modifier = toolbarModifier,
-                clipToBounds = toolbarClipToBounds,
-                collapsingToolbarState = toolbarState,
-            ) {
-                toolbar()
+    CompositionLocalProvider(
+        LocalCollapsingScrollConnection provides nestedScrollConnection
+    ) {
+        Layout(
+            content = {
+                CollapsingToolbar(
+                    modifier = toolbarModifier,
+                    clipToBounds = toolbarClipToBounds,
+                    collapsingToolbarState = toolbarState,
+                ) {
+                    toolbar()
+                }
+
+                CollapsingToolbarScaffoldScopeInstance.body()
+            },
+            modifier = modifier
+                .then(
+                    if (enabled) {
+                        Modifier.nestedScroll(nestedScrollConnection)
+                    } else {
+                        Modifier
+                    }
+                )
+        ) { measurables, constraints ->
+            check(measurables.size >= 2) {
+                "the number of children should be at least 2: toolbar, (at least one) body"
             }
 
-            CollapsingToolbarScaffoldScopeInstance.body()
-        },
-        modifier = modifier
-            .then(
-                if (enabled) {
-                    Modifier.nestedScroll(nestedScrollConnection)
-                } else {
-                    Modifier
+            val toolbarConstraints = constraints.copy(
+                minWidth = 0,
+                minHeight = 0
+            )
+            val bodyConstraints = constraints.copy(
+                minWidth = 0,
+                minHeight = 0,
+                maxHeight = when (scrollStrategy) {
+                    ScrollStrategy.ExitUntilCollapsed ->
+                        (constraints.maxHeight - toolbarState.minHeight).coerceAtLeast(0)
+
+                    ScrollStrategy.EnterAlways, ScrollStrategy.EnterAlwaysCollapsed ->
+                        constraints.maxHeight
                 }
             )
-    ) { measurables, constraints ->
-        check(measurables.size >= 2) {
-            "the number of children should be at least 2: toolbar, (at least one) body"
-        }
 
-        val toolbarConstraints = constraints.copy(
-            minWidth = 0,
-            minHeight = 0
-        )
-        val bodyConstraints = constraints.copy(
-            minWidth = 0,
-            minHeight = 0,
-            maxHeight = when (scrollStrategy) {
-                ScrollStrategy.ExitUntilCollapsed ->
-                    (constraints.maxHeight - toolbarState.minHeight).coerceAtLeast(0)
+            val toolbarPlaceable = measurables[0].measure(toolbarConstraints)
 
-                ScrollStrategy.EnterAlways, ScrollStrategy.EnterAlwaysCollapsed ->
-                    constraints.maxHeight
+            val bodyMeasurables = measurables.subList(1, measurables.size)
+            val childrenAlignments = bodyMeasurables.map {
+                (it.parentData as? ScaffoldParentData)?.alignment
             }
-        )
+            val bodyPlaceableList = bodyMeasurables.map {
+                it.measure(bodyConstraints)
+            }
 
-        val toolbarPlaceable = measurables[0].measure(toolbarConstraints)
+            val toolbarHeight = toolbarPlaceable.height
 
-        val bodyMeasurables = measurables.subList(1, measurables.size)
-        val childrenAlignments = bodyMeasurables.map {
-            (it.parentData as? ScaffoldParentData)?.alignment
-        }
-        val bodyPlaceableList = bodyMeasurables.map {
-            it.measure(bodyConstraints)
-        }
+            val width = max(
+                toolbarPlaceable.width,
+                bodyPlaceableList.maxOfOrNull { it.width } ?: 0
+            ).coerceIn(constraints.minWidth, constraints.maxWidth)
 
-        val toolbarHeight = toolbarPlaceable.height
+            val height = max(
+                toolbarHeight,
+                bodyPlaceableList.maxOfOrNull { it.height } ?: 0
+            ).coerceIn(constraints.minHeight, constraints.maxHeight)
 
-        val width = max(
-            toolbarPlaceable.width,
-            bodyPlaceableList.maxOfOrNull { it.width } ?: 0
-        ).coerceIn(constraints.minWidth, constraints.maxWidth)
+            layout(width, height) {
+                bodyPlaceableList.forEachIndexed { index, placeable ->
+                    val alignment = childrenAlignments[index]
 
-        val height = max(
-            toolbarHeight,
-            bodyPlaceableList.maxOfOrNull { it.height } ?: 0
-        ).coerceIn(constraints.minHeight, constraints.maxHeight)
-
-        layout(width, height) {
-            bodyPlaceableList.forEachIndexed { index, placeable ->
-                val alignment = childrenAlignments[index]
-
-                if (alignment == null) {
-                    placeable.placeRelative(0, toolbarHeight + state.offsetY)
-                } else {
-                    val offset = alignment.align(
-                        size = IntSize(placeable.width, placeable.height),
-                        space = IntSize(width, height),
-                        layoutDirection = layoutDirection
-                    )
-                    placeable.place(offset)
+                    if (alignment == null) {
+                        placeable.placeRelative(0, toolbarHeight + state.offsetY)
+                    } else {
+                        val offset = alignment.align(
+                            size = IntSize(placeable.width, placeable.height),
+                            space = IntSize(width, height),
+                            layoutDirection = layoutDirection
+                        )
+                        placeable.place(offset)
+                    }
                 }
+                toolbarPlaceable.placeRelative(0, state.offsetY)
             }
-            toolbarPlaceable.placeRelative(0, state.offsetY)
         }
     }
 }

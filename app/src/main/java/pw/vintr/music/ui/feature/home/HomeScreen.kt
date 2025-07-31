@@ -48,7 +48,9 @@ import pw.vintr.music.ui.kit.modifier.artworkGradientOverlayBackground
 import pw.vintr.music.ui.kit.player.FlowPlayer
 import pw.vintr.music.ui.kit.toolbar.collapsing.CollapsingLayout
 import pw.vintr.music.ui.kit.toolbar.collapsing.CollapsingLayoutState
+import pw.vintr.music.ui.kit.toolbar.collapsing.LocalCollapsingScrollConnection
 import pw.vintr.music.ui.kit.toolbar.collapsing.ScrollStrategy
+import pw.vintr.music.ui.kit.toolbar.collapsing.collapsingToolbarScrollConnection
 import pw.vintr.music.ui.kit.toolbar.collapsing.rememberCollapsingLayoutState
 import pw.vintr.music.ui.kit.visualizer.Visualizer
 import pw.vintr.music.ui.theme.Gilroy18
@@ -95,7 +97,14 @@ fun HomeScreen(
                     state = collapsingLayoutState,
                     scrollStrategy = ScrollStrategy.ExitUntilCollapsed,
                     toolbar = {
+                        val nestedScrollConnection = LocalCollapsingScrollConnection.current
+
                         HomeHeader(
+                            modifier = Modifier
+                                .collapsingToolbarScrollConnection(
+                                    coroutineScope = coroutineScope,
+                                    connection = nestedScrollConnection
+                                ),
                             collapsingState = collapsingLayoutState,
                             welcomeState = screenData.welcome,
                             flowPlayingState = flowPlayingState.value,
@@ -165,6 +174,7 @@ fun HomeScreen(
 
 @Composable
 private fun HomeHeader(
+    modifier: Modifier = Modifier,
     collapsingState: CollapsingLayoutState,
     welcomeState: MainPageWelcomeModel,
     flowPlayingState: FlowPlayingState,
@@ -176,7 +186,7 @@ private fun HomeHeader(
     val currentTrack = flowPlayingState.playingTrack
 
     Box(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
             .wrapContentHeight()
             .onSizeChanged { onHeaderSizeChanged() }
