@@ -24,13 +24,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.LifecycleResumeEffect
 import coil3.compose.AsyncImage
 import coil3.request.ImageRequest
 import coil3.request.crossfade
@@ -71,6 +71,11 @@ fun HomeScreen(
     val collapsingLayoutState = rememberCollapsingLayoutState()
     val cellsCount = rememberLibraryGridCellsCount()
     val gridState = rememberLazyGridState()
+
+    LifecycleResumeEffect(Unit) {
+        viewModel.refreshWelcome()
+        onPauseOrDispose {}
+    }
 
     Box(
         modifier = Modifier
@@ -195,8 +200,7 @@ private fun HomeHeader(
         if (currentTrack != null) {
             AsyncImage(
                 modifier = Modifier
-                    .matchParentSize()
-                    .alpha(collapsingState.toolbarState.progress),
+                    .matchParentSize(),
                 model = ImageRequest.Builder(LocalContext.current)
                     .data(currentTrack.artworkUrl)
                     .size(Size.ORIGINAL)
@@ -208,7 +212,9 @@ private fun HomeHeader(
             Box(
                 modifier = Modifier
                     .matchParentSize()
-                    .artworkGradientOverlayBackground(top = 0.5f)
+                    .artworkGradientOverlayBackground(
+                        top = 1f - (0.5f * collapsingState.toolbarState.progress)
+                    )
             )
         }
 
