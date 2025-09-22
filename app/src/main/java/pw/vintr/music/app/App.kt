@@ -14,7 +14,6 @@ import okhttp3.OkHttpClient
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.component.KoinComponent
-import org.koin.core.component.get
 import org.koin.core.context.GlobalContext
 import pw.vintr.music.BuildConfig
 import pw.vintr.music.app.di.dataModule
@@ -45,7 +44,7 @@ class App : Application(), SingletonImageLoader.Factory, KoinComponent {
     }
 
     override fun newImageLoader(context: PlatformContext): ImageLoader {
-        val okHttpClient: OkHttpClient = get()
+        val okHttpClient: OkHttpClient = getKoin().get<OkHttpClient>()
 
         return ImageLoader.Builder(applicationContext)
             .logger(DebugLogger())
