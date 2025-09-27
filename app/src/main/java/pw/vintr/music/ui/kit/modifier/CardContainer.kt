@@ -15,7 +15,7 @@ import androidx.compose.ui.unit.dp
 import pw.vintr.music.ui.theme.VintrMusicExtendedTheme
 
 fun Modifier.cardContainer(
-    shape: Shape = RoundedCornerShape(20.dp),
+    shape: Shape = RoundedCornerShape(8.dp),
     onClick: (() -> Unit)? = null
 ) = composed {
     val backgroundColor = VintrMusicExtendedTheme.colors.cardBackground

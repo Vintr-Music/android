@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -31,10 +30,7 @@ fun ServerMemberCard(
     Row(
         modifier = modifier
             .fillMaxWidth()
-            .cardContainer(
-                shape = RoundedCornerShape(10.dp),
-                onClick = onClick
-            ),
+            .cardContainer(onClick = onClick),
         horizontalArrangement = Arrangement.spacedBy(20.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
