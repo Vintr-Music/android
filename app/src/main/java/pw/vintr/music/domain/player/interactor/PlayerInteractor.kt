@@ -40,7 +40,7 @@ import pw.vintr.music.domain.player.model.session.toModel
 import pw.vintr.music.domain.playlist.model.PlaylistModel
 import pw.vintr.music.tools.extension.hasNoItems
 import pw.vintr.music.tools.extension.reorder
-import java.util.UUID
+import pw.vintr.music.tools.random.generateRandomString
 
 class PlayerInteractor(
     applicationContext: Context,
@@ -49,6 +49,10 @@ class PlayerInteractor(
     private val playerConfigRepository: PlayerConfigRepository,
     private val settingsRepository: SettingsRepository,
 ) : BaseInteractor() {
+
+    companion object {
+        private const val SESSION_ID_LENGTH = 10
+    }
 
     private var controller: MediaController? = null
 
@@ -162,7 +166,7 @@ class PlayerInteractor(
     }
 
     suspend fun startNewFlowSession() {
-        val flowSessionId = UUID.randomUUID().toString()
+        val flowSessionId = generateRandomString(length = SESSION_ID_LENGTH)
         val firstPage = getShuffledTracksPageUseCase.invoke(flowSessionId)
 
         playSession(
