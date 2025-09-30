@@ -52,7 +52,6 @@ import com.google.accompanist.permissions.isGranted
 import com.google.accompanist.permissions.rememberPermissionState
 import kotlinx.coroutines.delay
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import org.koin.compose.KoinContext
 import org.koin.compose.koinInject
 import pw.vintr.music.domain.library.model.track.TrackModel
 import pw.vintr.music.domain.server.model.ServerInviteModel
@@ -120,32 +119,30 @@ class MainActivity : ComponentActivity() {
             }
 
             CompositionLocalProvider(LocalActivity provides this) {
-                KoinContext {
-                    VintrMusicTheme {
-                        Surface(
-                            modifier = Modifier.fillMaxSize(),
-                            color = MaterialTheme.colorScheme.background
+                VintrMusicTheme {
+                    Surface(
+                        modifier = Modifier.fillMaxSize(),
+                        color = MaterialTheme.colorScheme.background
+                    ) {
+                        ModalBottomSheetLayout(
+                            bottomSheetNavigator = bottomSheetNavigator,
+                            sheetContentColor = Color.Transparent,
+                            sheetBackgroundColor = Color.Transparent,
+                            scrimColor = MaterialTheme.colorScheme.background
+                                .copy(alpha = 0.9f),
+                            sheetElevation = 0.dp
                         ) {
-                            ModalBottomSheetLayout(
-                                bottomSheetNavigator = bottomSheetNavigator,
-                                sheetContentColor = Color.Transparent,
-                                sheetBackgroundColor = Color.Transparent,
-                                scrimColor = MaterialTheme.colorScheme.background
-                                    .copy(alpha = 0.9f),
-                                sheetElevation = 0.dp
-                            ) {
-                                Navigation(
-                                    navController = navController,
-                                    rootScreen = when (initialState.value) {
-                                        AppInitialState.Authorized -> Screen.Root
-                                        AppInitialState.Login -> Screen.Login
-                                        AppInitialState.ServerSelection -> Screen.SelectServer()
-                                    }
-                                )
-                            }
-                            PrimaryLoader()
-                            AlertHolder()
+                            Navigation(
+                                navController = navController,
+                                rootScreen = when (initialState.value) {
+                                    AppInitialState.Authorized -> Screen.Root
+                                    AppInitialState.Login -> Screen.Login
+                                    AppInitialState.ServerSelection -> Screen.SelectServer()
+                                }
+                            )
                         }
+                        PrimaryLoader()
+                        AlertHolder()
                     }
                 }
             }

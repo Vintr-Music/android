@@ -1,5 +1,6 @@
 package pw.vintr.music.ui.feature.home
 
+import androidx.compose.runtime.Stable
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.combine
@@ -14,6 +15,7 @@ import pw.vintr.music.domain.player.model.session.PlayerSessionModel
 import pw.vintr.music.domain.player.model.state.PlayerStatusModel
 import pw.vintr.music.domain.visualizer.interactor.VisualizerInteractor
 import pw.vintr.music.domain.visualizer.model.VisualizerState
+import pw.vintr.music.tools.extension.updateLoaded
 import pw.vintr.music.ui.base.BaseScreenState
 import pw.vintr.music.ui.base.BaseViewModel
 import pw.vintr.music.ui.navigation.Screen
@@ -71,6 +73,12 @@ class HomeViewModel(
         _screenState.refreshWithStateHandling { loadScreenData() }
     }
 
+    fun refreshWelcome() {
+        _screenState.updateLoaded {
+            it.copy(welcome = MainPageWelcomeModel.getByNowTime())
+        }
+    }
+
     fun playFlow() {
         if (flowPlayingState.value.currentIsFlow) {
             playerInteractor.resume()
@@ -106,11 +114,13 @@ class HomeViewModel(
     }
 }
 
+@Stable
 data class HomeScreenData(
     val welcome: MainPageWelcomeModel,
     val items: List<MainPageItemModel>,
 )
 
+@Stable
 data class FlowPlayingState(
     val playingTrack: TrackModel? = null,
     val playerStatus: PlayerStatusModel = PlayerStatusModel.IDLE,

@@ -7,6 +7,10 @@ import androidx.compose.ui.input.nestedscroll.NestedScrollConnection
 import androidx.compose.ui.input.nestedscroll.NestedScrollSource
 import androidx.compose.ui.unit.Velocity
 
+interface CollapsingNestedScrollConnection : NestedScrollConnection {
+    suspend fun snap() {}
+}
+
 enum class ScrollStrategy {
     EnterAlways {
         override fun create(
@@ -14,7 +18,7 @@ enum class ScrollStrategy {
             toolbarState: CollapsingToolbarState,
             flingBehavior: FlingBehavior,
             snap: Boolean,
-        ): NestedScrollConnection =
+        ): CollapsingNestedScrollConnection =
             EnterAlwaysNestedScrollConnection(offsetY, toolbarState, flingBehavior)
     },
     EnterAlwaysCollapsed {
@@ -23,7 +27,7 @@ enum class ScrollStrategy {
             toolbarState: CollapsingToolbarState,
             flingBehavior: FlingBehavior,
             snap: Boolean,
-        ): NestedScrollConnection =
+        ): CollapsingNestedScrollConnection =
             EnterAlwaysCollapsedNestedScrollConnection(offsetY, toolbarState, flingBehavior)
     },
     ExitUntilCollapsed {
@@ -32,7 +36,7 @@ enum class ScrollStrategy {
             toolbarState: CollapsingToolbarState,
             flingBehavior: FlingBehavior,
             snap: Boolean,
-        ): NestedScrollConnection =
+        ): CollapsingNestedScrollConnection =
             ExitUntilCollapsedNestedScrollConnection(toolbarState, flingBehavior, snap)
     };
 
@@ -41,7 +45,7 @@ enum class ScrollStrategy {
         toolbarState: CollapsingToolbarState,
         flingBehavior: FlingBehavior,
         snap: Boolean = false,
-    ): NestedScrollConnection
+    ): CollapsingNestedScrollConnection
 }
 
 private enum class Direction {
@@ -69,7 +73,7 @@ internal class EnterAlwaysNestedScrollConnection(
     private val offsetY: MutableState<Int>,
     private val toolbarState: CollapsingToolbarState,
     private val flingBehavior: FlingBehavior
-) : NestedScrollConnection {
+) : CollapsingNestedScrollConnection {
     private val scrollDelegate = ScrollDelegate(offsetY)
     //private val tracker = RelativeVelocityTracker(CurrentTimeProviderImpl())
 
@@ -117,7 +121,7 @@ internal class EnterAlwaysCollapsedNestedScrollConnection(
     private val offsetY: MutableState<Int>,
     private val toolbarState: CollapsingToolbarState,
     private val flingBehavior: FlingBehavior
-) : NestedScrollConnection {
+) : CollapsingNestedScrollConnection {
     private val scrollDelegate = ScrollDelegate(offsetY)
 
     override fun onPreScroll(available: Offset, source: NestedScrollSource): Offset {
@@ -175,7 +179,7 @@ internal class ExitUntilCollapsedNestedScrollConnection(
     private val toolbarState: CollapsingToolbarState,
     private val flingBehavior: FlingBehavior,
     private val snap: Boolean,
-) : NestedScrollConnection {
+) : CollapsingNestedScrollConnection {
     private var direction: Direction = Direction.Idle
 
     override fun onPreScroll(available: Offset, source: NestedScrollSource): Offset {
@@ -227,6 +231,12 @@ internal class ExitUntilCollapsedNestedScrollConnection(
             velocity
         }
 
+        snap()
+
+        return Velocity(x = 0f, y = available.y - left)
+    }
+
+    override suspend fun snap() {
         val resultingToolbarProgress = toolbarState.progress
 
         if (snap && resultingToolbarProgress > 0 && resultingToolbarProgress < 1) {
@@ -241,7 +251,5 @@ internal class ExitUntilCollapsedNestedScrollConnection(
             }
             direction = Direction.Idle
         }
-
-        return Velocity(x = 0f, y = available.y - left)
     }
 }

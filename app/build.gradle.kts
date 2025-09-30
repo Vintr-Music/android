@@ -4,10 +4,10 @@ import java.util.Properties
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
+    id("org.jetbrains.kotlin.plugin.compose")
     id("kotlin-parcelize")
     id("io.realm.kotlin")
-    id("appmetrica-plugin")
-    id("org.jetbrains.kotlin.plugin.compose")
+    id("io.appmetrica.analytics")
 }
 
 appmetrica {
@@ -33,14 +33,14 @@ android {
         }
     }
     namespace = "pw.vintr.music"
-    compileSdk = 35
+    compileSdk = 36
 
     defaultConfig {
         applicationId = "pw.vintr.music"
         minSdk = 28
-        targetSdk = 35
-        versionCode = 8
-        versionName = "0.6.0 Preview"
+        targetSdk = 36
+        versionCode = 9
+        versionName = "0.6.1 Preview"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
@@ -65,11 +65,11 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
     kotlinOptions {
-        jvmTarget = "1.8"
+        jvmTarget = "17"
     }
     buildFeatures {
         compose = true
@@ -83,34 +83,34 @@ android {
 }
 
 dependencies {
-    val materialVersion = "1.8.3"
-    val navigationVersion = "2.9.2"
-    val accompanistVersion = "0.36.0"
-    val ktorVersion = "3.1.3"
-    val koinVersion = "4.0.4"
+    val materialVersion = "1.9.1"
+    val navigationVersion = "2.9.4"
+    val accompanistVersion = "0.37.3"
+    val accompanistNavigationVersion = "0.36.0"
+    val ktorVersion = "3.2.3"
+    val koinVersion = "4.1.1"
     val preferenceVersion = "1.2.1"
     val coilVersion = "3.2.0"
     val media3Version = "1.5.1"
-    val realmVersion = "2.3.0"
+    val realmVersion = "3.0.0"
     val realmCoroutinesVersion = "1.10.2"
     val paletteVersion = "1.0.0"
-    val cameraxVersion = "1.4.2"
+    val cameraxVersion = "1.5.0"
     val zxingVersion = "3.5.3"
-    val reordableVersion = "2.4.3"
-    val metricaVersion = "7.2.0"
+    val reordableVersion = "3.0.0"
+    val metricaVersion = "7.12.0"
     val immutableCollectionsVersion = "0.4.0"
 
     // Common Android
-    implementation("androidx.core:core-ktx:1.16.0")
-    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.9.2")
-    implementation("androidx.activity:activity-compose:1.10.1")
-    implementation(platform("androidx.compose:compose-bom:2025.07.00"))
+    implementation("androidx.core:core-ktx:1.17.0")
+    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.9.4")
+    implementation("androidx.activity:activity-compose:1.11.0")
+    implementation(platform("androidx.compose:compose-bom:2025.09.00"))
     implementation("androidx.compose.ui:ui")
     implementation("androidx.compose.ui:ui-graphics")
     implementation("androidx.compose.ui:ui-tooling-preview")
     implementation("androidx.preference:preference-ktx:$preferenceVersion")
     implementation("androidx.palette:palette-ktx:$paletteVersion")
-    implementation("androidx.compose.runtime:runtime-livedata:1.8.3")
 
     // Material
     implementation("androidx.compose.material3:material3")
@@ -122,16 +122,16 @@ dependencies {
 
     // Tests
     testImplementation("junit:junit:4.13.2")
-    androidTestImplementation("androidx.test.ext:junit:1.2.1")
-    androidTestImplementation("androidx.test.espresso:espresso-core:3.6.1")
-    androidTestImplementation(platform("androidx.compose:compose-bom:2025.07.00"))
+    androidTestImplementation("androidx.test.ext:junit:1.3.0")
+    androidTestImplementation("androidx.test.espresso:espresso-core:3.7.0")
+    androidTestImplementation(platform("androidx.compose:compose-bom:2025.09.00"))
     androidTestImplementation("androidx.compose.ui:ui-test-junit4")
     debugImplementation("androidx.compose.ui:ui-tooling")
     debugImplementation("androidx.compose.ui:ui-test-manifest")
 
     // Navigation | Accompanist
     implementation("androidx.navigation:navigation-compose:$navigationVersion")
-    implementation("com.google.accompanist:accompanist-navigation-material:$accompanistVersion")
+    implementation("com.google.accompanist:accompanist-navigation-material:$accompanistNavigationVersion")
     implementation("com.google.accompanist:accompanist-permissions:$accompanistVersion")
 
     // Ktor | HTTP

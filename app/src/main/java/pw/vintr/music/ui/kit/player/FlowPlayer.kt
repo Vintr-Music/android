@@ -1,7 +1,8 @@
 package pw.vintr.music.ui.kit.player
 
-import androidx.compose.animation.animateContentSize
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -41,8 +42,7 @@ fun FlowPlayer(
 ) {
     Column(
         modifier = modifier
-            .fillMaxWidth()
-            .animateContentSize(),
+            .fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Row(
@@ -66,19 +66,30 @@ fun FlowPlayer(
         }
 
         if (currentSessionIsFlow) {
-            Spacer(Modifier.height(12.dp))
+            Spacer(Modifier.height(20.dp))
             // Shuffle pill button to re-shake existing session
             Row(
                 modifier = Modifier
-                    .clip(RoundedCornerShape(20.dp))
-                    .background(VintrMusicExtendedTheme.colors.dialogBackground)
-                    .padding(vertical = 6.dp, horizontal = 12.dp)
-                    .clickable { onShuffleClick() },
+                    .height(32.dp)
+                    .clip(RoundedCornerShape(10.dp))
+                    .background(
+                        VintrMusicExtendedTheme.colors.borderedIconButtonBackground,
+                        shape = RoundedCornerShape(10.dp)
+                    )
+                    .border(
+                        BorderStroke(
+                            1.dp,
+                            VintrMusicExtendedTheme.colors.borderedIconButtonStroke
+                        ),
+                        shape = RoundedCornerShape(10.dp)
+                    )
+                    .clickable { onShuffleClick() }
+                    .padding(horizontal = 12.dp),
                 verticalAlignment = Alignment.CenterVertically,
             ) {
                 Icon(
                     modifier = Modifier
-                        .size(12.dp),
+                        .size(16.dp),
                     painter = painterResource(R.drawable.ic_shuffle),
                     tint = VintrMusicExtendedTheme.colors.textSecondary,
                     contentDescription = "Shuffle icon"
