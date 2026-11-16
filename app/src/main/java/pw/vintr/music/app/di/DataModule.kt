@@ -61,7 +61,7 @@ import pw.vintr.music.data.user.repository.UserRepository
 import pw.vintr.music.data.user.source.UserPreferencesDataSource
 import pw.vintr.music.data.user.source.UserRemoteDataSource
 
-private const val BASE_URL = "http://188.225.9.157:4001/"
+private const val BASE_URL = "http://85.92.110.117:4001/"
 
 private const val BEARER_PREFIX = "Bearer "
 

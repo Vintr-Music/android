@@ -11,9 +11,9 @@ plugins {
 }
 
 appmetrica {
-    postApiKey = { "5a659821-03aa-4fca-8812-c61df4750f68" }
-    setMappingBuildTypes(listOf("release"))
-    setOffline(true)
+    // Offline locally — mapping is collected but not uploaded (same as previous setOffline(true)).
+    postApiKey.set("5a659821-03aa-4fca-8812-c61df4750f68")
+    offline.set(true)
 }
 
 val keystorePropertiesFile = rootProject.file("keystore.properties")
@@ -47,7 +47,7 @@ android {
             useSupportLibrary = true
         }
 
-        buildConfigField("String", "BASE_URL", "\"http://188.225.9.157:4001/\"")
+        buildConfigField("String", "BASE_URL", "\"http://85.92.110.117:4001/\"")
         buildConfigField("String", "METRICA_API_KEY", "\"5a659821-03aa-4fca-8812-c61df4750f68\"")
 
         signingConfig = signingConfigs.getByName("debug")
@@ -82,30 +82,46 @@ android {
     }
 }
 
+// Realm Kotlin 3.0.0 pins the project to Kotlin 2.0.21. Keep the stdlib on that line so
+// transitive deps cannot pull 2.1+/2.2 metadata that the 2.0.21 compiler cannot read.
+configurations.configureEach {
+    resolutionStrategy {
+        force("org.jetbrains.kotlin:kotlin-stdlib:2.0.21")
+        force("org.jetbrains.kotlin:kotlin-stdlib-jdk7:2.0.21")
+        force("org.jetbrains.kotlin:kotlin-stdlib-jdk8:2.0.21")
+        force("org.jetbrains.kotlin:kotlin-stdlib-common:2.0.21")
+        force("org.jetbrains.kotlin:kotlin-reflect:2.0.21")
+    }
+}
+
 dependencies {
-    val materialVersion = "1.9.4"
-    val navigationVersion = "2.9.6"
+    // AndroidX / Compose capped for AGP 8.13 + compileSdk 36.
+    val materialVersion = "1.9.5"
+    val navigationVersion = "2.9.8"
     val accompanistVersion = "0.37.3"
     val accompanistNavigationVersion = "0.36.0"
-    val ktorVersion = "3.3.2"
-    val koinVersion = "4.1.1"
+    // Built with Kotlin 2.0.21 — newer Ktor/Coil/Koin ship 2.1+/2.2 metadata.
+    val ktorVersion = "3.0.3"
+    val koinVersion = "4.0.4"
     val preferenceVersion = "1.2.1"
-    val coilVersion = "3.3.0"
+    val coilVersion = "3.0.4"
+    // Intentionally pinned — media session migration is a separate task.
     val media3Version = "1.5.1"
     val realmVersion = "3.0.0"
-    val realmCoroutinesVersion = "1.10.2"
+    val coroutinesVersion = "1.9.0"
     val paletteVersion = "1.0.0"
-    val cameraxVersion = "1.5.1"
+    val cameraxVersion = "1.6.2"
     val zxingVersion = "3.5.4"
     val reordableVersion = "3.0.0"
-    val metricaVersion = "7.13.0"
+    val metricaVersion = "8.6.0"
     val immutableCollectionsVersion = "0.4.0"
+    val composeBomVersion = "2025.11.00"
 
     // Common Android
     implementation("androidx.core:core-ktx:1.17.0")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.9.4")
     implementation("androidx.activity:activity-compose:1.11.0")
-    implementation(platform("androidx.compose:compose-bom:2025.11.00"))
+    implementation(platform("androidx.compose:compose-bom:$composeBomVersion"))
     implementation("androidx.compose.ui:ui")
     implementation("androidx.compose.ui:ui-graphics")
     implementation("androidx.compose.ui:ui-tooling-preview")
@@ -124,7 +140,7 @@ dependencies {
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.3.0")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.7.0")
-    androidTestImplementation(platform("androidx.compose:compose-bom:2025.11.00"))
+    androidTestImplementation(platform("androidx.compose:compose-bom:$composeBomVersion"))
     androidTestImplementation("androidx.compose.ui:ui-test-junit4")
     debugImplementation("androidx.compose.ui:ui-tooling")
     debugImplementation("androidx.compose.ui:ui-test-manifest")
@@ -156,7 +172,7 @@ dependencies {
 
     // Realm
     implementation("io.realm.kotlin:library-base:$realmVersion")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$realmCoroutinesVersion")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutinesVersion")
 
     // Camera X
     implementation("androidx.camera:camera-core:$cameraxVersion")
