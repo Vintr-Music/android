@@ -6,6 +6,8 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.input.nestedscroll.NestedScrollConnection
 import androidx.compose.ui.input.nestedscroll.NestedScrollSource
 import androidx.compose.ui.unit.Velocity
+import kotlin.math.abs
+import kotlin.math.roundToInt
 
 interface CollapsingNestedScrollConnection : NestedScrollConnection {
     suspend fun snap() {}
@@ -48,12 +50,6 @@ enum class ScrollStrategy {
     ): CollapsingNestedScrollConnection
 }
 
-private enum class Direction {
-    Idle,
-    Expanding,
-    Collapsing;
-}
-
 private class ScrollDelegate(
     private val offsetY: MutableState<Int>
 ) {
@@ -75,7 +71,6 @@ internal class EnterAlwaysNestedScrollConnection(
     private val flingBehavior: FlingBehavior
 ) : CollapsingNestedScrollConnection {
     private val scrollDelegate = ScrollDelegate(offsetY)
-    //private val tracker = RelativeVelocityTracker(CurrentTimeProviderImpl())
 
     override fun onPreScroll(available: Offset, source: NestedScrollSource): Offset {
         val dy = available.y
@@ -175,24 +170,45 @@ internal class EnterAlwaysCollapsedNestedScrollConnection(
     }
 }
 
+/**
+ * Nested scroll for [ScrollStrategy.ExitUntilCollapsed].
+ *
+ * Mirrors Material3 / FsTopBar behaviour: drive collapse through a float [heightOffset] and,
+ * while the offset is changing, consume the **entire** pre-scroll delta. That keeps finger
+ * movement and body `placeRelative(toolbarHeight)` shift in sync, which is what prevents the
+ * rubber-band bounce. Expand happens only in post-scroll once the list has leftover delta
+ * (typically when it is already at the top).
+ */
 internal class ExitUntilCollapsedNestedScrollConnection(
     private val toolbarState: CollapsingToolbarState,
     private val flingBehavior: FlingBehavior,
     private val snap: Boolean,
 ) : CollapsingNestedScrollConnection {
-    private var direction: Direction = Direction.Idle
+
+    private var heightOffset = 0f
+    private var contentOffset = 0f
+
+    private val heightOffsetLimit: Float
+        get() = (toolbarState.minHeight - toolbarState.maxHeight).toFloat()
 
     override fun onPreScroll(available: Offset, source: NestedScrollSource): Offset {
-        val dy = available.y
-
-        val consume = if (dy < 0) { // collapsing: toolbar -> body
-            direction = Direction.Collapsing
-            toolbarState.dispatchRawDelta(dy)
-        } else {
-            0f
+        // ExitUntilCollapsed: never expand in pre-scroll.
+        if (available.y > 0f) {
+            return Offset.Zero
         }
 
-        return Offset(0f, consume)
+        syncHeightOffsetFromToolbar()
+
+        val previousOffset = heightOffset
+        applyHeightOffset(heightOffset + available.y)
+
+        return if (previousOffset != heightOffset) {
+            // Consume all remaining delta while the bar is still collapsing so the list
+            // does not move in the same frame as the body layout shift.
+            available.copy(x = 0f)
+        } else {
+            Offset.Zero
+        }
     }
 
     override fun onPostScroll(
@@ -200,56 +216,98 @@ internal class ExitUntilCollapsedNestedScrollConnection(
         available: Offset,
         source: NestedScrollSource
     ): Offset {
-        val dy = available.y
+        syncHeightOffsetFromToolbar()
+        contentOffset += consumed.y
 
-        val consume = if (dy > 0) { // expanding: body -> toolbar
-            direction = Direction.Expanding
-            toolbarState.dispatchRawDelta(dy)
-        } else {
-            0f
+        if (available.y < 0f || consumed.y < 0f) {
+            val previousOffset = heightOffset
+            applyHeightOffset(heightOffset + consumed.y)
+            return Offset(0f, heightOffset - previousOffset)
         }
 
-        return Offset(0f, consume)
-    }
-
-    override suspend fun onPreFling(available: Velocity): Velocity {
-        val left = if (available.y < 0) {
-            toolbarState.fling(flingBehavior, available.y)
-        } else {
-            available.y
+        if (consumed.y == 0f && available.y > 0f) {
+            contentOffset = 0f
         }
 
-        return Velocity(x = 0f, y = available.y - left)
+        if (available.y > 0f) {
+            val previousOffset = heightOffset
+            applyHeightOffset(heightOffset + available.y)
+            return Offset(0f, heightOffset - previousOffset)
+        }
+
+        return Offset.Zero
     }
 
     override suspend fun onPostFling(consumed: Velocity, available: Velocity): Velocity {
-        val velocity = available.y
-
-        val left = if (velocity > 0) {
-            toolbarState.fling(flingBehavior, velocity)
-        } else {
-            velocity
+        if (available.y > 0f) {
+            contentOffset = 0f
         }
-
-        snap()
-
-        return Velocity(x = 0f, y = available.y - left)
+        val remaining = settle(available.y)
+        return Velocity(x = 0f, y = available.y - remaining)
     }
 
     override suspend fun snap() {
-        val resultingToolbarProgress = toolbarState.progress
+        settle(velocity = 0f)
+    }
 
-        if (snap && resultingToolbarProgress > 0 && resultingToolbarProgress < 1) {
-            when (direction) {
-                Direction.Expanding -> {
+    private suspend fun settle(velocity: Float): Float {
+        syncHeightOffsetFromToolbar()
+        val progress = toolbarState.progress
+
+        if (progress <= 0.01f) {
+            return if (velocity > 1f) {
+                val left = toolbarState.fling(flingBehavior, velocity)
+                syncHeightOffsetFromToolbar()
+                left
+            } else {
+                velocity
+            }
+        }
+
+        if (progress >= 0.99f) {
+            return velocity
+        }
+
+        var remainingVelocity = velocity
+        if (abs(velocity) > 1f) {
+            remainingVelocity = toolbarState.fling(flingBehavior, velocity)
+            syncHeightOffsetFromToolbar()
+        }
+
+        if (snap) {
+            val progressAfterFling = toolbarState.progress
+            if (progressAfterFling > 0f && progressAfterFling < 1f) {
+                if (progressAfterFling < 0.5f) {
+                    toolbarState.collapse()
+                } else {
                     toolbarState.expand()
                 }
-                Direction.Collapsing -> {
-                    toolbarState.collapse()
-                }
-                Direction.Idle -> Unit
+                syncHeightOffsetFromToolbar()
             }
-            direction = Direction.Idle
         }
+
+        return remainingVelocity
+    }
+
+    private fun syncHeightOffsetFromToolbar() {
+        if (toolbarState.maxHeight == Int.MAX_VALUE ||
+            toolbarState.maxHeight == toolbarState.minHeight
+        ) {
+            return
+        }
+        heightOffset = (toolbarState.height - toolbarState.maxHeight).toFloat()
+            .coerceIn(heightOffsetLimit, 0f)
+    }
+
+    private fun applyHeightOffset(newOffset: Float) {
+        val limit = heightOffsetLimit
+        if (limit >= 0f) {
+            // Toolbar has no collapse range yet (not measured / min == max).
+            heightOffset = 0f
+            return
+        }
+
+        heightOffset = newOffset.coerceIn(limit, 0f)
+        toolbarState.setHeightFromOffset(heightOffset)
     }
 }

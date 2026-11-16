@@ -52,11 +52,7 @@ class CollapsingToolbarState(
     var minHeight: Int
         get() = minHeightState
         internal set(value) {
-            minHeightState = value
-
-            if (height < value) {
-                height = value
-            }
+            updateBounds(newMin = value, newMax = maxHeightState)
         }
 
     /**
@@ -67,11 +63,7 @@ class CollapsingToolbarState(
     var maxHeight: Int
         get() = maxHeightState
         internal set(value) {
-            maxHeightState = value
-
-            if (value < height) {
-                height = value
-            }
+            updateBounds(newMin = minHeightState, newMax = value)
         }
 
     private var maxHeightState by mutableIntStateOf(initialMaxHeight)
@@ -104,6 +96,58 @@ class CollapsingToolbarState(
     }
 
     private var deferredConsumption: Float = 0f
+
+    /**
+     * Sets [height] directly from a Material3-style height offset without going through
+     * [dispatchRawDelta] float remainder tracking. Used by ExitUntilCollapsed nested scroll.
+     */
+    internal fun setHeightFromOffset(heightOffset: Float) {
+        val limit = (minHeight - maxHeight).toFloat()
+        if (limit >= 0f) {
+            return
+        }
+        val coercedOffset = heightOffset.coerceIn(limit, 0f)
+        val newHeight = (maxHeight + coercedOffset)
+            .roundToInt()
+            .coerceIn(minHeight, maxHeight)
+        if (height != newHeight) {
+            height = newHeight
+            deferredConsumption = 0f
+        }
+    }
+
+    /**
+     * Updates min/max atomically while preserving collapse progress.
+     *
+     * Setting min and max independently is unsafe: after rotation from landscape
+     * (min == max) to portrait, an intermediate state can look like progress == 1 and
+     * force the toolbar fully expanded.
+     */
+    internal fun updateBounds(newMin: Int, newMax: Int) {
+        if (newMin == minHeightState && newMax == maxHeightState) {
+            return
+        }
+
+        val oldMin = minHeightState
+        val oldMax = maxHeightState
+        val oldHeight = height
+
+        val progress = when {
+            // First real measure — keep the toolbar expanded.
+            oldMax == Int.MAX_VALUE -> 1f
+            // No previous collapse range (e.g. landscape). Keep collapsed when a range appears,
+            // otherwise a height equal to the old single size becomes progress == 1.
+            oldMax <= oldMin -> 0f
+            else -> ((oldHeight - oldMin).toFloat() / (oldMax - oldMin)).coerceIn(0f, 1f)
+        }
+
+        minHeightState = newMin
+        maxHeightState = newMax
+        height = (newMin + progress * (newMax - newMin))
+            .roundToInt()
+            .coerceIn(newMin, newMax)
+        deferredConsumption = 0f
+    }
 
     suspend fun expand(duration: Int = 200) {
         val anim = AnimationState(height.toFloat())
@@ -217,10 +261,7 @@ private class CollapsingToolbarMeasurePolicy(
         val maxWidth = placeableList.maxOfOrNull{ it.width }
             ?.coerceIn(constraints.minWidth, constraints.maxWidth) ?: 0
 
-        collapsingToolbarState.also {
-            it.minHeight = minHeight
-            it.maxHeight = maxHeight
-        }
+        collapsingToolbarState.updateBounds(newMin = minHeight, newMax = maxHeight)
 
         val height = collapsingToolbarState.height
         return layout(maxWidth, height) {
