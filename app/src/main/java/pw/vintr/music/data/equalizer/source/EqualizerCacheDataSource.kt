@@ -1,46 +1,52 @@
 package pw.vintr.music.data.equalizer.source
 
-import io.realm.kotlin.Realm
-import io.realm.kotlin.ext.copyFromRealm
-import io.realm.kotlin.ext.query
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
+import androidx.room.withTransaction
+import pw.vintr.music.data.cache.db.CacheDatabase
 import pw.vintr.music.data.equalizer.cache.EqualizerCacheObject
-import kotlin.coroutines.resume
-import kotlin.coroutines.suspendCoroutine
+import pw.vintr.music.data.equalizer.cache.EqualizerDao
+import pw.vintr.music.data.equalizer.cache.EqualizerPresetEntity
 
-class EqualizerCacheDataSource(private val realm: Realm) {
+/**
+ * Public API intentionally unchanged vs the Realm implementation:
+ * - suspend saveEqualizer(EqualizerCacheObject)
+ * - suspend getEqualizer(): EqualizerCacheObject?
+ */
+class EqualizerCacheDataSource(
+    private val database: CacheDatabase,
+    private val equalizerDao: EqualizerDao,
+) {
 
     suspend fun saveEqualizer(equalizer: EqualizerCacheObject) {
-        realm.write {
-            // Find possibly existing equalizer
-            val currentEqualizer = query<EqualizerCacheObject>()
-                .first()
-                .find()
-
-            currentEqualizer?.let {
-                // Update existing equalizer
-                it.bands = equalizer.bands
-                it.presets = equalizer.presets
-                it.currentPreset = equalizer.currentPreset
-                it.enabled = equalizer.enabled
-            } ?: run {
-                // Save new equalizer
-                copyToRealm(equalizer)
+        database.withTransaction {
+            val equalizerRow = equalizer.copy(
+                id = EqualizerCacheObject.SINGLETON_ID,
+                enabled = equalizer.enabled,
+                currentPreset = equalizer.currentPreset,
+            )
+            equalizerDao.upsertEqualizer(equalizerRow)
+            equalizerDao.clearBands()
+            equalizerDao.clearPresets()
+            if (equalizer.bands.isNotEmpty()) {
+                equalizerDao.insertBands(
+                    equalizer.bands.mapIndexed { index, band ->
+                        band.copy(
+                            rowId = 0,
+                            equalizerId = EqualizerCacheObject.SINGLETON_ID,
+                            position = index,
+                        )
+                    }
+                )
+            }
+            if (equalizer.presets.isNotEmpty()) {
+                equalizerDao.insertPresets(
+                    equalizer.presets.mapIndexed { index, preset ->
+                        EqualizerPresetEntity.from(preset, position = index)
+                    }
+                )
             }
         }
     }
 
-    suspend fun getEqualizer(): EqualizerCacheObject? {
-        return withContext(Dispatchers.IO) {
-            suspendCoroutine { continuation ->
-                val equalizer = realm.query<EqualizerCacheObject>()
-                    .first()
-                    .find()
-                    ?.copyFromRealm()
-
-                continuation.resume(equalizer)
-            }
-        }
-    }
+    suspend fun getEqualizer(): EqualizerCacheObject? =
+        equalizerDao.get()?.toCacheObject()
 }

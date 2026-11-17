@@ -10,11 +10,11 @@ data class BandModel(
     val currentLevel: Int,
 ) {
     fun toCacheObject() = BandCacheObject(
-        number,
-        centerFrequency,
-        lowerLevel,
-        upperLevel,
-        currentLevel
+        number = number,
+        centerFrequency = centerFrequency,
+        lowerLevel = lowerLevel,
+        upperLevel = upperLevel,
+        currentLevel = currentLevel,
     )
 }
 

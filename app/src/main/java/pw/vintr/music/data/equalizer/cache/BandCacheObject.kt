@@ -1,38 +1,45 @@
 package pw.vintr.music.data.equalizer.cache
 
 import androidx.annotation.Keep
+import androidx.room.ColumnInfo
+import androidx.room.Entity
+import androidx.room.ForeignKey
+import androidx.room.Index
+import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
-import io.realm.kotlin.types.EmbeddedRealmObject
 
+/**
+ * One equalizer band belonging to the singleton equalizer document.
+ */
 @Keep
-class BandCacheObject() : EmbeddedRealmObject {
-
+@Entity(
+    tableName = "equalizer_band",
+    foreignKeys = [
+        ForeignKey(
+            entity = EqualizerCacheObject::class,
+            parentColumns = ["id"],
+            childColumns = ["equalizerId"],
+            onDelete = ForeignKey.CASCADE,
+        ),
+    ],
+    indices = [
+        Index(value = ["equalizerId", "position"]),
+    ],
+)
+data class BandCacheObject(
+    @PrimaryKey(autoGenerate = true)
+    val rowId: Long = 0,
+    @ColumnInfo(index = true)
+    val equalizerId: Int = EqualizerCacheObject.SINGLETON_ID,
+    val position: Int = 0,
     @SerializedName("number")
-    var number: Short = 0
-
+    val number: Short = 0,
     @SerializedName("centerFrequency")
-    var centerFrequency: Int = 0
-
+    val centerFrequency: Int = 0,
     @SerializedName("lowerLevel")
-    var lowerLevel: Int = 0
-
+    val lowerLevel: Int = 0,
     @SerializedName("upperLevel")
-    var upperLevel: Int = 0
-
+    val upperLevel: Int = 0,
     @SerializedName("currentLevel")
-    var currentLevel: Int = 0
-
-    constructor(
-        number: Short = 0,
-        centerFrequency: Int = 0,
-        lowerLevel: Int = 0,
-        upperLevel: Int = 0,
-        currentLevel: Int = 0
-    ) : this() {
-        this.number = number
-        this.centerFrequency = centerFrequency
-        this.lowerLevel = lowerLevel
-        this.upperLevel = upperLevel
-        this.currentLevel = currentLevel
-    }
-}
+    val currentLevel: Int = 0,
+)

@@ -5,8 +5,8 @@ plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
     id("org.jetbrains.kotlin.plugin.compose")
+    id("com.google.devtools.ksp")
     id("kotlin-parcelize")
-    id("io.realm.kotlin")
     id("io.appmetrica.analytics")
 }
 
@@ -82,17 +82,23 @@ android {
     }
 }
 
-// Realm Kotlin 3.0.0 pins the project to Kotlin 2.0.21. Keep the stdlib on that line so
-// transitive deps cannot pull 2.1+/2.2 metadata that the 2.0.21 compiler cannot read.
-configurations.configureEach {
-    resolutionStrategy {
-        force("org.jetbrains.kotlin:kotlin-stdlib:2.0.21")
-        force("org.jetbrains.kotlin:kotlin-stdlib-jdk7:2.0.21")
-        force("org.jetbrains.kotlin:kotlin-stdlib-jdk8:2.0.21")
-        force("org.jetbrains.kotlin:kotlin-stdlib-common:2.0.21")
-        force("org.jetbrains.kotlin:kotlin-reflect:2.0.21")
+// Keep stdlib on 2.0.21 while the project Kotlin compiler stays on that line
+// (Ktor/Coil pins below). Skip KSP classpaths: Room compiler needs newer
+// stdlib internals (e.g. SpillingKt) than 2.0.21 provides.
+configurations
+    .matching { config ->
+        val name = config.name.lowercase()
+        !name.startsWith("ksp") && !name.contains("annotationprocessor")
     }
-}
+    .configureEach {
+        resolutionStrategy {
+            force("org.jetbrains.kotlin:kotlin-stdlib:2.0.21")
+            force("org.jetbrains.kotlin:kotlin-stdlib-jdk7:2.0.21")
+            force("org.jetbrains.kotlin:kotlin-stdlib-jdk8:2.0.21")
+            force("org.jetbrains.kotlin:kotlin-stdlib-common:2.0.21")
+            force("org.jetbrains.kotlin:kotlin-reflect:2.0.21")
+        }
+    }
 
 dependencies {
     // AndroidX / Compose capped for AGP 8.13 + compileSdk 36.
@@ -107,7 +113,8 @@ dependencies {
     val coilVersion = "3.0.4"
     // Intentionally pinned — media session migration is a separate task.
     val media3Version = "1.5.1"
-    val realmVersion = "3.0.0"
+    // Room 2.8.x is KMP-ready; used here on Android first.
+    val roomVersion = "2.8.5"
     val coroutinesVersion = "1.9.0"
     val paletteVersion = "1.0.0"
     val cameraxVersion = "1.6.2"
@@ -170,9 +177,12 @@ dependencies {
     implementation("androidx.media3:media3-exoplayer:$media3Version")
     implementation("androidx.media3:media3-datasource-okhttp:$media3Version")
 
-    // Realm
-    implementation("io.realm.kotlin:library-base:$realmVersion")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutinesVersion")
+
+    // Room cache (SearchHistory, PlayerSession, Equalizer)
+    implementation("androidx.room:room-runtime:$roomVersion")
+    implementation("androidx.room:room-ktx:$roomVersion")
+    ksp("androidx.room:room-compiler:$roomVersion")
 
     // Camera X
     implementation("androidx.camera:camera-core:$cameraxVersion")
