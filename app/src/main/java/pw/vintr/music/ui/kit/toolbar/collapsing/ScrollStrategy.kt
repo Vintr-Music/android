@@ -7,7 +7,6 @@ import androidx.compose.ui.input.nestedscroll.NestedScrollConnection
 import androidx.compose.ui.input.nestedscroll.NestedScrollSource
 import androidx.compose.ui.unit.Velocity
 import kotlin.math.abs
-import kotlin.math.roundToInt
 
 interface CollapsingNestedScrollConnection : NestedScrollConnection {
     suspend fun snap() {}
@@ -173,11 +172,15 @@ internal class EnterAlwaysCollapsedNestedScrollConnection(
 /**
  * Nested scroll for [ScrollStrategy.ExitUntilCollapsed].
  *
- * Mirrors Material3 / FsTopBar behaviour: drive collapse through a float [heightOffset] and,
- * while the offset is changing, consume the **entire** pre-scroll delta. That keeps finger
- * movement and body `placeRelative(toolbarHeight)` shift in sync, which is what prevents the
- * rubber-band bounce. Expand happens only in post-scroll once the list has leftover delta
- * (typically when it is already at the top).
+ * Mirrors Material3 / FsTopBar: float [heightOffset], consume-all while collapsing in
+ * pre-scroll, expand only from post-scroll leftover.
+ *
+ * Bounce fix: after a short downward flick the list often starts a SideEffect fling *up*
+ * (inverted leftover velocity). That reverse motion used to rubber-band the content and
+ * then open the toolbar. See [shouldBlockRebound], [onPreFling], [onPreScroll], and
+ * [onPostScroll]. The guard must stay limited to downward-only near-top flicks — once
+ * the user has scrolled up or gone past [reboundGuardDistance], rebound handling is off
+ * so a fling back to the top is not inverted/stalled.
  */
 internal class ExitUntilCollapsedNestedScrollConnection(
     private val toolbarState: CollapsingToolbarState,
@@ -188,13 +191,77 @@ internal class ExitUntilCollapsedNestedScrollConnection(
     private var heightOffset = 0f
     private var contentOffset = 0f
 
+    /**
+     * Sign of the last user drag: -1 = scrolling content down / collapsing,
+     * +1 = scrolling toward top / expanding.
+     */
+    private var lastUserInputSign = 0
+
+    /**
+     * True once this gesture has had any upward UserInput. Prevents rebound redirect
+     * after "scroll down, then back up" — a trailing down micro-delta near the top
+     * must not invert the upward fling.
+     */
+    private var hadUpwardUserScroll = false
+
+    /**
+     * True once content has scrolled past [reboundGuardDistance] in this gesture.
+     * Survives a wrong contentOffset reset so deep-list flings stay unaffected.
+     */
+    private var scrolledPastReboundGuard = false
+
+    /**
+     * Only guard rebound while still near the top after a short downward flick.
+     */
+    private val reboundGuardDistance = 300f
+
     private val heightOffsetLimit: Float
         get() = (toolbarState.minHeight - toolbarState.maxHeight).toFloat()
 
+    /**
+     * Rebound = upward leftover after a downward-only near-top gesture.
+     * Not armed after upward user scroll or after scrolling deeper into the list.
+     */
+    private fun shouldBlockRebound(availableY: Float): Boolean =
+        lastUserInputSign < 0 &&
+            availableY > 0f &&
+            !hadUpwardUserScroll &&
+            !scrolledPastReboundGuard &&
+            contentOffset > -reboundGuardDistance
+
+    private fun resetReboundGestureState() {
+        lastUserInputSign = 0
+        hadUpwardUserScroll = false
+        scrolledPastReboundGuard = false
+    }
+
+    override suspend fun onPreFling(available: Velocity): Velocity {
+        // Child fling velocity = available - consumed. Consuming 2× an upward
+        // rebound leaves the list with −available (downward) so the flick continues
+        // in the user-intended direction instead of bouncing back or stalling.
+        if (shouldBlockRebound(available.y)) {
+            return Velocity(x = 0f, y = available.y * 2f)
+        }
+        return Velocity.Zero
+    }
+
     override fun onPreScroll(available: Offset, source: NestedScrollSource): Offset {
-        // ExitUntilCollapsed: never expand in pre-scroll.
         if (available.y > 0f) {
+            // Residual upward SideEffect after a downward gesture (preFling miss /
+            // overscroll). Eat before the list applies it so content does not
+            // rubber-band back toward the top.
+            if (
+                source != NestedScrollSource.UserInput &&
+                shouldBlockRebound(available.y)
+            ) {
+                return available.copy(x = 0f)
+            }
+            // ExitUntilCollapsed: never expand in pre-scroll.
             return Offset.Zero
+        }
+
+        if (source == NestedScrollSource.UserInput) {
+            lastUserInputSign = -1
         }
 
         syncHeightOffsetFromToolbar()
@@ -218,24 +285,46 @@ internal class ExitUntilCollapsedNestedScrollConnection(
     ): Offset {
         syncHeightOffsetFromToolbar()
         contentOffset += consumed.y
+        if (contentOffset <= -reboundGuardDistance) {
+            scrolledPastReboundGuard = true
+        }
 
-        if (available.y < 0f || consumed.y < 0f) {
+        if (source == NestedScrollSource.UserInput) {
+            when {
+                available.y > 0f || consumed.y > 0f -> {
+                    lastUserInputSign = 1
+                    hadUpwardUserScroll = true
+                }
+                consumed.y < 0f || available.y < 0f -> lastUserInputSign = -1
+            }
+        }
+
+        return if (available.y < 0f || consumed.y < 0f) {
             val previousOffset = heightOffset
             applyHeightOffset(heightOffset + consumed.y)
-            return Offset(0f, heightOffset - previousOffset)
-        }
+            Offset(0f, heightOffset - previousOffset)
+        } else {
+            if (consumed.y == 0f && available.y > 0f) {
+                contentOffset = 0f
+            }
 
-        if (consumed.y == 0f && available.y > 0f) {
-            contentOffset = 0f
+            if (available.y > 0f) {
+                // List fling reversed after a downward-only near-top gesture and hit
+                // the top. Do not open the toolbar; eat leftover so parents don't either.
+                if (
+                    source != NestedScrollSource.UserInput &&
+                    shouldBlockRebound(available.y)
+                ) {
+                    Offset(0f, available.y)
+                } else {
+                    val previousOffset = heightOffset
+                    applyHeightOffset(heightOffset + available.y)
+                    Offset(0f, heightOffset - previousOffset)
+                }
+            } else {
+                Offset.Zero
+            }
         }
-
-        if (available.y > 0f) {
-            val previousOffset = heightOffset
-            applyHeightOffset(heightOffset + available.y)
-            return Offset(0f, heightOffset - previousOffset)
-        }
-
-        return Offset.Zero
     }
 
     override suspend fun onPostFling(consumed: Velocity, available: Velocity): Velocity {
@@ -243,28 +332,22 @@ internal class ExitUntilCollapsedNestedScrollConnection(
             contentOffset = 0f
         }
         val remaining = settle(available.y)
+        resetReboundGestureState()
         return Velocity(x = 0f, y = available.y - remaining)
     }
 
     override suspend fun snap() {
         settle(velocity = 0f)
+        resetReboundGestureState()
     }
 
     private suspend fun settle(velocity: Float): Float {
         syncHeightOffsetFromToolbar()
         val progress = toolbarState.progress
 
-        if (progress <= 0.01f) {
-            return if (velocity > 1f) {
-                val left = toolbarState.fling(flingBehavior, velocity)
-                syncHeightOffsetFromToolbar()
-                left
-            } else {
-                velocity
-            }
-        }
-
-        if (progress >= 0.99f) {
+        // Material3 settleAppBar: already collapsed/expanded — do nothing.
+        // Avoids fling-expand on a collapsed bar after a downward gesture (bounce).
+        if (progress <= 0.01f || progress >= 0.99f) {
             return velocity
         }
 
@@ -277,6 +360,7 @@ internal class ExitUntilCollapsedNestedScrollConnection(
         if (snap) {
             val progressAfterFling = toolbarState.progress
             if (progressAfterFling > 0f && progressAfterFling < 1f) {
+                // Snap to nearest endpoint (Material3-style), not by fling direction.
                 if (progressAfterFling < 0.5f) {
                     toolbarState.collapse()
                 } else {
