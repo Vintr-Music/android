@@ -1,13 +1,11 @@
 import java.io.FileInputStream
 import java.util.Properties
-import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
     id("com.android.application")
-    id("org.jetbrains.kotlin.android")
     id("org.jetbrains.kotlin.plugin.compose")
+    id("org.jetbrains.kotlin.plugin.parcelize")
     id("com.google.devtools.ksp")
-    id("kotlin-parcelize")
     id("io.appmetrica.analytics")
 }
 
@@ -34,12 +32,12 @@ android {
         }
     }
     namespace = "pw.vintr.music"
-    compileSdk = 36
+    compileSdk = 37
 
     defaultConfig {
         applicationId = "pw.vintr.music"
         minSdk = 28
-        targetSdk = 36
+        targetSdk = 37
         versionCode = 9
         versionName = "0.6.1 Preview"
 
@@ -80,39 +78,31 @@ android {
     }
 }
 
-kotlin {
-    compilerOptions {
-        jvmTarget.set(JvmTarget.JVM_17)
-    }
-}
-
 dependencies {
-    // AndroidX / Compose capped for AGP 8.13 + compileSdk 36.
-    val materialVersion = "1.9.5"
+    val materialVersion = "1.12.1"
     val navigationVersion = "2.9.8"
     val accompanistVersion = "0.37.3"
     val accompanistNavigationVersion = "0.36.0"
     val ktorVersion = "3.6.1"
-    val koinVersion = "4.0.4"
+    val koinVersion = "4.2.2"
     val preferenceVersion = "1.2.1"
-    // 3.6.x requires compileSdk 37 + AGP 9.1; 3.5.x fits AGP 8.13 / SDK 36.
-    val coilVersion = "3.5.0"
+    val coilVersion = "3.6.3"
     // Intentionally pinned — media session migration is a separate task.
     val media3Version = "1.5.1"
     val roomVersion = "2.8.5"
-    val coroutinesVersion = "1.10.2"
-    val paletteVersion = "1.0.0"
+    val coroutinesVersion = "1.11.0"
+    val paletteVersion = "1.1.0"
     val cameraxVersion = "1.6.2"
     val zxingVersion = "3.5.4"
-    val reordableVersion = "3.0.0"
+    val reordableVersion = "3.1.0"
     val metricaVersion = "8.6.0"
-    val immutableCollectionsVersion = "0.4.0"
-    val composeBomVersion = "2025.11.00"
+    val immutableCollectionsVersion = "0.5.2"
+    val composeBomVersion = "2026.09.00"
 
     // Common Android
-    implementation("androidx.core:core-ktx:1.17.0")
-    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.9.4")
-    implementation("androidx.activity:activity-compose:1.11.0")
+    implementation("androidx.core:core-ktx:1.19.1")
+    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.11.0")
+    implementation("androidx.activity:activity-compose:1.13.0")
     implementation(platform("androidx.compose:compose-bom:$composeBomVersion"))
     implementation("androidx.compose.ui:ui")
     implementation("androidx.compose.ui:ui-graphics")
