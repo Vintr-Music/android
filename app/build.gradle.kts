@@ -1,5 +1,6 @@
 import java.io.FileInputStream
 import java.util.Properties
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
     id("com.android.application")
@@ -68,9 +69,6 @@ android {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
     }
-    kotlinOptions {
-        jvmTarget = "17"
-    }
     buildFeatures {
         compose = true
         buildConfig = true
@@ -82,23 +80,11 @@ android {
     }
 }
 
-// Keep stdlib on 2.0.21 while the project Kotlin compiler stays on that line
-// (Ktor/Coil pins below). Skip KSP classpaths: Room compiler needs newer
-// stdlib internals (e.g. SpillingKt) than 2.0.21 provides.
-configurations
-    .matching { config ->
-        val name = config.name.lowercase()
-        !name.startsWith("ksp") && !name.contains("annotationprocessor")
+kotlin {
+    compilerOptions {
+        jvmTarget.set(JvmTarget.JVM_17)
     }
-    .configureEach {
-        resolutionStrategy {
-            force("org.jetbrains.kotlin:kotlin-stdlib:2.0.21")
-            force("org.jetbrains.kotlin:kotlin-stdlib-jdk7:2.0.21")
-            force("org.jetbrains.kotlin:kotlin-stdlib-jdk8:2.0.21")
-            force("org.jetbrains.kotlin:kotlin-stdlib-common:2.0.21")
-            force("org.jetbrains.kotlin:kotlin-reflect:2.0.21")
-        }
-    }
+}
 
 dependencies {
     // AndroidX / Compose capped for AGP 8.13 + compileSdk 36.
@@ -106,16 +92,15 @@ dependencies {
     val navigationVersion = "2.9.8"
     val accompanistVersion = "0.37.3"
     val accompanistNavigationVersion = "0.36.0"
-    // Built with Kotlin 2.0.21 — newer Ktor/Coil/Koin ship 2.1+/2.2 metadata.
-    val ktorVersion = "3.0.3"
+    val ktorVersion = "3.6.1"
     val koinVersion = "4.0.4"
     val preferenceVersion = "1.2.1"
-    val coilVersion = "3.0.4"
+    // 3.6.x requires compileSdk 37 + AGP 9.1; 3.5.x fits AGP 8.13 / SDK 36.
+    val coilVersion = "3.5.0"
     // Intentionally pinned — media session migration is a separate task.
     val media3Version = "1.5.1"
-    // Room 2.8.x is KMP-ready; used here on Android first.
     val roomVersion = "2.8.5"
-    val coroutinesVersion = "1.9.0"
+    val coroutinesVersion = "1.10.2"
     val paletteVersion = "1.0.0"
     val cameraxVersion = "1.6.2"
     val zxingVersion = "3.5.4"

@@ -36,6 +36,5 @@
 # Kotlin / R8
 -keep class kotlin.** { *; }
 
-# Coil 3.0.x: PlatformContext is a Kotlin typealias, so R8 reports it as a missing class.
-# Fixed upstream in Coil 3.2+ consumer rules; we stay on 3.0.4 while Kotlin is 2.0.21.
+# Coil: PlatformContext is a Kotlin typealias on some versions; keep for R8 safety.
 -dontwarn coil3.PlatformContext
