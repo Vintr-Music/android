@@ -1,21 +1,24 @@
 package pw.vintr.music.data.search.cache
 
 import androidx.annotation.Keep
-import io.realm.kotlin.ext.realmListOf
-import io.realm.kotlin.ext.toRealmList
-import io.realm.kotlin.types.RealmList
-import io.realm.kotlin.types.RealmObject
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 
+/**
+ * Singleton search-history document.
+ * Previously a RealmObject; now a Room entity with the same CacheObject API surface.
+ */
 @Keep
-class SearchHistoryCacheObject() : RealmObject {
+@Entity(tableName = "search_history")
+data class SearchHistoryCacheObject(
+    @PrimaryKey
+    val id: Int = SINGLETON_ID,
+    val queries: List<String> = emptyList(),
+) {
 
-    var queries: RealmList<String> = realmListOf()
+    fun toModel() = queries
 
-    constructor(
-        queries: List<String>
-    ) : this() {
-        this.queries = queries.toRealmList()
+    companion object {
+        const val SINGLETON_ID = 0
     }
-
-    fun toModel() = queries.toList()
 }

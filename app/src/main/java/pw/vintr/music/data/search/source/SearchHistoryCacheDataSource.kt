@@ -1,48 +1,33 @@
 package pw.vintr.music.data.search.source
 
-import io.realm.kotlin.Realm
-import io.realm.kotlin.ext.query
-import io.realm.kotlin.ext.toRealmList
-import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.Flow
 import pw.vintr.music.data.search.cache.SearchHistoryCacheObject
+import pw.vintr.music.data.search.cache.SearchHistoryDao
 
-class SearchHistoryCacheDataSource(private val realm: Realm) {
+/**
+ * Public API intentionally unchanged vs the Realm implementation:
+ * - suspend saveSearchHistory(List&lt;String&gt;)
+ * - Flow&lt;SearchHistoryCacheObject?&gt; getSearchHistoryFlow()
+ */
+class SearchHistoryCacheDataSource(
+    private val searchHistoryDao: SearchHistoryDao,
+) {
 
     companion object {
         private const val MAX_HISTORY_ITEMS = 20
     }
 
     suspend fun saveSearchHistory(history: List<String>) {
-        realm.write {
-            // Find possibly existing equalizer
-            val currentHistory = query<SearchHistoryCacheObject>()
-                .first()
-                .find()
+        val currentQueries = searchHistoryDao.get()?.queries.orEmpty()
+        val merged = (history + currentQueries)
+            .distinct()
+            .take(MAX_HISTORY_ITEMS)
 
-            currentHistory?.let {
-                // Update existing history
-                currentHistory.queries = currentHistory
-                    .queries
-                    .toMutableList()
-                    .apply { addAll(0, history) }
-                    .take(MAX_HISTORY_ITEMS)
-                    .distinct()
-                    .toRealmList()
-            } ?: run {
-                // Save new history
-                copyToRealm(
-                    SearchHistoryCacheObject(
-                        history
-                            .take(MAX_HISTORY_ITEMS)
-                            .distinct()
-                    )
-                )
-            }
-        }
+        searchHistoryDao.upsert(
+            SearchHistoryCacheObject(queries = merged)
+        )
     }
 
-    fun getSearchHistoryFlow() = realm.query<SearchHistoryCacheObject>()
-        .first()
-        .asFlow()
-        .map { it.obj }
+    fun getSearchHistoryFlow(): Flow<SearchHistoryCacheObject?> =
+        searchHistoryDao.observe()
 }

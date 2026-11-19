@@ -14,7 +14,7 @@ class BottomSheetNestedScrollInterceptor(
     private val allowOverscroll: Boolean,
 ) : NestedScrollConnection {
 
-    private var lastPreScrollSource: NestedScrollSource = NestedScrollSource.Fling
+    private var lastPreScrollSource: NestedScrollSource = NestedScrollSource.SideEffect
 
     private var arrivedBoundarySource: NestedScrollSource? = null
 
@@ -26,15 +26,15 @@ class BottomSheetNestedScrollInterceptor(
     ): Offset {
         // Reset the state variable
         if (
-            source == NestedScrollSource.Drag &&
-            arrivedBoundarySource == NestedScrollSource.Fling
+            source == NestedScrollSource.UserInput &&
+            arrivedBoundarySource == NestedScrollSource.SideEffect
         ) {
             arrivedBoundarySource = null
         }
 
         if (
-            source == NestedScrollSource.Drag &&
-            lastPreScrollSource == NestedScrollSource.Fling
+            source == NestedScrollSource.UserInput &&
+            lastPreScrollSource == NestedScrollSource.SideEffect
         ) {
             canPassScrollEvent = lazyListState.firstVisibleItemIndex == 0 &&
                     !lazyListState.canScrollBackward
@@ -58,7 +58,7 @@ class BottomSheetNestedScrollInterceptor(
 
         // Decide whether to consume according to the sub-layout
         // consumption when reaching the boundary.
-        if (arrivedBoundarySource == NestedScrollSource.Fling) {
+        if (arrivedBoundarySource == NestedScrollSource.SideEffect) {
             return if (allowOverscroll) {
                 Offset.Zero
             } else {

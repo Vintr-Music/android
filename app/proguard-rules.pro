@@ -33,5 +33,8 @@
   @com.google.gson.annotations.SerializedName <fields>;
 }
 
-# Realm
+# Kotlin / R8
 -keep class kotlin.** { *; }
+
+# Coil: PlatformContext is a Kotlin typealias on some versions; keep for R8 safety.
+-dontwarn coil3.PlatformContext

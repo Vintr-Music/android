@@ -2,6 +2,7 @@ package pw.vintr.music.app.di
 
 import android.util.Log
 import androidx.preference.PreferenceManager
+import androidx.room.Room
 import com.google.gson.GsonBuilder
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.android.Android
@@ -15,23 +16,20 @@ import io.ktor.client.request.header
 import io.ktor.http.ContentType
 import io.ktor.http.HttpHeaders
 import io.ktor.serialization.gson.gson
-import io.realm.kotlin.Realm
-import io.realm.kotlin.RealmConfiguration
 import okhttp3.OkHttpClient
+import org.koin.android.ext.koin.androidContext
 import org.koin.dsl.module
 import org.koin.dsl.onClose
 import pw.vintr.music.data.audioSession.repository.AudioSessionRepository
 import pw.vintr.music.data.audioSession.source.AudioSessionPreferencesDataSource
-import pw.vintr.music.data.equalizer.cache.BandCacheObject
+import pw.vintr.music.data.cache.db.CACHE_DATABASE_NAME
+import pw.vintr.music.data.cache.db.CacheDatabase
 import pw.vintr.music.data.equalizer.cache.EqualizerCacheObject
-import pw.vintr.music.data.equalizer.cache.PresetCacheObject
 import pw.vintr.music.data.equalizer.repository.EqualizerRepository
 import pw.vintr.music.data.equalizer.source.EqualizerCacheDataSource
 import pw.vintr.music.data.equalizer.source.EqualizerPreferencesDataSource
 import pw.vintr.music.data.favorite.repository.FavoriteRepository
 import pw.vintr.music.data.favorite.source.FavoriteRemoteDataSource
-import pw.vintr.music.data.library.cache.album.AlbumCacheObject
-import pw.vintr.music.data.library.cache.track.TrackCacheObject
 import pw.vintr.music.data.library.repository.AlbumRepository
 import pw.vintr.music.data.library.repository.ArtistRepository
 import pw.vintr.music.data.library.repository.SearchRepository
@@ -42,14 +40,12 @@ import pw.vintr.music.data.library.source.SearchRemoteDataSource
 import pw.vintr.music.data.library.source.TrackRemoteDataSource
 import pw.vintr.music.data.mainPage.repository.MainPageRepository
 import pw.vintr.music.data.mainPage.source.MainPageRemoteDataSource
-import pw.vintr.music.data.player.cache.PlayerSessionCacheObject
 import pw.vintr.music.data.player.repository.PlayerConfigRepository
 import pw.vintr.music.data.player.repository.PlayerSessionRepository
 import pw.vintr.music.data.player.source.PlayerPreferencesDataStore
 import pw.vintr.music.data.player.source.PlayerSessionCacheDataStore
 import pw.vintr.music.data.playlist.repository.PlaylistRepository
 import pw.vintr.music.data.playlist.source.PlaylistRemoteDataSource
-import pw.vintr.music.data.search.cache.SearchHistoryCacheObject
 import pw.vintr.music.data.search.repository.SearchHistoryRepository
 import pw.vintr.music.data.search.source.SearchHistoryCacheDataSource
 import pw.vintr.music.data.server.repository.ServerRepository
@@ -61,13 +57,11 @@ import pw.vintr.music.data.user.repository.UserRepository
 import pw.vintr.music.data.user.source.UserPreferencesDataSource
 import pw.vintr.music.data.user.source.UserRemoteDataSource
 
-private const val BASE_URL = "http://188.225.9.157:4001/"
+private const val BASE_URL = "http://85.92.110.117:4001/"
 
 private const val BEARER_PREFIX = "Bearer "
 
 const val HEADER_MEDIA_SERVER_ID = "x-media-server-id"
-
-private const val REALM_SCHEMA_VERSION = 2L
 
 val dataModule = module {
     // Gson
@@ -86,27 +80,22 @@ val dataModule = module {
     single { UserPreferencesDataSource(get()) }
     single { ServerPreferencesDataSource(get()) }
 
-    // Realm
+    // Room cache DB (SearchHistory + PlayerSession + Equalizer)
     single {
-        val config = RealmConfiguration.Builder(
-            schema = setOf(
-                AlbumCacheObject::class,
-                TrackCacheObject::class,
-                PlayerSessionCacheObject::class,
-                PresetCacheObject::class,
-                BandCacheObject::class,
-                EqualizerCacheObject::class,
-                SearchHistoryCacheObject::class,
-            )
+        Room.databaseBuilder(
+            androidContext(),
+            CacheDatabase::class.java,
+            CACHE_DATABASE_NAME,
         )
-            .schemaVersion(REALM_SCHEMA_VERSION)
-            .deleteRealmIfMigrationNeeded()
+            .fallbackToDestructiveMigration(dropAllTables = true)
             .build()
-
-        Realm.open(config)
-    } onClose { realm ->
-        realm?.close()
+    } onClose { database ->
+        database?.close()
     }
+
+    single { get<CacheDatabase>().searchHistoryDao() }
+    single { get<CacheDatabase>().playerSessionDao() }
+    single { get<CacheDatabase>().equalizerDao() }
 
     // Network
     single {
@@ -207,7 +196,7 @@ val dataModule = module {
     single { AudioSessionRepository(get()) }
 
     // Player
-    single { PlayerSessionCacheDataStore(get()) }
+    single { PlayerSessionCacheDataStore(get(), get()) }
     single { PlayerSessionRepository(get()) }
     single { PlayerPreferencesDataStore(get()) }
     single { PlayerConfigRepository(get()) }
@@ -217,7 +206,7 @@ val dataModule = module {
     single { SettingsRepository(get()) }
 
     // Equalizer
-    single { EqualizerCacheDataSource(get()) }
+    single { EqualizerCacheDataSource(get(), get()) }
     single { EqualizerPreferencesDataSource(get(), get()) }
     single { EqualizerRepository(get(), get()) }
 

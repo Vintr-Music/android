@@ -1,7 +1,5 @@
 package pw.vintr.music.domain.player.model.session
 
-import io.realm.kotlin.ext.realmListOf
-import io.realm.kotlin.ext.toRealmList
 import pw.vintr.music.app.constants.ConfigConstants
 import pw.vintr.music.data.player.cache.PlayerSessionCacheObject
 import pw.vintr.music.domain.library.model.album.AlbumModel
@@ -50,7 +48,7 @@ sealed class PlayerSessionModel {
         override fun toCacheObject() = PlayerSessionCacheObject(
             album = null,
             artist = null,
-            tracks = realmListOf(),
+            tracks = emptyList(),
         )
 
         override fun toCustomSession(): Custom = Custom(listOf())
@@ -63,9 +61,7 @@ sealed class PlayerSessionModel {
 
         override fun toCacheObject() = PlayerSessionCacheObject(
             album = album.toCacheObject(),
-            tracks = tracks
-                .map { it.toCacheObject() }
-                .toRealmList()
+            tracks = tracks.map { it.toCacheObject() },
         )
 
         override fun toCustomSession() = Custom(tracks)
@@ -84,9 +80,7 @@ sealed class PlayerSessionModel {
             artist = artist.name,
             sessionId = sessionId,
             totalCount = totalCount,
-            tracks = tracks
-                .map { it.toCacheObject() }
-                .toRealmList()
+            tracks = tracks.map { it.toCacheObject() },
         )
 
         override val nextPageUrl: String = "api/library/tracks/shuffled"
@@ -112,9 +106,7 @@ sealed class PlayerSessionModel {
 
         override fun toCacheObject() = PlayerSessionCacheObject(
             playlistId = playlistId,
-            tracks = tracks
-                .map { it.toCacheObject() }
-                .toRealmList()
+            tracks = tracks.map { it.toCacheObject() },
         )
 
         override fun toCustomSession() = Custom(tracks)
@@ -139,9 +131,7 @@ sealed class PlayerSessionModel {
         override fun toCacheObject() = PlayerSessionCacheObject(
             sessionId = sessionId,
             totalCount = totalCount,
-            tracks = tracks
-                .map { it.toCacheObject() }
-                .toRealmList()
+            tracks = tracks.map { it.toCacheObject() },
         )
 
         override fun toCustomSession() = Custom(tracks)
@@ -154,9 +144,7 @@ sealed class PlayerSessionModel {
     data class Custom(override val tracks: List<TrackModel>) : PlayerSessionModel() {
 
         override fun toCacheObject() = PlayerSessionCacheObject(
-            tracks = tracks
-                .map { it.toCacheObject() }
-                .toRealmList()
+            tracks = tracks.map { it.toCacheObject() },
         )
 
         override fun toCustomSession() = this

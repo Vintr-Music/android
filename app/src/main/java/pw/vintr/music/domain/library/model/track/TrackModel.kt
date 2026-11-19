@@ -4,7 +4,6 @@ import android.net.Uri
 import android.os.Parcelable
 import androidx.media3.common.MediaItem
 import androidx.media3.common.MediaMetadata
-import io.realm.kotlin.ext.toRealmList
 import kotlinx.parcelize.IgnoredOnParcel
 import kotlinx.parcelize.Parcelize
 import pw.vintr.music.data.library.cache.track.TrackCacheObject
@@ -37,13 +36,11 @@ data class TrackModel(
         lossless = format.lossless,
         numberOfChannels = format.numberOfChannels,
         sampleRate = format.sampleRate,
-        tagTypes = format.tagTypes.toRealmList(),
+        tagTypes = format.tagTypes,
         tool = format.tool,
         album = metadata.album,
-        artists = metadata.artists
-            .map { it.name }
-            .toRealmList(),
-        genre = metadata.genre.toRealmList(),
+        artists = metadata.artists.map { it.name },
+        genre = metadata.genre,
         title = metadata.title,
         number = metadata.number,
         year = metadata.year,

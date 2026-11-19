@@ -6,7 +6,7 @@ data class PresetModel(
     val number: Short,
     val name: String,
 ) {
-    fun toCacheObject() = PresetCacheObject(number, name)
+    fun toCacheObject() = PresetCacheObject(number = number, name = name)
 }
 
 fun PresetCacheObject.toModel() = PresetModel(number, name)
