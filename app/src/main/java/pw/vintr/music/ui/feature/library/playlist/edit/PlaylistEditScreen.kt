@@ -33,8 +33,8 @@ import pw.vintr.music.tools.composable.rememberBottomSheetNestedScrollIntercepto
 import pw.vintr.music.core.ui.kit.button.ButtonSecondary
 import pw.vintr.music.core.ui.kit.button.ButtonSimpleIcon
 import pw.vintr.music.core.ui.kit.input.AppTextField
-import pw.vintr.music.ui.kit.layout.ScreenStateLayout
-import pw.vintr.music.ui.kit.library.TrackView
+import pw.vintr.music.ui.common.layout.ScreenStateLayout
+import pw.vintr.music.core.ui.kit.library.TrackView
 import pw.vintr.music.core.ui.kit.toolbar.ToolbarRegular
 import pw.vintr.music.ui.navigation.NavigatorType
 import pw.vintr.music.core.ui.theme.VintrMusicExtendedTheme
@@ -143,7 +143,10 @@ fun PlaylistEditScreen(
                                 key = item.id,
                             ) {
                                 TrackView(
-                                    trackModel = item.track,
+                                    title = item.track.metadata.title,
+                            artist = item.track.metadata.artist,
+                            durationText = item.track.format.durationFormat,
+                            artworkUrl = item.track.artworkUrl,
                                     trailingAction = {
                                         Icon(
                                             modifier = Modifier.draggableHandle(),

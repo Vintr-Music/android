@@ -256,7 +256,12 @@ fun VintrMusicTheme(
 
     ApplySystemBars(darkTheme = darkTheme)
 
-    CompositionLocalProvider(LocalVintrColors provides vintrColors) {
+    val vintrTypography = rememberVintrTypography()
+
+    CompositionLocalProvider(
+        LocalVintrColors provides vintrColors,
+        LocalVintrTypography provides vintrTypography,
+    ) {
         MaterialTheme(
             colorScheme = colorScheme,
             typography = Typography,
@@ -273,6 +278,10 @@ object VintrMusicExtendedTheme {
     val colors: VintrMusicColors
         @Composable
         get() = LocalVintrColors.current
+
+    val typography: VintrTypography
+        @Composable
+        get() = LocalVintrTypography.current
 }
 
 @Composable

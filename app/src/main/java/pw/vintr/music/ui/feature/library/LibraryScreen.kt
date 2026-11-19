@@ -31,8 +31,8 @@ import androidx.compose.ui.unit.dp
 import org.koin.androidx.compose.koinViewModel
 import pw.vintr.music.R
 import pw.vintr.music.core.ui.kit.layout.PullRefreshLayout
-import pw.vintr.music.ui.kit.layout.ScreenStateLayout
-import pw.vintr.music.ui.kit.library.ArtistView
+import pw.vintr.music.ui.common.layout.ScreenStateLayout
+import pw.vintr.music.core.ui.kit.library.ArtistView
 import pw.vintr.music.core.ui.kit.menu.MenuItemIconified
 import pw.vintr.music.core.ui.theme.Gilroy12
 import pw.vintr.music.core.ui.theme.Gilroy14
@@ -172,7 +172,8 @@ fun LibraryScreen(
                     ) { artist ->
                         ArtistView(
                             modifier = Modifier.padding(4.dp),
-                            artist = artist,
+                            artworkUrl = artist.artworkUrl,
+                            name = artist.name,
                             textStyle = Gilroy12,
                             onClick = { viewModel.openArtist(artist) }
                         )

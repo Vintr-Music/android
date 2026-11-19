@@ -15,7 +15,6 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import pw.vintr.music.core.ui.theme.Bee0
-import pw.vintr.music.core.ui.theme.RubikMedium18
 import pw.vintr.music.core.ui.theme.switchColors
 
 @Composable
@@ -23,7 +22,7 @@ fun MenuItem(
     modifier: Modifier = Modifier,
     title: String,
     subtitle: String? = null,
-    titleStyle: TextStyle = RubikMedium18,
+    titleStyle: TextStyle? = null,
     leading: @Composable (RowScope.() -> Unit)? = null,
     trailing: @Composable (RowScope.() -> Unit)? = null,
 ) {
@@ -48,7 +47,7 @@ fun MenuItemIconified(
     modifier: Modifier = Modifier,
     title: String,
     subtitle: String? = null,
-    titleStyle: TextStyle = RubikMedium18,
+    titleStyle: TextStyle? = null,
     iconTint: Color = Bee0,
     iconSize: Dp = 24.dp,
     iconRes: Int,

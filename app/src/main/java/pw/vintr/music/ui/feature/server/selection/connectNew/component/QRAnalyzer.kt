@@ -1,4 +1,4 @@
-package pw.vintr.music.ui.kit.scanner
+package pw.vintr.music.ui.feature.server.selection.connectNew.component
 
 import android.graphics.ImageFormat
 import androidx.camera.core.ImageAnalysis

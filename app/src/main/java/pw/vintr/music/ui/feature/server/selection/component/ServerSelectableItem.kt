@@ -1,4 +1,4 @@
-package pw.vintr.music.ui.kit.server
+package pw.vintr.music.ui.feature.server.selection.component
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable

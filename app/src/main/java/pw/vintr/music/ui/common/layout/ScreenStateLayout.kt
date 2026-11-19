@@ -1,4 +1,4 @@
-package pw.vintr.music.ui.kit.layout
+package pw.vintr.music.ui.common.layout
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth

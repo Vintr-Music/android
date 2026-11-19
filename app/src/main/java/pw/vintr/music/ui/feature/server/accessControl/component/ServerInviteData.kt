@@ -1,4 +1,4 @@
-package pw.vintr.music.ui.kit.server.invite
+package pw.vintr.music.ui.feature.server.accessControl.component
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer

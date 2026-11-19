@@ -1,8 +1,7 @@
 package pw.vintr.music.core.ui.tools
 
-import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.WindowInsets
-import androidx.compose.foundation.layout.isImeVisible
+import androidx.compose.foundation.layout.ime
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -18,12 +17,12 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.offset
 
-@OptIn(ExperimentalLayoutApi::class)
 fun Modifier.clearFocusOnKeyboardDismiss(): Modifier = composed {
     var isFocused by remember { mutableStateOf(false) }
     var keyboardAppearedSinceLastFocused by remember { mutableStateOf(false) }
     if (isFocused) {
-        val imeIsVisible = WindowInsets.isImeVisible
+        val density = LocalDensity.current
+        val imeIsVisible = WindowInsets.ime.getBottom(density) > 0
         val focusManager = LocalFocusManager.current
         LaunchedEffect(imeIsVisible) {
             if (imeIsVisible) {

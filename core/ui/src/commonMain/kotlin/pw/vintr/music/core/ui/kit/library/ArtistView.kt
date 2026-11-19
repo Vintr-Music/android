@@ -1,64 +1,56 @@
-package pw.vintr.music.ui.kit.library
+package pw.vintr.music.core.ui.kit.library
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import pw.vintr.music.domain.library.model.album.AlbumModel
-import pw.vintr.music.tools.extension.Comma
-import pw.vintr.music.tools.extension.Space
 import pw.vintr.music.core.ui.kit.image.ArtworkAsyncImage
 import pw.vintr.music.core.ui.kit.modifier.artworkContainer
-import pw.vintr.music.core.ui.theme.Gilroy14
 import pw.vintr.music.core.ui.theme.Gilroy16
 import pw.vintr.music.core.ui.theme.VintrMusicExtendedTheme
 
 @Composable
-fun AlbumView(
+fun ArtistView(
     modifier: Modifier = Modifier,
-    album: AlbumModel,
+    artworkUrl: String,
+    name: String,
+    textStyle: TextStyle? = null,
     onClick: () -> Unit = {},
 ) {
+    val resolvedTextStyle = textStyle ?: Gilroy16
+
     Column(
         modifier = modifier
             .clip(RoundedCornerShape(4.dp))
             .clickable { onClick() }
     ) {
         Box(
-            modifier = Modifier
-                .artworkContainer(RoundedCornerShape(4.dp)),
+            modifier = Modifier.artworkContainer(CircleShape),
         ) {
             ArtworkAsyncImage(
                 modifier = Modifier.fillMaxSize(),
-                url = album.artworkUrl,
+                url = artworkUrl,
             )
         }
         Spacer(modifier = Modifier.height(10.dp))
         Text(
-            text = album.name,
-            style = Gilroy16,
-            color = VintrMusicExtendedTheme.colors.textRegular
-        )
-        Spacer(modifier = Modifier.height(4.dp))
-        Text(
-            text = buildString {
-                append(album.artist.name)
-
-                album.year?.let { year ->
-                    append(String.Comma + String.Space)
-                    append(year.toString())
-                }
-            },
-            style = Gilroy14,
-            color = VintrMusicExtendedTheme.colors.textSecondary
+            modifier = Modifier.fillMaxWidth(),
+            text = name,
+            style = resolvedTextStyle,
+            color = VintrMusicExtendedTheme.colors.textRegular,
+            textAlign = TextAlign.Center
         )
     }
 }

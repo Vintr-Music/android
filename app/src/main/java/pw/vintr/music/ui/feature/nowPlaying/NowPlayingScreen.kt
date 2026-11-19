@@ -46,9 +46,9 @@ import pw.vintr.music.tools.composable.rememberDisplayRoundness
 import pw.vintr.music.tools.extension.Dash
 import pw.vintr.music.tools.extension.Space
 import pw.vintr.music.core.ui.kit.button.ButtonBorderedIcon
-import pw.vintr.music.ui.kit.player.PlayerControls
+import pw.vintr.music.ui.common.player.PlayerControls
 import pw.vintr.music.core.ui.kit.player.PlayerProgressBar
-import pw.vintr.music.ui.kit.player.PlayerStatePager
+import pw.vintr.music.ui.common.player.PlayerStatePager
 import pw.vintr.music.core.ui.theme.Gilroy16
 import pw.vintr.music.core.ui.theme.Gilroy24
 import pw.vintr.music.core.ui.theme.VintrMusicExtendedTheme

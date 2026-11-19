@@ -41,11 +41,11 @@ import pw.vintr.music.tools.extension.Empty
 import pw.vintr.music.core.ui.tools.escapePadding
 import pw.vintr.music.core.ui.kit.button.ButtonFavorite
 import pw.vintr.music.core.ui.kit.button.ButtonPlayerState
-import pw.vintr.music.ui.kit.library.AlbumView
-import pw.vintr.music.ui.kit.layout.ScreenStateLayout
-import pw.vintr.music.ui.kit.library.FIXED_TRACK_VIEW_HEIGHT
-import pw.vintr.music.ui.kit.library.TrackView
-import pw.vintr.music.ui.kit.library.tools.rememberLibraryGridCellsCount
+import pw.vintr.music.core.ui.kit.library.AlbumView
+import pw.vintr.music.ui.common.layout.ScreenStateLayout
+import pw.vintr.music.core.ui.kit.library.FIXED_TRACK_VIEW_HEIGHT
+import pw.vintr.music.core.ui.kit.library.TrackView
+import pw.vintr.music.core.ui.kit.library.rememberLibraryGridCellsCount
 import pw.vintr.music.core.ui.kit.menu.MenuItemIconified
 import pw.vintr.music.core.ui.kit.modifier.actionHeaderBackground
 import pw.vintr.music.core.ui.kit.selector.PageIndicator
@@ -259,7 +259,10 @@ fun ArtistDetailsScreen(
                                             modifier = Modifier
                                                 .fillMaxWidth()
                                                 .height(FIXED_TRACK_VIEW_HEIGHT.dp),
-                                            trackModel = track,
+                                            title = track.metadata.title,
+                                            artist = track.metadata.artist,
+                                            durationText = track.format.durationFormat,
+                                            artworkUrl = track.artworkUrl,
                                             fixedHeight = true,
                                             isPlaying = playingState.playingTrack == track,
                                             onMoreClick = { viewModel.openTrackAction(track) },
@@ -301,7 +304,10 @@ fun ArtistDetailsScreen(
                         key = { it.id }
                     ) { album ->
                         AlbumView(
-                            album = album,
+                            artworkUrl = album.artworkUrl,
+                            name = album.name,
+                            artistName = album.artist.name,
+                            year = album.year,
                             onClick = { viewModel.onAlbumClick(album) }
                         )
                     }

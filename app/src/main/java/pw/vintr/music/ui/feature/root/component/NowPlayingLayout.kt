@@ -1,4 +1,4 @@
-package pw.vintr.music.ui.kit.layout
+package pw.vintr.music.ui.feature.root.component
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.animateDpAsState
@@ -25,7 +25,7 @@ import kotlinx.coroutines.launch
 import pw.vintr.music.domain.player.model.state.PlayerStateHolderModel
 import pw.vintr.music.ui.feature.nowPlaying.NowPlayingScreen
 import pw.vintr.music.core.ui.kit.dimen.DimensDp
-import pw.vintr.music.ui.kit.player.BottomNowPlaying
+import pw.vintr.music.ui.common.player.BottomNowPlaying
 import pw.vintr.music.core.ui.kit.sliding.BottomSheetScaffold
 import pw.vintr.music.core.ui.kit.sliding.BottomSheetScaffoldState
 import pw.vintr.music.core.ui.kit.sliding.rememberBottomSheetScaffoldState

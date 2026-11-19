@@ -41,11 +41,11 @@ import pw.vintr.music.domain.mainPage.model.MainPageWelcomeModel
 import pw.vintr.music.domain.player.model.state.PlayerStatusModel
 import pw.vintr.music.domain.visualizer.model.VisualizerState
 import pw.vintr.music.core.ui.kit.layout.PullRefreshLayout
-import pw.vintr.music.ui.kit.library.AlbumView
-import pw.vintr.music.ui.kit.library.tools.rememberLibraryGridCellsCount
-import pw.vintr.music.ui.kit.layout.ScreenStateLayout
+import pw.vintr.music.core.ui.kit.library.AlbumView
+import pw.vintr.music.core.ui.kit.library.rememberLibraryGridCellsCount
+import pw.vintr.music.ui.common.layout.ScreenStateLayout
 import pw.vintr.music.core.ui.kit.modifier.artworkGradientOverlayBackground
-import pw.vintr.music.ui.kit.player.FlowPlayer
+import pw.vintr.music.ui.common.player.FlowPlayer
 import pw.vintr.music.core.ui.kit.toolbar.collapsing.CollapsingLayout
 import pw.vintr.music.core.ui.kit.toolbar.collapsing.CollapsingLayoutState
 import pw.vintr.music.core.ui.kit.toolbar.collapsing.LocalCollapsingScrollConnection
@@ -165,7 +165,10 @@ fun HomeScreen(
                                 key = { it.id }
                             ) { album ->
                                 AlbumView(
-                                    album = album,
+                            artworkUrl = album.artworkUrl,
+                            name = album.name,
+                            artistName = album.artist.name,
+                            year = album.year,
                                     onClick = { viewModel.onAlbumClick(album) }
                                 )
                             }

@@ -1,4 +1,4 @@
-package pw.vintr.music.ui.kit.library
+package pw.vintr.music.core.ui.kit.library
 
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.foundation.background
@@ -23,11 +23,11 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import coil3.size.Size
-import pw.vintr.music.R
-import pw.vintr.music.domain.library.model.track.TrackModel
 import pw.vintr.music.core.ui.kit.button.ButtonSimpleIcon
 import pw.vintr.music.core.ui.kit.image.ArtworkAsyncImage
 import pw.vintr.music.core.ui.kit.modifier.artworkContainer
+import pw.vintr.music.core.ui.resources.Res
+import pw.vintr.music.core.ui.resources.ic_more
 import pw.vintr.music.core.ui.theme.RubikMedium16
 import pw.vintr.music.core.ui.theme.RubikRegular14
 import pw.vintr.music.core.ui.theme.VintrMusicExtendedTheme
@@ -37,7 +37,10 @@ const val FIXED_TRACK_VIEW_HEIGHT = 56
 @Composable
 fun TrackView(
     modifier: Modifier = Modifier,
-    trackModel: TrackModel,
+    title: String,
+    artist: String,
+    durationText: String,
+    artworkUrl: String? = null,
     isPlaying: Boolean = false,
     showArtwork: Boolean = false,
     showTrailingAction: Boolean = true,
@@ -49,7 +52,7 @@ fun TrackView(
     onMoreClick: () -> Unit = {},
     trailingAction: @Composable () -> Unit = {
         ButtonSimpleIcon(
-            iconRes = R.drawable.ic_more,
+            icon = Res.drawable.ic_more,
             onClick = onMoreClick,
             tint = VintrMusicExtendedTheme.colors.textRegular,
         )
@@ -81,7 +84,7 @@ fun TrackView(
             ) {
                 ArtworkAsyncImage(
                     modifier = Modifier.fillMaxSize(),
-                    url = trackModel.artworkUrl,
+                    url = artworkUrl,
                     size = Size(
                         width = constraints.maxWidth,
                         height = constraints.maxHeight
@@ -94,7 +97,7 @@ fun TrackView(
             modifier = Modifier.weight(1f)
         ) {
             Text(
-                text = trackModel.metadata.title,
+                text = title,
                 style = RubikMedium16,
                 color = VintrMusicExtendedTheme.colors.textRegular,
                 maxLines = if (fixedHeight) 1 else Int.MAX_VALUE,
@@ -102,7 +105,7 @@ fun TrackView(
             )
             Spacer(modifier = Modifier.height(4.dp))
             Text(
-                text = trackModel.metadata.artist,
+                text = artist,
                 style = RubikRegular14,
                 color = VintrMusicExtendedTheme.colors.textSecondary,
                 maxLines = if (fixedHeight) 1 else Int.MAX_VALUE,
@@ -111,7 +114,7 @@ fun TrackView(
         }
         Spacer(modifier = Modifier.width(8.dp))
         Text(
-            text = trackModel.format.durationFormat,
+            text = durationText,
             style = RubikRegular14,
             color = VintrMusicExtendedTheme.colors.textRegular,
             maxLines = if (fixedHeight) 1 else Int.MAX_VALUE,

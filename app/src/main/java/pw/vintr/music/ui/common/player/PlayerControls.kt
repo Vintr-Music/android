@@ -1,4 +1,4 @@
-package pw.vintr.music.ui.kit.player
+package pw.vintr.music.ui.common.player
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border

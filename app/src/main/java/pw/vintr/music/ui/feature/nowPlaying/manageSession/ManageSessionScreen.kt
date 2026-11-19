@@ -23,7 +23,7 @@ import org.koin.androidx.compose.koinViewModel
 import pw.vintr.music.R
 import pw.vintr.music.tools.composable.rememberBottomSheetNestedScrollInterceptor
 import pw.vintr.music.core.ui.kit.button.ButtonSimpleIcon
-import pw.vintr.music.ui.kit.library.TrackView
+import pw.vintr.music.core.ui.kit.library.TrackView
 import pw.vintr.music.core.ui.kit.toolbar.ToolbarRegular
 import pw.vintr.music.ui.navigation.NavigatorType
 import pw.vintr.music.core.ui.theme.VintrMusicExtendedTheme
@@ -88,7 +88,10 @@ fun ManageSessionScreen(
                     key = wrapper.listUUID,
                 ) {
                     TrackView(
-                        trackModel = wrapper.track,
+                        title = wrapper.track.metadata.title,
+                            artist = wrapper.track.metadata.artist,
+                            durationText = wrapper.track.format.durationFormat,
+                            artworkUrl = wrapper.track.artworkUrl,
                         isPlaying = screenData.value.currentTrack == wrapper.track,
                         trailingAction = {
                             Icon(

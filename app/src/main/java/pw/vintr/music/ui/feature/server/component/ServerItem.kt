@@ -1,4 +1,4 @@
-package pw.vintr.music.ui.kit.server
+package pw.vintr.music.ui.feature.server.component
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement

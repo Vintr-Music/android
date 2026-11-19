@@ -20,9 +20,9 @@ import org.koin.androidx.compose.koinViewModel
 import pw.vintr.music.R
 import pw.vintr.music.tools.extension.scaffoldPadding
 import pw.vintr.music.core.ui.kit.layout.PullRefreshLayout
-import pw.vintr.music.ui.kit.library.ArtistView
-import pw.vintr.music.ui.kit.library.tools.rememberLibraryGridCells
-import pw.vintr.music.ui.kit.layout.ScreenStateLayout
+import pw.vintr.music.core.ui.kit.library.ArtistView
+import pw.vintr.music.core.ui.kit.library.rememberLibraryGridCells
+import pw.vintr.music.ui.common.layout.ScreenStateLayout
 import pw.vintr.music.core.ui.kit.toolbar.ToolbarRegular
 
 @OptIn(ExperimentalMaterialApi::class)
@@ -73,7 +73,8 @@ fun ArtistListScreen(
                         key = { artist -> artist.name }
                     ) { artist ->
                         ArtistView(
-                            artist = artist,
+                            artworkUrl = artist.artworkUrl,
+                            name = artist.name,
                             onClick = { viewModel.onArtistClick(artist) }
                         )
                     }

@@ -32,8 +32,8 @@ import pw.vintr.music.domain.player.model.state.PlayerStatusModel
 import pw.vintr.music.tools.extension.Empty
 import pw.vintr.music.core.ui.kit.button.ButtonPlayerState
 import pw.vintr.music.core.ui.kit.button.ButtonSimpleIcon
-import pw.vintr.music.ui.kit.layout.ScreenStateLayout
-import pw.vintr.music.ui.kit.library.TrackView
+import pw.vintr.music.ui.common.layout.ScreenStateLayout
+import pw.vintr.music.core.ui.kit.library.TrackView
 import pw.vintr.music.core.ui.kit.modifier.actionHeaderBackground
 import pw.vintr.music.core.ui.kit.state.EmptyState
 import pw.vintr.music.core.ui.kit.toolbar.ToolbarRegular
@@ -203,7 +203,10 @@ fun PlaylistDetailsScreen(
                         key = { _, record -> record.id }
                     ) { index, record ->
                         TrackView(
-                            trackModel = record.track,
+                            title = record.track.metadata.title,
+                            artist = record.track.metadata.artist,
+                            durationText = record.track.format.durationFormat,
+                            artworkUrl = record.track.artworkUrl,
                             isPlaying = playingState.playingTrack == record.track,
                             onMoreClick = { viewModel.openTrackAction(record) },
                             onClick = { viewModel.playPlaylist(index) }

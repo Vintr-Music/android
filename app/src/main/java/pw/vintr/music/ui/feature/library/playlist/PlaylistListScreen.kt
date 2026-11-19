@@ -29,9 +29,9 @@ import pw.vintr.music.ui.base.BaseScreenState
 import pw.vintr.music.core.ui.kit.button.ButtonRegular
 import pw.vintr.music.core.ui.kit.button.ButtonSimpleIcon
 import pw.vintr.music.core.ui.kit.layout.PullRefreshLayout
-import pw.vintr.music.ui.kit.layout.ScreenStateLayout
-import pw.vintr.music.ui.kit.library.PlaylistView
-import pw.vintr.music.ui.kit.library.tools.rememberLibraryGridCells
+import pw.vintr.music.ui.common.layout.ScreenStateLayout
+import pw.vintr.music.core.ui.kit.library.PlaylistView
+import pw.vintr.music.core.ui.kit.library.rememberLibraryGridCells
 import pw.vintr.music.core.ui.kit.state.EmptyState
 import pw.vintr.music.core.ui.kit.toolbar.ToolbarRegular
 import pw.vintr.music.core.ui.theme.Bee1
@@ -118,7 +118,8 @@ fun PlaylistListScreen(
                             key = { playlist -> playlist.id }
                         ) { playlist ->
                             PlaylistView(
-                                playlist = playlist,
+                                artworkUrl = playlist.artworkUrl,
+                                name = playlist.name,
                                 onClick = { viewModel.openPlaylist(playlist) }
                             )
                         }

@@ -39,10 +39,10 @@ import pw.vintr.music.R
 import pw.vintr.music.core.ui.tools.escapePadding
 import pw.vintr.music.tools.extension.itemsSeparated
 import pw.vintr.music.core.ui.kit.input.AppTextField
-import pw.vintr.music.ui.kit.layout.ScreenStateLayout
-import pw.vintr.music.ui.kit.library.AlbumView
-import pw.vintr.music.ui.kit.library.ArtistView
-import pw.vintr.music.ui.kit.library.TrackView
+import pw.vintr.music.ui.common.layout.ScreenStateLayout
+import pw.vintr.music.core.ui.kit.library.AlbumView
+import pw.vintr.music.core.ui.kit.library.ArtistView
+import pw.vintr.music.core.ui.kit.library.TrackView
 import pw.vintr.music.core.ui.kit.separator.LineSeparator
 import pw.vintr.music.core.ui.theme.Gilroy18
 import pw.vintr.music.core.ui.theme.RubikMedium16
@@ -134,7 +134,8 @@ fun SearchScreen(viewModel: SearchViewModel = koinViewModel()) {
                             key = { it.name }
                         ) { artist ->
                             ArtistView(
-                                artist = artist,
+                                artworkUrl = artist.artworkUrl,
+                                name = artist.name,
                                 onClick = { viewModel.onArtistClick(artist) }
                             )
                         }
@@ -158,7 +159,10 @@ fun SearchScreen(viewModel: SearchViewModel = koinViewModel()) {
                             key = { it.id }
                         ) { album ->
                             AlbumView(
-                                album = album,
+                            artworkUrl = album.artworkUrl,
+                            name = album.name,
+                            artistName = album.artist.name,
+                            year = album.year,
                                 onClick = { viewModel.onAlbumClick(album) }
                             )
                         }
@@ -185,7 +189,10 @@ fun SearchScreen(viewModel: SearchViewModel = koinViewModel()) {
                             TrackView(
                                 modifier = Modifier
                                     .escapePadding(horizontal = SPACING_DP.dp),
-                                trackModel = track,
+                                title = track.metadata.title,
+                            artist = track.metadata.artist,
+                            durationText = track.format.durationFormat,
+                            artworkUrl = track.artworkUrl,
                                 isPlaying = playerState.value.currentTrack == track,
                                 showArtwork = true,
                                 contentPadding = PaddingValues(horizontal = 20.dp),

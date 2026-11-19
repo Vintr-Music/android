@@ -17,16 +17,18 @@ import pw.vintr.music.core.ui.theme.VintrMusicExtendedTheme
 fun MenuTitle(
     modifier: Modifier = Modifier,
     title: String,
-    titleStyle: TextStyle = RubikMedium18,
+    titleStyle: TextStyle? = null,
     subtitle: String? = null,
 ) {
+    val resolvedTitleStyle = titleStyle ?: RubikMedium18
+
     Column(
         modifier = modifier,
         verticalArrangement = Arrangement.Center,
     ) {
         Text(
             text = title,
-            style = titleStyle,
+            style = resolvedTitleStyle,
             color = VintrMusicExtendedTheme.colors.textRegular,
         )
         subtitle?.let {

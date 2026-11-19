@@ -29,8 +29,8 @@ import pw.vintr.music.R
 import pw.vintr.music.tools.composable.StatusBarEffect
 import pw.vintr.music.core.ui.kit.button.ButtonRegular
 import pw.vintr.music.core.ui.kit.button.ButtonText
-import pw.vintr.music.ui.kit.server.ServerSelectableItem
-import pw.vintr.music.ui.kit.layout.ScreenStateLayout
+import pw.vintr.music.ui.feature.server.selection.component.ServerSelectableItem
+import pw.vintr.music.ui.common.layout.ScreenStateLayout
 import pw.vintr.music.core.ui.kit.toolbar.ToolbarPrimaryMount
 import pw.vintr.music.core.ui.kit.toolbar.ToolbarRegular
 import pw.vintr.music.ui.navigation.NavigatorType

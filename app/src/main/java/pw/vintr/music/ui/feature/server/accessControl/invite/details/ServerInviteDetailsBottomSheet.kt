@@ -33,7 +33,7 @@ import org.koin.core.parameter.parametersOf
 import pw.vintr.music.domain.server.model.ServerInviteModel
 import pw.vintr.music.tools.extension.dialogContainer
 import pw.vintr.music.core.ui.kit.loader.LoaderScreen
-import pw.vintr.music.ui.kit.server.invite.ServerInviteData
+import pw.vintr.music.ui.feature.server.accessControl.component.ServerInviteData
 
 @Composable
 fun ServerInviteDetailsBottomSheet(

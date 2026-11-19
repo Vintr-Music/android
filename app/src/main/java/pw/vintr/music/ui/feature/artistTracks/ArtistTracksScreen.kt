@@ -31,8 +31,8 @@ import pw.vintr.music.domain.player.model.state.PlayerStatusModel
 import pw.vintr.music.tools.extension.scaffoldPadding
 import pw.vintr.music.tools.extension.shouldStartPaginate
 import pw.vintr.music.core.ui.kit.button.ButtonPlayerState
-import pw.vintr.music.ui.kit.layout.ScreenStateLayout
-import pw.vintr.music.ui.kit.library.TrackView
+import pw.vintr.music.ui.common.layout.ScreenStateLayout
+import pw.vintr.music.core.ui.kit.library.TrackView
 import pw.vintr.music.core.ui.kit.pagination.paginationControls
 import pw.vintr.music.core.ui.kit.toolbar.ToolbarRegular
 import pw.vintr.music.core.ui.kit.toolbar.collapsing.CollapsingLayout
@@ -139,7 +139,10 @@ fun ArtistTracksScreen(
                         key = { _, track -> track.md5 }
                     ) { index, track ->
                         TrackView(
-                            trackModel = track,
+                            title = track.metadata.title,
+                            artist = track.metadata.artist,
+                            durationText = track.format.durationFormat,
+                            artworkUrl = track.artworkUrl,
                             isPlaying = playingState.playingTrack == track,
                             onMoreClick = { viewModel.openTrackAction(track) },
                             onClick = { viewModel.playArtist(index) }

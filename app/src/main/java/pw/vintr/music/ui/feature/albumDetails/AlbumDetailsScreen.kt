@@ -28,8 +28,8 @@ import pw.vintr.music.tools.extension.Empty
 import pw.vintr.music.core.ui.kit.button.ButtonFavorite
 import pw.vintr.music.core.ui.kit.button.ButtonPlayerState
 import pw.vintr.music.core.ui.kit.button.ButtonSimpleIcon
-import pw.vintr.music.ui.kit.library.TrackView
-import pw.vintr.music.ui.kit.layout.ScreenStateLayout
+import pw.vintr.music.core.ui.kit.library.TrackView
+import pw.vintr.music.ui.common.layout.ScreenStateLayout
 import pw.vintr.music.core.ui.kit.modifier.actionHeaderBackground
 import pw.vintr.music.core.ui.kit.toolbar.ToolbarWithArtwork
 import pw.vintr.music.core.ui.kit.toolbar.ToolbarRegular
@@ -182,7 +182,10 @@ fun AlbumDetailsScreen(
                         key = { _, track -> track.md5 }
                     ) { index, track ->
                         TrackView(
-                            trackModel = track,
+                            title = track.metadata.title,
+                            artist = track.metadata.artist,
+                            durationText = track.format.durationFormat,
+                            artworkUrl = track.artworkUrl,
                             isPlaying = albumState.playingTrack == track,
                             onMoreClick = { viewModel.openTrackAction(track) },
                             onClick = { viewModel.playAlbum(index) }
