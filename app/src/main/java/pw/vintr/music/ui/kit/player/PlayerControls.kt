@@ -25,7 +25,7 @@ import pw.vintr.music.domain.player.model.config.PlayerRepeatMode
 import pw.vintr.music.domain.player.model.config.PlayerShuffleMode
 import pw.vintr.music.domain.player.model.state.PlayerStateHolderModel
 import pw.vintr.music.domain.player.model.state.PlayerStatusModel
-import pw.vintr.music.ui.kit.button.ButtonPlayerState
+import pw.vintr.music.core.ui.kit.button.ButtonPlayerState
 import pw.vintr.music.core.ui.kit.button.ButtonSimpleIcon
 import pw.vintr.music.core.ui.theme.Bee0
 import pw.vintr.music.core.ui.theme.VintrMusicExtendedTheme

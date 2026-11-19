@@ -23,7 +23,7 @@ import pw.vintr.music.core.ui.kit.layout.PullRefreshLayout
 import pw.vintr.music.ui.kit.library.ArtistView
 import pw.vintr.music.ui.kit.library.tools.rememberLibraryGridCells
 import pw.vintr.music.ui.kit.layout.ScreenStateLayout
-import pw.vintr.music.ui.kit.toolbar.ToolbarRegular
+import pw.vintr.music.core.ui.kit.toolbar.ToolbarRegular
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable

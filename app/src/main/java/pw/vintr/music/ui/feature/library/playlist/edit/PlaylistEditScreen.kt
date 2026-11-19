@@ -32,10 +32,10 @@ import pw.vintr.music.R
 import pw.vintr.music.tools.composable.rememberBottomSheetNestedScrollInterceptor
 import pw.vintr.music.core.ui.kit.button.ButtonSecondary
 import pw.vintr.music.core.ui.kit.button.ButtonSimpleIcon
-import pw.vintr.music.ui.kit.input.AppTextField
+import pw.vintr.music.core.ui.kit.input.AppTextField
 import pw.vintr.music.ui.kit.layout.ScreenStateLayout
 import pw.vintr.music.ui.kit.library.TrackView
-import pw.vintr.music.ui.kit.toolbar.ToolbarRegular
+import pw.vintr.music.core.ui.kit.toolbar.ToolbarRegular
 import pw.vintr.music.ui.navigation.NavigatorType
 import pw.vintr.music.core.ui.theme.VintrMusicExtendedTheme
 import sh.calvin.reorderable.ReorderableItem

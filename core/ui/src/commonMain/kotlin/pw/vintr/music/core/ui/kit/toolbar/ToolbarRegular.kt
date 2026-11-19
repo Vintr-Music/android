@@ -1,4 +1,4 @@
-package pw.vintr.music.ui.kit.toolbar
+package pw.vintr.music.core.ui.kit.toolbar
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxScope
@@ -18,12 +18,13 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import pw.vintr.music.R
-import pw.vintr.music.tools.extension.Empty
 import pw.vintr.music.core.ui.kit.button.ButtonSimpleIcon
+import pw.vintr.music.core.ui.resources.Res
+import pw.vintr.music.core.ui.resources.ic_back
 import pw.vintr.music.core.ui.theme.Bee1
 import pw.vintr.music.core.ui.theme.Gilroy18
 import pw.vintr.music.core.ui.theme.VintrMusicExtendedTheme
+import pw.vintr.music.core.ui.tools.Empty
 
 val REGULAR_TOOLBAR_HEIGHT = 56.dp
 
@@ -53,7 +54,7 @@ fun ToolbarRegular(
                 contentAlignment = Alignment.Center,
             ) {
                 ButtonSimpleIcon(
-                    iconRes = R.drawable.ic_back,
+                    icon = Res.drawable.ic_back,
                     onClick = onBackPressed,
                     tint = backButtonColor,
                 )

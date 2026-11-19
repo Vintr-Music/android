@@ -1,4 +1,4 @@
-package pw.vintr.music.ui.kit.equalizer
+package pw.vintr.music.core.ui.kit.equalizer
 
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.Column
@@ -23,18 +23,20 @@ import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.graphics.TransformOrigin
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.layout.layout
-import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Constraints
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
-import pw.vintr.music.R
-import pw.vintr.music.tools.extension.escapePadding
+import org.jetbrains.compose.resources.stringResource
+import androidx.compose.ui.tooling.preview.Preview
+import pw.vintr.music.core.ui.resources.Res
+import pw.vintr.music.core.ui.resources.hz
+import pw.vintr.music.core.ui.resources.khz
 import pw.vintr.music.core.ui.theme.Gilroy10
 import pw.vintr.music.core.ui.theme.Gradient0
 import pw.vintr.music.core.ui.theme.Gradient1
 import pw.vintr.music.core.ui.theme.VintrMusicExtendedTheme
+import pw.vintr.music.core.ui.tools.escapePadding
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -98,10 +100,10 @@ fun EqualizerBandSlider(
                 text = buildString {
                     if (centerFrequency >= 1000000) {
                         append(centerFrequency / 1000000)
-                        append(stringResource(id = R.string.khz))
+                        append(stringResource(Res.string.khz))
                     } else {
                         append(centerFrequency / 1000)
-                        append(stringResource(id = R.string.hz))
+                        append(stringResource(Res.string.hz))
                     }
                 },
                 style = Gilroy10,
@@ -152,7 +154,6 @@ private fun SliderTrack(sliderState: SliderState, activeTrackBrush: Brush) {
             y = center.y
         )
 
-        // Active track
         drawLine(
             activeTrackBrush,
             activeSliderValueStart,

@@ -30,11 +30,11 @@ import pw.vintr.music.domain.library.model.artist.ArtistModel
 import pw.vintr.music.domain.player.model.state.PlayerStatusModel
 import pw.vintr.music.tools.extension.scaffoldPadding
 import pw.vintr.music.tools.extension.shouldStartPaginate
-import pw.vintr.music.ui.kit.button.ButtonPlayerState
+import pw.vintr.music.core.ui.kit.button.ButtonPlayerState
 import pw.vintr.music.ui.kit.layout.ScreenStateLayout
 import pw.vintr.music.ui.kit.library.TrackView
-import pw.vintr.music.ui.kit.pagination.paginationControls
-import pw.vintr.music.ui.kit.toolbar.ToolbarRegular
+import pw.vintr.music.core.ui.kit.pagination.paginationControls
+import pw.vintr.music.core.ui.kit.toolbar.ToolbarRegular
 import pw.vintr.music.core.ui.kit.toolbar.collapsing.CollapsingLayout
 import pw.vintr.music.core.ui.kit.toolbar.collapsing.ScrollStrategy
 import pw.vintr.music.core.ui.kit.toolbar.collapsing.rememberCollapsingLayoutState

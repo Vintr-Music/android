@@ -22,7 +22,7 @@ import pw.vintr.music.R
 import pw.vintr.music.core.ui.kit.menu.MenuItem
 import pw.vintr.music.core.ui.kit.menu.MenuItemSwitchable
 import pw.vintr.music.core.ui.kit.menu.MenuSectionTitle
-import pw.vintr.music.ui.kit.toolbar.ToolbarRegular
+import pw.vintr.music.core.ui.kit.toolbar.ToolbarRegular
 
 @Composable
 fun SettingsScreen(

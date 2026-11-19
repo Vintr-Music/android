@@ -13,9 +13,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import pw.vintr.music.core.ui.kit.resource.drawablePainter
+import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import org.jetbrains.compose.resources.DrawableResource
+import org.jetbrains.compose.resources.painterResource
+import pw.vintr.music.core.ui.kit.resource.drawablePainter
 import pw.vintr.music.core.ui.theme.VintrMusicExtendedTheme
 
 @Composable
@@ -23,6 +26,44 @@ fun ButtonBorderedIcon(
     modifier: Modifier = Modifier,
     iconModifier: Modifier = Modifier,
     iconRes: Int,
+    onClick: () -> Unit,
+    size: Dp = 32.dp,
+    tint: Color = VintrMusicExtendedTheme.colors.textRegular
+) {
+    ButtonBorderedIcon(
+        modifier = modifier,
+        iconModifier = iconModifier,
+        painter = drawablePainter(iconRes),
+        onClick = onClick,
+        size = size,
+        tint = tint,
+    )
+}
+
+@Composable
+fun ButtonBorderedIcon(
+    modifier: Modifier = Modifier,
+    iconModifier: Modifier = Modifier,
+    icon: DrawableResource,
+    onClick: () -> Unit,
+    size: Dp = 32.dp,
+    tint: Color = VintrMusicExtendedTheme.colors.textRegular
+) {
+    ButtonBorderedIcon(
+        modifier = modifier,
+        iconModifier = iconModifier,
+        painter = painterResource(icon),
+        onClick = onClick,
+        size = size,
+        tint = tint,
+    )
+}
+
+@Composable
+fun ButtonBorderedIcon(
+    modifier: Modifier = Modifier,
+    iconModifier: Modifier = Modifier,
+    painter: Painter,
     onClick: () -> Unit,
     size: Dp = 32.dp,
     tint: Color = VintrMusicExtendedTheme.colors.textRegular
@@ -47,7 +88,7 @@ fun ButtonBorderedIcon(
     ) {
         Icon(
             modifier = iconModifier,
-            painter = drawablePainter(iconRes),
+            painter = painter,
             contentDescription = "Simple icon button",
             tint = tint
         )

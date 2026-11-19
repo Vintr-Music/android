@@ -4,7 +4,7 @@ import android.os.Parcelable
 import kotlinx.parcelize.IgnoredOnParcel
 import kotlinx.parcelize.Parcelize
 import pw.vintr.music.data.library.dto.track.TrackFormatDto
-import pw.vintr.music.tools.format.DurationFormat
+import pw.vintr.music.core.ui.tools.DurationFormat
 
 @Parcelize
 data class TrackFormatModel(

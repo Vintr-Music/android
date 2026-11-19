@@ -1,4 +1,4 @@
-package pw.vintr.music.ui.kit.state
+package pw.vintr.music.core.ui.kit.state
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
@@ -9,12 +9,15 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import pw.vintr.music.R
+import org.jetbrains.compose.resources.painterResource
+import org.jetbrains.compose.resources.stringResource
+import androidx.compose.ui.tooling.preview.Preview
 import pw.vintr.music.core.ui.kit.button.ButtonRegular
+import pw.vintr.music.core.ui.resources.Res
+import pw.vintr.music.core.ui.resources.common_data_error
+import pw.vintr.music.core.ui.resources.common_retry
+import pw.vintr.music.core.ui.resources.ic_error
 import pw.vintr.music.core.ui.theme.Gilroy18
 import pw.vintr.music.core.ui.theme.VintrMusicExtendedTheme
 
@@ -30,18 +33,18 @@ fun ErrorState(
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Image(
-            painter = painterResource(id = R.drawable.ic_error),
+            painter = painterResource(Res.drawable.ic_error),
             contentDescription = null
         )
         Spacer(modifier = Modifier.height(20.dp))
         Text(
-            text = stringResource(id = R.string.common_data_error),
+            text = stringResource(Res.string.common_data_error),
             style = Gilroy18,
             color = VintrMusicExtendedTheme.colors.textRegular,
         )
         Spacer(modifier = Modifier.height(32.dp))
         ButtonRegular(
-            text = stringResource(id = R.string.common_retry),
+            text = stringResource(Res.string.common_retry),
             onClick = retryAction,
             wrapContentWidth = true,
         )

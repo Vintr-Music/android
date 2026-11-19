@@ -41,10 +41,10 @@ import com.google.accompanist.permissions.rememberPermissionState
 import org.koin.androidx.compose.koinViewModel
 import pw.vintr.music.R
 import pw.vintr.music.core.ui.kit.button.ButtonRegular
-import pw.vintr.music.ui.kit.input.AppTextField
+import pw.vintr.music.core.ui.kit.input.AppTextField
 import pw.vintr.music.ui.kit.scanner.QRScanner
 import pw.vintr.music.core.ui.kit.selector.SegmentControl
-import pw.vintr.music.ui.kit.toolbar.ToolbarRegular
+import pw.vintr.music.core.ui.kit.toolbar.ToolbarRegular
 import pw.vintr.music.core.ui.theme.Gilroy16
 import pw.vintr.music.core.ui.theme.VintrMusicExtendedTheme
 

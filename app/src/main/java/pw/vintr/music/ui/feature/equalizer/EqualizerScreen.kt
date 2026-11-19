@@ -22,11 +22,11 @@ import androidx.compose.ui.unit.dp
 import org.koin.androidx.compose.koinViewModel
 import pw.vintr.music.R
 import pw.vintr.music.tools.extension.scaffoldPadding
-import pw.vintr.music.ui.kit.equalizer.EqualizerBandSlider
+import pw.vintr.music.core.ui.kit.equalizer.EqualizerBandSlider
 import pw.vintr.music.ui.kit.layout.ScreenStateLayout
 import pw.vintr.music.core.ui.kit.menu.MenuItemSwitchable
 import pw.vintr.music.core.ui.kit.menu.MenuSectionTitle
-import pw.vintr.music.ui.kit.toolbar.ToolbarRegular
+import pw.vintr.music.core.ui.kit.toolbar.ToolbarRegular
 
 @Composable
 fun EqualizerScreen(viewModel: EqualizerViewModel = koinViewModel()) {

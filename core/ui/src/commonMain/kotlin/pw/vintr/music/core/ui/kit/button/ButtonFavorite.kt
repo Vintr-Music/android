@@ -1,9 +1,10 @@
-package pw.vintr.music.ui.kit.button
+package pw.vintr.music.core.ui.kit.button
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import pw.vintr.music.R
-import pw.vintr.music.core.ui.kit.button.ButtonBorderedIcon
+import pw.vintr.music.core.ui.resources.Res
+import pw.vintr.music.core.ui.resources.ic_favorite_filled
+import pw.vintr.music.core.ui.resources.ic_favorite_outline
 import pw.vintr.music.core.ui.theme.Red2
 import pw.vintr.music.core.ui.theme.VintrMusicExtendedTheme
 
@@ -15,10 +16,10 @@ fun ButtonFavorite(
 ) {
     ButtonBorderedIcon(
         modifier = modifier,
-        iconRes = if (isFavorite) {
-            R.drawable.ic_favorite_filled
+        icon = if (isFavorite) {
+            Res.drawable.ic_favorite_filled
         } else {
-            R.drawable.ic_favorite_outline
+            Res.drawable.ic_favorite_outline
         },
         tint = if (isFavorite) {
             Red2

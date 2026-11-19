@@ -19,7 +19,7 @@ import pw.vintr.music.R
 import pw.vintr.music.ui.feature.server.accessControl.invite.ServerInviteListTab
 import pw.vintr.music.ui.feature.server.accessControl.members.ServerMemberListTab
 import pw.vintr.music.core.ui.kit.selector.SegmentControl
-import pw.vintr.music.ui.kit.toolbar.ToolbarRegular
+import pw.vintr.music.core.ui.kit.toolbar.ToolbarRegular
 
 @Composable
 fun ServerAccessControlScreen(

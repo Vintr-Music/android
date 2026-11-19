@@ -38,9 +38,9 @@ import pw.vintr.music.R
 import pw.vintr.music.domain.library.model.artist.ArtistModel
 import pw.vintr.music.domain.player.model.state.PlayerStatusModel
 import pw.vintr.music.tools.extension.Empty
-import pw.vintr.music.tools.extension.escapePadding
-import pw.vintr.music.ui.kit.button.ButtonFavorite
-import pw.vintr.music.ui.kit.button.ButtonPlayerState
+import pw.vintr.music.core.ui.tools.escapePadding
+import pw.vintr.music.core.ui.kit.button.ButtonFavorite
+import pw.vintr.music.core.ui.kit.button.ButtonPlayerState
 import pw.vintr.music.ui.kit.library.AlbumView
 import pw.vintr.music.ui.kit.layout.ScreenStateLayout
 import pw.vintr.music.ui.kit.library.FIXED_TRACK_VIEW_HEIGHT
@@ -50,7 +50,7 @@ import pw.vintr.music.core.ui.kit.menu.MenuItemIconified
 import pw.vintr.music.core.ui.kit.modifier.actionHeaderBackground
 import pw.vintr.music.core.ui.kit.selector.PageIndicator
 import pw.vintr.music.ui.kit.toolbar.ToolbarWithArtwork
-import pw.vintr.music.ui.kit.toolbar.ToolbarRegular
+import pw.vintr.music.core.ui.kit.toolbar.ToolbarRegular
 import pw.vintr.music.core.ui.kit.toolbar.collapsing.CollapsingLayout
 import pw.vintr.music.core.ui.kit.toolbar.collapsing.ScrollStrategy
 import pw.vintr.music.core.ui.kit.toolbar.collapsing.rememberCollapsingLayoutState

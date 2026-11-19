@@ -1,4 +1,4 @@
-package pw.vintr.music.ui.kit.player
+package pw.vintr.music.core.ui.kit.player
 
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.border
@@ -21,9 +21,9 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
-import pw.vintr.music.tools.format.DurationFormat
 import pw.vintr.music.core.ui.theme.Gilroy12
 import pw.vintr.music.core.ui.theme.VintrMusicExtendedTheme
+import pw.vintr.music.core.ui.tools.DurationFormat
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -108,7 +108,6 @@ private fun SliderTrack(
             trackStrokeWidth,
         )
 
-        // Access activeRange through sliderState
         val normalizedValue = (sliderState.value - sliderState.valueRange.start) /
                 (sliderState.valueRange.endInclusive - sliderState.valueRange.start)
 
@@ -127,14 +126,12 @@ private fun SliderTrack(
             y = center.y
         )
 
-        // Active track
         drawLine(
             activeTrackColor,
             activeSliderValueStart,
             activeSliderValueEnd,
             trackStrokeWidth,
         )
-        // Active marker
         drawLine(
             strokeColor,
             markerValueStart,

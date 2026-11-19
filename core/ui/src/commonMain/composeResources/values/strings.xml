@@ -1,0 +1,7 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="common_data_error">Error data loading</string>
+    <string name="common_retry">Retry</string>
+    <string name="hz">Hz</string>
+    <string name="khz">kHz</string>
+</resources>

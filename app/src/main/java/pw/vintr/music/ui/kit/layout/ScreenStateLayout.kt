@@ -6,7 +6,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import pw.vintr.music.ui.base.BaseScreenState
 import pw.vintr.music.core.ui.kit.loader.LoaderScreen
-import pw.vintr.music.ui.kit.state.ErrorState
+import pw.vintr.music.core.ui.kit.state.ErrorState
 
 @Composable
 fun <T> ScreenStateLayout(

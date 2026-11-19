@@ -1,4 +1,4 @@
-package pw.vintr.music.ui.kit.alert
+package pw.vintr.music.core.ui.kit.alert
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -15,12 +15,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import pw.vintr.music.R
-import pw.vintr.music.tools.extension.Empty
 import pw.vintr.music.core.ui.kit.button.ButtonSimpleIcon
+import pw.vintr.music.core.ui.resources.Res
+import pw.vintr.music.core.ui.resources.ic_close
 import pw.vintr.music.core.ui.theme.Gilroy16
 import pw.vintr.music.core.ui.theme.RubikMedium14
 import pw.vintr.music.core.ui.theme.VintrMusicExtendedTheme
+import pw.vintr.music.core.ui.tools.Empty
 
 @Composable
 fun Alert(
@@ -38,20 +39,18 @@ fun Alert(
             .padding(20.dp)
     ) {
         Row(
-            modifier = Modifier
-                .fillMaxWidth(),
+            modifier = Modifier.fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(20.dp),
         ) {
             Text(
-                modifier = Modifier
-                    .weight(1f),
+                modifier = Modifier.weight(1f),
                 text = title,
                 style = Gilroy16,
                 color = VintrMusicExtendedTheme.colors.textRegular,
             )
             ButtonSimpleIcon(
-                iconRes = R.drawable.ic_close,
+                icon = Res.drawable.ic_close,
                 onClick = onCloseAction,
             )
         }

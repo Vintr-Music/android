@@ -1,6 +1,5 @@
-package pw.vintr.music.ui.kit.input
+package pw.vintr.music.core.ui.kit.input
 
-import androidx.annotation.DrawableRes
 import androidx.compose.foundation.background
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Box
@@ -25,16 +24,17 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.platform.LocalFocusManager
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
-import pw.vintr.music.R
-import pw.vintr.music.tools.extension.Empty
-import pw.vintr.music.tools.extension.clearFocusOnKeyboardDismiss
 import pw.vintr.music.core.ui.kit.button.ButtonSimpleIcon
+import pw.vintr.music.core.ui.kit.resource.drawablePainter
+import pw.vintr.music.core.ui.resources.Res
+import pw.vintr.music.core.ui.resources.ic_clear
 import pw.vintr.music.core.ui.theme.Gilroy11
 import pw.vintr.music.core.ui.theme.LocalVintrColors
 import pw.vintr.music.core.ui.theme.RubikRegular16
+import pw.vintr.music.core.ui.tools.Empty
+import pw.vintr.music.core.ui.tools.clearFocusOnKeyboardDismiss
 
 @Composable
 fun AppTextField(
@@ -44,7 +44,6 @@ fun AppTextField(
     onValueChange: (String) -> Unit = {},
     hint: String = String.Empty,
     label: String = String.Empty,
-    @DrawableRes
     leadingIconRes: Int? = null,
     keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
     singleLine: Boolean = true,
@@ -107,21 +106,17 @@ fun AppTextField(
                     modifier = Modifier.padding(horizontal = 12.dp),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    // Leading icon
                     leadingIconRes?.let { res ->
                         Icon(
                             modifier = Modifier.size(20.dp),
-                            painter = painterResource(id = res),
+                            painter = drawablePainter(res),
                             tint = LocalVintrColors.current.textFieldHint,
                             contentDescription = null
                         )
                         Spacer(modifier = Modifier.width(10.dp))
                     }
 
-                    // Text field
-                    Box(
-                        modifier = Modifier.weight(1f),
-                    ) {
+                    Box(modifier = Modifier.weight(1f)) {
                         if (value.isEmpty()) {
                             Text(
                                 text = hint,
@@ -129,15 +124,13 @@ fun AppTextField(
                                 color = LocalVintrColors.current.textFieldHint,
                             )
                         }
-
                         innerTextField()
                     }
 
-                    // Clear button
                     if (showClearButton) {
                         Spacer(modifier = Modifier.width(10.dp))
                         ButtonSimpleIcon(
-                            iconRes = R.drawable.ic_clear,
+                            icon = Res.drawable.ic_clear,
                             tint = LocalVintrColors.current.textFieldHint,
                             onClick = actionOnClear
                         )

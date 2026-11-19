@@ -32,8 +32,8 @@ import pw.vintr.music.core.ui.kit.layout.PullRefreshLayout
 import pw.vintr.music.ui.kit.layout.ScreenStateLayout
 import pw.vintr.music.ui.kit.library.PlaylistView
 import pw.vintr.music.ui.kit.library.tools.rememberLibraryGridCells
-import pw.vintr.music.ui.kit.state.EmptyState
-import pw.vintr.music.ui.kit.toolbar.ToolbarRegular
+import pw.vintr.music.core.ui.kit.state.EmptyState
+import pw.vintr.music.core.ui.kit.toolbar.ToolbarRegular
 import pw.vintr.music.core.ui.theme.Bee1
 
 @OptIn(ExperimentalMaterialApi::class)
