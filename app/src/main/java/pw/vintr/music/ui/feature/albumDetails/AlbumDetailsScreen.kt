@@ -31,7 +31,7 @@ import pw.vintr.music.core.ui.kit.button.ButtonSimpleIcon
 import pw.vintr.music.ui.kit.library.TrackView
 import pw.vintr.music.ui.kit.layout.ScreenStateLayout
 import pw.vintr.music.core.ui.kit.modifier.actionHeaderBackground
-import pw.vintr.music.ui.kit.toolbar.ToolbarWithArtwork
+import pw.vintr.music.core.ui.kit.toolbar.ToolbarWithArtwork
 import pw.vintr.music.core.ui.kit.toolbar.ToolbarRegular
 import pw.vintr.music.core.ui.kit.toolbar.collapsing.CollapsingLayout
 import pw.vintr.music.core.ui.kit.toolbar.collapsing.ScrollStrategy

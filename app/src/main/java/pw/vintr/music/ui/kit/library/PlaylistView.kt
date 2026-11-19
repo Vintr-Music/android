@@ -11,16 +11,11 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
-import coil3.compose.AsyncImage
 import coil3.request.CachePolicy
-import coil3.request.ImageRequest
-import coil3.request.crossfade
-import coil3.request.error
-import pw.vintr.music.R
 import pw.vintr.music.domain.playlist.model.PlaylistModel
+import pw.vintr.music.core.ui.kit.image.ArtworkAsyncImage
+import pw.vintr.music.core.ui.kit.image.playlistNoArtworkPainter
 import pw.vintr.music.core.ui.kit.modifier.artworkContainer
 import pw.vintr.music.core.ui.theme.Gilroy16
 import pw.vintr.music.core.ui.theme.VintrMusicExtendedTheme
@@ -40,18 +35,11 @@ fun PlaylistView(
             modifier = Modifier
                 .artworkContainer(RoundedCornerShape(4.dp)),
         ) {
-            AsyncImage(
+            ArtworkAsyncImage(
                 modifier = Modifier.fillMaxSize(),
-                model = ImageRequest.Builder(LocalContext.current)
-                    .data(playlist.artworkUrl)
-                    .size(300)
-                    .crossfade(enable = true)
-                    .error(drawableResId = R.drawable.ic_playlist_no_artwork)
-                    .memoryCachePolicy(CachePolicy.DISABLED)
-                    .diskCachePolicy(CachePolicy.DISABLED)
-                    .build(),
-                contentScale = ContentScale.Crop,
-                contentDescription = null
+                url = playlist.artworkUrl,
+                cachePolicy = CachePolicy.DISABLED,
+                error = playlistNoArtworkPainter(),
             )
         }
         Spacer(modifier = Modifier.height(10.dp))

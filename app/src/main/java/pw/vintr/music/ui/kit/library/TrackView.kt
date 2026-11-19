@@ -20,16 +20,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import coil3.compose.AsyncImage
-import coil3.request.ImageRequest
-import coil3.request.crossfade
+import coil3.size.Size
 import pw.vintr.music.R
 import pw.vintr.music.domain.library.model.track.TrackModel
 import pw.vintr.music.core.ui.kit.button.ButtonSimpleIcon
+import pw.vintr.music.core.ui.kit.image.ArtworkAsyncImage
 import pw.vintr.music.core.ui.kit.modifier.artworkContainer
 import pw.vintr.music.core.ui.theme.RubikMedium16
 import pw.vintr.music.core.ui.theme.RubikRegular14
@@ -82,18 +79,13 @@ fun TrackView(
                     .size(48.dp)
                     .artworkContainer(RoundedCornerShape(4.dp)),
             ) {
-                AsyncImage(
+                ArtworkAsyncImage(
                     modifier = Modifier.fillMaxSize(),
-                    model = ImageRequest.Builder(LocalContext.current)
-                        .data(trackModel.artworkUrl)
-                        .size(
-                            width = constraints.maxWidth,
-                            height = constraints.maxHeight
-                        )
-                        .crossfade(enable = true)
-                        .build(),
-                    contentScale = ContentScale.Crop,
-                    contentDescription = null
+                    url = trackModel.artworkUrl,
+                    size = Size(
+                        width = constraints.maxWidth,
+                        height = constraints.maxHeight
+                    ),
                 )
             }
             Spacer(modifier = Modifier.width(12.dp))

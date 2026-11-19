@@ -49,7 +49,7 @@ import pw.vintr.music.ui.kit.library.tools.rememberLibraryGridCellsCount
 import pw.vintr.music.core.ui.kit.menu.MenuItemIconified
 import pw.vintr.music.core.ui.kit.modifier.actionHeaderBackground
 import pw.vintr.music.core.ui.kit.selector.PageIndicator
-import pw.vintr.music.ui.kit.toolbar.ToolbarWithArtwork
+import pw.vintr.music.core.ui.kit.toolbar.ToolbarWithArtwork
 import pw.vintr.music.core.ui.kit.toolbar.ToolbarRegular
 import pw.vintr.music.core.ui.kit.toolbar.collapsing.CollapsingLayout
 import pw.vintr.music.core.ui.kit.toolbar.collapsing.ScrollStrategy

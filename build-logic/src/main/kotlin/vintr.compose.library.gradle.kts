@@ -35,6 +35,18 @@ extensions.configure<KotlinMultiplatformExtension>("kotlin") {
         implementation(compose.components.uiToolingPreview)
         implementation(libs.jetbrains.lifecycle.runtime.compose)
         implementation(libs.jetbrains.lifecycle.viewmodel.compose)
+        implementation(libs.coil.compose)
+    }
+    sourceSets.androidMain.dependencies {
+        implementation(libs.coil.network.okhttp)
+    }
+    sourceSets.iosMain.dependencies {
+        implementation(libs.coil.network.ktor3)
+        implementation(libs.ktor.client.darwin)
+    }
+    sourceSets.jvmMain.dependencies {
+        implementation(libs.coil.network.ktor3)
+        implementation(libs.ktor.client.java)
     }
 }
 

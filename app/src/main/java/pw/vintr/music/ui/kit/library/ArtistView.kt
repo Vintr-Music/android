@@ -13,14 +13,11 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import coil3.compose.AsyncImage
-import coil3.request.ImageRequest
-import coil3.request.crossfade
 import pw.vintr.music.domain.library.model.artist.ArtistModel
+import pw.vintr.music.core.ui.kit.image.ArtworkAsyncImage
 import pw.vintr.music.core.ui.kit.modifier.artworkContainer
 import pw.vintr.music.core.ui.theme.Gilroy16
 import pw.vintr.music.core.ui.theme.VintrMusicExtendedTheme
@@ -41,14 +38,9 @@ fun ArtistView(
             modifier = Modifier
                 .artworkContainer(CircleShape),
         ) {
-            AsyncImage(
+            ArtworkAsyncImage(
                 modifier = Modifier.fillMaxSize(),
-                model = ImageRequest.Builder(LocalContext.current)
-                    .data(artist.artworkUrl)
-                    .size(300)
-                    .crossfade(enable = true)
-                    .build(),
-                contentDescription = null
+                url = artist.artworkUrl,
             )
         }
         Spacer(modifier = Modifier.height(10.dp))

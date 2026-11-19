@@ -1,4 +1,4 @@
-package pw.vintr.music.ui.kit.toolbar
+package pw.vintr.music.core.ui.kit.toolbar
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxScope
@@ -12,20 +12,14 @@ import androidx.compose.foundation.layout.statusBars
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.blur
-import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalWindowInfo
 import androidx.compose.ui.unit.coerceIn
 import androidx.compose.ui.unit.dp
-import coil3.compose.AsyncImage
 import coil3.request.CachePolicy
-import coil3.request.ImageRequest
-import coil3.request.crossfade
 import coil3.size.Size
-import pw.vintr.music.tools.extension.pxToDpFloat
+import pw.vintr.music.core.ui.kit.image.ArtworkAsyncImage
 import pw.vintr.music.core.ui.kit.modifier.artworkGradientOverlayBackground
-import pw.vintr.music.core.ui.kit.toolbar.ToolbarRegular
 import pw.vintr.music.core.ui.kit.toolbar.collapsing.CollapsingLayoutState
 import pw.vintr.music.core.ui.kit.toolbar.collapsing.CollapsingToolbarScope
 import pw.vintr.music.core.ui.theme.VintrMusicExtendedTheme
@@ -48,42 +42,34 @@ fun CollapsingToolbarScope.ToolbarWithArtwork(
     if (screenHeight > screenWidth) {
         val collapsePercentage = 1 - state.toolbarState.progress
         val blurAmount = (collapsePercentage * BLUR_BASE_RADIUS_DP).dp
+        val toolbarHeight = with(LocalDensity.current) {
+            state.toolbarState.height.toDp()
+        }
 
         BoxWithConstraints(
             modifier = Modifier
                 .fillMaxWidth()
                 .aspectRatio(1f),
         ) {
-            AsyncImage(
+            ArtworkAsyncImage(
                 modifier = Modifier
                     .fillMaxSize()
                     .blur(blurAmount),
-                model = ImageRequest.Builder(LocalContext.current)
-                    .data(artworkUrl)
-                    .size(Size.ORIGINAL)
-                    .let { builder ->
-                        cachePolicy?.let {
-                            builder
-                                .memoryCachePolicy(it)
-                                .diskCachePolicy(it)
-                        } ?: builder
-                    }
-                    .crossfade(enable = true)
-                    .build(),
-                contentDescription = null,
-                contentScale = ContentScale.Crop,
+                url = artworkUrl,
+                size = Size.ORIGINAL,
+                cachePolicy = cachePolicy,
             )
 
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(
-                        state.toolbarState.height
-                            .pxToDpFloat().dp
-                            .coerceIn(
-                                minimumValue = 56.dp,
-                                maximumValue = constraints.maxHeight.dp
-                            )
+                        toolbarHeight.coerceIn(
+                            minimumValue = 56.dp,
+                            maximumValue = with(LocalDensity.current) {
+                                constraints.maxHeight.toDp()
+                            }
+                        )
                     )
                     .artworkGradientOverlayBackground()
             )
@@ -108,17 +94,12 @@ fun CollapsingToolbarScope.ToolbarWithArtwork(
                 .fillMaxWidth()
                 .height(height),
         ) {
-            AsyncImage(
+            ArtworkAsyncImage(
                 modifier = Modifier
                     .fillMaxSize()
                     .blur(BLUR_BASE_RADIUS_DP.dp),
-                model = ImageRequest.Builder(LocalContext.current)
-                    .data(artworkUrl)
-                    .size(Size.ORIGINAL)
-                    .crossfade(enable = true)
-                    .build(),
-                contentDescription = null,
-                contentScale = ContentScale.Crop,
+                url = artworkUrl,
+                size = Size.ORIGINAL,
             )
 
             Box(

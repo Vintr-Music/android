@@ -11,15 +11,11 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
-import coil3.compose.AsyncImage
-import coil3.request.ImageRequest
-import coil3.request.crossfade
 import pw.vintr.music.domain.library.model.album.AlbumModel
 import pw.vintr.music.tools.extension.Comma
 import pw.vintr.music.tools.extension.Space
+import pw.vintr.music.core.ui.kit.image.ArtworkAsyncImage
 import pw.vintr.music.core.ui.kit.modifier.artworkContainer
 import pw.vintr.music.core.ui.theme.Gilroy14
 import pw.vintr.music.core.ui.theme.Gilroy16
@@ -40,15 +36,9 @@ fun AlbumView(
             modifier = Modifier
                 .artworkContainer(RoundedCornerShape(4.dp)),
         ) {
-            AsyncImage(
+            ArtworkAsyncImage(
                 modifier = Modifier.fillMaxSize(),
-                model = ImageRequest.Builder(LocalContext.current)
-                    .data(album.artworkUrl)
-                    .size(300)
-                    .crossfade(enable = true)
-                    .build(),
-                contentScale = ContentScale.Crop,
-                contentDescription = null
+                url = album.artworkUrl,
             )
         }
         Spacer(modifier = Modifier.height(10.dp))
