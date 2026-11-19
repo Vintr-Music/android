@@ -21,9 +21,9 @@ import androidx.compose.ui.unit.dp
 import pw.vintr.music.R
 import pw.vintr.music.tools.extension.Empty
 import pw.vintr.music.ui.kit.button.ButtonSimpleIcon
-import pw.vintr.music.ui.theme.Bee1
-import pw.vintr.music.ui.theme.Gilroy18
-import pw.vintr.music.ui.theme.VintrMusicExtendedTheme
+import pw.vintr.music.core.ui.theme.Bee1
+import pw.vintr.music.core.ui.theme.Gilroy18
+import pw.vintr.music.core.ui.theme.VintrMusicExtendedTheme
 
 val REGULAR_TOOLBAR_HEIGHT = 56.dp
 

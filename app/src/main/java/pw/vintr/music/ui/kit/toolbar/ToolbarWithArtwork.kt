@@ -27,7 +27,7 @@ import pw.vintr.music.tools.extension.pxToDpFloat
 import pw.vintr.music.ui.kit.modifier.artworkGradientOverlayBackground
 import pw.vintr.music.ui.kit.toolbar.collapsing.CollapsingLayoutState
 import pw.vintr.music.ui.kit.toolbar.collapsing.CollapsingToolbarScope
-import pw.vintr.music.ui.theme.VintrMusicExtendedTheme
+import pw.vintr.music.core.ui.theme.VintrMusicExtendedTheme
 
 private const val BLUR_BASE_RADIUS_DP = 10
 

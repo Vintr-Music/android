@@ -1,4 +1,4 @@
-package pw.vintr.music.ui.kit.dimen
+package pw.vintr.music.core.ui.kit.dimen
 
 import androidx.compose.ui.unit.dp
 

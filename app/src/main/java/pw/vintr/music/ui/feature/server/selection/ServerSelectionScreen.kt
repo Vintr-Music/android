@@ -34,7 +34,7 @@ import pw.vintr.music.ui.kit.layout.ScreenStateLayout
 import pw.vintr.music.ui.kit.toolbar.ToolbarPrimaryMount
 import pw.vintr.music.ui.kit.toolbar.ToolbarRegular
 import pw.vintr.music.ui.navigation.NavigatorType
-import pw.vintr.music.ui.theme.Gilroy32
+import pw.vintr.music.core.ui.theme.Gilroy32
 
 @Composable
 fun ServerSelectionScreen(

@@ -26,7 +26,7 @@ import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import pw.vintr.music.ui.theme.VintrMusicExtendedTheme
+import pw.vintr.music.core.ui.theme.VintrMusicExtendedTheme
 
 private const val RADIO_ANIMATION_DURATION = 100
 

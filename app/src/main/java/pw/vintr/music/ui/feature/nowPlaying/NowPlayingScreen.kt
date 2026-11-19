@@ -49,9 +49,9 @@ import pw.vintr.music.ui.kit.button.ButtonBorderedIcon
 import pw.vintr.music.ui.kit.player.PlayerControls
 import pw.vintr.music.ui.kit.player.PlayerProgressBar
 import pw.vintr.music.ui.kit.player.PlayerStatePager
-import pw.vintr.music.ui.theme.Gilroy16
-import pw.vintr.music.ui.theme.Gilroy24
-import pw.vintr.music.ui.theme.VintrMusicExtendedTheme
+import pw.vintr.music.core.ui.theme.Gilroy16
+import pw.vintr.music.core.ui.theme.Gilroy24
+import pw.vintr.music.core.ui.theme.VintrMusicExtendedTheme
 
 private val MAX_CONTROLS_ROUNDNESS = 20.dp
 private const val BLUR_BASE_RADIUS_DP = 20

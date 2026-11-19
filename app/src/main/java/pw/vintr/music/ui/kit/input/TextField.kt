@@ -32,9 +32,9 @@ import pw.vintr.music.R
 import pw.vintr.music.tools.extension.Empty
 import pw.vintr.music.tools.extension.clearFocusOnKeyboardDismiss
 import pw.vintr.music.ui.kit.button.ButtonSimpleIcon
-import pw.vintr.music.ui.theme.Gilroy11
-import pw.vintr.music.ui.theme.LocalVintrColors
-import pw.vintr.music.ui.theme.RubikRegular16
+import pw.vintr.music.core.ui.theme.Gilroy11
+import pw.vintr.music.core.ui.theme.LocalVintrColors
+import pw.vintr.music.core.ui.theme.RubikRegular16
 
 @Composable
 fun AppTextField(

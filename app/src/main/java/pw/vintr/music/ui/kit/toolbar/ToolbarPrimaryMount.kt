@@ -14,7 +14,7 @@ import androidx.compose.ui.graphics.drawOutline
 import androidx.compose.ui.graphics.drawscope.drawIntoCanvas
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import pw.vintr.music.ui.theme.Gray5
+import pw.vintr.music.core.ui.theme.Gray5
 
 @Composable
 fun ToolbarPrimaryMount(

@@ -20,9 +20,9 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import pw.vintr.music.R
 import pw.vintr.music.ui.kit.button.ButtonRegular
-import pw.vintr.music.ui.theme.Bee1
-import pw.vintr.music.ui.theme.Gilroy18
-import pw.vintr.music.ui.theme.VintrMusicExtendedTheme
+import pw.vintr.music.core.ui.theme.Bee1
+import pw.vintr.music.core.ui.theme.Gilroy18
+import pw.vintr.music.core.ui.theme.VintrMusicExtendedTheme
 
 private const val LOADER_KEY = "PAGE_LOADER"
 private const val ERROR_KEY = "PAGE_LOADER"

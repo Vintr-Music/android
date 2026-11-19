@@ -31,8 +31,8 @@ import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.unit.dp
-import pw.vintr.music.ui.kit.dimen.DimensDp
-import pw.vintr.music.ui.theme.VintrMusicExtendedTheme
+import pw.vintr.music.core.ui.kit.dimen.DimensDp
+import pw.vintr.music.core.ui.theme.VintrMusicExtendedTheme
 
 @Composable
 fun AppNavigationBar(

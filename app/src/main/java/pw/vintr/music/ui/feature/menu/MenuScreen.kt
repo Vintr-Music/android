@@ -34,10 +34,10 @@ import pw.vintr.music.ui.kit.menu.MenuItemIconified
 import pw.vintr.music.ui.kit.layout.ScreenStateLayout
 import pw.vintr.music.ui.kit.modifier.cardContainer
 import pw.vintr.music.ui.kit.server.ServerItem
-import pw.vintr.music.ui.theme.Bee0
-import pw.vintr.music.ui.theme.Gilroy16
-import pw.vintr.music.ui.theme.Gilroy32
-import pw.vintr.music.ui.theme.VintrMusicExtendedTheme
+import pw.vintr.music.core.ui.theme.Bee0
+import pw.vintr.music.core.ui.theme.Gilroy16
+import pw.vintr.music.core.ui.theme.Gilroy32
+import pw.vintr.music.core.ui.theme.VintrMusicExtendedTheme
 
 @Composable
 fun MenuScreen(

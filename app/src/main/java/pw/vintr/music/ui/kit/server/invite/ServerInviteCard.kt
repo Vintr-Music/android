@@ -12,7 +12,7 @@ import androidx.compose.ui.unit.dp
 import pw.vintr.music.R
 import pw.vintr.music.domain.server.model.ServerInviteModel
 import pw.vintr.music.ui.kit.modifier.cardContainer
-import pw.vintr.music.ui.theme.VintrMusicExtendedTheme
+import pw.vintr.music.core.ui.theme.VintrMusicExtendedTheme
 
 @Composable
 fun ServerInviteCard(

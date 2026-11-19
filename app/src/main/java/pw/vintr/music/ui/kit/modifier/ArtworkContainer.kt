@@ -10,7 +10,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.unit.dp
-import pw.vintr.music.ui.theme.VintrMusicExtendedTheme
+import pw.vintr.music.core.ui.theme.VintrMusicExtendedTheme
 
 fun Modifier.artworkContainer(shape: Shape) = composed {
     val backgroundColor = VintrMusicExtendedTheme.colors.coverBackground

@@ -17,9 +17,9 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import pw.vintr.music.ui.kit.modifier.tabIndicatorOffset
-import pw.vintr.music.ui.theme.Bee0
-import pw.vintr.music.ui.theme.RubikMedium16
-import pw.vintr.music.ui.theme.VintrMusicExtendedTheme
+import pw.vintr.music.core.ui.theme.Bee0
+import pw.vintr.music.core.ui.theme.RubikMedium16
+import pw.vintr.music.core.ui.theme.VintrMusicExtendedTheme
 
 @Composable
 fun AppScrollableTabRow(

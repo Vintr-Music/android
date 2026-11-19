@@ -22,8 +22,8 @@ import coil3.request.error
 import pw.vintr.music.R
 import pw.vintr.music.domain.playlist.model.PlaylistModel
 import pw.vintr.music.ui.kit.modifier.artworkContainer
-import pw.vintr.music.ui.theme.Gilroy16
-import pw.vintr.music.ui.theme.VintrMusicExtendedTheme
+import pw.vintr.music.core.ui.theme.Gilroy16
+import pw.vintr.music.core.ui.theme.VintrMusicExtendedTheme
 
 @Composable
 fun PlaylistView(

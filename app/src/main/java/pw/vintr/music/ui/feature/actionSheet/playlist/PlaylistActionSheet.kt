@@ -36,9 +36,9 @@ import pw.vintr.music.ui.feature.actionSheet.playlist.entity.PlaylistActionSheet
 import pw.vintr.music.ui.kit.common.ActionSheetInfoParam
 import pw.vintr.music.ui.kit.menu.MenuItemIconified
 import pw.vintr.music.ui.kit.modifier.artworkContainer
-import pw.vintr.music.ui.theme.RubikMedium16
-import pw.vintr.music.ui.theme.RubikRegular14
-import pw.vintr.music.ui.theme.VintrMusicExtendedTheme
+import pw.vintr.music.core.ui.theme.RubikMedium16
+import pw.vintr.music.core.ui.theme.RubikRegular14
+import pw.vintr.music.core.ui.theme.VintrMusicExtendedTheme
 
 @Composable
 fun PlaylistActionSheet(

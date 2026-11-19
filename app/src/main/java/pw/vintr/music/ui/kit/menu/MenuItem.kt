@@ -15,9 +15,9 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import pw.vintr.music.ui.theme.Bee0
-import pw.vintr.music.ui.theme.RubikMedium18
-import pw.vintr.music.ui.theme.switchColors
+import pw.vintr.music.core.ui.theme.Bee0
+import pw.vintr.music.core.ui.theme.RubikMedium18
+import pw.vintr.music.core.ui.theme.switchColors
 
 @Composable
 fun MenuItem(

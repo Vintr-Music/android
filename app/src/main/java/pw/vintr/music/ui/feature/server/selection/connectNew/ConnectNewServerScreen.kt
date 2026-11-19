@@ -45,8 +45,8 @@ import pw.vintr.music.ui.kit.input.AppTextField
 import pw.vintr.music.ui.kit.scanner.QRScanner
 import pw.vintr.music.ui.kit.selector.SegmentControl
 import pw.vintr.music.ui.kit.toolbar.ToolbarRegular
-import pw.vintr.music.ui.theme.Gilroy16
-import pw.vintr.music.ui.theme.VintrMusicExtendedTheme
+import pw.vintr.music.core.ui.theme.Gilroy16
+import pw.vintr.music.core.ui.theme.VintrMusicExtendedTheme
 
 @OptIn(ExperimentalPermissionsApi::class)
 @Composable

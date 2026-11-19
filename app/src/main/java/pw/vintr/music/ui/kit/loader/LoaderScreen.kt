@@ -8,7 +8,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import pw.vintr.music.ui.theme.Bee1
+import pw.vintr.music.core.ui.theme.Bee1
 
 @Composable
 fun LoaderScreen(modifier: Modifier = Modifier) {

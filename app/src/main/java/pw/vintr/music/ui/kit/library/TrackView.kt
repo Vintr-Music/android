@@ -31,9 +31,9 @@ import pw.vintr.music.R
 import pw.vintr.music.domain.library.model.track.TrackModel
 import pw.vintr.music.ui.kit.button.ButtonSimpleIcon
 import pw.vintr.music.ui.kit.modifier.artworkContainer
-import pw.vintr.music.ui.theme.RubikMedium16
-import pw.vintr.music.ui.theme.RubikRegular14
-import pw.vintr.music.ui.theme.VintrMusicExtendedTheme
+import pw.vintr.music.core.ui.theme.RubikMedium16
+import pw.vintr.music.core.ui.theme.RubikRegular14
+import pw.vintr.music.core.ui.theme.VintrMusicExtendedTheme
 
 const val FIXED_TRACK_VIEW_HEIGHT = 56
 

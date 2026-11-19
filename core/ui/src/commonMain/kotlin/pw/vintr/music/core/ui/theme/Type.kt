@@ -1,24 +1,15 @@
-package pw.vintr.music.ui.theme
+package pw.vintr.music.core.ui.theme
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
-import pw.vintr.music.R
 
-// Default empty typography
 val Typography = Typography()
 
-val Rubik = FontFamily(
-    Font(R.font.rubik_regular, FontWeight.Normal),
-    Font(R.font.rubik_medium, FontWeight.Medium),
-    Font(R.font.rubik_bold, FontWeight.Bold),
-)
-val Gilroy = FontFamily(
-    Font(R.font.gilroy_extra_bold),
-)
+expect val Rubik: FontFamily
+expect val Gilroy: FontFamily
 
 val BaseRubikStyle = TextStyle(fontFamily = Rubik)
 

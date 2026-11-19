@@ -1,4 +1,4 @@
-package pw.vintr.music.ui.theme
+package pw.vintr.music.core.ui.theme
 
 import androidx.compose.ui.graphics.Color
 

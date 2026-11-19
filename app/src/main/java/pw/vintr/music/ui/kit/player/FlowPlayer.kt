@@ -27,9 +27,9 @@ import androidx.compose.ui.unit.dp
 import pw.vintr.music.R
 import pw.vintr.music.domain.player.model.state.PlayerStatusModel
 import pw.vintr.music.ui.kit.button.ButtonPlayerStateIcon
-import pw.vintr.music.ui.theme.Gilroy11
-import pw.vintr.music.ui.theme.Gilroy24
-import pw.vintr.music.ui.theme.VintrMusicExtendedTheme
+import pw.vintr.music.core.ui.theme.Gilroy11
+import pw.vintr.music.core.ui.theme.Gilroy24
+import pw.vintr.music.core.ui.theme.VintrMusicExtendedTheme
 
 @Composable
 @Preview

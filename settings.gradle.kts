@@ -1,10 +1,12 @@
 pluginManagement {
+    includeBuild("build-logic")
     repositories {
         google()
         mavenCentral()
         gradlePluginPortal()
     }
 }
+
 dependencyResolutionManagement {
     repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
     repositories {
@@ -13,6 +15,8 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "Vintr Music"
-include(":app")
- 
+rootProject.name = "VintrMusic"
+
+include("app")
+include("core:ui")
+include("desktop-app")

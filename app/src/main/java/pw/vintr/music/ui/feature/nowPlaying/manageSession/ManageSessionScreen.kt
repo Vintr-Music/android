@@ -26,7 +26,7 @@ import pw.vintr.music.ui.kit.button.ButtonSimpleIcon
 import pw.vintr.music.ui.kit.library.TrackView
 import pw.vintr.music.ui.kit.toolbar.ToolbarRegular
 import pw.vintr.music.ui.navigation.NavigatorType
-import pw.vintr.music.ui.theme.VintrMusicExtendedTheme
+import pw.vintr.music.core.ui.theme.VintrMusicExtendedTheme
 import sh.calvin.reorderable.ReorderableItem
 import sh.calvin.reorderable.rememberReorderableLazyListState
 

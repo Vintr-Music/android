@@ -8,9 +8,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import pw.vintr.music.ui.theme.RubikMedium14
-import pw.vintr.music.ui.theme.RubikRegular14
-import pw.vintr.music.ui.theme.VintrMusicExtendedTheme
+import pw.vintr.music.core.ui.theme.RubikMedium14
+import pw.vintr.music.core.ui.theme.RubikRegular14
+import pw.vintr.music.core.ui.theme.VintrMusicExtendedTheme
 
 @Composable
 fun ActionSheetInfoParam(title: String, value: String) {

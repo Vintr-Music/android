@@ -22,8 +22,8 @@ import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import pw.vintr.music.tools.format.DurationFormat
-import pw.vintr.music.ui.theme.Gilroy12
-import pw.vintr.music.ui.theme.VintrMusicExtendedTheme
+import pw.vintr.music.core.ui.theme.Gilroy12
+import pw.vintr.music.core.ui.theme.VintrMusicExtendedTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

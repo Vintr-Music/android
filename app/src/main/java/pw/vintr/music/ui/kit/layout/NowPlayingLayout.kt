@@ -24,7 +24,7 @@ import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.launch
 import pw.vintr.music.domain.player.model.state.PlayerStateHolderModel
 import pw.vintr.music.ui.feature.nowPlaying.NowPlayingScreen
-import pw.vintr.music.ui.kit.dimen.DimensDp
+import pw.vintr.music.core.ui.kit.dimen.DimensDp
 import pw.vintr.music.ui.kit.player.BottomNowPlaying
 import pw.vintr.music.ui.kit.sliding.BottomSheetScaffold
 import pw.vintr.music.ui.kit.sliding.BottomSheetScaffoldState

@@ -19,8 +19,8 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import pw.vintr.music.tools.extension.Empty
-import pw.vintr.music.ui.theme.Gradient0
-import pw.vintr.music.ui.theme.Gradient1
+import pw.vintr.music.core.ui.theme.Gradient0
+import pw.vintr.music.core.ui.theme.Gradient1
 import kotlin.math.log10
 
 private const val MIN_BARS_COUNT = 10

@@ -27,8 +27,8 @@ import pw.vintr.music.domain.player.model.state.PlayerStateHolderModel
 import pw.vintr.music.domain.player.model.state.PlayerStatusModel
 import pw.vintr.music.ui.kit.button.ButtonPlayerState
 import pw.vintr.music.ui.kit.button.ButtonSimpleIcon
-import pw.vintr.music.ui.theme.Bee0
-import pw.vintr.music.ui.theme.VintrMusicExtendedTheme
+import pw.vintr.music.core.ui.theme.Bee0
+import pw.vintr.music.core.ui.theme.VintrMusicExtendedTheme
 
 @Composable
 @Preview(widthDp = 400)

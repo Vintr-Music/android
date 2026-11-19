@@ -34,7 +34,7 @@ import pw.vintr.music.ui.kit.library.PlaylistView
 import pw.vintr.music.ui.kit.library.tools.rememberLibraryGridCells
 import pw.vintr.music.ui.kit.state.EmptyState
 import pw.vintr.music.ui.kit.toolbar.ToolbarRegular
-import pw.vintr.music.ui.theme.Bee1
+import pw.vintr.music.core.ui.theme.Bee1
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable

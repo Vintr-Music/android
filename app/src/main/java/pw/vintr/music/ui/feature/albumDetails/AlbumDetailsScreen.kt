@@ -36,9 +36,9 @@ import pw.vintr.music.ui.kit.toolbar.ToolbarRegular
 import pw.vintr.music.ui.kit.toolbar.collapsing.CollapsingLayout
 import pw.vintr.music.ui.kit.toolbar.collapsing.ScrollStrategy
 import pw.vintr.music.ui.kit.toolbar.collapsing.rememberCollapsingLayoutState
-import pw.vintr.music.ui.theme.Gilroy16
-import pw.vintr.music.ui.theme.Gilroy36
-import pw.vintr.music.ui.theme.VintrMusicExtendedTheme
+import pw.vintr.music.core.ui.theme.Gilroy16
+import pw.vintr.music.core.ui.theme.Gilroy36
+import pw.vintr.music.core.ui.theme.VintrMusicExtendedTheme
 
 @Composable
 fun AlbumDetailsScreen(

@@ -2,11 +2,11 @@ import java.io.FileInputStream
 import java.util.Properties
 
 plugins {
-    id("com.android.application")
-    id("org.jetbrains.kotlin.plugin.compose")
-    id("org.jetbrains.kotlin.plugin.parcelize")
-    id("com.google.devtools.ksp")
-    id("io.appmetrica.analytics")
+    alias(libs.plugins.android.application)
+    alias(libs.plugins.kotlin.compose)
+    alias(libs.plugins.kotlin.parcelize)
+    alias(libs.plugins.ksp)
+    alias(libs.plugins.appmetrica)
 }
 
 appmetrica {
@@ -32,12 +32,12 @@ android {
         }
     }
     namespace = "pw.vintr.music"
-    compileSdk = 37
+    compileSdk = libs.versions.compileSdk.get().toInt()
 
     defaultConfig {
         applicationId = "pw.vintr.music"
-        minSdk = 28
-        targetSdk = 37
+        minSdk = libs.versions.minSdk.get().toInt()
+        targetSdk = libs.versions.targetSdk.get().toInt()
         versionCode = 10
         versionName = "0.6.2 Preview"
 
@@ -79,98 +79,80 @@ android {
 }
 
 dependencies {
-    val materialVersion = "1.12.1"
-    val navigationVersion = "2.9.8"
-    val accompanistVersion = "0.37.3"
-    val accompanistNavigationVersion = "0.36.0"
-    val ktorVersion = "3.6.1"
-    val koinVersion = "4.2.2"
-    val preferenceVersion = "1.2.1"
-    val coilVersion = "3.6.3"
-    // Intentionally pinned — media session migration is a separate task.
-    val media3Version = "1.5.1"
-    val roomVersion = "2.8.5"
-    val coroutinesVersion = "1.11.0"
-    val paletteVersion = "1.1.0"
-    val cameraxVersion = "1.6.2"
-    val zxingVersion = "3.5.4"
-    val reordableVersion = "3.1.0"
-    val metricaVersion = "8.6.0"
-    val immutableCollectionsVersion = "0.5.2"
-    val composeBomVersion = "2026.09.00"
+    implementation(project(":core:ui"))
 
     // Common Android
-    implementation("androidx.core:core-ktx:1.19.1")
-    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.11.0")
-    implementation("androidx.activity:activity-compose:1.13.0")
-    implementation(platform("androidx.compose:compose-bom:$composeBomVersion"))
-    implementation("androidx.compose.ui:ui")
-    implementation("androidx.compose.ui:ui-graphics")
-    implementation("androidx.compose.ui:ui-tooling-preview")
-    implementation("androidx.preference:preference-ktx:$preferenceVersion")
-    implementation("androidx.palette:palette-ktx:$paletteVersion")
+    implementation(libs.androidx.core.ktx)
+    implementation(libs.androidx.lifecycle.runtime.ktx)
+    implementation(libs.androidx.activity.compose)
+    implementation(platform(libs.androidx.compose.bom))
+    implementation(libs.androidx.compose.ui)
+    implementation(libs.androidx.compose.ui.graphics)
+    implementation(libs.androidx.compose.ui.tooling.preview)
+    implementation(libs.androidx.preference.ktx)
+    implementation(libs.androidx.palette.ktx)
 
     // Material
-    implementation("androidx.compose.material3:material3")
-    implementation("androidx.compose.material:material:$materialVersion")
-    implementation("androidx.compose.material:material-navigation:$materialVersion")
+    implementation(libs.androidx.compose.material3)
+    implementation(libs.androidx.compose.material)
+    implementation(libs.androidx.compose.material.navigation)
 
     // Compose external
-    implementation("sh.calvin.reorderable:reorderable:$reordableVersion")
+    implementation(libs.reorderable)
 
     // Tests
-    testImplementation("junit:junit:4.13.2")
-    androidTestImplementation("androidx.test.ext:junit:1.3.0")
-    androidTestImplementation("androidx.test.espresso:espresso-core:3.7.0")
-    androidTestImplementation(platform("androidx.compose:compose-bom:$composeBomVersion"))
-    androidTestImplementation("androidx.compose.ui:ui-test-junit4")
-    debugImplementation("androidx.compose.ui:ui-tooling")
-    debugImplementation("androidx.compose.ui:ui-test-manifest")
+    testImplementation(libs.junit)
+    androidTestImplementation(libs.androidx.test.ext.junit)
+    androidTestImplementation(libs.androidx.test.espresso.core)
+    androidTestImplementation(platform(libs.androidx.compose.bom))
+    androidTestImplementation(libs.androidx.compose.ui.test.junit4)
+    debugImplementation(libs.androidx.compose.ui.tooling)
+    debugImplementation(libs.androidx.compose.ui.test.manifest)
 
     // Navigation | Accompanist
-    implementation("androidx.navigation:navigation-compose:$navigationVersion")
-    implementation("com.google.accompanist:accompanist-navigation-material:$accompanistNavigationVersion")
-    implementation("com.google.accompanist:accompanist-permissions:$accompanistVersion")
+    implementation(libs.androidx.navigation.compose)
+    implementation(libs.accompanist.navigation.material)
+    implementation(libs.accompanist.permissions)
 
     // Ktor | HTTP
-    implementation("io.ktor:ktor-client-android:$ktorVersion")
-    implementation("io.ktor:ktor-client-logging-jvm:$ktorVersion")
-    implementation("io.ktor:ktor-client-content-negotiation:$ktorVersion")
-    implementation("io.ktor:ktor-serialization-gson:$ktorVersion")
-    implementation("io.ktor:ktor-client-resources:$ktorVersion")
+    implementation(libs.ktor.client.android)
+    implementation(libs.ktor.client.logging.jvm)
+    implementation(libs.ktor.client.content.negotiation)
+    implementation(libs.ktor.serialization.gson)
+    implementation(libs.ktor.client.resources)
 
     // Koin
-    implementation("io.insert-koin:koin-android:$koinVersion")
-    implementation("io.insert-koin:koin-androidx-compose:$koinVersion")
+    implementation(libs.koin.android)
+    implementation(libs.koin.androidx.compose)
 
     // Coil
-    implementation("io.coil-kt.coil3:coil-compose:$coilVersion")
-    implementation("io.coil-kt.coil3:coil-network-okhttp:$coilVersion")
+    implementation(libs.coil.compose)
+    implementation(libs.coil.network.okhttp)
 
     // Media 3
-    implementation("androidx.media3:media3-session:$media3Version")
-    implementation("androidx.media3:media3-exoplayer:$media3Version")
-    implementation("androidx.media3:media3-datasource-okhttp:$media3Version")
+    implementation(libs.media3.session)
+    implementation(libs.media3.exoplayer)
+    implementation(libs.media3.datasource.okhttp)
 
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutinesVersion")
+    implementation(libs.kotlinx.coroutines.core)
 
     // Room cache (SearchHistory, PlayerSession, Equalizer)
-    implementation("androidx.room:room-runtime:$roomVersion")
-    implementation("androidx.room:room-ktx:$roomVersion")
-    ksp("androidx.room:room-compiler:$roomVersion")
+    implementation(libs.room.runtime)
+    implementation(libs.room.ktx)
+    ksp(libs.room.compiler)
 
     // Camera X
-    implementation("androidx.camera:camera-core:$cameraxVersion")
-    implementation("androidx.camera:camera-camera2:$cameraxVersion")
-    implementation("androidx.camera:camera-view:$cameraxVersion")
-    implementation("androidx.camera:camera-lifecycle:$cameraxVersion")
+    implementation(libs.camera.core)
+    implementation(libs.camera.camera2)
+    implementation(libs.camera.view)
+    implementation(libs.camera.lifecycle)
 
     // ZXing Scanner
-    implementation("com.google.zxing:core:$zxingVersion")
+    implementation(libs.zxing.core)
 
     // Metrica
-    implementation("io.appmetrica.analytics:analytics:$metricaVersion")
+    implementation(libs.appmetrica.analytics)
 
     // Immutable collections
-    implementation("org.jetbrains.kotlinx:kotlinx-collections-immutable:${immutableCollectionsVersion}")
+    implementation(libs.kotlinx.collections.immutable)
 }

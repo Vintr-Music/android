@@ -52,10 +52,10 @@ import pw.vintr.music.ui.kit.modifier.artworkContainer
 import pw.vintr.music.ui.kit.state.EmptyState
 import pw.vintr.music.ui.kit.toolbar.ToolbarRegular
 import pw.vintr.music.ui.navigation.NavigatorType
-import pw.vintr.music.ui.theme.Green0
-import pw.vintr.music.ui.theme.RubikMedium16
-import pw.vintr.music.ui.theme.RubikRegular14
-import pw.vintr.music.ui.theme.VintrMusicExtendedTheme
+import pw.vintr.music.core.ui.theme.Green0
+import pw.vintr.music.core.ui.theme.RubikMedium16
+import pw.vintr.music.core.ui.theme.RubikRegular14
+import pw.vintr.music.core.ui.theme.VintrMusicExtendedTheme
 
 @Composable
 fun PlaylistAddTrackScreen(

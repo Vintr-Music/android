@@ -1,6 +1,5 @@
-package pw.vintr.music.ui.theme
+package pw.vintr.music.core.ui.theme
 
-import android.app.Activity
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.LocalRippleConfiguration
@@ -12,12 +11,8 @@ import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.Immutable
-import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.toArgb
-import androidx.compose.ui.platform.LocalView
-import androidx.core.view.WindowCompat
 
 @Immutable
 data class VintrMusicColors(
@@ -248,7 +243,6 @@ fun VintrMusicTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
     content: @Composable () -> Unit
 ) {
-    val view = LocalView.current
     val colorScheme = if (darkTheme) {
         darkColorScheme
     } else {
@@ -260,18 +254,7 @@ fun VintrMusicTheme(
         lightVintrColors
     }
 
-    if (!view.isInEditMode) {
-        SideEffect {
-            val window = (view.context as Activity).window
-            val windowsInsetsController = WindowCompat.getInsetsController(window, view)
-
-            window.statusBarColor = Color.Transparent.toArgb()
-            window.navigationBarColor = Color.Transparent.toArgb()
-
-            windowsInsetsController.isAppearanceLightStatusBars = !darkTheme
-            windowsInsetsController.isAppearanceLightNavigationBars = !darkTheme
-        }
-    }
+    ApplySystemBars(darkTheme = darkTheme)
 
     CompositionLocalProvider(LocalVintrColors provides vintrColors) {
         MaterialTheme(

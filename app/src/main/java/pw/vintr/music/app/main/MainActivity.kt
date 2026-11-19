@@ -22,7 +22,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.core.view.WindowCompat
 import pw.vintr.music.ui.feature.login.LoginScreen
-import pw.vintr.music.ui.theme.VintrMusicTheme
+import pw.vintr.music.core.ui.theme.VintrMusicTheme
 import androidx.compose.material.ExperimentalMaterialApi
 //noinspection UsingMaterialAndMaterial3Libraries
 import androidx.compose.material.ModalBottomSheetValue
@@ -86,7 +86,7 @@ import pw.vintr.music.ui.navigation.Screen
 import pw.vintr.music.ui.navigation.navArgs.parcelable.ParcelableNavType
 import pw.vintr.music.ui.navigation.navArgs.parcelableList.ParcelableListNavType
 import pw.vintr.music.ui.navigation.navGraph.extendedDialog
-import pw.vintr.music.ui.theme.Bee1
+import pw.vintr.music.core.ui.theme.Bee1
 
 private const val TRANSITION_DURATION = 300
 

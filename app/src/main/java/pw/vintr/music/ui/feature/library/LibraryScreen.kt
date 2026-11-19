@@ -34,10 +34,10 @@ import pw.vintr.music.ui.kit.layout.PullRefreshLayout
 import pw.vintr.music.ui.kit.layout.ScreenStateLayout
 import pw.vintr.music.ui.kit.library.ArtistView
 import pw.vintr.music.ui.kit.menu.MenuItemIconified
-import pw.vintr.music.ui.theme.Gilroy12
-import pw.vintr.music.ui.theme.Gilroy14
-import pw.vintr.music.ui.theme.RubikMedium16
-import pw.vintr.music.ui.theme.VintrMusicExtendedTheme
+import pw.vintr.music.core.ui.theme.Gilroy12
+import pw.vintr.music.core.ui.theme.Gilroy14
+import pw.vintr.music.core.ui.theme.RubikMedium16
+import pw.vintr.music.core.ui.theme.VintrMusicExtendedTheme
 
 private const val MENU_ITEM_LIBRARY = "item-library"
 private const val MENU_ITEM_ALL_ARTISTS = "item-artists"

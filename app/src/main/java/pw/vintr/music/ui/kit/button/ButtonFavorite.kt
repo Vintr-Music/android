@@ -3,8 +3,8 @@ package pw.vintr.music.ui.kit.button
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import pw.vintr.music.R
-import pw.vintr.music.ui.theme.Red2
-import pw.vintr.music.ui.theme.VintrMusicExtendedTheme
+import pw.vintr.music.core.ui.theme.Red2
+import pw.vintr.music.core.ui.theme.VintrMusicExtendedTheme
 
 @Composable
 fun ButtonFavorite(

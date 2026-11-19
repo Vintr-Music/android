@@ -44,9 +44,9 @@ import pw.vintr.music.ui.kit.library.AlbumView
 import pw.vintr.music.ui.kit.library.ArtistView
 import pw.vintr.music.ui.kit.library.TrackView
 import pw.vintr.music.ui.kit.separator.LineSeparator
-import pw.vintr.music.ui.theme.Gilroy18
-import pw.vintr.music.ui.theme.RubikMedium16
-import pw.vintr.music.ui.theme.VintrMusicExtendedTheme
+import pw.vintr.music.core.ui.theme.Gilroy18
+import pw.vintr.music.core.ui.theme.RubikMedium16
+import pw.vintr.music.core.ui.theme.VintrMusicExtendedTheme
 
 private const val TAG_ARTISTS_TITLE = "tag-artists-title"
 private const val TAG_ALBUMS_TITLE = "tag-albums-title"

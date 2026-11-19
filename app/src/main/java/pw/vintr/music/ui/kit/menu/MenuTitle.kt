@@ -9,9 +9,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
-import pw.vintr.music.ui.theme.Gilroy14
-import pw.vintr.music.ui.theme.RubikMedium18
-import pw.vintr.music.ui.theme.VintrMusicExtendedTheme
+import pw.vintr.music.core.ui.theme.Gilroy14
+import pw.vintr.music.core.ui.theme.RubikMedium18
+import pw.vintr.music.core.ui.theme.VintrMusicExtendedTheme
 
 @Composable
 fun MenuTitle(

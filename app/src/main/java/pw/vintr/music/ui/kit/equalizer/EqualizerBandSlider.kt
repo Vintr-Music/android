@@ -31,10 +31,10 @@ import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import pw.vintr.music.R
 import pw.vintr.music.tools.extension.escapePadding
-import pw.vintr.music.ui.theme.Gilroy10
-import pw.vintr.music.ui.theme.Gradient0
-import pw.vintr.music.ui.theme.Gradient1
-import pw.vintr.music.ui.theme.VintrMusicExtendedTheme
+import pw.vintr.music.core.ui.theme.Gilroy10
+import pw.vintr.music.core.ui.theme.Gradient0
+import pw.vintr.music.core.ui.theme.Gradient1
+import pw.vintr.music.core.ui.theme.VintrMusicExtendedTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

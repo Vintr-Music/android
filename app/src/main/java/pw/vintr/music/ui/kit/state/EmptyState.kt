@@ -16,8 +16,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import pw.vintr.music.R
 import pw.vintr.music.tools.extension.Empty
-import pw.vintr.music.ui.theme.Gilroy20
-import pw.vintr.music.ui.theme.VintrMusicExtendedTheme
+import pw.vintr.music.core.ui.theme.Gilroy20
+import pw.vintr.music.core.ui.theme.VintrMusicExtendedTheme
 
 @Composable
 @Preview

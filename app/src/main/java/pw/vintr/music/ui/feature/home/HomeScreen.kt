@@ -53,9 +53,9 @@ import pw.vintr.music.ui.kit.toolbar.collapsing.ScrollStrategy
 import pw.vintr.music.ui.kit.toolbar.collapsing.collapsingToolbarScrollConnection
 import pw.vintr.music.ui.kit.toolbar.collapsing.rememberCollapsingLayoutState
 import pw.vintr.music.ui.kit.visualizer.Visualizer
-import pw.vintr.music.ui.theme.Gilroy18
-import pw.vintr.music.ui.theme.Gilroy24
-import pw.vintr.music.ui.theme.VintrMusicExtendedTheme
+import pw.vintr.music.core.ui.theme.Gilroy18
+import pw.vintr.music.core.ui.theme.Gilroy24
+import pw.vintr.music.core.ui.theme.VintrMusicExtendedTheme
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable

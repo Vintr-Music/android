@@ -16,9 +16,9 @@ import org.koin.androidx.compose.koinViewModel
 import pw.vintr.music.R
 import pw.vintr.music.ui.feature.dialog.entity.ConfirmDialogData
 import pw.vintr.music.ui.kit.button.ButtonText
-import pw.vintr.music.ui.theme.Gilroy20
-import pw.vintr.music.ui.theme.RubikRegular14
-import pw.vintr.music.ui.theme.VintrMusicExtendedTheme
+import pw.vintr.music.core.ui.theme.Gilroy20
+import pw.vintr.music.core.ui.theme.RubikRegular14
+import pw.vintr.music.core.ui.theme.VintrMusicExtendedTheme
 
 @Composable
 fun ConfirmDialog(
