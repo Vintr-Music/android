@@ -33,9 +33,9 @@ import pw.vintr.music.tools.extension.dialogContainer
 import pw.vintr.music.tools.format.DurationFormat
 import pw.vintr.music.ui.feature.actionSheet.playlist.entity.PlaylistAction
 import pw.vintr.music.ui.feature.actionSheet.playlist.entity.PlaylistActionSheetInfo
-import pw.vintr.music.ui.kit.common.ActionSheetInfoParam
-import pw.vintr.music.ui.kit.menu.MenuItemIconified
-import pw.vintr.music.ui.kit.modifier.artworkContainer
+import pw.vintr.music.core.ui.kit.common.ActionSheetInfoParam
+import pw.vintr.music.core.ui.kit.menu.MenuItemIconified
+import pw.vintr.music.core.ui.kit.modifier.artworkContainer
 import pw.vintr.music.core.ui.theme.RubikMedium16
 import pw.vintr.music.core.ui.theme.RubikRegular14
 import pw.vintr.music.core.ui.theme.VintrMusicExtendedTheme

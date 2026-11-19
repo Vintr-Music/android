@@ -18,7 +18,7 @@ import org.koin.androidx.compose.koinViewModel
 import pw.vintr.music.R
 import pw.vintr.music.ui.feature.server.accessControl.invite.ServerInviteListTab
 import pw.vintr.music.ui.feature.server.accessControl.members.ServerMemberListTab
-import pw.vintr.music.ui.kit.selector.SegmentControl
+import pw.vintr.music.core.ui.kit.selector.SegmentControl
 import pw.vintr.music.ui.kit.toolbar.ToolbarRegular
 
 @Composable

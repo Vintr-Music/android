@@ -20,7 +20,7 @@ import coil3.request.crossfade
 import pw.vintr.music.domain.library.model.album.AlbumModel
 import pw.vintr.music.tools.extension.Comma
 import pw.vintr.music.tools.extension.Space
-import pw.vintr.music.ui.kit.modifier.artworkContainer
+import pw.vintr.music.core.ui.kit.modifier.artworkContainer
 import pw.vintr.music.core.ui.theme.Gilroy14
 import pw.vintr.music.core.ui.theme.Gilroy16
 import pw.vintr.music.core.ui.theme.VintrMusicExtendedTheme

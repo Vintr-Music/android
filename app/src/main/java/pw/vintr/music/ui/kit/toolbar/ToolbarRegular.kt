@@ -20,7 +20,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import pw.vintr.music.R
 import pw.vintr.music.tools.extension.Empty
-import pw.vintr.music.ui.kit.button.ButtonSimpleIcon
+import pw.vintr.music.core.ui.kit.button.ButtonSimpleIcon
 import pw.vintr.music.core.ui.theme.Bee1
 import pw.vintr.music.core.ui.theme.Gilroy18
 import pw.vintr.music.core.ui.theme.VintrMusicExtendedTheme

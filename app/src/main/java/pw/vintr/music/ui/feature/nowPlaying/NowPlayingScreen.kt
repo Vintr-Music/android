@@ -45,7 +45,7 @@ import pw.vintr.music.domain.player.model.state.PlayerStatusModel
 import pw.vintr.music.tools.composable.rememberDisplayRoundness
 import pw.vintr.music.tools.extension.Dash
 import pw.vintr.music.tools.extension.Space
-import pw.vintr.music.ui.kit.button.ButtonBorderedIcon
+import pw.vintr.music.core.ui.kit.button.ButtonBorderedIcon
 import pw.vintr.music.ui.kit.player.PlayerControls
 import pw.vintr.music.ui.kit.player.PlayerProgressBar
 import pw.vintr.music.ui.kit.player.PlayerStatePager

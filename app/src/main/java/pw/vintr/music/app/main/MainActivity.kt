@@ -78,7 +78,7 @@ import pw.vintr.music.ui.feature.library.playlist.addTrack.PlaylistAddTrackScree
 import pw.vintr.music.ui.feature.library.playlist.create.PlaylistCreateScreen
 import pw.vintr.music.ui.feature.library.playlist.edit.PlaylistEditScreen
 import pw.vintr.music.ui.kit.alert.Alert
-import pw.vintr.music.ui.kit.sliding.AnchoredDraggableDefaults
+import pw.vintr.music.core.ui.kit.sliding.AnchoredDraggableDefaults
 import pw.vintr.music.ui.navigation.Navigator
 import pw.vintr.music.ui.navigation.NavigatorEffect
 import pw.vintr.music.ui.navigation.NavigatorType

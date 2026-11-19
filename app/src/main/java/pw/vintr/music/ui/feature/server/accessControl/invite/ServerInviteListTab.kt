@@ -13,7 +13,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import org.koin.androidx.compose.koinViewModel
 import org.koin.core.parameter.parametersOf
-import pw.vintr.music.ui.kit.layout.PullRefreshLayout
+import pw.vintr.music.core.ui.kit.layout.PullRefreshLayout
 import pw.vintr.music.ui.kit.layout.ScreenStateLayout
 import pw.vintr.music.ui.kit.server.invite.ServerInviteCard
 

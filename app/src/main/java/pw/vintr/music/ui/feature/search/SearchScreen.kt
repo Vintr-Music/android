@@ -43,7 +43,7 @@ import pw.vintr.music.ui.kit.layout.ScreenStateLayout
 import pw.vintr.music.ui.kit.library.AlbumView
 import pw.vintr.music.ui.kit.library.ArtistView
 import pw.vintr.music.ui.kit.library.TrackView
-import pw.vintr.music.ui.kit.separator.LineSeparator
+import pw.vintr.music.core.ui.kit.separator.LineSeparator
 import pw.vintr.music.core.ui.theme.Gilroy18
 import pw.vintr.music.core.ui.theme.RubikMedium16
 import pw.vintr.music.core.ui.theme.VintrMusicExtendedTheme

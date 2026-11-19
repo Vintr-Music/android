@@ -48,10 +48,10 @@ import pw.vintr.music.ui.feature.menu.MenuScreen
 import pw.vintr.music.ui.feature.search.SearchScreen
 import pw.vintr.music.ui.feature.settings.SettingsScreen
 import pw.vintr.music.ui.kit.layout.NowPlayingLayout
-import pw.vintr.music.ui.kit.navbar.AppNavBarItem
-import pw.vintr.music.ui.kit.navbar.AppNavigationBar
-import pw.vintr.music.ui.kit.sliding.BottomSheetScaffoldState
-import pw.vintr.music.ui.kit.sliding.rememberBottomSheetScaffoldState
+import pw.vintr.music.core.ui.kit.navbar.AppNavBarItem
+import pw.vintr.music.core.ui.kit.navbar.AppNavigationBar
+import pw.vintr.music.core.ui.kit.sliding.BottomSheetScaffoldState
+import pw.vintr.music.core.ui.kit.sliding.rememberBottomSheetScaffoldState
 import pw.vintr.music.ui.navigation.Navigator
 import pw.vintr.music.ui.navigation.NavigatorAction
 import pw.vintr.music.ui.navigation.NavigatorEffect

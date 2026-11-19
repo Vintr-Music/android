@@ -20,9 +20,9 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import pw.vintr.music.R
 import pw.vintr.music.domain.server.model.ServerModel
-import pw.vintr.music.ui.kit.button.ButtonSecondary
-import pw.vintr.music.ui.kit.button.ButtonSecondarySize
-import pw.vintr.music.ui.kit.radio.AppRadioButton
+import pw.vintr.music.core.ui.kit.button.ButtonSecondary
+import pw.vintr.music.core.ui.kit.button.ButtonSecondarySize
+import pw.vintr.music.core.ui.kit.radio.AppRadioButton
 import pw.vintr.music.core.ui.theme.Gilroy14
 import pw.vintr.music.core.ui.theme.VintrMusicExtendedTheme
 

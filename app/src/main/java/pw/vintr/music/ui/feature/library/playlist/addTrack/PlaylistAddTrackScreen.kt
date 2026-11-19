@@ -44,11 +44,11 @@ import org.koin.androidx.compose.koinViewModel
 import org.koin.core.parameter.parametersOf
 import pw.vintr.music.R
 import pw.vintr.music.tools.composable.rememberBottomSheetNestedScrollInterceptor
-import pw.vintr.music.ui.kit.button.ButtonRegular
-import pw.vintr.music.ui.kit.button.ButtonSecondary
-import pw.vintr.music.ui.kit.button.ButtonSimpleIcon
+import pw.vintr.music.core.ui.kit.button.ButtonRegular
+import pw.vintr.music.core.ui.kit.button.ButtonSecondary
+import pw.vintr.music.core.ui.kit.button.ButtonSimpleIcon
 import pw.vintr.music.ui.kit.layout.ScreenStateLayout
-import pw.vintr.music.ui.kit.modifier.artworkContainer
+import pw.vintr.music.core.ui.kit.modifier.artworkContainer
 import pw.vintr.music.ui.kit.state.EmptyState
 import pw.vintr.music.ui.kit.toolbar.ToolbarRegular
 import pw.vintr.music.ui.navigation.NavigatorType

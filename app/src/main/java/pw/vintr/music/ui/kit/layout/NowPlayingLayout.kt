@@ -26,9 +26,9 @@ import pw.vintr.music.domain.player.model.state.PlayerStateHolderModel
 import pw.vintr.music.ui.feature.nowPlaying.NowPlayingScreen
 import pw.vintr.music.core.ui.kit.dimen.DimensDp
 import pw.vintr.music.ui.kit.player.BottomNowPlaying
-import pw.vintr.music.ui.kit.sliding.BottomSheetScaffold
-import pw.vintr.music.ui.kit.sliding.BottomSheetScaffoldState
-import pw.vintr.music.ui.kit.sliding.rememberBottomSheetScaffoldState
+import pw.vintr.music.core.ui.kit.sliding.BottomSheetScaffold
+import pw.vintr.music.core.ui.kit.sliding.BottomSheetScaffoldState
+import pw.vintr.music.core.ui.kit.sliding.rememberBottomSheetScaffoldState
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable

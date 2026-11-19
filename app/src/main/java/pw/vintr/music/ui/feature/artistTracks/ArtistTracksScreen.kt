@@ -35,9 +35,9 @@ import pw.vintr.music.ui.kit.layout.ScreenStateLayout
 import pw.vintr.music.ui.kit.library.TrackView
 import pw.vintr.music.ui.kit.pagination.paginationControls
 import pw.vintr.music.ui.kit.toolbar.ToolbarRegular
-import pw.vintr.music.ui.kit.toolbar.collapsing.CollapsingLayout
-import pw.vintr.music.ui.kit.toolbar.collapsing.ScrollStrategy
-import pw.vintr.music.ui.kit.toolbar.collapsing.rememberCollapsingLayoutState
+import pw.vintr.music.core.ui.kit.toolbar.collapsing.CollapsingLayout
+import pw.vintr.music.core.ui.kit.toolbar.collapsing.ScrollStrategy
+import pw.vintr.music.core.ui.kit.toolbar.collapsing.rememberCollapsingLayoutState
 
 @Composable
 fun ArtistTracksScreen(

@@ -31,9 +31,9 @@ import pw.vintr.music.tools.composable.ColumnItems
 import pw.vintr.music.tools.extension.dialogContainer
 import pw.vintr.music.tools.extension.toStringRes
 import pw.vintr.music.ui.feature.actionSheet.track.entity.TrackAction
-import pw.vintr.music.ui.kit.common.ActionSheetInfoParam
-import pw.vintr.music.ui.kit.menu.MenuItemIconified
-import pw.vintr.music.ui.kit.modifier.artworkContainer
+import pw.vintr.music.core.ui.kit.common.ActionSheetInfoParam
+import pw.vintr.music.core.ui.kit.menu.MenuItemIconified
+import pw.vintr.music.core.ui.kit.modifier.artworkContainer
 import pw.vintr.music.core.ui.theme.RubikMedium16
 import pw.vintr.music.core.ui.theme.RubikRegular14
 import pw.vintr.music.core.ui.theme.VintrMusicExtendedTheme

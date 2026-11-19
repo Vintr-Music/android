@@ -21,7 +21,7 @@ import androidx.compose.ui.unit.dp
 import pw.vintr.music.domain.player.model.state.PlayerStateHolderModel
 import pw.vintr.music.domain.player.model.state.PlayerStatusModel
 import pw.vintr.music.ui.kit.button.ButtonPlayerStateIcon
-import pw.vintr.music.ui.kit.separator.LineSeparator
+import pw.vintr.music.core.ui.kit.separator.LineSeparator
 import pw.vintr.music.core.ui.theme.RubikMedium16
 import pw.vintr.music.core.ui.theme.RubikRegular14
 import pw.vintr.music.core.ui.theme.VintrMusicExtendedTheme

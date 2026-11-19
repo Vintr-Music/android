@@ -24,9 +24,9 @@ import coil3.request.ImageRequest
 import coil3.request.crossfade
 import coil3.size.Size
 import pw.vintr.music.tools.extension.pxToDpFloat
-import pw.vintr.music.ui.kit.modifier.artworkGradientOverlayBackground
-import pw.vintr.music.ui.kit.toolbar.collapsing.CollapsingLayoutState
-import pw.vintr.music.ui.kit.toolbar.collapsing.CollapsingToolbarScope
+import pw.vintr.music.core.ui.kit.modifier.artworkGradientOverlayBackground
+import pw.vintr.music.core.ui.kit.toolbar.collapsing.CollapsingLayoutState
+import pw.vintr.music.core.ui.kit.toolbar.collapsing.CollapsingToolbarScope
 import pw.vintr.music.core.ui.theme.VintrMusicExtendedTheme
 
 private const val BLUR_BASE_RADIUS_DP = 10

@@ -14,7 +14,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import pw.vintr.music.R
-import pw.vintr.music.ui.kit.button.ButtonRegular
+import pw.vintr.music.core.ui.kit.button.ButtonRegular
 import pw.vintr.music.core.ui.theme.Gilroy18
 import pw.vintr.music.core.ui.theme.VintrMusicExtendedTheme
 

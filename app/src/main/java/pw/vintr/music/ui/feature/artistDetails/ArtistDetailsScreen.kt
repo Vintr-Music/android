@@ -46,14 +46,14 @@ import pw.vintr.music.ui.kit.layout.ScreenStateLayout
 import pw.vintr.music.ui.kit.library.FIXED_TRACK_VIEW_HEIGHT
 import pw.vintr.music.ui.kit.library.TrackView
 import pw.vintr.music.ui.kit.library.tools.rememberLibraryGridCellsCount
-import pw.vintr.music.ui.kit.menu.MenuItemIconified
-import pw.vintr.music.ui.kit.modifier.actionHeaderBackground
-import pw.vintr.music.ui.kit.selector.PageIndicator
+import pw.vintr.music.core.ui.kit.menu.MenuItemIconified
+import pw.vintr.music.core.ui.kit.modifier.actionHeaderBackground
+import pw.vintr.music.core.ui.kit.selector.PageIndicator
 import pw.vintr.music.ui.kit.toolbar.ToolbarWithArtwork
 import pw.vintr.music.ui.kit.toolbar.ToolbarRegular
-import pw.vintr.music.ui.kit.toolbar.collapsing.CollapsingLayout
-import pw.vintr.music.ui.kit.toolbar.collapsing.ScrollStrategy
-import pw.vintr.music.ui.kit.toolbar.collapsing.rememberCollapsingLayoutState
+import pw.vintr.music.core.ui.kit.toolbar.collapsing.CollapsingLayout
+import pw.vintr.music.core.ui.kit.toolbar.collapsing.ScrollStrategy
+import pw.vintr.music.core.ui.kit.toolbar.collapsing.rememberCollapsingLayoutState
 import pw.vintr.music.core.ui.theme.Gilroy36
 import pw.vintr.music.core.ui.theme.VintrMusicExtendedTheme
 

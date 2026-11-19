@@ -16,7 +16,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import pw.vintr.music.R
 import pw.vintr.music.domain.user.model.UserModel
-import pw.vintr.music.ui.kit.modifier.cardContainer
+import pw.vintr.music.core.ui.kit.modifier.cardContainer
 import pw.vintr.music.core.ui.theme.Gilroy16
 import pw.vintr.music.core.ui.theme.RubikBold12
 import pw.vintr.music.core.ui.theme.VintrMusicExtendedTheme

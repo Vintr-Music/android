@@ -27,12 +27,12 @@ import androidx.compose.ui.unit.dp
 import org.koin.androidx.compose.koinViewModel
 import pw.vintr.music.BuildConfig
 import pw.vintr.music.R
-import pw.vintr.music.ui.kit.button.ButtonSecondary
-import pw.vintr.music.ui.kit.button.ButtonSecondarySize
-import pw.vintr.music.ui.kit.button.ButtonSimpleIcon
-import pw.vintr.music.ui.kit.menu.MenuItemIconified
+import pw.vintr.music.core.ui.kit.button.ButtonSecondary
+import pw.vintr.music.core.ui.kit.button.ButtonSecondarySize
+import pw.vintr.music.core.ui.kit.button.ButtonSimpleIcon
+import pw.vintr.music.core.ui.kit.menu.MenuItemIconified
 import pw.vintr.music.ui.kit.layout.ScreenStateLayout
-import pw.vintr.music.ui.kit.modifier.cardContainer
+import pw.vintr.music.core.ui.kit.modifier.cardContainer
 import pw.vintr.music.ui.kit.server.ServerItem
 import pw.vintr.music.core.ui.theme.Bee0
 import pw.vintr.music.core.ui.theme.Gilroy16

@@ -17,7 +17,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import pw.vintr.music.R
 import pw.vintr.music.tools.extension.Empty
-import pw.vintr.music.ui.kit.button.ButtonSimpleIcon
+import pw.vintr.music.core.ui.kit.button.ButtonSimpleIcon
 import pw.vintr.music.core.ui.theme.Gilroy16
 import pw.vintr.music.core.ui.theme.RubikMedium14
 import pw.vintr.music.core.ui.theme.VintrMusicExtendedTheme

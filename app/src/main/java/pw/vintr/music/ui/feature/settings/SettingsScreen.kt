@@ -19,9 +19,9 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import org.koin.androidx.compose.koinViewModel
 import pw.vintr.music.R
-import pw.vintr.music.ui.kit.menu.MenuItem
-import pw.vintr.music.ui.kit.menu.MenuItemSwitchable
-import pw.vintr.music.ui.kit.menu.MenuSectionTitle
+import pw.vintr.music.core.ui.kit.menu.MenuItem
+import pw.vintr.music.core.ui.kit.menu.MenuItemSwitchable
+import pw.vintr.music.core.ui.kit.menu.MenuSectionTitle
 import pw.vintr.music.ui.kit.toolbar.ToolbarRegular
 
 @Composable
