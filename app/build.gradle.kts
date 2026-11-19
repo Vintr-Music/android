@@ -38,8 +38,8 @@ android {
         applicationId = "pw.vintr.music"
         minSdk = 28
         targetSdk = 37
-        versionCode = 9
-        versionName = "0.6.1 Preview"
+        versionCode = 10
+        versionName = "0.6.2 Preview"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
