@@ -19,7 +19,7 @@ import pw.vintr.music.core.ui.resources.Res
 import pw.vintr.music.core.ui.resources.ic_empty_favorite
 import pw.vintr.music.core.ui.theme.Gilroy20
 import pw.vintr.music.core.ui.theme.VintrMusicExtendedTheme
-import pw.vintr.music.core.ui.tools.Empty
+import pw.vintr.music.core.ui.tools.extension.Empty
 
 @Composable
 @Preview

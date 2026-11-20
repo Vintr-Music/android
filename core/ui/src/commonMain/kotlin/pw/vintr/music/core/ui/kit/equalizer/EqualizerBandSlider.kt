@@ -36,7 +36,7 @@ import pw.vintr.music.core.ui.theme.Gilroy10
 import pw.vintr.music.core.ui.theme.Gradient0
 import pw.vintr.music.core.ui.theme.Gradient1
 import pw.vintr.music.core.ui.theme.VintrMusicExtendedTheme
-import pw.vintr.music.core.ui.tools.escapePadding
+import pw.vintr.music.core.ui.tools.extension.escapePadding
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

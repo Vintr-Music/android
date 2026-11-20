@@ -1,12 +1,11 @@
-package pw.vintr.music.tools.composable
+package pw.vintr.music.core.ui.tools.compose
 
-import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.SideEffect
 import androidx.compose.ui.graphics.Color
 
 @Composable
-fun StatusBarEffect(useDarkIcons: Boolean = !isSystemInDarkTheme()) {
+actual fun StatusBarEffect(useDarkIcons: Boolean) {
     val systemUiController = rememberSystemUiController()
 
     SideEffect {

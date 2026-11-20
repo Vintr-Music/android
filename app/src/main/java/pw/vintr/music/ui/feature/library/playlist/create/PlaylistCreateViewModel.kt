@@ -5,7 +5,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import pw.vintr.music.domain.playlist.interactor.PlaylistInteractor
-import pw.vintr.music.tools.extension.Empty
+import pw.vintr.music.core.ui.tools.extension.Empty
 import pw.vintr.music.tools.validation.TextFieldValidator
 import pw.vintr.music.core.presentation.base.BaseViewModel
 import pw.vintr.music.core.navigation.navigator.NavigatorType

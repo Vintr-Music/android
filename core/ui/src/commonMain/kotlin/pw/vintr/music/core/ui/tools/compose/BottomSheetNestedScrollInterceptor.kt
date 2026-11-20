@@ -1,4 +1,4 @@
-package pw.vintr.music.tools.composable
+package pw.vintr.music.core.ui.tools.compose
 
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.runtime.Composable

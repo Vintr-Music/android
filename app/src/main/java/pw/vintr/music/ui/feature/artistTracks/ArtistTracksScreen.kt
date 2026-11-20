@@ -28,8 +28,8 @@ import org.koin.core.parameter.parametersOf
 import pw.vintr.music.R
 import pw.vintr.music.domain.library.model.artist.ArtistModel
 import pw.vintr.music.domain.player.model.state.PlayerStatusModel
-import pw.vintr.music.tools.extension.scaffoldPadding
-import pw.vintr.music.tools.extension.shouldStartPaginate
+import pw.vintr.music.core.ui.tools.extension.scaffoldPadding
+import pw.vintr.music.core.ui.tools.extension.shouldStartPaginate
 import pw.vintr.music.core.ui.kit.button.ButtonPlayerState
 import pw.vintr.music.core.presentation.component.ScreenStateLayout
 import pw.vintr.music.core.ui.kit.library.TrackView

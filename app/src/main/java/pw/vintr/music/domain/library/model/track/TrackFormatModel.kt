@@ -5,7 +5,7 @@ import kotlinx.parcelize.IgnoredOnParcel
 import kotlinx.parcelize.Parcelize
 import kotlinx.serialization.Serializable
 import pw.vintr.music.data.library.dto.track.TrackFormatDto
-import pw.vintr.music.core.ui.tools.DurationFormat
+import pw.vintr.music.core.ui.tools.format.DurationFormat
 
 @Serializable
 @Parcelize

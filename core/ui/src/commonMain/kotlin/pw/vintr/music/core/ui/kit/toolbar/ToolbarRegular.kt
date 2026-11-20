@@ -24,7 +24,7 @@ import pw.vintr.music.core.ui.resources.ic_back
 import pw.vintr.music.core.ui.theme.Bee1
 import pw.vintr.music.core.ui.theme.Gilroy18
 import pw.vintr.music.core.ui.theme.VintrMusicExtendedTheme
-import pw.vintr.music.core.ui.tools.Empty
+import pw.vintr.music.core.ui.tools.extension.Empty
 
 val REGULAR_TOOLBAR_HEIGHT = 56.dp
 

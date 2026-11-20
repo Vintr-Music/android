@@ -1,4 +1,4 @@
-package pw.vintr.music.tools.composable
+package pw.vintr.music.core.ui.tools.compose
 
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.Spacer
@@ -29,6 +29,6 @@ inline fun <T> ColumnScope.ColumnItems(
             }
         }
     } else {
-        items.forEach {item -> itemContent(item) }
+        items.forEach { item -> itemContent(item) }
     }
 }

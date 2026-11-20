@@ -11,7 +11,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import pw.vintr.music.R
 import pw.vintr.music.domain.server.model.ServerInviteModel
-import pw.vintr.music.tools.format.DateFormat
+import pw.vintr.music.core.ui.tools.format.DateFormat
 import pw.vintr.music.core.ui.theme.Gilroy12
 import pw.vintr.music.core.ui.theme.Gilroy14
 import pw.vintr.music.core.ui.theme.Gilroy16

@@ -1,4 +1,4 @@
-package pw.vintr.music.tools.extension
+package pw.vintr.music.core.ui.tools.format
 
 import java.text.SimpleDateFormat
 import java.util.Date

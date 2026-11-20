@@ -1,7 +1,5 @@
-package pw.vintr.music.tools.format
+package pw.vintr.music.core.ui.tools.format
 
-import pw.vintr.music.tools.extension.safeFormat
-import pw.vintr.music.tools.extension.safeParse
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale

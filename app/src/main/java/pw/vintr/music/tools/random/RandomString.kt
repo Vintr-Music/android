@@ -1,6 +1,6 @@
 package pw.vintr.music.tools.random
 
-import pw.vintr.music.tools.extension.Empty
+import pw.vintr.music.core.ui.tools.extension.Empty
 import kotlin.random.Random
 
 fun generateRandomString(length: Int): String {

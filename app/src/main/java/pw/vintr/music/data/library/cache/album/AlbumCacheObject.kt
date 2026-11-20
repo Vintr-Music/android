@@ -1,7 +1,7 @@
 package pw.vintr.music.data.library.cache.album
 
 import androidx.annotation.Keep
-import pw.vintr.music.tools.extension.Empty
+import pw.vintr.music.core.ui.tools.extension.Empty
 
 /**
  * Embedded album fields on [pw.vintr.music.data.player.cache.PlayerSessionCacheObject]

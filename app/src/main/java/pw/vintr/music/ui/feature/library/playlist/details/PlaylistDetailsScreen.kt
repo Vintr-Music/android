@@ -29,7 +29,7 @@ import org.koin.androidx.compose.koinViewModel
 import org.koin.core.parameter.parametersOf
 import pw.vintr.music.R
 import pw.vintr.music.domain.player.model.state.PlayerStatusModel
-import pw.vintr.music.tools.extension.Empty
+import pw.vintr.music.core.ui.tools.extension.Empty
 import pw.vintr.music.core.ui.kit.button.ButtonPlayerState
 import pw.vintr.music.core.ui.kit.button.ButtonSimpleIcon
 import pw.vintr.music.core.presentation.component.ScreenStateLayout

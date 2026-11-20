@@ -7,7 +7,7 @@ import androidx.room.ForeignKey
 import androidx.room.Index
 import androidx.room.PrimaryKey
 import pw.vintr.music.data.player.cache.PlayerSessionCacheObject
-import pw.vintr.music.tools.extension.Empty
+import pw.vintr.music.core.ui.tools.extension.Empty
 
 /**
  * One queued track belonging to the singleton player session.

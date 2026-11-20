@@ -8,8 +8,8 @@ import kotlinx.serialization.Serializable
 import pw.vintr.music.data.library.dto.album.AlbumDto
 import pw.vintr.music.data.library.cache.album.AlbumCacheObject
 import pw.vintr.music.domain.library.model.artist.ArtistModel
-import pw.vintr.music.tools.extension.Comma
-import pw.vintr.music.tools.extension.Space
+import pw.vintr.music.core.ui.tools.extension.Comma
+import pw.vintr.music.core.ui.tools.extension.Space
 import pw.vintr.music.tools.http.MediaUrlBuilder
 
 @Serializable

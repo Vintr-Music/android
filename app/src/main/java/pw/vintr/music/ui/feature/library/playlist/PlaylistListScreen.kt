@@ -24,7 +24,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import org.koin.androidx.compose.koinViewModel
 import pw.vintr.music.R
-import pw.vintr.music.tools.extension.scaffoldPadding
+import pw.vintr.music.core.ui.tools.extension.scaffoldPadding
 import pw.vintr.music.core.presentation.base.BaseScreenState
 import pw.vintr.music.core.ui.kit.button.ButtonRegular
 import pw.vintr.music.core.ui.kit.button.ButtonSimpleIcon

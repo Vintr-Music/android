@@ -26,7 +26,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import org.koin.androidx.compose.koinViewModel
 import pw.vintr.music.R
-import pw.vintr.music.tools.composable.StatusBarEffect
+import pw.vintr.music.core.ui.tools.compose.StatusBarEffect
 import pw.vintr.music.core.ui.kit.button.ButtonRegular
 import pw.vintr.music.core.ui.kit.button.ButtonText
 import pw.vintr.music.ui.feature.server.selection.component.ServerSelectableItem

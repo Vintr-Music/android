@@ -1,4 +1,4 @@
-package pw.vintr.music.core.ui.tools
+package pw.vintr.music.core.ui.tools.format
 
 object DurationFormat {
 

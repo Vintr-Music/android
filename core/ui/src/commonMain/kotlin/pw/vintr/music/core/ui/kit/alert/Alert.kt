@@ -21,7 +21,7 @@ import pw.vintr.music.core.ui.resources.ic_close
 import pw.vintr.music.core.ui.theme.Gilroy16
 import pw.vintr.music.core.ui.theme.RubikMedium14
 import pw.vintr.music.core.ui.theme.VintrMusicExtendedTheme
-import pw.vintr.music.core.ui.tools.Empty
+import pw.vintr.music.core.ui.tools.extension.Empty
 
 @Composable
 fun Alert(

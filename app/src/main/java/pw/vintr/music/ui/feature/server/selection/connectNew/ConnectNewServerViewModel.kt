@@ -10,7 +10,7 @@ import pw.vintr.music.domain.alert.interactor.AlertInteractor
 import pw.vintr.music.domain.alert.model.AlertModel
 import pw.vintr.music.domain.server.model.ServerModel
 import pw.vintr.music.domain.server.useCase.connectNew.ConnectNewServerUseCase
-import pw.vintr.music.tools.extension.Empty
+import pw.vintr.music.core.ui.tools.extension.Empty
 import pw.vintr.music.core.presentation.base.BaseViewModel
 import pw.vintr.music.core.navigation.navigator.NavigatorType
 

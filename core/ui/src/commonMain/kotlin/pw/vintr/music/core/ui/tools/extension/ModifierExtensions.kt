@@ -1,7 +1,13 @@
-package pw.vintr.music.core.ui.tools
+package pw.vintr.music.core.ui.tools.extension
 
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.calculateEndPadding
+import androidx.compose.foundation.layout.calculateStartPadding
 import androidx.compose.foundation.layout.ime
+import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -13,6 +19,7 @@ import androidx.compose.ui.focus.onFocusEvent
 import androidx.compose.ui.layout.layout
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.offset
@@ -55,5 +62,22 @@ fun Modifier.escapePadding(horizontal: Dp = 0.dp, vertical: Dp = 0.dp) = compose
         val placeable = measurable.measure(looseConstraints)
 
         layout(placeable.width, placeable.height) { placeable.placeRelative(x = 0, y = 0) }
+    }
+}
+
+fun Modifier.scaffoldPadding(scaffoldPadding: PaddingValues) = composed {
+    padding(
+        top = scaffoldPadding.calculateTopPadding(),
+        start = scaffoldPadding.calculateStartPadding(LocalLayoutDirection.current),
+        end = scaffoldPadding.calculateEndPadding(LocalLayoutDirection.current)
+    )
+}
+
+fun Modifier.noRippleClickable(onClick: () -> Unit = { }): Modifier = composed {
+    clickable(
+        indication = null,
+        interactionSource = remember { MutableInteractionSource() }
+    ) {
+        onClick()
     }
 }

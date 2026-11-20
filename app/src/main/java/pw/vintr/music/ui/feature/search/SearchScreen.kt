@@ -36,8 +36,8 @@ import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.unit.dp
 import org.koin.androidx.compose.koinViewModel
 import pw.vintr.music.R
-import pw.vintr.music.core.ui.tools.escapePadding
-import pw.vintr.music.tools.extension.itemsSeparated
+import pw.vintr.music.core.ui.tools.extension.escapePadding
+import pw.vintr.music.core.ui.tools.extension.itemsSeparated
 import pw.vintr.music.core.ui.kit.input.AppTextField
 import pw.vintr.music.core.presentation.component.ScreenStateLayout
 import pw.vintr.music.core.ui.kit.library.AlbumView

@@ -7,8 +7,8 @@ import kotlinx.serialization.Serializable
 import pw.vintr.music.data.library.dto.track.TrackMetadataDto
 import pw.vintr.music.domain.library.model.album.AlbumModel
 import pw.vintr.music.domain.library.model.artist.ArtistModel
-import pw.vintr.music.tools.extension.Comma
-import pw.vintr.music.tools.extension.Space
+import pw.vintr.music.core.ui.tools.extension.Comma
+import pw.vintr.music.core.ui.tools.extension.Space
 
 @Serializable
 @Parcelize

@@ -2,7 +2,7 @@ package pw.vintr.music.data.equalizer.cache
 
 import androidx.annotation.Keep
 import com.google.gson.annotations.SerializedName
-import pw.vintr.music.tools.extension.Empty
+import pw.vintr.music.core.ui.tools.extension.Empty
 
 /**
  * Preset payload for domain / Gson / @Embedded currentPreset.

@@ -30,8 +30,8 @@ import org.koin.androidx.compose.koinViewModel
 import org.koin.compose.koinInject
 import pw.vintr.music.domain.library.model.album.AlbumModel
 import pw.vintr.music.domain.library.model.artist.ArtistModel
-import pw.vintr.music.tools.composable.StatusBarEffect
-import pw.vintr.music.tools.extension.Empty
+import pw.vintr.music.core.ui.tools.compose.StatusBarEffect
+import pw.vintr.music.core.ui.tools.extension.Empty
 import pw.vintr.music.core.navigation.navArgs.getRequiredArg
 import pw.vintr.music.core.navigation.navArgs.getStringArg
 import pw.vintr.music.ui.feature.albumDetails.AlbumDetailsScreen

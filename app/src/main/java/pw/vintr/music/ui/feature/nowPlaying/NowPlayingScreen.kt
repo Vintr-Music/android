@@ -42,9 +42,9 @@ import coil3.toBitmap
 import org.koin.androidx.compose.koinViewModel
 import pw.vintr.music.R
 import pw.vintr.music.domain.player.model.state.PlayerStatusModel
-import pw.vintr.music.tools.composable.rememberDisplayRoundness
-import pw.vintr.music.tools.extension.Dash
-import pw.vintr.music.tools.extension.Space
+import pw.vintr.music.core.ui.tools.compose.rememberDisplayRoundness
+import pw.vintr.music.core.ui.tools.extension.Dash
+import pw.vintr.music.core.ui.tools.extension.Space
 import pw.vintr.music.core.ui.kit.button.ButtonBorderedIcon
 import pw.vintr.music.ui.common.player.PlayerControls
 import pw.vintr.music.core.ui.kit.player.PlayerProgressBar

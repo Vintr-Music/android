@@ -1,4 +1,4 @@
-package pw.vintr.music.tools.composable
+package pw.vintr.music.core.ui.tools.compose
 
 import android.app.Activity
 import android.content.Context
