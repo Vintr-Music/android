@@ -27,7 +27,7 @@ import pw.vintr.music.core.ui.kit.button.ButtonRegular
 import pw.vintr.music.core.ui.kit.button.ButtonSimpleIcon
 import pw.vintr.music.core.ui.kit.input.AppTextField
 import pw.vintr.music.core.ui.kit.toolbar.ToolbarRegular
-import pw.vintr.music.ui.navigation.NavigatorType
+import pw.vintr.music.core.navigation.navigator.NavigatorType
 
 @Composable
 fun PlaylistCreateScreen(

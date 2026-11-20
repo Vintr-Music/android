@@ -23,7 +23,7 @@ import pw.vintr.music.ui.feature.actionSheet.album.entity.AlbumAction
 import pw.vintr.music.ui.feature.actionSheet.album.entity.AlbumActionResult
 import pw.vintr.music.ui.feature.actionSheet.album.entity.AlbumActionSheetInfo
 import pw.vintr.music.ui.feature.actionSheet.track.entity.TrackAction
-import pw.vintr.music.ui.navigation.NavigatorType
+import pw.vintr.music.core.navigation.navigator.NavigatorType
 import pw.vintr.music.ui.navigation.Screen
 
 class AlbumDetailsViewModel(

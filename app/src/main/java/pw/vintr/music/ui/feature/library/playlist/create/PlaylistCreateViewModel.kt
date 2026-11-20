@@ -8,7 +8,7 @@ import pw.vintr.music.domain.playlist.interactor.PlaylistInteractor
 import pw.vintr.music.tools.extension.Empty
 import pw.vintr.music.tools.validation.TextFieldValidator
 import pw.vintr.music.ui.base.BaseViewModel
-import pw.vintr.music.ui.navigation.NavigatorType
+import pw.vintr.music.core.navigation.navigator.NavigatorType
 
 class PlaylistCreateViewModel(
     private val playlistInteractor: PlaylistInteractor,

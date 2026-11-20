@@ -3,9 +3,11 @@ package pw.vintr.music.domain.library.model.track
 import android.os.Parcelable
 import kotlinx.parcelize.IgnoredOnParcel
 import kotlinx.parcelize.Parcelize
+import kotlinx.serialization.Serializable
 import pw.vintr.music.data.library.dto.track.TrackFormatDto
 import pw.vintr.music.core.ui.tools.DurationFormat
 
+@Serializable
 @Parcelize
 data class TrackFormatModel(
     val bitrate: Double,

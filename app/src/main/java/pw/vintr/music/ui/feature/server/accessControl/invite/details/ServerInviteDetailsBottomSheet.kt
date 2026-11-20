@@ -31,7 +31,7 @@ import androidx.compose.ui.unit.dp
 import org.koin.androidx.compose.koinViewModel
 import org.koin.core.parameter.parametersOf
 import pw.vintr.music.domain.server.model.ServerInviteModel
-import pw.vintr.music.tools.extension.dialogContainer
+import pw.vintr.music.core.ui.kit.modifier.dialogContainer
 import pw.vintr.music.core.ui.kit.loader.LoaderScreen
 import pw.vintr.music.ui.feature.server.accessControl.component.ServerInviteData
 

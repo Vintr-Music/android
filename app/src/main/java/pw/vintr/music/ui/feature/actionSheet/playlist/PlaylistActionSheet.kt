@@ -29,7 +29,7 @@ import coil3.request.error
 import org.koin.androidx.compose.koinViewModel
 import pw.vintr.music.R
 import pw.vintr.music.tools.composable.ColumnItems
-import pw.vintr.music.tools.extension.dialogContainer
+import pw.vintr.music.core.ui.kit.modifier.dialogContainer
 import pw.vintr.music.core.ui.tools.DurationFormat
 import pw.vintr.music.ui.feature.actionSheet.playlist.entity.PlaylistAction
 import pw.vintr.music.ui.feature.actionSheet.playlist.entity.PlaylistActionSheetInfo

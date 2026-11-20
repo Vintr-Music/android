@@ -19,4 +19,5 @@ rootProject.name = "VintrMusic"
 
 include("app")
 include("core:ui")
+include("core:navigation")
 include("desktop-app")

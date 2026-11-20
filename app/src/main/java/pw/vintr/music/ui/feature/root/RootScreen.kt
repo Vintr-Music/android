@@ -32,7 +32,8 @@ import pw.vintr.music.domain.library.model.album.AlbumModel
 import pw.vintr.music.domain.library.model.artist.ArtistModel
 import pw.vintr.music.tools.composable.StatusBarEffect
 import pw.vintr.music.tools.extension.Empty
-import pw.vintr.music.tools.extension.getRequiredArg
+import pw.vintr.music.core.navigation.navArgs.getRequiredArg
+import pw.vintr.music.core.navigation.navArgs.getStringArg
 import pw.vintr.music.ui.feature.albumDetails.AlbumDetailsScreen
 import pw.vintr.music.ui.feature.artistDetails.ArtistDetailsScreen
 import pw.vintr.music.ui.feature.artistTracks.ArtistTracksScreen
@@ -52,12 +53,13 @@ import pw.vintr.music.core.ui.kit.navbar.AppNavBarItem
 import pw.vintr.music.core.ui.kit.navbar.AppNavigationBar
 import pw.vintr.music.core.ui.kit.sliding.BottomSheetScaffoldState
 import pw.vintr.music.core.ui.kit.sliding.rememberBottomSheetScaffoldState
-import pw.vintr.music.ui.navigation.Navigator
-import pw.vintr.music.ui.navigation.NavigatorAction
-import pw.vintr.music.ui.navigation.NavigatorEffect
-import pw.vintr.music.ui.navigation.NavigatorType
+import pw.vintr.music.core.navigation.navigator.Navigator
+import pw.vintr.music.core.navigation.navigator.NavigatorAction
+import pw.vintr.music.core.navigation.navigator.NavigatorEffect
+import pw.vintr.music.core.navigation.navigator.NavigatorType
+import pw.vintr.music.core.navigation.screen.Screen as NavigationScreen
+import pw.vintr.music.core.navigation.navArgs.serializable.serializableNavType
 import pw.vintr.music.ui.navigation.Screen
-import pw.vintr.music.ui.navigation.navArgs.parcelable.ParcelableNavType
 
 private const val TRANSITION_DURATION = 300
 
@@ -144,7 +146,7 @@ fun RootScreen(
 @Composable
 fun TabNavigation(
     modifier: Modifier = Modifier,
-    rootScreen: Screen,
+    rootScreen: NavigationScreen,
     navigatorType: NavigatorType,
     navigator: Navigator = koinInject(),
     scaffoldState: BottomSheetScaffoldState,
@@ -191,13 +193,12 @@ fun TabNavigation(
             Screen.AlbumDetails.routeTemplate,
             arguments = listOf(
                 navArgument(Screen.AlbumDetails.ARG_KEY_ALBUM) {
-                    type = ParcelableNavType(AlbumModel::class.java)
+                    type = serializableNavType<AlbumModel>()
                 }
             )
         ) { entry ->
-            val album = entry.arguments.getRequiredArg(
-                Screen.AlbumDetails.ARG_KEY_ALBUM,
-                AlbumModel::class.java
+            val album = entry.arguments.getRequiredArg<AlbumModel>(
+                Screen.AlbumDetails.ARG_KEY_ALBUM
             )
 
             AlbumDetailsScreen(album = album)
@@ -206,13 +207,12 @@ fun TabNavigation(
             route = Screen.ArtistDetails.routeTemplate,
             arguments = listOf(
                 navArgument(Screen.ArtistDetails.ARG_KEY_ARTIST) {
-                    type = ParcelableNavType(ArtistModel::class.java)
+                    type = serializableNavType<ArtistModel>()
                 }
             )
         ) { entry ->
-            val artist = entry.arguments.getRequiredArg(
-                Screen.ArtistDetails.ARG_KEY_ARTIST,
-                ArtistModel::class.java
+            val artist = entry.arguments.getRequiredArg<ArtistModel>(
+                Screen.ArtistDetails.ARG_KEY_ARTIST
             )
 
             ArtistDetailsScreen(artist = artist)
@@ -221,19 +221,19 @@ fun TabNavigation(
             route = Screen.ArtistTracks.routeTemplate,
             arguments = listOf(
                 navArgument(Screen.ArtistDetails.ARG_KEY_ARTIST) {
-                    type = ParcelableNavType(ArtistModel::class.java)
+                    type = serializableNavType<ArtistModel>()
                 },
                 navArgument(Screen.ArtistTracks.ARG_KEY_PLAYING_SESSION_ID) {
                     defaultValue = String.Empty
                 }
             )
         ) { entry ->
-            val artist = entry.arguments.getRequiredArg(
-                Screen.ArtistDetails.ARG_KEY_ARTIST,
-                ArtistModel::class.java
+            val artist = entry.arguments.getRequiredArg<ArtistModel>(
+                Screen.ArtistDetails.ARG_KEY_ARTIST
             )
-            val playingSessionId = entry.arguments
-                ?.getString(Screen.ArtistTracks.ARG_KEY_PLAYING_SESSION_ID).orEmpty()
+            val playingSessionId = entry.arguments.getStringArg(
+                Screen.ArtistTracks.ARG_KEY_PLAYING_SESSION_ID
+            )
 
             ArtistTracksScreen(
                 artist = artist,

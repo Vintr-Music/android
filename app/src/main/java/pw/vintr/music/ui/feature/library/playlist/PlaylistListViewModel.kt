@@ -8,7 +8,7 @@ import pw.vintr.music.domain.playlist.model.PlaylistModel
 import pw.vintr.music.ui.base.BaseScreenState
 import pw.vintr.music.ui.base.BaseViewModel
 import pw.vintr.music.ui.base.mapToScreenState
-import pw.vintr.music.ui.navigation.NavigatorType
+import pw.vintr.music.core.navigation.navigator.NavigatorType
 import pw.vintr.music.ui.navigation.Screen
 
 class PlaylistListViewModel(

@@ -14,7 +14,7 @@ import pw.vintr.music.tools.extension.withLoaded
 import pw.vintr.music.tools.validation.TextFieldValidator
 import pw.vintr.music.ui.base.BaseScreenState
 import pw.vintr.music.ui.base.BaseViewModel
-import pw.vintr.music.ui.navigation.NavigatorType
+import pw.vintr.music.core.navigation.navigator.NavigatorType
 
 class PlaylistEditViewModel(
     private val playlistId: String,

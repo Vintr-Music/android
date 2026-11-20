@@ -25,7 +25,7 @@ import pw.vintr.music.tools.composable.rememberBottomSheetNestedScrollIntercepto
 import pw.vintr.music.core.ui.kit.button.ButtonSimpleIcon
 import pw.vintr.music.core.ui.kit.library.TrackView
 import pw.vintr.music.core.ui.kit.toolbar.ToolbarRegular
-import pw.vintr.music.ui.navigation.NavigatorType
+import pw.vintr.music.core.navigation.navigator.NavigatorType
 import pw.vintr.music.core.ui.theme.VintrMusicExtendedTheme
 import sh.calvin.reorderable.ReorderableItem
 import sh.calvin.reorderable.rememberReorderableLazyListState

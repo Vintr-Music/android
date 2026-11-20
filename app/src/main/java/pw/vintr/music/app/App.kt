@@ -18,7 +18,7 @@ import org.koin.core.context.GlobalContext
 import pw.vintr.music.BuildConfig
 import pw.vintr.music.app.di.dataModule
 import pw.vintr.music.app.di.domainModule
-import pw.vintr.music.app.di.uiModule
+import pw.vintr.music.app.di.presentationModule
 
 class App : Application(), SingletonImageLoader.Factory, KoinComponent {
 
@@ -29,7 +29,7 @@ class App : Application(), SingletonImageLoader.Factory, KoinComponent {
         GlobalContext.startKoin {
             androidLogger()
             androidContext(this@App)
-            modules(listOf(dataModule, domainModule, uiModule))
+            modules(listOf(dataModule, domainModule, presentationModule))
         }
 
         // App Metrica activate

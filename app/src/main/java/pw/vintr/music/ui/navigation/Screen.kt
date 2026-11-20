@@ -1,71 +1,33 @@
 package pw.vintr.music.ui.navigation
 
-import android.os.Parcelable
+import pw.vintr.music.core.navigation.screen.Screen as NavigationScreen
+import pw.vintr.music.core.navigation.screen.ScreenWithArgs
+import pw.vintr.music.core.navigation.screen.buildRouteTemplate
+import pw.vintr.music.core.navigation.navArgs.serializable.encodeNavArg
 import pw.vintr.music.domain.library.model.album.AlbumModel
 import pw.vintr.music.domain.library.model.artist.ArtistModel
 import pw.vintr.music.domain.library.model.track.TrackModel
 import pw.vintr.music.domain.server.model.ServerInviteModel
 import pw.vintr.music.ui.feature.actionSheet.album.entity.AlbumActionSheetInfo
 import pw.vintr.music.ui.feature.actionSheet.playlist.entity.PlaylistActionSheetInfo
-import pw.vintr.music.ui.feature.dialog.entity.ConfirmDialogData
 import pw.vintr.music.ui.feature.actionSheet.track.entity.TrackAction
-import pw.vintr.music.ui.navigation.navArgs.parcelable.ParcelableNavTypeSerializer
-import pw.vintr.music.ui.navigation.navArgs.parcelableList.ParcelableListWrapper
+import pw.vintr.music.ui.feature.dialog.entity.ConfirmDialogData
 
-@Suppress("SameParameterValue")
-private fun buildRoute(
-    destination: String,
-    params: Map<String, String> = mapOf()
-) = buildString {
-    append(destination)
-    params.forEach { append("?${it.key}=${it.value}") }
-}
+object Screen {
 
-@Suppress("SameParameterValue")
-private fun buildRouteTemplate(
-    destination: String,
-    paramKeys: List<String>
-) = buildString {
-    append(destination)
-    paramKeys.forEach { append("?$it={$it}") }
-}
+    data object Login : NavigationScreen {
+        override val route: String = "login"
+    }
 
-sealed class Screen(val route: String) {
-
-    abstract class ScreenWithArgs(
-        destination: String,
-        args: Map<String, Any>
-    ) : Screen(
-        route = buildRoute(
-            destination = destination,
-            params = args.mapValues {
-                when (val value = it.value) {
-                    is Parcelable -> {
-                        ParcelableNavTypeSerializer(value.javaClass)
-                            .toRouteString(value)
-                    }
-                    is List<*> -> {
-                        val parcelableValues = value.filterIsInstance<Parcelable>()
-                        ParcelableNavTypeSerializer(ParcelableListWrapper::class.java)
-                            .toRouteString(ParcelableListWrapper(parcelableValues))
-                    }
-                    else -> {
-                        it.value.toString()
-                    }
-                }
-            }
-        )
-    )
-
-    data object Login : Screen(route = "login")
-
-    data object Register : Screen(route = "register")
+    data object Register : NavigationScreen {
+        override val route: String = "register"
+    }
 
     data class SelectServer(
         val usePrimaryMountToolbar: Boolean = true,
     ) : ScreenWithArgs(
         destination = ROUTE_DESTINATION,
-        args = mapOf(ARG_IS_INITIALIZE_MODE to usePrimaryMountToolbar)
+        args = mapOf(ARG_IS_INITIALIZE_MODE to usePrimaryMountToolbar.toString())
     ) {
         companion object {
             const val ARG_IS_INITIALIZE_MODE = "arg-is-initialize-mode"
@@ -78,7 +40,9 @@ sealed class Screen(val route: String) {
         }
     }
 
-    data object ConnectNewServer : Screen(route = "new-server")
+    data object ConnectNewServer : NavigationScreen {
+        override val route: String = "new-server"
+    }
 
     data class ServerAccessControl(val serverId: String) : ScreenWithArgs(
         destination = ROUTE_DESTINATION,
@@ -97,7 +61,7 @@ sealed class Screen(val route: String) {
 
     data class ServerInviteDetails(val invite: ServerInviteModel) : ScreenWithArgs(
         destination = ROUTE_DESTINATION,
-        args = mapOf(ARG_KEY_SERVER_INVITE to invite)
+        args = mapOf(ARG_KEY_SERVER_INVITE to encodeNavArg(invite))
     ) {
         companion object {
             const val ARG_KEY_SERVER_INVITE = "arg-server-invite"
@@ -110,29 +74,53 @@ sealed class Screen(val route: String) {
         }
     }
 
-    data object Root : Screen(route = "root")
+    data object Root : NavigationScreen {
+        override val route: String = "root"
+    }
 
-    data object Home : Screen(route = "home")
+    data object Home : NavigationScreen {
+        override val route: String = "home"
+    }
 
-    data object Search : Screen(route = "search")
+    data object Search : NavigationScreen {
+        override val route: String = "search"
+    }
 
-    data object Library : Screen(route = "library")
+    data object Library : NavigationScreen {
+        override val route: String = "library"
+    }
 
-    data object Menu : Screen(route = "menu")
+    data object Menu : NavigationScreen {
+        override val route: String = "menu"
+    }
 
-    data object Settings : Screen(route = "settings")
+    data object Settings : NavigationScreen {
+        override val route: String = "settings"
+    }
 
-    data object Equalizer : Screen(route = "equalizer")
+    data object Equalizer : NavigationScreen {
+        override val route: String = "equalizer"
+    }
 
-    data object ArtistList : Screen(route = "all-artists")
+    data object ArtistList : NavigationScreen {
+        override val route: String = "all-artists"
+    }
 
-    data object PlaylistList : Screen(route = "all-playlists")
+    data object PlaylistList : NavigationScreen {
+        override val route: String = "all-playlists"
+    }
 
-    data object ArtistFavoriteList : Screen(route = "favorite-artists")
+    data object ArtistFavoriteList : NavigationScreen {
+        override val route: String = "favorite-artists"
+    }
 
-    data object AlbumFavoriteList : Screen(route = "favorite-albums")
+    data object AlbumFavoriteList : NavigationScreen {
+        override val route: String = "favorite-albums"
+    }
 
-    data object PlaylistCreate : Screen(route = "playlist-create")
+    data object PlaylistCreate : NavigationScreen {
+        override val route: String = "playlist-create"
+    }
 
     data class PlaylistAddTrack(val trackId: String) : ScreenWithArgs(
         destination = ROUTE_DESTINATION,
@@ -181,7 +169,7 @@ sealed class Screen(val route: String) {
 
     data class AlbumDetails(val album: AlbumModel) : ScreenWithArgs(
         destination = ROUTE_DESTINATION,
-        args = mapOf(ARG_KEY_ALBUM to album)
+        args = mapOf(ARG_KEY_ALBUM to encodeNavArg(album))
     ) {
         companion object {
             const val ARG_KEY_ALBUM = "arg-key-album"
@@ -196,7 +184,7 @@ sealed class Screen(val route: String) {
 
     data class ArtistDetails(val artist: ArtistModel) : ScreenWithArgs(
         destination = ROUTE_DESTINATION,
-        args = mapOf(ARG_KEY_ARTIST to artist)
+        args = mapOf(ARG_KEY_ARTIST to encodeNavArg(artist))
     ) {
         companion object {
             const val ARG_KEY_ARTIST = "arg-key-artist"
@@ -215,7 +203,7 @@ sealed class Screen(val route: String) {
     ) : ScreenWithArgs(
         destination = ROUTE_DESTINATION,
         args = mapOf(
-            ARG_KEY_ARTIST to artist,
+            ARG_KEY_ARTIST to encodeNavArg(artist),
             ARG_KEY_PLAYING_SESSION_ID to playingSessionId,
         )
     ) {
@@ -239,7 +227,10 @@ sealed class Screen(val route: String) {
         ),
     ) : ScreenWithArgs(
         destination = ROUTE_DESTINATION,
-        args = mapOf(ARG_KEY_TRACK to trackModel, ARG_KEY_ACTIONS to allowedActions)
+        args = mapOf(
+            ARG_KEY_TRACK to encodeNavArg(trackModel),
+            ARG_KEY_ACTIONS to encodeNavArg(allowedActions),
+        )
     ) {
         companion object {
             const val ARG_KEY_TRACK = "arg-track-model"
@@ -257,7 +248,7 @@ sealed class Screen(val route: String) {
         val albumActionSheetInfo: AlbumActionSheetInfo,
     ) : ScreenWithArgs(
         destination = ROUTE_DESTINATION,
-        args = mapOf(ARG_KEY_SHEET_INFO to albumActionSheetInfo)
+        args = mapOf(ARG_KEY_SHEET_INFO to encodeNavArg(albumActionSheetInfo))
     ) {
         companion object {
             const val ARG_KEY_SHEET_INFO = "arg-sheet-info"
@@ -274,7 +265,7 @@ sealed class Screen(val route: String) {
         val playlistActionSheetInfo: PlaylistActionSheetInfo,
     ) : ScreenWithArgs(
         destination = ROUTE_DESTINATION,
-        args = mapOf(ARG_KEY_SHEET_INFO to playlistActionSheetInfo)
+        args = mapOf(ARG_KEY_SHEET_INFO to encodeNavArg(playlistActionSheetInfo))
     ) {
         companion object {
             const val ARG_KEY_SHEET_INFO = "arg-sheet-info"
@@ -289,7 +280,7 @@ sealed class Screen(val route: String) {
 
     data class ConfirmDialog(val data: ConfirmDialogData) : ScreenWithArgs(
         destination = ROUTE_DESTINATION,
-        args = mapOf(ARG_KEY_DATA to data)
+        args = mapOf(ARG_KEY_DATA to encodeNavArg(data))
     ) {
         companion object {
             const val ARG_KEY_DATA = "arg-key-data"
@@ -302,5 +293,7 @@ sealed class Screen(val route: String) {
         }
     }
 
-    data object ManageSession : Screen(route = "manage-session")
+    data object ManageSession : NavigationScreen {
+        override val route: String = "manage-session"
+    }
 }

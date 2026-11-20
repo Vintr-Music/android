@@ -8,7 +8,8 @@ import pw.vintr.music.domain.player.interactor.PlayerInteractor
 import pw.vintr.music.domain.player.model.state.PlayerStateHolderModel
 import pw.vintr.music.domain.player.model.state.PlayerStatusModel
 import pw.vintr.music.ui.base.BaseViewModel
-import pw.vintr.music.ui.navigation.NavigatorType
+import pw.vintr.music.core.navigation.navigator.NavigatorType
+import pw.vintr.music.core.navigation.screen.Screen as NavigationScreen
 import pw.vintr.music.ui.navigation.Screen
 
 sealed interface TabNavigator : NavigatorType {
@@ -23,7 +24,7 @@ sealed class Tab(
     @DrawableRes
     val iconRes: Int,
     val navigatorType: NavigatorType,
-    val rootScreen: Screen,
+    val rootScreen: NavigationScreen,
 ) {
     data object Home : Tab(
         route = "home",
