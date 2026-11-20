@@ -14,7 +14,7 @@ import pw.vintr.music.tools.extension.withLoaded
 import pw.vintr.music.ui.base.BaseScreenState
 import pw.vintr.music.ui.base.BaseViewModel
 import pw.vintr.music.ui.feature.server.selection.connectNew.ConnectNewServerResult
-import pw.vintr.music.ui.navigation.NavigatorType
+import pw.vintr.music.core.navigation.navigator.NavigatorType
 import pw.vintr.music.ui.navigation.Screen
 
 class ServerSelectionViewModel(

@@ -2,16 +2,20 @@ package pw.vintr.music.domain.playlist.model
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
+import kotlinx.serialization.Serializable
 import pw.vintr.music.data.playlist.dto.PlaylistDto
 import pw.vintr.music.tools.http.MediaUrlBuilder
+import pw.vintr.music.tools.serialization.CalendarSerializer
 import java.util.Calendar
 
+@Serializable
 @Parcelize
 data class PlaylistModel(
     val id: String,
     val owner: String,
     val name: String,
     val description: String,
+    @Serializable(with = CalendarSerializer::class)
     val createdAt: Calendar,
     val artworkUrl: String = MediaUrlBuilder.artworkForPlaylist(id)
 ) : Parcelable

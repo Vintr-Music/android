@@ -3,12 +3,14 @@ package pw.vintr.music.domain.library.model.track
 import android.os.Parcelable
 import kotlinx.parcelize.IgnoredOnParcel
 import kotlinx.parcelize.Parcelize
+import kotlinx.serialization.Serializable
 import pw.vintr.music.data.library.dto.track.TrackMetadataDto
 import pw.vintr.music.domain.library.model.album.AlbumModel
 import pw.vintr.music.domain.library.model.artist.ArtistModel
 import pw.vintr.music.tools.extension.Comma
 import pw.vintr.music.tools.extension.Space
 
+@Serializable
 @Parcelize
 data class TrackMetadataModel(
     val album: String,

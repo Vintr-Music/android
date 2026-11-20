@@ -6,11 +6,13 @@ import androidx.media3.common.MediaItem
 import androidx.media3.common.MediaMetadata
 import kotlinx.parcelize.IgnoredOnParcel
 import kotlinx.parcelize.Parcelize
+import kotlinx.serialization.Serializable
 import pw.vintr.music.data.library.cache.track.TrackCacheObject
 import pw.vintr.music.data.library.dto.track.TrackDto
 import pw.vintr.music.domain.library.model.artist.ArtistModel
 import pw.vintr.music.tools.http.MediaUrlBuilder
 
+@Serializable
 @Parcelize
 data class TrackModel(
     val filePath: String,

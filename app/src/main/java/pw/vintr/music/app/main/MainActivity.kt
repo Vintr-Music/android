@@ -5,7 +5,6 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.BackHandler
 import androidx.activity.compose.setContent
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.core.AnimationSpec
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.expandVertically
 import androidx.compose.animation.fadeIn
@@ -15,33 +14,19 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.size
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
-import androidx.compose.ui.Modifier
-import androidx.core.view.WindowCompat
-import pw.vintr.music.ui.feature.login.LoginScreen
-import pw.vintr.music.core.ui.theme.VintrMusicTheme
-import androidx.compose.material.ExperimentalMaterialApi
-//noinspection UsingMaterialAndMaterial3Libraries
-import androidx.compose.material.ModalBottomSheetValue
-//noinspection UsingMaterialAndMaterial3Libraries
-import androidx.compose.material.navigation.BottomSheetNavigator
-//noinspection UsingMaterialAndMaterial3Libraries
-import androidx.compose.material.navigation.ModalBottomSheetLayout
-//noinspection UsingMaterialAndMaterial3Libraries
-import androidx.compose.material.navigation.bottomSheet
-//noinspection UsingMaterialAndMaterial3Libraries
-import androidx.compose.material.rememberModalBottomSheetState
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.core.view.WindowCompat
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -53,18 +38,39 @@ import com.google.accompanist.permissions.rememberPermissionState
 import kotlinx.coroutines.delay
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.compose.koinInject
+import pw.vintr.music.core.navigation.bottomSheet.ModalBottomSheetLayout
+import pw.vintr.music.core.navigation.navigator.Navigator
+import pw.vintr.music.core.navigation.navigator.NavigatorEffect
+import pw.vintr.music.core.navigation.navigator.NavigatorType
+import pw.vintr.music.core.navigation.screen.Screen as NavigationScreen
+import pw.vintr.music.core.navigation.navArgs.getBooleanArg
+import pw.vintr.music.core.navigation.navArgs.getRequiredArg
+import pw.vintr.music.core.navigation.navArgs.getRequiredArgList
+import pw.vintr.music.core.navigation.navArgs.getStringArg
+import pw.vintr.music.core.navigation.navArgs.serializable.serializableListNavType
+import pw.vintr.music.core.navigation.navArgs.serializable.serializableNavType
+import pw.vintr.music.core.navigation.navGraph.bottomSheet
+import pw.vintr.music.core.navigation.navGraph.extendedDialog
+import pw.vintr.music.core.navigation.bottomSheet.rememberBottomSheetNavigator
+import pw.vintr.music.core.ui.kit.alert.Alert
+import pw.vintr.music.core.ui.theme.Bee1
+import pw.vintr.music.core.ui.theme.VintrMusicTheme
 import pw.vintr.music.domain.library.model.track.TrackModel
 import pw.vintr.music.domain.server.model.ServerInviteModel
 import pw.vintr.music.tools.extension.Empty
-import pw.vintr.music.tools.extension.getRequiredArg
-import pw.vintr.music.tools.extension.getRequiredArgList
 import pw.vintr.music.tools.extension.noRippleClickable
 import pw.vintr.music.ui.feature.actionSheet.album.AlbumActionSheet
 import pw.vintr.music.ui.feature.actionSheet.album.entity.AlbumActionSheetInfo
 import pw.vintr.music.ui.feature.actionSheet.playlist.PlaylistActionSheet
 import pw.vintr.music.ui.feature.actionSheet.playlist.entity.PlaylistActionSheetInfo
+import pw.vintr.music.ui.feature.actionSheet.track.TrackActionSheet
+import pw.vintr.music.ui.feature.actionSheet.track.entity.TrackAction
 import pw.vintr.music.ui.feature.dialog.ConfirmDialog
 import pw.vintr.music.ui.feature.dialog.entity.ConfirmDialogData
+import pw.vintr.music.ui.feature.library.playlist.addTrack.PlaylistAddTrackScreen
+import pw.vintr.music.ui.feature.library.playlist.create.PlaylistCreateScreen
+import pw.vintr.music.ui.feature.library.playlist.edit.PlaylistEditScreen
+import pw.vintr.music.ui.feature.login.LoginScreen
 import pw.vintr.music.ui.feature.nowPlaying.manageSession.ManageSessionScreen
 import pw.vintr.music.ui.feature.register.RegisterScreen
 import pw.vintr.music.ui.feature.root.RootScreen
@@ -72,21 +78,8 @@ import pw.vintr.music.ui.feature.server.accessControl.ServerAccessControlScreen
 import pw.vintr.music.ui.feature.server.accessControl.invite.details.ServerInviteDetailsBottomSheet
 import pw.vintr.music.ui.feature.server.selection.ServerSelectionScreen
 import pw.vintr.music.ui.feature.server.selection.connectNew.ConnectNewServerScreen
-import pw.vintr.music.ui.feature.actionSheet.track.TrackActionSheet
-import pw.vintr.music.ui.feature.actionSheet.track.entity.TrackAction
-import pw.vintr.music.ui.feature.library.playlist.addTrack.PlaylistAddTrackScreen
-import pw.vintr.music.ui.feature.library.playlist.create.PlaylistCreateScreen
-import pw.vintr.music.ui.feature.library.playlist.edit.PlaylistEditScreen
-import pw.vintr.music.core.ui.kit.alert.Alert
-import pw.vintr.music.core.ui.kit.sliding.AnchoredDraggableDefaults
-import pw.vintr.music.ui.navigation.Navigator
-import pw.vintr.music.ui.navigation.NavigatorEffect
-import pw.vintr.music.ui.navigation.NavigatorType
 import pw.vintr.music.ui.navigation.Screen
-import pw.vintr.music.ui.navigation.navArgs.parcelable.ParcelableNavType
-import pw.vintr.music.ui.navigation.navArgs.parcelableList.ParcelableListNavType
-import pw.vintr.music.ui.navigation.navGraph.extendedDialog
-import pw.vintr.music.core.ui.theme.Bee1
+import kotlin.time.Duration.Companion.milliseconds
 
 private const val TRANSITION_DURATION = 300
 
@@ -181,7 +174,7 @@ class MainActivity : ComponentActivity() {
 
         LaunchedEffect(key1 = alertState.value) {
             if (alertState.value.alertVisible) {
-                delay(ALERT_SHOW_DURATION)
+                delay(ALERT_SHOW_DURATION.milliseconds)
                 viewModel.hideAlert()
             }
         }
@@ -214,7 +207,7 @@ class MainActivity : ComponentActivity() {
 fun Navigation(
     navigator: Navigator = koinInject(),
     navController: NavHostController,
-    rootScreen: Screen
+    rootScreen: NavigationScreen
 ) {
     NavigatorEffect(
         type = NavigatorType.Root,
@@ -237,8 +230,10 @@ fun Navigation(
                 navArgument(Screen.SelectServer.ARG_IS_INITIALIZE_MODE) { defaultValue = true }
             )
         ) {
-            val isInitializeMode = it.arguments
-                ?.getBoolean(Screen.SelectServer.ARG_IS_INITIALIZE_MODE) ?: true
+            val isInitializeMode = it.arguments.getBooleanArg(
+                Screen.SelectServer.ARG_IS_INITIALIZE_MODE,
+                default = true
+            )
 
             ServerSelectionScreen(isInitializeMode = isInitializeMode)
         }
@@ -253,8 +248,7 @@ fun Navigation(
                 }
             )
         ) {
-            val serverId = it.arguments
-                ?.getString(Screen.ServerAccessControl.ARG_KEY_SERVER_ID) ?: String.Empty
+            val serverId = it.arguments.getStringArg(Screen.ServerAccessControl.ARG_KEY_SERVER_ID)
 
             ServerAccessControlScreen(serverId = serverId)
         }
@@ -262,7 +256,7 @@ fun Navigation(
             Screen.ServerInviteDetails.routeTemplate,
             arguments = listOf(
                 navArgument(Screen.ServerInviteDetails.ARG_KEY_SERVER_INVITE) {
-                    type = ParcelableNavType(ServerInviteModel::class.java)
+                    type = serializableNavType<ServerInviteModel>()
                 }
             )
         ) {
@@ -280,10 +274,10 @@ fun Navigation(
             Screen.TrackActionSheet.routeTemplate,
             arguments = listOf(
                 navArgument(Screen.TrackActionSheet.ARG_KEY_TRACK) {
-                    type = ParcelableNavType(TrackModel::class.java)
+                    type = serializableNavType<TrackModel>()
                 },
                 navArgument(Screen.TrackActionSheet.ARG_KEY_ACTIONS) {
-                    type = ParcelableListNavType<TrackAction>()
+                    type = serializableListNavType<TrackAction>()
                 }
             )
         ) {
@@ -305,7 +299,7 @@ fun Navigation(
             Screen.AlbumActionSheet.routeTemplate,
             arguments = listOf(
                 navArgument(Screen.AlbumActionSheet.ARG_KEY_SHEET_INFO) {
-                    type = ParcelableNavType(AlbumActionSheetInfo::class.java)
+                    type = serializableNavType<AlbumActionSheetInfo>()
                 },
             )
         ) {
@@ -321,7 +315,7 @@ fun Navigation(
             Screen.PlaylistActionSheet.routeTemplate,
             arguments = listOf(
                 navArgument(Screen.PlaylistActionSheet.ARG_KEY_SHEET_INFO) {
-                    type = ParcelableNavType(PlaylistActionSheetInfo::class.java)
+                    type = serializableNavType<PlaylistActionSheetInfo>()
                 },
             )
         ) {
@@ -337,7 +331,7 @@ fun Navigation(
             route = Screen.ConfirmDialog.routeTemplate,
             arguments = listOf(
                 navArgument(Screen.ConfirmDialog.ARG_KEY_DATA) {
-                    type = ParcelableNavType(ConfirmDialogData::class.java)
+                    type = serializableNavType<ConfirmDialogData>()
                 },
             )
         ) {
@@ -368,8 +362,7 @@ fun Navigation(
             )
         ) {
             BackHandler { navController.navigateUp() }
-            val trackId = it.arguments
-                ?.getString(Screen.PlaylistAddTrack.ARG_KEY_TRACK_ID) ?: String.Empty
+            val trackId = it.arguments.getStringArg(Screen.PlaylistAddTrack.ARG_KEY_TRACK_ID)
 
             PlaylistAddTrackScreen(trackId)
         }
@@ -383,26 +376,9 @@ fun Navigation(
             )
         ) {
             BackHandler { navController.navigateUp() }
-            val playlistId = it.arguments
-                ?.getString(Screen.PlaylistEdit.ARG_KEY_PLAYLIST_ID) ?: String.Empty
+            val playlistId = it.arguments.getStringArg(Screen.PlaylistEdit.ARG_KEY_PLAYLIST_ID)
 
             PlaylistEditScreen(playlistId)
         }
-    }
-}
-
-@OptIn(ExperimentalMaterialApi::class)
-@Composable
-fun rememberBottomSheetNavigator(
-    animationSpec: AnimationSpec<Float> = AnchoredDraggableDefaults.AnimationSpec,
-    skipHalfExpanded: Boolean = false,
-): BottomSheetNavigator {
-    val sheetState = rememberModalBottomSheetState(
-        ModalBottomSheetValue.Hidden,
-        animationSpec,
-        skipHalfExpanded = skipHalfExpanded
-    )
-    return remember(sheetState) {
-        BottomSheetNavigator(sheetState = sheetState)
     }
 }

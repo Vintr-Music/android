@@ -3,7 +3,7 @@ package pw.vintr.music.ui.feature.actionSheet.album
 import pw.vintr.music.ui.base.BaseViewModel
 import pw.vintr.music.ui.feature.actionSheet.album.entity.AlbumAction
 import pw.vintr.music.ui.feature.actionSheet.album.entity.AlbumActionResult
-import pw.vintr.music.ui.navigation.NavigatorType
+import pw.vintr.music.core.navigation.navigator.NavigatorType
 
 class AlbumActionViewModel : BaseViewModel() {
 

@@ -51,7 +51,7 @@ import pw.vintr.music.ui.common.layout.ScreenStateLayout
 import pw.vintr.music.core.ui.kit.modifier.artworkContainer
 import pw.vintr.music.core.ui.kit.state.EmptyState
 import pw.vintr.music.core.ui.kit.toolbar.ToolbarRegular
-import pw.vintr.music.ui.navigation.NavigatorType
+import pw.vintr.music.core.navigation.navigator.NavigatorType
 import pw.vintr.music.core.ui.theme.Green0
 import pw.vintr.music.core.ui.theme.RubikMedium16
 import pw.vintr.music.core.ui.theme.RubikRegular14

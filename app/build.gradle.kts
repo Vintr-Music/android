@@ -5,6 +5,7 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.kotlin.parcelize)
+    alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.ksp)
     alias(libs.plugins.appmetrica)
 }
@@ -80,6 +81,7 @@ android {
 
 dependencies {
     implementation(project(":core:ui"))
+    implementation(project(":core:navigation"))
 
     // Common Android
     implementation(libs.androidx.core.ktx)
@@ -95,7 +97,6 @@ dependencies {
     // Material
     implementation(libs.androidx.compose.material3)
     implementation(libs.androidx.compose.material)
-    implementation(libs.androidx.compose.material.navigation)
 
     // Compose external
     implementation(libs.reorderable)
@@ -110,8 +111,8 @@ dependencies {
     debugImplementation(libs.androidx.compose.ui.test.manifest)
 
     // Navigation | Accompanist
-    implementation(libs.androidx.navigation.compose)
-    implementation(libs.accompanist.navigation.material)
+    implementation(libs.jetbrains.navigation.compose)
+    implementation(libs.kotlinx.serialization.json)
     implementation(libs.accompanist.permissions)
 
     // Ktor | HTTP

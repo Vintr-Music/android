@@ -33,7 +33,7 @@ import pw.vintr.music.ui.feature.server.selection.component.ServerSelectableItem
 import pw.vintr.music.ui.common.layout.ScreenStateLayout
 import pw.vintr.music.core.ui.kit.toolbar.ToolbarPrimaryMount
 import pw.vintr.music.core.ui.kit.toolbar.ToolbarRegular
-import pw.vintr.music.ui.navigation.NavigatorType
+import pw.vintr.music.core.navigation.navigator.NavigatorType
 import pw.vintr.music.core.ui.theme.Gilroy32
 
 @Composable

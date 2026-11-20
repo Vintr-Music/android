@@ -14,7 +14,7 @@ import pw.vintr.music.ui.base.BaseScreenState
 import pw.vintr.music.ui.base.BaseViewModel
 import pw.vintr.music.ui.feature.dialog.entity.ConfirmDialogTemplate.openLogoutConfirmDialog
 import pw.vintr.music.ui.feature.dialog.entity.ConfirmResult
-import pw.vintr.music.ui.navigation.NavigatorType
+import pw.vintr.music.core.navigation.navigator.NavigatorType
 import pw.vintr.music.ui.navigation.Screen
 
 class MenuViewModel(

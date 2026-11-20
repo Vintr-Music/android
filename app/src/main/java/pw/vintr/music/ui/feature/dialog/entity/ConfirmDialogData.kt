@@ -3,10 +3,15 @@ package pw.vintr.music.ui.feature.dialog.entity
 import android.os.Parcelable
 import androidx.annotation.StringRes
 import kotlinx.parcelize.Parcelize
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
+@Serializable
 sealed interface ConfirmDialogData : Parcelable {
 
+    @Serializable
     @Parcelize
+    @SerialName("resource")
     class Resource(
         @StringRes
         val titleRes: Int,
@@ -18,7 +23,9 @@ sealed interface ConfirmDialogData : Parcelable {
         val declineTextRes: Int? = null,
     ) : ConfirmDialogData
 
+    @Serializable
     @Parcelize
+    @SerialName("text")
     class Text(
         val title: String,
         val message: String,
