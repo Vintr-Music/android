@@ -47,7 +47,7 @@ import pw.vintr.music.tools.composable.rememberBottomSheetNestedScrollIntercepto
 import pw.vintr.music.core.ui.kit.button.ButtonRegular
 import pw.vintr.music.core.ui.kit.button.ButtonSecondary
 import pw.vintr.music.core.ui.kit.button.ButtonSimpleIcon
-import pw.vintr.music.ui.common.layout.ScreenStateLayout
+import pw.vintr.music.core.presentation.component.ScreenStateLayout
 import pw.vintr.music.core.ui.kit.modifier.artworkContainer
 import pw.vintr.music.core.ui.kit.state.EmptyState
 import pw.vintr.music.core.ui.kit.toolbar.ToolbarRegular

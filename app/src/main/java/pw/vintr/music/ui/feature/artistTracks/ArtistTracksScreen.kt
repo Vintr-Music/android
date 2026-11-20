@@ -31,7 +31,7 @@ import pw.vintr.music.domain.player.model.state.PlayerStatusModel
 import pw.vintr.music.tools.extension.scaffoldPadding
 import pw.vintr.music.tools.extension.shouldStartPaginate
 import pw.vintr.music.core.ui.kit.button.ButtonPlayerState
-import pw.vintr.music.ui.common.layout.ScreenStateLayout
+import pw.vintr.music.core.presentation.component.ScreenStateLayout
 import pw.vintr.music.core.ui.kit.library.TrackView
 import pw.vintr.music.core.ui.kit.pagination.paginationControls
 import pw.vintr.music.core.ui.kit.toolbar.ToolbarRegular

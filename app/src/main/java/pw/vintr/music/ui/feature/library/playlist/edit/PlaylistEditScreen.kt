@@ -33,7 +33,7 @@ import pw.vintr.music.tools.composable.rememberBottomSheetNestedScrollIntercepto
 import pw.vintr.music.core.ui.kit.button.ButtonSecondary
 import pw.vintr.music.core.ui.kit.button.ButtonSimpleIcon
 import pw.vintr.music.core.ui.kit.input.AppTextField
-import pw.vintr.music.ui.common.layout.ScreenStateLayout
+import pw.vintr.music.core.presentation.component.ScreenStateLayout
 import pw.vintr.music.core.ui.kit.library.TrackView
 import pw.vintr.music.core.ui.kit.toolbar.ToolbarRegular
 import pw.vintr.music.core.navigation.navigator.NavigatorType

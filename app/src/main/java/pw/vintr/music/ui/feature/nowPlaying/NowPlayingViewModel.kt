@@ -11,7 +11,7 @@ import pw.vintr.music.domain.player.model.config.PlayerRepeatMode
 import pw.vintr.music.domain.player.model.config.PlayerShuffleMode
 import pw.vintr.music.domain.player.model.state.PlayerProgressModel
 import pw.vintr.music.domain.player.model.state.PlayerStateHolderModel
-import pw.vintr.music.ui.base.BaseViewModel
+import pw.vintr.music.core.presentation.base.BaseViewModel
 import pw.vintr.music.ui.feature.actionSheet.track.entity.TrackAction
 import pw.vintr.music.core.navigation.navigator.NavigatorType
 import pw.vintr.music.ui.navigation.Screen

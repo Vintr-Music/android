@@ -15,9 +15,9 @@ import pw.vintr.music.domain.player.model.session.PlayerSessionModel
 import pw.vintr.music.domain.player.model.state.PlayerStatusModel
 import pw.vintr.music.domain.visualizer.interactor.VisualizerInteractor
 import pw.vintr.music.domain.visualizer.model.VisualizerState
-import pw.vintr.music.tools.extension.updateLoaded
-import pw.vintr.music.ui.base.BaseScreenState
-import pw.vintr.music.ui.base.BaseViewModel
+import pw.vintr.music.core.presentation.extension.updateLoaded
+import pw.vintr.music.core.presentation.base.BaseScreenState
+import pw.vintr.music.core.presentation.base.BaseViewModel
 import pw.vintr.music.ui.navigation.Screen
 
 class HomeViewModel(

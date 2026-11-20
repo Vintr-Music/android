@@ -30,7 +30,7 @@ import pw.vintr.music.tools.composable.StatusBarEffect
 import pw.vintr.music.core.ui.kit.button.ButtonRegular
 import pw.vintr.music.core.ui.kit.button.ButtonText
 import pw.vintr.music.ui.feature.server.selection.component.ServerSelectableItem
-import pw.vintr.music.ui.common.layout.ScreenStateLayout
+import pw.vintr.music.core.presentation.component.ScreenStateLayout
 import pw.vintr.music.core.ui.kit.toolbar.ToolbarPrimaryMount
 import pw.vintr.music.core.ui.kit.toolbar.ToolbarRegular
 import pw.vintr.music.core.navigation.navigator.NavigatorType

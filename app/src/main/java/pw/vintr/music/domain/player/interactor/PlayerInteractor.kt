@@ -24,7 +24,7 @@ import pw.vintr.music.app.service.VintrMusicService
 import pw.vintr.music.data.player.repository.PlayerConfigRepository
 import pw.vintr.music.data.player.repository.PlayerSessionRepository
 import pw.vintr.music.data.settings.repository.SettingsRepository
-import pw.vintr.music.domain.base.BaseInteractor
+import pw.vintr.music.core.domain.base.BaseInteractor
 import pw.vintr.music.domain.library.model.album.AlbumModel
 import pw.vintr.music.domain.library.model.artist.ArtistModel
 import pw.vintr.music.domain.library.model.track.TrackModel

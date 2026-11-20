@@ -5,9 +5,9 @@ import kotlinx.coroutines.flow.mapLatest
 import kotlinx.coroutines.launch
 import pw.vintr.music.domain.playlist.interactor.PlaylistInteractor
 import pw.vintr.music.domain.playlist.model.PlaylistModel
-import pw.vintr.music.ui.base.BaseScreenState
-import pw.vintr.music.ui.base.BaseViewModel
-import pw.vintr.music.ui.base.mapToScreenState
+import pw.vintr.music.core.presentation.base.BaseScreenState
+import pw.vintr.music.core.presentation.base.BaseViewModel
+import pw.vintr.music.core.presentation.base.mapToScreenState
 import pw.vintr.music.core.navigation.navigator.NavigatorType
 import pw.vintr.music.ui.navigation.Screen
 

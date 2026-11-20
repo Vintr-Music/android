@@ -5,8 +5,8 @@ import kotlinx.coroutines.flow.asStateFlow
 import pw.vintr.music.R
 import pw.vintr.music.domain.library.model.artist.ArtistModel
 import pw.vintr.music.domain.library.useCase.GetArtistListUseCase
-import pw.vintr.music.ui.base.BaseScreenState
-import pw.vintr.music.ui.base.BaseViewModel
+import pw.vintr.music.core.presentation.base.BaseScreenState
+import pw.vintr.music.core.presentation.base.BaseViewModel
 import pw.vintr.music.ui.navigation.Screen
 
 class LibraryViewModel(

@@ -1,7 +1,7 @@
 package pw.vintr.music.domain.settings
 
 import pw.vintr.music.data.settings.repository.SettingsRepository
-import pw.vintr.music.domain.base.BaseInteractor
+import pw.vintr.music.core.domain.base.BaseInteractor
 
 class PlaybackSettingsInteractor(
     private val repository: SettingsRepository,

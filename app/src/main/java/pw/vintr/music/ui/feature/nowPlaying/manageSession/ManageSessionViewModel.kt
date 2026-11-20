@@ -7,7 +7,7 @@ import kotlinx.coroutines.launch
 import pw.vintr.music.domain.library.model.track.TrackModel
 import pw.vintr.music.domain.player.interactor.PlayerInteractor
 import pw.vintr.music.tools.extension.reorder
-import pw.vintr.music.ui.base.BaseViewModel
+import pw.vintr.music.core.presentation.base.BaseViewModel
 import java.util.UUID
 
 class ManageSessionViewModel(

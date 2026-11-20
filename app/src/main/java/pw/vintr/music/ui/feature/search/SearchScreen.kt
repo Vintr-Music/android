@@ -39,7 +39,7 @@ import pw.vintr.music.R
 import pw.vintr.music.core.ui.tools.escapePadding
 import pw.vintr.music.tools.extension.itemsSeparated
 import pw.vintr.music.core.ui.kit.input.AppTextField
-import pw.vintr.music.ui.common.layout.ScreenStateLayout
+import pw.vintr.music.core.presentation.component.ScreenStateLayout
 import pw.vintr.music.core.ui.kit.library.AlbumView
 import pw.vintr.music.core.ui.kit.library.ArtistView
 import pw.vintr.music.core.ui.kit.library.TrackView

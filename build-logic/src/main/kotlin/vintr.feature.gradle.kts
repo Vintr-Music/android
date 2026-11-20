@@ -8,5 +8,7 @@ extensions.configure<KotlinMultiplatformExtension>("kotlin") {
     sourceSets.commonMain.dependencies {
         implementation(project(":core:ui"))
         implementation(project(":core:navigation"))
+        implementation(project(":core:domain"))
+        implementation(project(":core:presentation"))
     }
 }

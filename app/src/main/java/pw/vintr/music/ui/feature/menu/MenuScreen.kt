@@ -31,7 +31,7 @@ import pw.vintr.music.core.ui.kit.button.ButtonSecondary
 import pw.vintr.music.core.ui.kit.button.ButtonSecondarySize
 import pw.vintr.music.core.ui.kit.button.ButtonSimpleIcon
 import pw.vintr.music.core.ui.kit.menu.MenuItemIconified
-import pw.vintr.music.ui.common.layout.ScreenStateLayout
+import pw.vintr.music.core.presentation.component.ScreenStateLayout
 import pw.vintr.music.core.ui.kit.modifier.cardContainer
 import pw.vintr.music.ui.feature.server.component.ServerItem
 import pw.vintr.music.core.ui.theme.Bee0

@@ -8,7 +8,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import pw.vintr.music.domain.server.model.ServerInviteModel
 import pw.vintr.music.domain.server.useCase.accessControl.GetServerInviteQRUseCase
-import pw.vintr.music.ui.base.BaseViewModel
+import pw.vintr.music.core.presentation.base.BaseViewModel
 
 class ServerInviteDetailsViewModel(
     private val invite: ServerInviteModel,

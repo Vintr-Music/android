@@ -2,7 +2,8 @@ package pw.vintr.music.app.di
 
 import org.koin.android.ext.koin.androidContext
 import org.koin.dsl.module
-import pw.vintr.music.app.extension.interactor
+import pw.vintr.music.core.domain.di.coreDomainModule
+import pw.vintr.music.core.domain.di.interactor
 import pw.vintr.music.domain.alert.interactor.AlertInteractor
 import pw.vintr.music.domain.equalizer.interactor.EqualizerInteractor
 import pw.vintr.music.domain.favorite.FavoriteAlbumsInteractor
@@ -12,7 +13,6 @@ import pw.vintr.music.domain.library.useCase.GetArtistAlbumsUseCase
 import pw.vintr.music.domain.library.useCase.GetArtistListUseCase
 import pw.vintr.music.domain.library.useCase.GetShuffledTracksPageUseCase
 import pw.vintr.music.domain.library.useCase.SearchLibraryUseCase
-import pw.vintr.music.domain.loader.PrimaryLoaderInteractor
 import pw.vintr.music.domain.mainPage.useCase.GetMainPageContentUseCase
 import pw.vintr.music.domain.player.interactor.PlayerInteractor
 import pw.vintr.music.domain.playlist.interactor.PlaylistInteractor
@@ -34,6 +34,8 @@ import pw.vintr.music.domain.user.useCase.RegisterUseCase
 import pw.vintr.music.domain.visualizer.interactor.VisualizerInteractor
 
 val domainModule = module {
+    includes(coreDomainModule)
+
     single { AuthorizeUseCase(get()) }
     single { RegisterUseCase(get()) }
     single { LogoutUseCase(get(), get()) }
@@ -56,7 +58,6 @@ val domainModule = module {
     single { SearchLibraryUseCase(get()) }
     single { GetShuffledTracksPageUseCase(get()) }
 
-    interactor { PrimaryLoaderInteractor() }
     interactor { AlertInteractor() }
     interactor { PlayerInteractor(androidContext(), get(), get(), get(), get()) }
     interactor { PlaybackSettingsInteractor(get()) }

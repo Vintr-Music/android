@@ -4,8 +4,8 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import pw.vintr.music.domain.server.model.ServerInviteModel
 import pw.vintr.music.domain.server.useCase.accessControl.GetServerInviteListUseCase
-import pw.vintr.music.ui.base.BaseScreenState
-import pw.vintr.music.ui.base.BaseViewModel
+import pw.vintr.music.core.presentation.base.BaseScreenState
+import pw.vintr.music.core.presentation.base.BaseViewModel
 import pw.vintr.music.ui.navigation.Screen
 
 class ServerInviteListViewModel(

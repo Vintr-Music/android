@@ -7,12 +7,12 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import pw.vintr.music.domain.alert.interactor.AlertInteractor
 import pw.vintr.music.domain.alert.model.AlertState
-import pw.vintr.music.domain.loader.PrimaryLoaderInteractor
+import pw.vintr.music.core.domain.primaryLoader.PrimaryLoaderInteractor
 import pw.vintr.music.domain.player.interactor.PlayerInteractor
 import pw.vintr.music.domain.server.useCase.selection.GetIsServerSelectedUseCase
 import pw.vintr.music.domain.user.useCase.GetAuthorizeStateUseCase
 import pw.vintr.music.domain.visualizer.interactor.VisualizerInteractor
-import pw.vintr.music.ui.base.BaseViewModel
+import pw.vintr.music.core.presentation.base.BaseViewModel
 import pw.vintr.music.ui.feature.dialog.entity.ConfirmDialogTemplate.openSpeakerPlayConfirmDialog
 
 class MainViewModel(

@@ -10,8 +10,8 @@ import pw.vintr.music.domain.server.useCase.selection.GetSelectedServerUseCase
 import pw.vintr.music.domain.user.model.UserModel
 import pw.vintr.music.domain.user.useCase.GetProfileUseCase
 import pw.vintr.music.domain.user.useCase.LogoutUseCase
-import pw.vintr.music.ui.base.BaseScreenState
-import pw.vintr.music.ui.base.BaseViewModel
+import pw.vintr.music.core.presentation.base.BaseScreenState
+import pw.vintr.music.core.presentation.base.BaseViewModel
 import pw.vintr.music.ui.feature.dialog.entity.ConfirmDialogTemplate.openLogoutConfirmDialog
 import pw.vintr.music.ui.feature.dialog.entity.ConfirmResult
 import pw.vintr.music.core.navigation.navigator.NavigatorType

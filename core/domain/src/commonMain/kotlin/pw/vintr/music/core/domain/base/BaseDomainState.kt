@@ -1,4 +1,4 @@
-package pw.vintr.music.domain.base
+package pw.vintr.music.core.domain.base
 
 sealed interface BaseDomainState<T> {
 

@@ -15,11 +15,11 @@ import pw.vintr.music.domain.player.model.state.PlayerStatusModel
 import pw.vintr.music.domain.playlist.interactor.PlaylistInteractor
 import pw.vintr.music.domain.playlist.model.PlaylistModel
 import pw.vintr.music.domain.playlist.model.PlaylistRecordModel
-import pw.vintr.music.tools.extension.updateLoaded
-import pw.vintr.music.tools.extension.updateWithLoaded
-import pw.vintr.music.tools.extension.withLoaded
-import pw.vintr.music.ui.base.BaseScreenState
-import pw.vintr.music.ui.base.BaseViewModel
+import pw.vintr.music.core.presentation.extension.updateLoaded
+import pw.vintr.music.core.presentation.extension.updateWithLoaded
+import pw.vintr.music.core.presentation.extension.withLoaded
+import pw.vintr.music.core.presentation.base.BaseScreenState
+import pw.vintr.music.core.presentation.base.BaseViewModel
 import pw.vintr.music.ui.feature.actionSheet.playlist.entity.PlaylistAction
 import pw.vintr.music.ui.feature.actionSheet.playlist.entity.PlaylistActionResult
 import pw.vintr.music.ui.feature.actionSheet.playlist.entity.PlaylistActionSheetInfo

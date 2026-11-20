@@ -1,6 +1,6 @@
 package pw.vintr.music.ui.feature.dialog
 
-import pw.vintr.music.ui.base.BaseViewModel
+import pw.vintr.music.core.presentation.base.BaseViewModel
 import pw.vintr.music.ui.feature.dialog.entity.ConfirmResult
 import pw.vintr.music.core.navigation.navigator.NavigatorType
 

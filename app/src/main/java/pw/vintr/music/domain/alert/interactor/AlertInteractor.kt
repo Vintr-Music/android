@@ -6,7 +6,7 @@ import kotlinx.coroutines.flow.shareIn
 import kotlinx.coroutines.flow.update
 import pw.vintr.music.domain.alert.model.AlertModel
 import pw.vintr.music.domain.alert.model.AlertState
-import pw.vintr.music.domain.base.BaseInteractor
+import pw.vintr.music.core.domain.base.BaseInteractor
 
 class AlertInteractor : BaseInteractor() {
 

@@ -31,7 +31,7 @@ import androidx.compose.ui.unit.dp
 import org.koin.androidx.compose.koinViewModel
 import pw.vintr.music.R
 import pw.vintr.music.core.ui.kit.layout.PullRefreshLayout
-import pw.vintr.music.ui.common.layout.ScreenStateLayout
+import pw.vintr.music.core.presentation.component.ScreenStateLayout
 import pw.vintr.music.core.ui.kit.library.ArtistView
 import pw.vintr.music.core.ui.kit.menu.MenuItemIconified
 import pw.vintr.music.core.ui.theme.Gilroy12

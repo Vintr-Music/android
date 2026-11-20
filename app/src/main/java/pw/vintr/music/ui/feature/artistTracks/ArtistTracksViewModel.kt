@@ -14,9 +14,9 @@ import pw.vintr.music.domain.pagination.model.withNextPageLoading
 import pw.vintr.music.domain.player.interactor.PlayerInteractor
 import pw.vintr.music.domain.player.model.session.PlayerSessionModel
 import pw.vintr.music.domain.player.model.state.PlayerStatusModel
-import pw.vintr.music.tools.extension.withLoaded
-import pw.vintr.music.ui.base.BaseScreenState
-import pw.vintr.music.ui.base.BaseViewModel
+import pw.vintr.music.core.presentation.extension.withLoaded
+import pw.vintr.music.core.presentation.base.BaseScreenState
+import pw.vintr.music.core.presentation.base.BaseViewModel
 import pw.vintr.music.ui.feature.actionSheet.track.entity.TrackAction
 import pw.vintr.music.core.navigation.navigator.NavigatorType
 import pw.vintr.music.ui.navigation.Screen

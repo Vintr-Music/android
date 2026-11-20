@@ -1,10 +1,10 @@
-package pw.vintr.music.ui.common.layout
+package pw.vintr.music.core.presentation.component
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import pw.vintr.music.ui.base.BaseScreenState
+import pw.vintr.music.core.presentation.base.BaseScreenState
 import pw.vintr.music.core.ui.kit.loader.LoaderScreen
 import pw.vintr.music.core.ui.kit.state.ErrorState
 

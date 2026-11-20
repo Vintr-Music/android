@@ -43,7 +43,7 @@ import pw.vintr.music.domain.visualizer.model.VisualizerState
 import pw.vintr.music.core.ui.kit.layout.PullRefreshLayout
 import pw.vintr.music.core.ui.kit.library.AlbumView
 import pw.vintr.music.core.ui.kit.library.rememberLibraryGridCellsCount
-import pw.vintr.music.ui.common.layout.ScreenStateLayout
+import pw.vintr.music.core.presentation.component.ScreenStateLayout
 import pw.vintr.music.core.ui.kit.modifier.artworkGradientOverlayBackground
 import pw.vintr.music.ui.common.player.FlowPlayer
 import pw.vintr.music.core.ui.kit.toolbar.collapsing.CollapsingLayout

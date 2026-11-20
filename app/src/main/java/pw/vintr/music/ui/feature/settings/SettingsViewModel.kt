@@ -2,7 +2,7 @@ package pw.vintr.music.ui.feature.settings
 
 import kotlinx.coroutines.flow.map
 import pw.vintr.music.domain.settings.PlaybackSettingsInteractor
-import pw.vintr.music.ui.base.BaseViewModel
+import pw.vintr.music.core.presentation.base.BaseViewModel
 import pw.vintr.music.ui.navigation.Screen
 
 class SettingsViewModel(

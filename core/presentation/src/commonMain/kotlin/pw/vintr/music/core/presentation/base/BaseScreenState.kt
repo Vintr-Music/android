@@ -1,6 +1,6 @@
-package pw.vintr.music.ui.base
+package pw.vintr.music.core.presentation.base
 
-import pw.vintr.music.domain.base.BaseDomainState
+import pw.vintr.music.core.domain.base.BaseDomainState
 
 interface BaseScreenState<T> {
 
@@ -27,18 +27,12 @@ fun <T> mapToScreenState(domainState: BaseDomainState<T>) = when (domainState) {
         BaseScreenState.Loading()
     }
     is BaseDomainState.Loaded -> {
-        if (domainState.data is List<*>) {
-            if (domainState.data.isNotEmpty()) {
-                BaseScreenState.Loaded(
-                    data = domainState.data,
-                    isRefreshing = domainState.isRefreshing
-                )
-            } else {
-                BaseScreenState.Empty()
-            }
+        val data = domainState.data
+        if (data is List<*> && data.isEmpty()) {
+            BaseScreenState.Empty()
         } else {
             BaseScreenState.Loaded(
-                data = domainState.data,
+                data = data,
                 isRefreshing = domainState.isRefreshing
             )
         }

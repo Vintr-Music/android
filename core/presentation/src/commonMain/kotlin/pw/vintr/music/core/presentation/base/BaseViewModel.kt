@@ -1,4 +1,4 @@
-package pw.vintr.music.ui.base
+package pw.vintr.music.core.presentation.base
 
 import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.CoroutineExceptionHandler
@@ -13,11 +13,11 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent
-import pw.vintr.music.core.navigation.navigator.Navigator
 import org.koin.core.component.inject
-import pw.vintr.music.domain.loader.PrimaryLoaderInteractor
-import pw.vintr.music.core.navigation.navigator.NavigatorType
+import pw.vintr.music.core.domain.primaryLoader.PrimaryLoaderInteractor
 import pw.vintr.music.core.navigation.navResult.ResultListenerHandler
+import pw.vintr.music.core.navigation.navigator.Navigator
+import pw.vintr.music.core.navigation.navigator.NavigatorType
 
 abstract class BaseViewModel : ViewModel(), CoroutineScope, KoinComponent {
 

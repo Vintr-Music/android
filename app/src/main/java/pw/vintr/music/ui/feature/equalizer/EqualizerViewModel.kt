@@ -9,10 +9,10 @@ import pw.vintr.music.domain.equalizer.model.BandModel
 import pw.vintr.music.domain.equalizer.model.EqualizerModel
 import pw.vintr.music.tools.extension.cancelIfActive
 import pw.vintr.music.tools.extension.updateItem
-import pw.vintr.music.tools.extension.updateLoaded
-import pw.vintr.music.tools.extension.withLoaded
-import pw.vintr.music.ui.base.BaseScreenState
-import pw.vintr.music.ui.base.BaseViewModel
+import pw.vintr.music.core.presentation.extension.updateLoaded
+import pw.vintr.music.core.presentation.extension.withLoaded
+import pw.vintr.music.core.presentation.base.BaseScreenState
+import pw.vintr.music.core.presentation.base.BaseViewModel
 
 class EqualizerViewModel(
     private val equalizerInteractor: EqualizerInteractor,

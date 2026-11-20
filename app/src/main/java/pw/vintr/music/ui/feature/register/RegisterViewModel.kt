@@ -8,7 +8,7 @@ import pw.vintr.music.domain.alert.interactor.AlertInteractor
 import pw.vintr.music.domain.alert.model.AlertModel
 import pw.vintr.music.domain.user.useCase.RegisterUseCase
 import pw.vintr.music.tools.extension.Empty
-import pw.vintr.music.ui.base.BaseViewModel
+import pw.vintr.music.core.presentation.base.BaseViewModel
 import pw.vintr.music.ui.navigation.Screen
 
 class RegisterViewModel(

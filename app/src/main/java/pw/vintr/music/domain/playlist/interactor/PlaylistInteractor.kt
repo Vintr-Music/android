@@ -11,12 +11,12 @@ import pw.vintr.music.data.playlist.dto.record.PlaylistRecordCreateDto
 import pw.vintr.music.data.playlist.dto.record.PlaylistRecordUpdateDto
 import pw.vintr.music.data.playlist.dto.PlaylistUpdateRecordsDto
 import pw.vintr.music.data.playlist.repository.PlaylistRepository
-import pw.vintr.music.domain.base.BaseDomainState
-import pw.vintr.music.domain.base.BaseInteractor
+import pw.vintr.music.core.domain.base.BaseDomainState
+import pw.vintr.music.core.domain.base.BaseInteractor
 import pw.vintr.music.domain.playlist.model.PlaylistModel
 import pw.vintr.music.domain.playlist.model.PlaylistRecordModel
 import pw.vintr.music.domain.playlist.model.toModel
-import pw.vintr.music.tools.extension.updateLoaded
+import pw.vintr.music.core.domain.base.updateLoaded
 
 class PlaylistInteractor(
     private val playlistRepository: PlaylistRepository,

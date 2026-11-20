@@ -7,7 +7,7 @@ import pw.vintr.music.R
 import pw.vintr.music.domain.player.interactor.PlayerInteractor
 import pw.vintr.music.domain.player.model.state.PlayerStateHolderModel
 import pw.vintr.music.domain.player.model.state.PlayerStatusModel
-import pw.vintr.music.ui.base.BaseViewModel
+import pw.vintr.music.core.presentation.base.BaseViewModel
 import pw.vintr.music.core.navigation.navigator.NavigatorType
 import pw.vintr.music.core.navigation.screen.Screen as NavigationScreen
 import pw.vintr.music.ui.navigation.Screen

@@ -7,7 +7,7 @@ import kotlinx.coroutines.launch
 import pw.vintr.music.domain.playlist.interactor.PlaylistInteractor
 import pw.vintr.music.tools.extension.Empty
 import pw.vintr.music.tools.validation.TextFieldValidator
-import pw.vintr.music.ui.base.BaseViewModel
+import pw.vintr.music.core.presentation.base.BaseViewModel
 import pw.vintr.music.core.navigation.navigator.NavigatorType
 
 class PlaylistCreateViewModel(

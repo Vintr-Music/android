@@ -1,4 +1,4 @@
-package pw.vintr.music.domain.base
+package pw.vintr.music.core.domain.base
 
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -6,9 +6,8 @@ import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.isActive
-import java.io.Closeable
 
-abstract class BaseInteractor : CoroutineScope, Closeable {
+abstract class BaseInteractor : CoroutineScope, AutoCloseable {
 
     private val job = SupervisorJob()
 

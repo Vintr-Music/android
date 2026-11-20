@@ -25,11 +25,11 @@ import androidx.compose.ui.unit.dp
 import org.koin.androidx.compose.koinViewModel
 import pw.vintr.music.R
 import pw.vintr.music.tools.extension.scaffoldPadding
-import pw.vintr.music.ui.base.BaseScreenState
+import pw.vintr.music.core.presentation.base.BaseScreenState
 import pw.vintr.music.core.ui.kit.button.ButtonRegular
 import pw.vintr.music.core.ui.kit.button.ButtonSimpleIcon
 import pw.vintr.music.core.ui.kit.layout.PullRefreshLayout
-import pw.vintr.music.ui.common.layout.ScreenStateLayout
+import pw.vintr.music.core.presentation.component.ScreenStateLayout
 import pw.vintr.music.core.ui.kit.library.PlaylistView
 import pw.vintr.music.core.ui.kit.library.rememberLibraryGridCells
 import pw.vintr.music.core.ui.kit.state.EmptyState

@@ -4,7 +4,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import pw.vintr.music.domain.library.model.track.TrackModel
 import pw.vintr.music.domain.player.interactor.PlayerInteractor
-import pw.vintr.music.ui.base.BaseViewModel
+import pw.vintr.music.core.presentation.base.BaseViewModel
 import pw.vintr.music.ui.feature.actionSheet.track.entity.TrackAction
 import pw.vintr.music.ui.feature.actionSheet.track.entity.TrackActionResult
 import pw.vintr.music.core.navigation.navigator.NavigatorType

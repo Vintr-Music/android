@@ -14,8 +14,8 @@ import pw.vintr.music.domain.player.interactor.PlayerInteractor
 import pw.vintr.music.domain.player.model.state.PlayerStateHolderModel
 import pw.vintr.music.domain.search.SearchHistoryInteractor
 import pw.vintr.music.tools.extension.Empty
-import pw.vintr.music.ui.base.BaseScreenState
-import pw.vintr.music.ui.base.BaseViewModel
+import pw.vintr.music.core.presentation.base.BaseScreenState
+import pw.vintr.music.core.presentation.base.BaseViewModel
 import pw.vintr.music.ui.feature.actionSheet.track.entity.TrackAction
 import pw.vintr.music.core.navigation.navigator.NavigatorType
 import pw.vintr.music.ui.navigation.Screen

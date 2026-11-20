@@ -9,10 +9,10 @@ import pw.vintr.music.domain.server.model.ServerModel
 import pw.vintr.music.domain.server.useCase.selection.GetSelectedServerUseCase
 import pw.vintr.music.domain.server.useCase.list.GetServerListUseCase
 import pw.vintr.music.domain.server.useCase.selection.SelectServerUseCase
-import pw.vintr.music.tools.extension.updateLoaded
-import pw.vintr.music.tools.extension.withLoaded
-import pw.vintr.music.ui.base.BaseScreenState
-import pw.vintr.music.ui.base.BaseViewModel
+import pw.vintr.music.core.presentation.extension.updateLoaded
+import pw.vintr.music.core.presentation.extension.withLoaded
+import pw.vintr.music.core.presentation.base.BaseScreenState
+import pw.vintr.music.core.presentation.base.BaseViewModel
 import pw.vintr.music.ui.feature.server.selection.connectNew.ConnectNewServerResult
 import pw.vintr.music.core.navigation.navigator.NavigatorType
 import pw.vintr.music.ui.navigation.Screen

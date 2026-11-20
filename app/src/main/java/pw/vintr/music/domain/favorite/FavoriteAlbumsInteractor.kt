@@ -7,11 +7,11 @@ import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.shareIn
 import pw.vintr.music.data.favorite.dto.FavoriteAlbumDto
 import pw.vintr.music.data.favorite.repository.FavoriteRepository
-import pw.vintr.music.domain.base.BaseDomainState
-import pw.vintr.music.domain.base.BaseInteractor
+import pw.vintr.music.core.domain.base.BaseDomainState
+import pw.vintr.music.core.domain.base.BaseInteractor
 import pw.vintr.music.domain.library.model.album.AlbumModel
 import pw.vintr.music.domain.library.model.album.toModel
-import pw.vintr.music.tools.extension.updateLoaded
+import pw.vintr.music.core.domain.base.updateLoaded
 
 class FavoriteAlbumsInteractor(
     private val favoriteRepository: FavoriteRepository,

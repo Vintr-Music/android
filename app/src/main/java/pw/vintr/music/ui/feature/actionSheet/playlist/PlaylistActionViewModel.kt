@@ -1,6 +1,6 @@
 package pw.vintr.music.ui.feature.actionSheet.playlist
 
-import pw.vintr.music.ui.base.BaseViewModel
+import pw.vintr.music.core.presentation.base.BaseViewModel
 import pw.vintr.music.ui.feature.actionSheet.playlist.entity.PlaylistAction
 import pw.vintr.music.ui.feature.actionSheet.playlist.entity.PlaylistActionResult
 import pw.vintr.music.core.navigation.navigator.NavigatorType

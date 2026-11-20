@@ -7,7 +7,7 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import pw.vintr.music.data.audioSession.repository.AudioSessionRepository
 import pw.vintr.music.data.equalizer.repository.EqualizerRepository
-import pw.vintr.music.domain.base.BaseInteractor
+import pw.vintr.music.core.domain.base.BaseInteractor
 import pw.vintr.music.domain.equalizer.model.EqualizerModel
 import pw.vintr.music.domain.equalizer.model.toModel
 import pw.vintr.music.tools.extension.toModel

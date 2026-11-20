@@ -1,11 +1,11 @@
-package pw.vintr.music.app.extension
+package pw.vintr.music.core.domain.di
 
 import org.koin.core.definition.Definition
 import org.koin.core.definition.KoinDefinition
 import org.koin.core.module.Module
 import org.koin.core.qualifier.Qualifier
 import org.koin.dsl.onClose
-import pw.vintr.music.domain.base.BaseInteractor
+import pw.vintr.music.core.domain.base.BaseInteractor
 
 inline fun <reified T : BaseInteractor> Module.interactor(
     qualifier: Qualifier? = null,

@@ -32,7 +32,7 @@ import pw.vintr.music.domain.player.model.state.PlayerStatusModel
 import pw.vintr.music.tools.extension.Empty
 import pw.vintr.music.core.ui.kit.button.ButtonPlayerState
 import pw.vintr.music.core.ui.kit.button.ButtonSimpleIcon
-import pw.vintr.music.ui.common.layout.ScreenStateLayout
+import pw.vintr.music.core.presentation.component.ScreenStateLayout
 import pw.vintr.music.core.ui.kit.library.TrackView
 import pw.vintr.music.core.ui.kit.modifier.actionHeaderBackground
 import pw.vintr.music.core.ui.kit.state.EmptyState

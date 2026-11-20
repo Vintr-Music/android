@@ -4,8 +4,8 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import pw.vintr.music.domain.server.useCase.accessControl.GetServerMemberListUseCase
 import pw.vintr.music.domain.user.model.UserModel
-import pw.vintr.music.ui.base.BaseScreenState
-import pw.vintr.music.ui.base.BaseViewModel
+import pw.vintr.music.core.presentation.base.BaseScreenState
+import pw.vintr.music.core.presentation.base.BaseViewModel
 
 class ServerMemberListViewModel(
     private val serverId: String,

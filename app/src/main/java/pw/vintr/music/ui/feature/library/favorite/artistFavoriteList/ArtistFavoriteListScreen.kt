@@ -24,7 +24,7 @@ import pw.vintr.music.tools.extension.scaffoldPadding
 import pw.vintr.music.core.ui.kit.layout.PullRefreshLayout
 import pw.vintr.music.core.ui.kit.library.ArtistView
 import pw.vintr.music.core.ui.kit.library.rememberLibraryGridCells
-import pw.vintr.music.ui.common.layout.ScreenStateLayout
+import pw.vintr.music.core.presentation.component.ScreenStateLayout
 import pw.vintr.music.core.ui.kit.state.EmptyState
 import pw.vintr.music.core.ui.kit.toolbar.ToolbarRegular
 

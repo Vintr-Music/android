@@ -29,7 +29,7 @@ import pw.vintr.music.core.ui.kit.button.ButtonFavorite
 import pw.vintr.music.core.ui.kit.button.ButtonPlayerState
 import pw.vintr.music.core.ui.kit.button.ButtonSimpleIcon
 import pw.vintr.music.core.ui.kit.library.TrackView
-import pw.vintr.music.ui.common.layout.ScreenStateLayout
+import pw.vintr.music.core.presentation.component.ScreenStateLayout
 import pw.vintr.music.core.ui.kit.modifier.actionHeaderBackground
 import pw.vintr.music.core.ui.kit.toolbar.ToolbarWithArtwork
 import pw.vintr.music.core.ui.kit.toolbar.ToolbarRegular

@@ -9,7 +9,7 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.shareIn
 import kotlinx.coroutines.launch
 import pw.vintr.music.data.audioSession.repository.AudioSessionRepository
-import pw.vintr.music.domain.base.BaseInteractor
+import pw.vintr.music.core.domain.base.BaseInteractor
 import pw.vintr.music.domain.player.interactor.PlayerInteractor
 import pw.vintr.music.domain.player.model.state.PlayerStatusModel
 import pw.vintr.music.domain.visualizer.model.VisualizerState

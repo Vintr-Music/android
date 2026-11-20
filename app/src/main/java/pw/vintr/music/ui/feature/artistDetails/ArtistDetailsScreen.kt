@@ -42,7 +42,7 @@ import pw.vintr.music.core.ui.tools.escapePadding
 import pw.vintr.music.core.ui.kit.button.ButtonFavorite
 import pw.vintr.music.core.ui.kit.button.ButtonPlayerState
 import pw.vintr.music.core.ui.kit.library.AlbumView
-import pw.vintr.music.ui.common.layout.ScreenStateLayout
+import pw.vintr.music.core.presentation.component.ScreenStateLayout
 import pw.vintr.music.core.ui.kit.library.FIXED_TRACK_VIEW_HEIGHT
 import pw.vintr.music.core.ui.kit.library.TrackView
 import pw.vintr.music.core.ui.kit.library.rememberLibraryGridCellsCount
